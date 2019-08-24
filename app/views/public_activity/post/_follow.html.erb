@@ -1,0 +1,25 @@
+<!--  Main partial being rendered for Public Activity gem on Post follow from Follows_controller. (views/public_activity/post/_follow.html.erb). -->
+<% if activity.trackable %>
+  <span id="activities_span" class="">
+    <span>
+      followed a Post titled:
+    </span>
+    <%= link_to activity.trackable.title, subtopic_post_path(activity.trackable.city, activity.trackable.topic, activity.trackable.subtopic, activity.trackable), id: "activity_post_link", class: "bold" %>
+    <span>
+       in:
+      <span class="i bold"> <%= activity.trackable.topic.name %> </span>
+      <span class="text-14"> 
+        /
+      </span>
+      <span class="i bold"> <%= activity.trackable.subtopic.name %> </span> 
+    </span>    
+    <span id="follow_activity">
+      - posted by: 
+      <span class="i">
+        <%= link_to activity.recipient.name, user_path(activity.recipient.city, activity.recipient) %>
+      </span>
+    </span>
+  </span>
+<% else %>
+    unfollowed a Post.
+<% end %>

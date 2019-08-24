@@ -1,0 +1,242 @@
+<!-- Main Page for creating a new Project for a city (views/Projects/new.html.erb). -->
+<div class="content">
+  <div class="col-all-1"></div> 
+  <div class="col-d-9 col-t-10 col-p-12 center">
+    <%= simple_format(@map_project.description, {}, wrapper_tag: "div id='new_text_wrap' class='vanish'") %>
+      <div class="theme_color_black text-medium mb-3 col-tier">      
+        <div class="col-all-12">
+          <p class="mb-0 page_info_title">
+            Post on <%= current_city %> Map - <%= @workplace.name %>
+          </p>
+        </div>
+        <div id="map-post-modal" class="col-all-12">
+          <!-- use the modal component, pass in the prop -->
+          <modal v-if="showModal" @close="showModal = false">
+          </modal>
+        </div>
+      </div>
+      <div id="new_Project_form" class="content">
+        <div class="tier light-box-shadow bg-white p-4 mb-3" style="border: 1px solid rgba(128, 128, 128, .5);">
+          <div class="col-all-12" style="display: block !important">
+            <!-- Below - Renders errors from the new Project page due to validation errors. Error messages inside views/layouts/_errors.html.erb -->
+            <div class="col-all-10 center">
+              <%= render 'layouts/errors', obj: @map_project %>
+            </div>
+          <!-- Begin -  Form for new Project -->
+          <%= simple_form_for @map_project, url: create_map_project_path, html: { multipart: true, class: 'form-horizontal float-left col-d-12 col-t-12 col-p-12 margin-t-0' } do |f| %>
+           <!-- Below - Hidden field tags for storing the latitude, longitude of the pin on submit. 
+             Manual hidden fields with HTML so that validation can work, otherwise using ruby way, we lose -->
+            <input type="hidden" name="map_project[shapes_attributes][0][geo]" id="shape_geo">
+         
+            <div id="map_container" class="my-5 pt-3 col-all-12 pl-0 bg-white border-radius-none border-none intro2_step2">
+              <h4 class="">
+                Draw on the map below, using the toolbar on the left.
+              </h4>
+              <div id="new_workplace_post_map" class="">
+                <%= render 'project_map', obj: @map_project %>
+              </div>
+            </div>  <!-- End -  Rendering for the Map.  -->
+            <!-- Begin - Project Title.  -->
+            <div class="col-tier margin-t-18 intro2_step3">
+              <div class="col-d-6 col-t-6 col-p-12 pr-2"> 
+                <%= f.label :title, "Title", class: 'pull-left'  %>
+                <%= f.text_field :title, name: "map_project[title]", maxlength: 70, title: "Enter a succinct title for this Project. In a few words, what is the issue? (Limit: 70 Characters)", placeholder: "Title of the Project (E.G: 'Stop sign needed here') (Limit: 70 Characters)", class: "form-control input-box-shadow" %>
+              </div>
+              <div class="col-d-6 col-t-6 col-p-12 pl-2"> 
+                <%= f.label :address, "Location or Address", class: 'pull-left loc_mt_ms' %>
+                <%= f.text_field :address, name: "map_project[address]", maxlength: 50, title: "Where in #{ current_city } is your Project located? Exact address, nearby landmarks, location, road, or where it can be found. Limit: 50 Characters.", placeholder: 'Enter exact address, road, or nearby landmarks', class: "form-control input-box-shadow" %>
+              </div>
+            </div>
+            <div class="loading" style="display:none; z-index: 15000">
+              <div class="center-all" style="border-radius: 10px !important">
+               <%= image_tag "icons/misc/loading.gif", alt: "Uploading", class: "", style: "width: 300px" %>
+               <div class="theme_color_dark mb-5 px-4">Please wait while your image uploads...</div>
+              </div>
+            </div>
+            
+            <!-- Begin - New Project description row -->
+            <div class="col-tier margin-t-18">
+              <div class="col-all-12 intro2_step4"> 
+               <%= f.label :description %>
+               <%= f.hidden_field :description, name: "map_project[description]", id: "post_description", required: true %>
+                <div id="editor-container" hidden="true"></div>
+                <div id="quill_container"></div>
+              </div>
+            </div>
+            <!-- End - New Project description row -->
+            <!-- Below -  Area for post to be shared with other admins -->
+            <div class="col-tier center margin-t-12 margin-b-25 intro2_step5">
+              <button class="theme_color_dark text-18" title="Click to tag other members so they are notified of this post, this is optional." type="button" style="background: transparent !important; border: none !important; height: 38px; font-size: 2.5rem">
+                <i class="fas fa-at pl-0" style="font-size: 2.5rem"></i><i class="fas fa-user" style="font-size: 2.5rem"></i>
+              </button>
+              <div style="width: 60%">
+                <%= f.text_field :tags, data: {behavior: "autocomplete"}, title: "Tag other users to share upload with (EG: '@john')", placeholder: "Tag anyone you'd like to share this with (EG: '@john')", class: "form-control input-box-shadow"  %>
+              </div>
+              <div style="margin-left: auto !important;">
+                <div class="image-upload">
+                 <label for="image-input">
+                   <i class="fas fa-file-image margin-r-8 text-35 theme_color_dark" title="Add an image to your conversation." style="cursor: pointer;"></i>
+                 </label>
+                 <%= f.file_field :images, multiple: true, accept: 'image/*', onchange: "readURL(this);", id:"image-input" %>
+                </div>
+              </div>
+              <div class="image-upload">
+                <label for="file-input">
+                  <i class="ml-3 fas fa-paperclip margin-r-8 text-35 theme_color_dark"  title="Upload a document/file that pertains to your conversation. You can upload a PDF, Doc, PowerPoint, etc.." style="cursor: pointer;"></i>
+                </label>
+                <%= f.file_field :files, multiple: true, accept: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.openxmlformats-officedocument.presentationml.slideshow, application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint, application/pdf, text/*', onchange: "readFile(this);", id:"file-input" %>
+              </div>
+              <div id="new_doc" class="my-3 vanish col-tier" style="height: 30px !important;">
+                <div class="theme_color_dark text-18 b">
+                  <i class="fas fa-paperclip"><span class="ml-2">You have attached a file</span></i>
+                </div>
+              </div>
+              <div id="image_preview_tier" class="col-tier">
+                  <%= f.label :images, "Preview of Uploaded Image <small> (Preview of only one image) </small> <br>".html_safe, class: "mt-3 vanish img_prev_title pull-left text-left col-tier control-label mb-2" %>
+                <img id="img_prev" class="vanish" src="#" alt="Image">
+              </div>
+            </div>
+          </div> <!-- End - Main tier for Project New -->
+          <div class="col-tier">
+            <div class="col-all-12 mb-0"> 
+              <%= f.submit "Submit Project", id: "loadgif", class: "form_btn btn action padding-x-15 mb-0 push-right pull-right disabled", disabled: true, onclick: "amplitude.getInstance().logEvent('Workplace Project Submitted');" %>
+            </div>
+          </div>
+        </div> 
+      <% end %> <!-- End - Simple-Form Form field on physical page, not on map. -->
+    </div>
+  </div>
+</div>
+
+<!-- Below -  Renders in the list of admins from instance variable @admins in controller, with the path provided by controller as well, where to grab the admins list from for @mentioning them -->
+<%= render 'layouts/tagging_admins_script', obj: @workplace_admins_path %>
+<script>
+   // Below - Sets up hidden form fields to fill with data. Variables are used in _workplace_map_post_map.html.erb partial
+  var submit_map_btn = $("#loadgif"), shape_geo = $("#shape_geo");
+  
+function readURL(input) {
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+    $("#img_prev").show();
+    $(".img_prev_title").show();
+    if (input.files.length > 1) {
+      $(".img_prev_title").append(input.files.length + " attached images");
+    };
+    reader.onload = function (e) {
+      $('#img_prev')
+        .attr('src', e.target.result)
+    };
+
+    reader.readAsDataURL(input.files[0]);
+  }
+};
+
+function readFile(input) {
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+    $("#new_doc").show();
+    if (input.files.length > 1) {
+      $("#new_doc").text(input.files.length + " attached files");
+    };
+    reader.onload = function (e) {
+      $('#new_doc')
+        .attr('src', e.target.result)
+    };
+
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+</script>
+<script>
+// register modal component
+Vue.component('modal', {
+  template: '#modal-template'
+})
+
+// start app
+new Vue({
+  el: '#map-post-modal',
+  data: {
+    showModal: false
+  }
+})
+</script>
+<script>
+    var form = document.querySelector('.form-horizontal');
+    var quill = new Quill('#quill_container', {
+    modules: {
+      toolbar: [
+        ['bold', 'italic', 'link'],
+        [{ list: 'ordered' }, { list: 'bullet' }]
+      ]
+    },
+    placeholder: "The description of your project, explaining what it is, where it's at, what should be done, and your experience with it. Limit: 6,000 Characters (about 900 words).",
+    theme: 'snow'  // or 'bubble'
+  });
+  
+  
+  form.onsubmit = function() {
+    var postContentInput = document.querySelector('#post_description');
+    postContentInput.value = quill.root.innerHTML;
+  };
+  
+  // Below - Sets up a variable from the simple format rendering about on edit post
+  var editDescription = $('#edit_text_wrap').text();
+$('.ql-editor p').text(editDescription);
+  // Below - Shuffles in text from a failed resource submission's description
+  var newDescription = $('#new_text_wrap').text();
+  $('.ql-editor p').text(newDescription);
+
+</script>
+
+<script>
+var intro2  = introJs();
+
+intro2.setOptions({
+    tooltipPosition : 'top',
+    steps: [
+        {
+            element: '.intro2_step1',
+            intro: 'Starting off your Project, please select a category that best describes your reason for posting. You may also click Post, which will redirect you to the Forum Post page',
+            position: 'bottom'
+        },            {
+            element: '.intro2_step2',
+            intro: 'Next, using the map and the buttons located on the left side draw a shape to describe what your issue is about. You may recenter on your location, fullscreen, draw a polyline, polygon, or place a marker. Clicking the change map button on the top right will provide an alternate tileset for the map. This does not change anything except the appearance of the map.',
+            position: 'right'
+        },
+        {
+            element: '.intro2_step3',
+            intro: 'After creating your map shape, enter a title for your post. As well as a location, this may be a precise location or an approximate location.',
+            position: 'bottom'
+        },
+        {
+            element: '.intro2_step4',
+            intro: 'Here you can write a short description of what your post focuses on, there is a minimum character limit of 50.',
+            position: 'right'
+        },
+        {
+            element: '.intro2_step5',
+            intro: 'Lastly, you may optionally chose to tag other members of your workplace, using the @ symbol. As well as choosing to add a picture or attach a file to accompany your new Project. After you review your post and everything is correct, Press Submit below to create your new Project.',
+            position: 'left'
+        }
+    ]
+});
+
+window.addEventListener('load', function () {
+    var doneTour = localStorage.getItem('EventTour') === 'Completed';
+    if (doneTour) {
+        return;
+    }
+    else {
+        intro2.start()
+
+        intro2.oncomplete(function () {
+            localStorage.setItem('EventTour', 'Completed');
+        });
+
+        intro2.onexit(function () {
+            localStorage.setItem('EventTour', 'Completed');
+        });
+    }
+});
+</script> 

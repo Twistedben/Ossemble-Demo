@@ -1,0 +1,77 @@
+<!--  List partial for rendering resources from workplaces and admins (views/admins/admin_layouts/_workplace_resources_list.html.erb)
+-->
+
+<div id="resource_list" class="col-tier">
+  <!-- Below - Renders in a message to create content if there are no resources to show yet. -->
+  <% if obj.empty? %>
+    <div class="card center-all light-box-shadow padding-all-15 mt-0 bg-white col-tier">
+      <% if is_current_page?("admin_libraries", "library_upload_shares") %>
+        <h3 class="center-all padding-all-15 mt-0">
+           No uploads have yet to be shared with you.
+        </h3> 
+      <% elsif is_current_page?("admin_libraries", "library_maps") %>
+        <h3 class="center-all padding-all-15 mt-0">
+          You have yet to save any Workplace Map Posts to your library.
+        </h3> 
+      <% elsif is_current_page?("admin_libraries", "library_posts") %>
+        <h3 class="center-all padding-all-15 mt-0">
+          You have yet to save any Workplace Forum Posts to your library.
+        </h3> 
+      <% end %>
+    </div>
+  <% else %>
+    <!-- Below - Renders in each complaint for a city. -->
+    <% obj.each do |resource| %> 
+      <div id="list_card_container">
+        <div class="col-tier">
+          <!-- Begin -  CONTENT TIER: Picture, user info, resource info, description, tags, etc. -->
+          <div id="image_container" class="col-d-2 col-t-3 col-p-10 transparent">
+            <!-- Below -  Renders the resources image, if one is attached or the default icon image if one isn't. -->
+            <%= display_workplace_image(resource.entriable) %>
+          </div>
+          <div id="content_container" class="col-d-10 col-t-9 col-p-12">
+            <div id="resource_info_container" class="col-all-12">
+              <a id="list_title" class="tier" href="<%= library_entry_category_link(resource.entriable.admin.institute, resource.entriable.admin, resource.entriable.library, resource.entriable) %>">
+                <!-- Below -  Renders the resource's title and if complaint the address as well. -->
+                <%= display_list_title(resource.entriable) %>
+              </a>
+              <div id="avatar_name" class="tier">
+                <!-- Below -  Renders the resource's owner's avatar -->
+                <%= display_small_city_avatar(resource.entriable.admin) %>
+                <!-- Below -  Renders the resource's owner's name and whether they're a non resident -->
+                <%= link_to "#{resource.entriable.admin.name}", institute_admin_path(resource.entriable.admin.institute, resource.entriable.admin), id: " " , class: "margin-l-8 pt-2"  %>
+              </div>
+              <div id="time_score" class="tier">
+                <!-- Below -  Displays date the resource was posted and if a score is attached, that as well. -->
+                <%= "Uploaded: #{display_date_in_numbers(resource.entriable.created_at)}".html_safe %>
+                <br>
+                <%= "Shared: #{time_ago_in_words(resource.created_at)} ago".html_safe %>
+                <!-- Below -  Calls helper from Reviews_helper.rb file to display icon whether the review is scorable or not due to the fact it's a non-resident review -->
+              </div>
+            </div> 
+            <div id="list_tag_tier" class="col-all-12 tier">
+
+            </div>
+            <!-- Begin - DESCRIPTION: Description row -->
+            <div id="list_description_container" class="col-all-12">
+              <!-- Below -  Displays resource description with the link to its show page. -->
+              <%= display_library_entry_description(resource.entriable) %>
+            </div>
+            <!-- End -  DESCRIPTION: -->
+          </div>
+        </div> <!-- End - CONTENT TIER: -->
+       
+       <!-- Begin -  ACTION TIER: Endorse, Share, Comments and endorsements Row -->
+        <div id="list_action_container" class="col-tier">
+        
+          <div id="endorse_container" class="col-d-2 col-t-3 col-p-4"> 
+          </div>
+          <a id="vote_container" class="col-d-3 col-t-4 col-p-4" href="">
+          </a>
+          <a id="comment_container" class="col-d-3 col-t-4 col-p-4" href="">
+          </a>
+        </div>  <!-- End - ACTION TIER: Share, Comments and endorsements row -->
+      </div>
+    <% end %>
+  <% end %>
+</div>

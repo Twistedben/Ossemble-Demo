@@ -1,0 +1,65 @@
+<!--  The main partial rendered for activity being created or deleted concerning comments (views/public_activity/comment/_create)-->
+<% if activity.trackable %>
+  <% @comment_parent = activity.trackable.subject
+     @parent_id = activity.trackable.parent_id
+     @parent = @comment_parent.constantize.find(@parent_id) %>
+  <span id="activities_span" class="">
+    <span>
+      commented on a
+    </span>
+    <!-- Below -  A comment on a post. -->
+    <% if activity.trackable.subject == "Post" %>
+      <span>
+        Post titled:
+      </span>
+       <%= link_to @parent.title, subtopic_post_path(@parent.city, @parent.topic, @parent.subtopic, @parent), id: "activity_post_link", class: "b" %>
+      <span>
+        in:
+        <span class="i bold"> <%= @parent.topic.name %> </span>
+        <span class="text-14"> 
+          /
+        </span>
+        <span class="i bold"> <%= @parent.subtopic.name %> </span> 
+      </span>
+    <!-- Below -  A comment on a complaint. -->
+    <% elsif activity.trackable.subject == "Complaint" %>
+      <span>
+        Complaint titled:
+      </span>
+      <%= link_to "#{@parent.title}", city_complaint_path(@parent.city, @parent), id: "activity_complaint_link", class: "b" %>
+        <!-- Below -  A comment on a concern. -->
+    <% elsif activity.trackable.subject == "Concern" %>
+      <span>
+        Concern titled:
+      </span>
+      <%= link_to "#{@parent.title}", city_concern_path(@parent.city, @parent), id: "activity_complaint_link", class: "b" %>
+    <!-- Below -  A comment on a City Review. -->
+    <% elsif activity.trackable.subject == "CityReview" %>
+      <span>
+        City Review titled:
+      </span>
+      <%= link_to "#{@parent.title}", city_review_path(@parent.city, @parent), id: "activity_complaint_link", class: "b" %>
+    <!-- Below -  A comment on a Department Review. -->
+    <% elsif activity.trackable.subject == "DepartmentReview" %>
+      <span>
+        Department Review titled:
+      </span>
+      <%= link_to "#{@parent.title}", city_department_review_path(@parent.city, @parent), id: "activity_complaint_link", class: "b" %> 
+    <% elsif activity.trackable.subject == "Petition" %>
+      <span>
+        Petition titled:
+      </span>
+      <%= link_to "#{@parent.title}", city_petition_path(@parent.city, @parent), id: "activity_complaint_link", class: "b" %> 
+    <% end %>
+    <span id="comments_city">
+      <span class="text-14">
+        - 
+      </span>
+      <span class="faded i">
+        <%= link_to "#{@parent.city.name}", city_feed_path(@parent.city), id: 'activity_city_link', class: "" %>
+      </span>
+    </span>
+<% else %>
+  deleted a comment.
+  </span>
+<% end %>

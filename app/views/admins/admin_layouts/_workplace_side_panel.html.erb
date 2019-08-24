@@ -1,0 +1,283 @@
+<!--  Workplace SidePanel partial rendered on nearly every page when logged in as admin. 
+        Css is found in separate Workplace_side_panel.css stylesheet page.
+          This is rendered from Application.html.erb page. -->
+         
+<div id="workplace_sidepanel" class="workplace_side_panel intro1_step4">
+  <div class="close_container mb-3">
+    <a id="closeSPLink" href="javascript:void(0)" class="pointer col-tier closebtn push-right"  onclick="closeSidePanel(); sidebarCollapse();">
+      <span id="side_panel_city">
+        <span title="Close Channel navigation panel" class="
+        <%= current_admin.institute.name.length > 15 ? "text-14 padding-l-3" : "text-16" %> 
+        " style="
+        ">
+          <%= current_admin.institute.name %>
+        </span>
+        <i class="fas fa-arrow-left arrow_ms" onclick="closeSidePanel()"></i>
+      </span>
+    </a>
+  </div>
+  <div id="sidepanel_top_container">
+    <div id="side_panel_header_container" title="Click to switch to another Channel's home feed <%= 'or to add a new one' if is_current_super_admin? %> ">
+      <!-- Below -  If the admin belongs to more than one workplace, then show a dropdown with them listed. Otherwise, just link to the one they belong to. -->
+      <% if current_admin.workplaces.count >= 1 %>
+        <div id="workplaces_btn_container" class="btn-group">
+          <button id="workplaces_btn" type="button" class="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <div id="workplaces_btn_text">
+              <span class="workplace_text_ms">
+                <% if is_workplace_page? && !is_undefined_workplace_page? %>
+                  <%= current_workplace %> 
+                <% else %>
+                  Channels
+                <% end %>
+                <i id="workplace_dropdown_arrow" class='fas fa-caret-down'></i>
+              </span>
+            </div>
+          </button>
+          <div id="workplace_dropdown_menu" class="dropdown-menu">
+            <h5 id="workplace_dropdown_menu_header" class="dropdown-header"> 
+              Your Channels
+            </h5>
+            <!-- Below -  Renders the feed link for a workplace for each workplace the admin belongs to -->
+            <% current_admin.workplaces.each do |workplace| %>
+              <div class="dropdown-divider"></div>
+              <%= link_to "#{workplace.name}", workplace_feed_path(workplace.institute, workplace), id: "workplace_link" , class: "" %>
+            <% end %>
+            <!-- Below -  Allows admin to create a new workplace if they're super admin -->
+            <% if is_current_super_admin? %>
+              <div class="dropdown-divider"></div>
+              <%= link_to "<i class='far fa-plus-square'></i> Add a Channel".html_safe, new_institute_workplace_path(current_admin.institute), title: "Create a new Channel for a separate feed, map location, and members to join and collaborate.", id: "workplace_link" , class: "new_workplace_link"  %>
+            <% end %>
+          </div>
+        </div>
+      <% else %>  <!--  Admin Doesn't belong to a workplace -->
+        <h3 class="margin-y-3 margin-x-8 text-warning">
+          You don't belong to a Workplace Channel.
+          Contact your organization's administrator.
+        </h3>
+      <% end %> <!--  End - Check of workplaces count -->
+      <div id="side_panel_header_divider" class="side_panel_header_divider"></div>
+    </div>
+    <div id="side_panel_top_link_container" class="col-tier blc_ms" title="Click to see Channel's Collaborative Feed">
+      <div id="feed_icon_container" class="top_icon_container">
+        <i class='fas fa-home'></i>
+      </div>
+      <% if is_workplace_page? && !is_undefined_workplace_page? %>
+        <%= link_to "Feed", workplace_feed_path(@institute, @workplace), id: "feed_link" , class: "btn" %>
+      <% elsif @institute %>
+        <%= link_to "Feed", workplace_feed_path(@institute, current_admin.workplaces.first), id: "feed_link" , class: "btn" %>
+      <% else %>
+        <%= link_to "Feed", workplace_feed_path(current_admin.institute, current_admin.workplaces.first), id: "feed_link" , class: "btn" %>
+      <% end %>
+    </div>
+    <div id="feed_divider" class="dropdown-divider"></div>    
+    <div id="side_panel_top_link_container" class="col-tier blc_ms2" title="Click to view Channel Map">
+      <div class="top_icon_container">
+        <span class="side_arrow_ms"><ion-icon name="return-right"></ion-icon></span>
+        <i class='fas fa-map icon_map_ms'></i>
+      </div>
+      <% if is_workplace_page? && !is_undefined_workplace_page?  %>
+        <%= link_to "Map", workplace_map_path(@institute, @workplace), id: "workplace_map_link" , class: "btn", onclick: "amplitude.getInstance().logEvent('Map View Sidepanel');" %>
+      <% elsif @institute %>
+        <%= link_to "Map", workplace_map_path(@institute, current_admin.workplaces.first), id: " " , class: "btn", onclick: "amplitude.getInstance().logEvent('Map View Sidepanel');" %>
+      <% else %>
+        <%= link_to "Map", city_workplace_map_path(current_admin.institute, current_admin.workplaces.first), id: " " , class: "btn", onclick: "amplitude.getInstance().logEvent('Map View Sidepanel');" %>
+      <% end %>
+    </div>
+    <div id="workplace_map_divider" class="dropdown-divider"></div>
+    <div id="side_panel_top_link_container" class="col-tier blc_ms" title="Click to view Channel directory and other members">
+      <div id="directory_icon_container" class="top_icon_container">
+        <i class='fas fa-address-card'></i>
+      </div>
+      <% if is_workplace_page? && !is_undefined_workplace_page? %>
+        <%= link_to "Directory", workplace_directory_path(@institute, @workplace), id: "workplace_directory_link" , class: "btn" %>
+      <% elsif @institute %>
+        <%= link_to "Directory", workplace_directory_path(@institute, current_admin.workplaces.first), id: "workplace_directory_link" , class: "btn", onclick: "amplitude.getInstance().logEvent('Directory Sidepanel');" %>
+      <% else %>
+        <%= link_to "Directory", city_workplace_directory_path(current_admin.institute, current_admin.workplaces.first), id: "workplace_directory_link" , class: "btn", onclick: "amplitude.getInstance().logEvent('Directory Sidepanel');" %>
+      <% end %>
+    </div>
+    <!-- <div id="workplace_directory_divider" class="dropdown-divider"></div> -->
+  </div>
+  <div id="sidepanel_bottom_container" class="spb_pb_ms">
+    <div class="bottom_link_container col-tier blc_ms">
+      <div class="bottom_icon_container">
+        <i class='fas fa-bell'></i>
+      </div>
+      <span data-behavior="notifications" data-notifications='<%= render template: "notifications/index", formats: [:json] %>'>
+        <%= link_to "Notifications".html_safe, user_notifications_path(), title: "Click to view Notifications", id: "notifications_link", class: "btn", onclick: "amplitude.getInstance().logEvent('Notifications Sidepanel');" %>
+      </span>
+      <h1 id='unread_count' class="m-0 text-big pull-left relative" style="top: 4.5px; left: 2px; cursor: default; color: #F5F5F5;" data-behavior='unread-count' title='Total number of unread Notifications'></h1>
+    </div>
+    <div id="notifications_divider" class="dropdown-divider"></div>
+    <% if is_workplace_page? && !is_undefined_workplace_page? %>
+      <div class="bottom_link_container col-tier blc_ms" title="Click to invite new members to the Channel">
+        <div class="bottom_icon_container">
+          <i class='fas fa-user-plus'></i>
+        </div>
+        <%= link_to "Invite Member", new_workplace_invite_path(@institute, @workplace), id: "workplace_invite_link" , class: "btn", onclick: "amplitude.getInstance().logEvent('Invite Member Sidepanel');" %>
+      </div>
+      <div id="workplace_invite_divider" class="dropdown-divider"></div>
+    <% end %>
+
+    <!-- Below -  Renders two links for a super admin of a workplace, to access subscription and pay, and also workplace settings -->
+    <% if is_current_super_admin? %>
+      <% if is_workplace_page? && !is_undefined_workplace_page?  %>
+        <div class="bottom_link_container col-tier blc_ms" title="Click to modify Channel settings">
+          <div class="bottom_icon_container padding-r-3">
+            <i class='fas fa-cog' aria-hidden='true'></i>
+          </div>
+            <%= link_to "Settings", edit_institute_workplace_path(@institute, @workplace), id: 'workplace_edit_link', class: 'btn', onclick: "amplitude.getInstance().logEvent('Settings Sidepanel');" %>    
+        
+        </div>
+        <div id="workplace_edit_divider" class="dropdown-divider"></div>
+      <% end %>
+    <!--  NOTE: Subscription is disabled until implemented properly. -->
+      <div class="bottom_link_container col-tier" title="Click to view subscription and payment information">
+        <div class="bottom_icon_container padding-r-3">
+          <i class='far fa-credit-card' aria-hidden='true'></i>
+        </div>
+          <%= link_to "Subscription", payments_path(current_admin.institute), id: 'workplace_subscription_link', class: 'btn' %>    
+      </div>
+      <div id="workplace_subscription_divider" class="dropdown-divider"></div>
+    <% end %>
+  </div>
+</div>
+
+<!-- Use any element to open the sidenav -->
+<div id="open_sidepanel" onclick="openSidePanel()" title="Open Channel navigation panel">
+  <a href="javascript:void(0)" class="openBtn"  onclick="openSidePanel()">
+    <i class="fas fa-arrow-right" onclick="openSidePanel()"></i>
+  </a>
+</div>
+
+<!-- Below - JS Code to swap icons on workplace dropdown btn for opened menu or closed -->
+<script> 
+  $("#workplaces_btn").on( 'click', function() {
+    if ($("#workplace_dropdown_arrow").hasClass("fa-caret-down")) { 
+      $("#workplace_dropdown_arrow").removeClass("fa-caret-down");
+      $("#workplace_dropdown_arrow").addClass("fa-caret-right");
+    } else  { 
+      $("#workplace_dropdown_arrow").removeClass("fa-caret-right");
+      $("#workplace_dropdown_arrow").addClass("fa-caret-down");
+    }
+  });
+</script>
+
+<script>
+// Below - Adds CSS to links in the sidepael if that's the current page they're on to highlight and show user where they currently are.
+<% if is_library_page? || current_page?(institute_workplaces_path(current_admin.institute)) || is_chatroom_page? || is_undefined_workplace_page? %>
+// Do nothing to avoid error
+
+<% elsif current_page?(user_notifications_path) %>
+    $("#notifications_divider").css({
+      "opacity": "1",
+      "width": "100%"
+    });
+   $("#notifications_link").css({
+      "font-weight": "bold",
+      "color": "white"
+    });
+   $(".fa-bell").css({
+      "font-weight": "bold",
+      "color": "white"
+    });
+<% elsif controller_name == "workplaces" || controller_name == "workplace_posts" || controller_name == "workplace_map_posts" %>
+  <% if current_page?(workplace_map_path(@institute, @workplace)) %>
+     $("#workplace_map_divider").css({
+        "opacity": "1",
+        "width": "100%"
+      });
+     $("#workplace_map_link").css({
+        "font-weight": "bold",
+        "color": "white"
+      });
+     $(".fa-map").css({
+        "font-weight": "bold",
+        "color": "white"
+      });
+  <% elsif current_page?(workplace_directory_path(current_admin.institute, current_admin.main_workplace)) %>
+     $("#workplace_directory_divider").css({
+        "opacity": "1",
+        "width": "100%"
+      });
+     $("#workplace_directory_link").css({
+        "font-weight": "bold",
+        "color": "white"
+      });
+     $(".fa-address-card").css({
+        "font-weight": "bold",
+        "color": "white"
+      });
+  <% elsif current_page?(new_workplace_invite_path(@institute, @workplace)) %> 
+     $("#workplace_invite_divider").css({
+          "opacity": "1",
+          "width": "100%"
+        });
+     $("#workplace_invite_link").css({
+          "font-weight": "bold",
+          "color": "white"
+        });
+     $(".fa-user-plus").css({
+          "font-weight": "bold",
+          "color": "white"
+        });
+  <% elsif current_page?(edit_institute_workplace_path(@institute, @workplace)) %> 
+     $("#workplace_edit_divider").css({
+          "opacity": "1",
+          "width": "100%"
+        });
+     $("#workplace_edit_link").css({
+          "font-weight": "bold",
+          "color": "white"
+        });
+     $(".fa-cog").css({
+          "font-weight": "bold",
+          "color": "white"
+        });
+  <% elsif controller_name == "workplace_posts" || controller_name == "workplace_map_posts" || controller_name == "workplaces"%>
+    $("#feed_link, .fa-home").css({
+        "font-weight": "bold",
+        "color": "white"
+      });
+    $("#feed_divider").css({
+        "opacity": "1",
+        "width": "100%"
+      });
+
+  <% else %>
+  <% end %>
+<% else %>
+
+<% end %>
+
+// Below - JS Code to allow side panel opening and closing, setting proper CSS and animation
+  function openSidePanel() {
+    $("#open_sidepanel").hide()
+    if ($(window).width() < 600) {
+      $("#workplace_sidepanel").css({"width": "82%",
+          "position": "fixed",
+          "opacity": "0.95"
+        });
+        
+     }
+    else {
+      $("#workplace_sidepanel").css("width", "210px");
+      $("main").css("margin-left", "100px");
+    }
+   
+}
+
+/* Set the width of the side navigation to 0 and the left margin of the page content to 0 */
+ function closeSidePanel() {
+   
+    $("#workplace_sidepanel").css("width", "0px");
+    $("main").css("margin-left", "45px");
+    $("#open_sidepanel").show().animate({
+      width: "45px"
+    }, 40);
+}
+
+/* Below is the code to always show the side panel on page load */
+
+
+</script>

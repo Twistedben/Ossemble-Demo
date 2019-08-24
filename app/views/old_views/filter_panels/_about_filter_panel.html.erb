@@ -1,0 +1,91 @@
+<!-- Begin - Filter About Panel -->
+<div id="filter_panel_wrapper" class="filtertoggle col-d-12 center pl-0 pt-0" style="">
+  <aside style="width: 100% !important">
+    <div id="filter_panel_content" class="p-0 mb-4 border-radius-10">
+      <div id="filter_panel_body" class="center panel-default panel-profile no-border border-radius-10">
+        
+        <div id="filter_panel_list_wrapper" class="panel-body no-border">
+          <ul id="filter_panel_list" class="list-group">
+            <div class="mb-2">
+              <div class="mb-0 text-xbig city_feeds_pos b roboto ml-3" style="color: rgba(88, 88, 88, .9)">
+                <%= link_to "Ossemble", root_path, class: "title_link" %>
+              </div>
+            </div>
+            <div>
+            <li class="dropdown mb-0 city_feeds_pos">
+              <a class="dropdown no-underline"><i class="fas fa-info-circle text-xxbig margin-l-12 margin-r-12 ms_t_panel_head"></i><span class='ms_font_panel'>About Us</span><i class="pl-3 fas fa-caret-down"></i></a>
+              <ul class="dropdown-menu city_feeds_pos about_dd_style pt-0 mt-0">
+                <li class="about_dd_hover city_feeds_pos"><a class="p-0 transparent" href="<%= about_path %>"><i class="fas fa-gavel margin-l-8 margin-r-12"></i><span class='ms_font_panel'>Mission</a></li>
+                <li class="about_dd_hover city_feeds_pos"><a class="p-0 transparent" href="<%= inspiration_path %>"><i class="fas fa-chess-queen margin-l-8 margin-r-12"></i><span class='ms_font_panel'>Inspiration</span></a></li>
+                <li class="about_dd_hover city_feeds_pos"><a class="p-0 transparent" href="<%= team_path %>"><i class="fas fa-users margin-l-8 margin-r-10"></i><span class='ms_font_panel'>Team</span></a></li>
+              </ul>
+            </li>
+            <li class="dropdown m-0 city_feeds_pos">
+              <a class="dropdown no-underline"><i class="fas fa-cogs text-xxbig margin-l-8 margin-r-50 ms_t_panel_head"></i> <span class='ms_font_panel'>How It Works</span><i class="pl-3 fas fa-caret-down"></i></a>
+              <ul class="dropdown-menu city_feeds_pos about_dd_style pt-0 mt-0">
+                <li class="about_dd_hover city_feeds_pos"><a class="p-0 transparent" href="<%= about_city_score_path %>"><i class="fas fa-percent margin-l-8 margin-r-12 ms_t_panel_head"></i><span class='ms_font_panel'>City Score</span></a></li>
+                <li class="about_dd_hover city_feeds_pos"><a class="p-0 transparent" href="<%= about_forum_path %>"><i class="fas fa-comments margin-l-8 ms_t_panel_head" style="margin-right: 15px"></i><span class='ms_font_panel'>Forum</span></a></li>
+                <li class="about_dd_hover city_feeds_pos"><a class="p-0 transparent" href="<%= reputation_path %>"><i class="fas fa-medal margin-l-8 margin-r-12 ms_t_panel_head"></i><span class='ms_font_panel'>Reputation</span></a></li>
+                <!-- 
+                     <li class="about_dd_hover"><a class="p-0 transparent" href="#"><i class="fab fa-accessible-icon margin-l-0 margin-r-10"></i><span class='ms_font_panel'>The Beacon</span></a></li>
+                -->
+              </ul>
+            </li>
+             </div>
+            <li class="m-0 city_feeds_pos">
+              <a class="no-underline" href="<%= policies_path %>"><i class="fas fa-copyright text-xxbig margin-l-10 margin-r-12 ms_t_panel_head"></i><span class='ms_font_panel'>Policies & Terms</span></a>
+              <ul class="about_dd_style city_feeds_pos pt-0 mt-0">
+              </ul>
+            </li>
+            <li class="m-0 city_feeds_pos">
+              <a class="no-underline" href="/about/faq"><i class="fas fa-question-circle text-xxbig margin-l-10 margin-r-12 ms_t_panel_head"></i><span class='ms_font_panel'>FAQ</span></a>
+              <ul class="about_dd_style city_feeds_pos pt-0 mt-0">
+              </ul>
+            </li>
+            <li class="m-0 city_feeds_pos">
+              <a class="no-underline" href="/about/contact_us"><i class="fas fa-phone text-xxbig margin-l-10 margin-r-12 ms_t_panel_head"></i><span class='ms_font_panel'>Contact Us</span></a>
+              <ul class="about_dd_style city_feeds_pos pt-0 mt-0">
+              </ul>
+            </li>
+            <li class="m-0 city_feeds_pos mb-3">
+              <a class="no-underline" style="cursor: pointer" onclick="ml_webform_742238('show')"><i class="fas fa-archive text-xxbig margin-l-10 margin-r-12 ms_t_panel_head"></i><span class='ms_font_panel'>Request City</span></a>
+              <ul class="about_dd_style city_feeds_pos pt-0 mt-0">
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<script>
+    var ml_webform_742238 = ml_account('webforms', '742238', 'l6h8p1', 'load');
+    ml_webform_742238('animation', 'fadeIn');
+</script>
+
+<script>
+  const textNode = document.querySelector('#jumbo_main_text,jumbo_slogan_text');
+const splitTextArr = textNode.innerText.split(" ");
+let finalMarkup = "";
+splitTextArr.forEach(buildMarkup);
+
+
+function buildMarkup(text, index) {
+  let spanText;
+  (index === 2) ? 
+  spanText = "<span>" + text + "</span><br />" : 
+  spanText = "<span>" + text + "</span> ";
+  
+  return finalMarkup += spanText;
+}
+
+textNode.innerHTML = finalMarkup;
+</script>
+
+<script>
+  //$(document).ready ->
+  $('li.dropdown a').on('click', function(event) {
+    $(this).parent().toggleClass('open');
+  });
+</script>

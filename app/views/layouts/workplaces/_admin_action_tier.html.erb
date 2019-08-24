@@ -1,0 +1,23 @@
+<!--  Partial for rendering show pages for admin resources inside workplace posts, reports and suggestions -->
+<!--  Partial rendering for Follow button, Share button, comment count and endorsement count on show pages. Object being passed in is the Show pages
+  instance variable which will determine what is being shared and what can be followed. -->
+<div id="user_action_tier" class="col-tier">
+  <div class="btn user_action_btn ms_x_padding_at margin-l-0 ms-com-end-1">
+    <%= display_comment_count(obj) %> <!-- Displays number of Comments. -->
+  </div>
+  <div class="btn user_action_btn ms-com-end-1" >
+    <%= display_vote_count(obj) %> <!-- Displays number of endorsements. -->
+  </div>
+</div> <!-- End -  User actions row-->
+<script>
+/*
+ document.getElementById('url_input').value=window.location.href;
+
+ function copyLink() {
+  var copyText = document.getElementById('url_input');
+  copyText.select();
+  document.execCommand("copy");
+  alert("Copied URL: " + copyText.value);
+}
+*/
+</script>

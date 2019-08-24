@@ -1,0 +1,69 @@
+<!-- Map for the Workplace's Map Post Show page. Object will get passed in and rendered. Helper methods used are in helpers/maps_helper.rb -->
+<script>
+ // Below - Sets initial view to the lat and long centering on city, but if there's a passed in object, sets to the bounds of the drawn shape from Map Post resource.
+ var map = L.map('workplace_show_post_map');
+ // Below - Renders in the map tile layer, fullscreen and repositition.
+ <%= render 'layouts/maps/map_instantiation.js' %>
+// Below - Scaling Zoom and Disabling Drag/Zoom
+L.control.scale().addTo(map);
+map.options.minZoom = 11;
+map.options.maxZoom = 19;
+// Below - Disables panning and normal map functions. Enabled by default
+ //map.dragging.disable();
+ //map.touchZoom.disable();
+ // map.doubleClickZoom.disable();
+ map.scrollWheelZoom.disable();
+ L.AwesomeMarkers.Icon.prototype.options.prefix = 'fa';    
+// Begin - WORKPLACE SHAPE- Adds Workplace Shape's GeoJSON DB 
+var geojsonLayer, layer_group, workplace_geojson;
+  workplace_geojson = [{
+    "type": "FeatureCollection",
+    "features" : [
+       <%= raw(@workplace.shape.geo) %>
+      ]
+  }];
+  
+  layer_group = new L.layerGroup();
+  geojsonLayer = L.geoJson(workplace_geojson, {
+    onEachFeature: function(feature, layer) {
+      map.fitBounds(layer.getBounds());
+    }
+  });
+    
+  geojsonLayer.setStyle({"color": "rgba(100, 84, 150, 0.55)"});
+  geojsonLayer.setStyle({"weight": "4"});
+  layer_group.addLayer(geojsonLayer);
+  map.addLayer(layer_group);
+// End - WORKPLACE SHAPE:
+// Begin - MAP POST SHAPE: Adds in Workplace Map Post Shape
+  var drawn_layer_group = new L.layerGroup();
+  var drawn_items = [{
+    "type": "FeatureCollection",
+      "features" : [
+        <%= raw(obj.shapes.first.geo) %>
+      ]
+  }];
+  var drawn_geojsonLayer = L.geoJson(drawn_items, {
+    // Below - Adds shape to map if it's a marker, and also converts to layers so .addLayer() can be user below this function
+    onEachFeature: function(feature, layer) {
+      // Below - If a marker is included in shape, adds the marker to the map.
+      if (layer._latlng != undefined) {
+        var currentMarker = L.marker(layer.getLatLng(), {
+          icon: L.AwesomeMarkers.icon({
+            icon: 'fas fa-dot-circle',
+            markerColor: 'blue',
+            iconColor: '#F8FAEE',           
+          })
+        }).addTo(map);
+        
+      };
+      layer.bindPopup("<h4 class='text-center'>" + feature.properties + "</h4>");
+    }
+  });
+  // Below - Adds shape
+  drawn_geojsonLayer.setStyle({"color": "rgba(80, 80, 200, 0.85)"});
+  drawn_geojsonLayer.setStyle({"weight": "4"});
+  drawn_layer_group.addLayer(drawn_geojsonLayer);
+  map.addLayer(drawn_layer_group);
+// End - MAP POST SHAPE:
+</script>

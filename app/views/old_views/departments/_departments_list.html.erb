@@ -1,0 +1,90 @@
+<!-- Main partial for listing departments, used in Departments/Index.html.erb and Community_Scores/Community_Score.html.erb -->
+
+<!-- Begin - Main Wrapper for page. -->
+<div id="departments_list">
+  <!-- Below - Renders in a message if there are no departments unless it's rendering from Community Score page.-->
+  <% if obj.empty? && obj != @trending_week_departments && obj != @trending_month_departments %>
+    <h2 class="center-all light-box-shadow py-3 mt-0  bg-white">No <span class="i">Departments</span> to show yet.</h2>
+  <% end %>
+  <!-- Below - Renders in each department for a city. -->
+  <% obj.each do |department| %> 
+    <div class="col-d-12 card bs_hover light-box-shadow no-border-radius padding-x-20 padding-y-0" style="padding: 0px 20px 0px 20px !important; border-radius: 0px !important; border: 1px solid rgba(128, 128, 128, .5);">
+      <div class="pull-right mt-0 no-padding">
+        <div class="col-d-2 col-t-3 bg-light col-p-12 pull-left mt-3 temp_dep_mb mr-5 margin-t-15">
+          <!-- Below - If statement determining if any images are attached to the department. -->
+          <!-- % if department.image.attached? %>   <!-- Department has images -->
+          <!--  %= image_tag department.image %>
+          % else %>  <!-- Department does NOT have images attached to it. -->
+        
+            <p class="well margin-y-0 center-all center-vertical p-2" style="min-height: 14rem">
+              <i class="center-all fas
+              <%= "fa-university" if department.category_type == "GovernmentScore" %>
+              <%= "fa-tree" if department.category_type == "ParkScore" %> 
+              <%= "fa-graduation-cap" if department.category_type == "SchoolScore" %> 
+                  " style="font-size: 65px;" aria-hidden="true"></i>
+            </p>
+          <!-- % end %>   <!-- End - Department Images Check -->
+          <!-- End - If statement determining if any images are attached to the department. -->
+        </div>
+        <div class="col-all-12">
+          <div class="tier departments_tier">
+            <div class="col-all-12 mt-3">
+            <p class="float-left pr-0 mb-0 mt-3 text-xmedium ms_comp_no_padding">
+              <!-- Begin - If Statement, displaying different icons whether Government, Schools, or Parks. -->
+              <i class="fas
+                <%= "fa-university" if department.category_type == "GovernmentScore" %>
+                <%= "fa-tree" if department.category_type == "ParkScore" %> 
+                <%= "fa-graduation-cap" if department.category_type == "SchoolScore" %> 
+                fa-lg" style="color: #a165aa;" aria-hidden="true"></i>
+          <!-- End - If Statement, displaying different icons whether Government, Schools, or Parks. -->
+            
+            </p>
+            <h4 class=" pull-left ms_small_margin pl-2 pr-0 mt-3 ml-0 text-large">
+            <!-- Programmers Note: Truncate the name size on media screen -->
+              <%= link_to department.name.titleize.truncate(19), city_department_path(@city, department), class:"title_link" %>
+            </h4>
+            <p class="h4 scoreStyle float-right mt-0 mb-1 margin-l-auto">
+              <%= department.score.to_i %>%
+            </p>
+          </div>
+        
+          <div class="tier ms_dep_margin width-100">
+            <small class="depAdd pull-left mt-4 ms_small_margin text-15">
+              <%= department.address %>
+            </small>
+            <p>
+              <h4 class="text-muted text-xmedium pull-right my-0" style="margin-left: auto !important; color: #585858 !important;">
+                <!-- Begin - If statement determining if the current user has/has not voted for this complaint,  created the complaint, is a guest, isn't their city, or is an admin. -->
+            <p>
+              <h4 class="text-muted pull-right mb-3" style="margin-top: 16px !important; font-size: 15px !important; margin-left: auto !important; color: color: #585858 !important;">
+                <%= department.reviews.size %> Reviews
+              </h4>
+            </p>
+            </p>
+            </h4>
+            </p>
+          </div>
+         </div>
+        </div>
+      </div>
+    </div>
+  <div style="height: 15px !important; background-color: transparent !important;"></div>
+  <% end %>
+  </div><!-- End - Main Wrapper for page. -->
+
+<script>
+ $( document ).ready(function() {
+if ($(window).width() < 768 ) {
+  $('.departments_tier').addClass('col-tier');
+} else {
+  $('.departments_tier').removeClass('col-tier');
+}});
+  // On resize - Recenters the view panel.
+  $( window ).resize(function() {
+if ($(window).width() < 768) {
+  $('.departments_tier').addClass('col-tier');
+} else {
+ $('.departments_tier').removeClass('col-tier');
+}});
+</script>
+

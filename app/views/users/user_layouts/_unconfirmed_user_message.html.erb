@@ -1,0 +1,15 @@
+<!--  Partial rendered if a user has not confirmed their account yet. It renders above profile pages, like user show, and user update. (devise/confirmations/_uncomfirmed_user_message.html.erb) -->
+
+    <div class="alert alert-warning pb-0 pt-1 px-2" style="border: 1px solid rgba(255, 0, 0, .6)" role="alert">
+      <div class="col-all-12">
+      <a href="#" class="close push-right" data-dismiss="alert">
+          &#215;
+      </a>
+      <p class="col-tier theme_color_black">
+        <span class="text-16 px-3 pt-0 pb-3">
+        <%= current_user.first_name %>, you have yet to confirm your Ossemble Profile. Please visit your email inbox for the address: <i class="underline"><%= current_user.email %></i>, and open the email with the subject line: <i>Ossemble - Profile Confirmation</i>. Click the button within that email to confirm your account within two days time. If you haven't received this email, <a href="<%= new_user_confirmation_path(current_user) %>" class="title_link"> click here. </a>
+        </span>
+      </p>
+      </div> 
+    </div>
+

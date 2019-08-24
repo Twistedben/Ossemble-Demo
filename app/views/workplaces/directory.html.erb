@@ -1,0 +1,136 @@
+<!-- Page for listing all admin members of a Workplace, their departments and titles. Super admins can remove members of a workplace from here. -->
+
+<div class="content">
+  <div class="tier">
+    <%= render "layouts/phones/mobile_accordion" %>
+    <div id="directory_container" class="col-d-7 col-t-11 col-p-12">
+      
+        <!-- Below - TODO: Search is not yet implemented for admins, but this will be to search by department, title and admin name.  -->
+          <!-- <div class="active-purple-4 mt-4 px-2 ms_search_margin">
+            %= form_with url: macro_search_path, local: true, method: :get, html: { class: "col-all-12" } do |form| %>
+              %= form.text_field :macro_search, placeholder: "Find public city feeds...", data: { behavior: "macro_search" }, class: "", style: "width: 100% !important", title: "Type in and select a city or person." %>
+              <!-- Below -  Button is hidden because we don't want a button but a simple icon built into the search bar -->
+            <!--  %= form.button "Search", style: "min-width: 70px", class: "vanish btn alt-action col-all-2 margin-l-3" %> -->
+           <!-- % end %> 
+          </div>-->
+
+      <div id="directory_header_container" class="col-tier">
+        <p>
+          <%= current_workplace %> Directory
+        </p>
+      </div>
+      <div class="col-tier">
+        <% @workplace_members.each do |member| %>
+        <!-- Below -  Doesn't show guest admins in directory -->
+        <% unless member.admin.is_guest_admin? %>
+          <!-- Begin -  Modal for contact button and to show admin's information -->
+          <div class="modal fade contact_modal_container" id="contact_modal_container_<%= member.admin.id %>" tabindex="-1" role="dialog" aria-labelledby="<%= member.admin.id %>_contact_modal" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header col-tier">
+                  <h3 class="modal-title" id="<%= member.admin.id %>_contact_modal">
+                    <%= link_to "#{member.admin.name}", institute_admin_path(member.admin.institute, member.admin), id: " " , class: "title_link" %>
+                  </h3>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div id="modal_label" class="col-tier">
+                  <h4>
+                     Contact Information
+                  </h4>
+                </div>
+                <hr>
+                <div class="modal-body col-tier">
+                  <p>
+                    <span>
+                      <b>
+                        Phone Number:
+                      </b>
+                      <%= member.admin.phone_number %>
+                    </span>
+                  </p>
+                  <p>
+                    <% unless member.admin.contacts.empty? %> <!--  If the contacts are'not empty, then show them in a loop -->
+                      <% member.admin.contacts.each do |contact| %>
+                        <div class="col-tier contact_information">
+                          <div class="" title="They type of contact information to contact this city official.">
+                            <span class="bold">
+                              <%= " #{contact.name}: " %>
+                            </span>
+                          </div>
+                          <div class="">
+                            <span class="padding-l-5">
+                              <!-- Below -  Checks if the contact info is and email address and if it is, wraps it in a link mail to -->
+                              <% if contact.is_email? %>
+                                 &nbsp;<%= "<a class='small_link' href='mailto:#{contact.information}'>#{contact.information}</a>".html_safe %> 
+                              <% else %>
+                                &nbsp;<%= "#{contact.information}" %> 
+                              <% end %>
+                            </span>
+                          </div>
+                        </div>
+                      <% end %> <!-- End -  Loop of existing contacts -->
+                    <% else %>  <!--  Contacts is empty for admin -->
+                      <div class="col-tier">
+                        <p class="center">
+                          <%= "#{member.admin.name} has yet to provide any additional contact information." %>
+                        </p>
+                      </div>
+                    <% end %> <!-- End -  Loop of existing contacts -->
+                  </p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn button-cs" data-dismiss="modal">
+                  <span aria-hidden="true">&times;</span>  Close
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End -  Modal for contact button and to show admin's information -->
+          <div id="directory_card_container">
+            <a class="directory_card" href="<%= institute_admin_path(member.admin.institute, member.admin)  %>">
+            <!-- Below -  If the admin is a super admin of workplace/city, allows a dropdown to edit admin's options -->
+            <div id="note_ms" class="col-tier">
+            <% if is_current_super_admin? && member.admin != current_admin %>
+                <div class="margin-l-auto">
+                  <a class="dropdown-toggle" role="button" aria-haspopup="true" data-toggle="dropdown" href="#" id="workplace_user_dropdown_btn">
+                    <i class="fas fa-user-edit"></i>
+                  </a>
+                  <div id="workplace_user_dropdown_menu" class="dropdown-menu dropdown-menu-bottom" aria-labelledby="workplace_user_dropdown">
+                    <%= link_to "<i class='far fa-times-circle'></i>Remove".html_safe, leave_workplace_path(@institute, @workplace, member), id: " " , class: "dropdown-item", method: :delete, data: {confirm: "Are you sure you want to remove #{member.admin.name} from #{@workplace.name}?"} %>
+                  </div>
+                </div>
+            <% end %>
+            </div>
+              <p id="directory_avatar">
+                <%= display_big_city_avatar(member.admin) %>
+              </p>
+              <p id="name" title="Click on card to visit <%= member.admin.first_name %>'s profile.">
+                <%= member.admin.name %>
+              </p>
+              <p id="department" title="The Department <%= member.admin.first_name %> belongs to.">
+                <%= member.admin.organization %> 
+              </p>
+
+              <p id="title" title="<%= member.admin.first_name %>'s title/position within their department.">
+                <%= member.admin.title %> 
+              </p>
+            </a>
+            <div class="col-tier border-top" style="padding: 15px 0px;">
+              <!-- Below -  Doesn't show message button if the current logged in admin  -->
+              <% unless current_admin == member.admin %>
+                <button type="button" class="btn button-up" style="border-radius: 10px" data-toggle="modal" data-target="#contact_modal_container_<%= member.admin.id %>">
+                  Contact
+                </button>
+              <% end %>
+            </div>
+          </div>
+        <% end %> <!--  End -- of Guest admin check -->
+       <% end %> <!--   End -- of Directory Workplace emmber loop  -->
+     </div>
+    </div>
+    <%= render 'admins/admin_layouts/workplace_action_panel' %>
+  </div>
+</div>

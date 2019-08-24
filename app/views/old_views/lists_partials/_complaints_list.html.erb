@@ -1,0 +1,147 @@
+<!-- Main partial for listing complaints, used in Complaints/Index.html.erb and Community_score/sommunity_score.html.erb -->
+
+<!-- PROGRAMMER'S NOTE: Remove Offset, Create two columns of rows here like in New Complaint and add date created of complaint. -->
+<div id="complaints_list">
+  <!-- Below - Renders in a message if there are no complaints to show yet unless the rendering is from community score page. -->
+  <% if obj.empty? && !current_page?(city_feed_path(@city)) %>
+    <h2 class="center-all light-box-shadow py-3 mt-0  bg-white">
+      No <span class="i">Complaints</span> to show yet. 
+      <%= link_to "Post one now!", new_city_complaint_path(@city), class:  "title_link" if hometown? %>
+    </h2>
+  <% end %>
+  <!-- Below - Renders in each complaint for a city. -->
+  <% obj.each do |complaint| %> 
+  <!-- Begin - Updates each complaint rendered on the page if the Complaint has first been filed. -->
+  <% if complaint.filed? %>
+    <% complaint.update_days_left %>
+  <% end %>
+  <!-- End - Updates each complaint rendered on the page if the Complaint has first been filed. -->
+    <div class="col-d-12 card bs_hover light-box-shadow no-border-radius padding-x-20 margin-b-15 padding-y-0" style="border: 1px solid rgba(128, 128, 128, .5)">
+      <div class="pull-right mt-0 no-padding">
+        <!-- Begin: If statement determining if any images are attached to the complaint. -->
+          <!-- Below - If statement determining if any images are attached to the complaint. -->
+          <% if complaint.image.attached? %>   <!-- Complaint HAS an image attached -->
+            <div class="col-d-2 col-t-3 col-p-12 pull-left mb-2 mr-4 margin-t-18">
+            <!-- %= link_to image_tag(complaint.image.variant(combine_options: {thumbnail: "283x180", extent: "283x140", gravity: "center"}), id: "uploaded_image", class: "center-content bg-light" ), city_complaint_path(@city, complaint) %> -->
+            <div style="min-height: 140px">
+              <%= link_to image_tag(complaint.image.variant(combine_options: {crop: "1100x1100+0+0", gravity: "center"}), id: "uploaded_image", class: "center-content comp_ms_image" ), city_complaint_path(@city, complaint) %> 
+            </div>
+              <div class="center-all mt-4">
+                <!-- Below - Renders in helper method for endorse in upvotes_helper.rb. Instance method, name of controller, and then name of resource to display on the button itself. -->
+                <%= display_endorse_button(complaint, "complaints", "List", city_complaint_path(@city, complaint)) %>
+              </div>
+            </div>
+          <% else %>  <!-- Complaint does NOT have any images attached to it. -->
+            <div class="col-d-2 col-t-3 col-p-12 pull-left mb-2 mr-4 ms_nomt_fix" style="margin-top: 20px">
+            <p class="well margin-y-0 center-all center-vertical p-2 ms_box_hide" style="min-height: 14rem" >
+              <!-- Below - Displays different icons depending on complaint process status. -->
+              <%= "<i class='fas fa-exclamation-triangle center-all' style='font-size: 65px'></i>".html_safe if complaint.verifying %>
+              <%= "<i class='fas fa-arrow-alt-circle-up center-all' style='font-size: 65px'></i>".html_safe if complaint.pending %>
+              <%= "<i class='far fa-envelope center-all' style='font-size: 65px'></i>".html_safe if complaint.filed %>
+              <%= "<i class='fas fa-percent center-all' style='font-size: 65px'></i>".html_safe if complaint.completed? || complaint.failed? %>
+            </p>
+              <div class="center-all mt-4">
+                <!-- Below - Renders in helper method for endorse in upvotes_helper.rb. Instance method, name of controller, and then name of resource to display on the button itself. -->
+                <%= display_endorse_button(complaint, "complaints", "List", city_complaint_path(@city, complaint)) %>
+              </div>
+            </div>
+          <% end %>   <!-- End - Complaint Images Check -->
+        <!-- End - If statement determining if any images are attached to the complaint. -->
+        <div id="resource_list" class="tier col-p-12">
+            <div class="text-xmedium ml-2 mt-2 mb-0 col-all-10">
+              <div class="float-left mr-2" style="position: relative; top: 10px;">
+              <!-- Below -  If statments that change the list icon depending on complaint category. 
+                
+                If the complaint is an other, it renders default font awesome complaint icon. TODO: Eventually move into a helper method. -->
+              <% if complaint.category == "Other" %>
+              <!--  The complaint is an other complaint so it renders font awesome icon. -->
+                <i class="fas fa-exclamation-triangle theme_color_dark text-big"></i>
+              <% else %> <!-- The complaint has a pre-defined category  -->
+               <!-- Below - Custom images are rendered in reflective of the category the complaint belongs to.  -->
+                  <%= image_tag "icons/complaints/pothole.png", alt: "Pothole", class: "relative", style: "width: 20px; top: -2px" if complaint.complaint_category.category == "Pothole"  %>
+                  <%= image_tag "icons/complaints/roadkill.png", alt: "Roadkill", class: "", style: "width: 25px" if complaint.complaint_category.category == "Roadkill"  %>
+                  <%= image_tag "icons/complaints/obstruction.png", alt: "Street Obstruction", class: "", style: "width: 20px; position: relative; top: -3px;" if complaint.complaint_category.category == "Street Obstruction"  %>
+                  <%= image_tag "icons/complaints/streetlamp.png", alt: "Streelight", class: "", style: "width: 10px; position: relative; top: -6px;" if complaint.complaint_category.category == "Streetlights & Signs"  %>
+                  <%= image_tag "icons/complaints/snowplow.png", alt: "Snow Plowing", class: "relative", style: "width: 30px; top: -2px" if complaint.complaint_category.category == "Snow Plowing"  %>
+                  <%= image_tag "icons/complaints/weeds.png", alt: "Weeds", class: "", style: "width: 27px; position: relative; top: -4px;" if complaint.complaint_category.category == "Weeds & Grass"  %>
+                  <%= image_tag "icons/complaints/trash.png", alt: "Trash", class: "", style: "width: 15px; position: relative; top: -2px;" if complaint.complaint_category.category == "Trash"  %>
+                  <%= image_tag "icons/complaints/graffiti.png", alt: "Graffiti", class: "relative", style: "width: 15px; top: -4px" if complaint.complaint_category.category == "Graffiti"  %>
+                  <%= image_tag "icons/complaints/abandon.png", alt: "Abandoned Property", class: "", style: "width: 20px; position: relative; top: -5px;" if complaint.complaint_category.category == "Abandoned Property"  %>
+                  <%= image_tag "icons/complaints/sidewalk.png", alt: "Sidewalk", class: "", style: "width: 30px" if complaint.complaint_category.category == "Sidewalk"  %>
+                  <%= image_tag "icons/complaints/forest.png", alt: "Forestry", class: "", style: "width: 20px; position: relative; top: -5px;" if complaint.complaint_category.category == "Forestry"  %>
+                  <%= image_tag "icons/complaints/flood.png", alt: "Water Supply", class: "relative", style: "width: 22px; top: -3px" if complaint.complaint_category.category == "Water Supply"  %>
+              <% end %> 
+              <!--  End of complaint category check for image icon rendering. -->
+           </div>
+            
+            <h4 class="ms_small_margin pl-2 pr-0 mt-3 ml-0 text-large mb-2" style="margin-bottom: 0px !important">
+              <%= link_to "#{complaint.title.truncate(25)} - <span class='text-18'>#{complaint.address.truncate(25)}</span>".html_safe, city_complaint_path(@city, complaint), class: "title_link" %>
+            </h4>
+            <p class="text-muted text-medium mt-1 mb-0 col-all-12" style="height: 57px">
+              <span class="tier">
+                <span style="width: 35px !important; height: 30px !important;">
+                  <%= display_list_avatar(complaint.user) %>
+                </span>
+                <span class="relative" style="top: 4px; left: 5px;">
+                  <%= link_to complaint.user.name, user_path(complaint.user.friendly_id), class: 'text-medium text-muted' %>
+                </span>
+              </span>
+                <br>
+                <span class="relative" style="top: -20px">
+                  <span class="text-medium"> 
+                   <b>Posted:</b> <%= time_ago_in_words(complaint.created_at).capitalize %> ago - 
+                  </span>
+                  <span class="text-muted text-medium bold">                      
+                  <%= "Scored:" if complaint.finished? %>
+                  <%= "Current Score:" unless complaint.finished? %>
+                  </span>
+                  <span class="bold text-xmedium" style="color: black;"><%= display_score(complaint) %></span>
+               </span>
+            </p>
+          </div> 
+           <div class="col-all-12 pull-left tier">
+              <a class="btn mr-2 alt-action" href='<%= city_complaints_path(@city) %>' >
+                Complaint
+               </a>
+               <a class="btn mr-2 alt-action" href='<%= complaint_category_link(complaint) %>' >
+                 <%= complaint.category %>
+               </a>
+               <a class="btn mr-2 alt-action" href='
+                    <%= complaint_process_link(complaint) %>
+                    ' >
+                <%= complaint.process %>
+               </a>
+            </div>
+          
+          <div class="col-all-12 ms_comp_margin tier ms_comp_no_padding">
+            <div class= "mb-0">
+              <small class="depAdd ms_comp_margin2 pull-left mt-2 ml-0 text-18 text-black">
+                <small>
+                 <%= complaint.description.truncate(170) %>
+                </small>
+              </small>
+            </div>
+          </div>
+          <div class="col-all-12 px-0" style="margin-top: -8px">
+            <!-- Begin -  Filter tags Row -->
+            <div id="share_tier" class="tier">
+             <!--  Twitter and facebook buttons. COmmented out due to Facebook List sharing issues.
+              <!-- Below -  Twitter share share. Goes to shares_helper.rb, passing in resource, website to share with, show page link, and then title.   -->
+              <!--  %= display_share_button(complaint, "Twitter", city_complaint_path(complaint.city, complaint),"#{complaint.city.name} Complaint: #{complaint.title} - #{complaint.address}: #{city_complaint_url(complaint.city, complaint)}") %>
+                <!-- Below -  Facebook share. Goes to shares_helper.rb, passing in resource, website to share with, show page link, and then title.   -->
+              <!--  %= display_share_button(complaint, "Facebook", city_complaint_path(complaint.city, complaint),"#{complaint.city.name} Complaint: #{complaint.title} - #{complaint.address}:") %>
+              -->
+              <div class="theme_color_black padding-t-8">
+                <%= display_vote_count(complaint) %> <!-- Displays endorsements count  -->
+              </div>
+              <div class="theme_color_black mx-3 padding-t-8">
+                <%= display_comment_count(complaint) %> <!--  Displays comments count -->
+              </div>
+            </div>
+            <!-- End -  Filter tags Row -->
+          </div>     
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

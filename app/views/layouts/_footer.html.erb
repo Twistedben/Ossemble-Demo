@@ -1,0 +1,50 @@
+<!-- Beginning - Footer -->
+<div id="footer_tier" class="col-tier relative" style="
+<%= "top: 25px" unless current_page?(root_path) || current_page?(citizen_landing_page_path) %>
+">
+  <div class="col-all-12">
+    <div id="oss_footer" class="footer-basic well mb-0 padding-y-10 no-border-radius" style="background-color: #F8F9FA !important;"> 
+      <footer>
+        <div class="social center-all pb-0">
+          <a href="https://www.facebook.com/ossemble/">
+            <i class="fab fa-facebook-square" style="font-size: 35px"></i>
+          </a>
+          <a href="https://www.instagram.com/ossemble/">
+            <i class="fab fa-instagram" style="font-size: 35px"></i>
+          </a>
+          <a href="https://twitter.com/Ossemble">
+            <i class="fab fa-twitter-square" style="font-size: 35px"></i>
+          </a>
+        </div>
+        <ul class="list-inline">
+          <li class="px-0">
+            <%= link_to_if(current_admin, "Home", root_path) do %>
+              <%= link_to "Home", citizen_landing_page_path %>
+              <li class="px-1 text-small theme_color_dark ms-top" style="top: -2px !important; position: relative; opacity: .6;"><i class="fas fa-circle"></i></li>
+              <%= link_to "Workplace Home", about_city_landing_page_path %>
+            <% end %>
+          </li>
+          <li class="px-1 text-small theme_color_dark ms-top" style="top: -2px !important; position: relative; opacity: .6;"><i class="fas fa-circle"></i></li>
+          <%= "<li class='px-0'><a href='/about/contact_us'>Contact Us</a></li>".html_safe if is_logged_in? %>
+          <%= "<li class='px-0'><a href='mailto:support@ossemble.com'>Email Us</a></li>".html_safe if is_guest? %>
+          <li class="px-1 text-small theme_color_dark ms-top" style="top: -2px !important; position: relative; opacity: .6;"><i class="fas fa-circle"></i></li>
+          <!-- <li class="px-0"><a href="#" data-confirm="Blog feature coming soon!">Blog </a></li> 
+                <li class="px-1 text-small theme_color_dark ms-top" style="top: -2px !important; position: relative; opacity: .6;"><i class="fas fa-circle"></i></li>
+          -->
+          <li class="px-0"><%= link_to "About", about_path %></li>
+          <li class="px-1 text-small theme_color_dark ms-top" style="top: -2px !important; position: relative; opacity: .6;"><i class="fas fa-circle"></i></li>
+          <li class="px-0"><%= link_to "Policies", policies_path %></li>
+        </ul>
+        <% unless is_guest? %>
+          <p class="center-all margin-y-3 text-16">
+            <%= link_to "City Login", new_admin_session_path, class: "theme_color_black hlb", style: "opacity: .9" unless current_user_or_admin %>
+            <%= link_to "Switch to Public Profile", new_user_session_path, class: "theme_color_black hlb", style: "opacity: .9" if current_admin %>
+            <%= link_to "Switch to Workplace Profile", new_admin_session_path, class: "theme_color_black hlb", style: "opacity: .9" if current_user %>
+          </p>
+        <% end %>
+        <p class="copyright">Ossemble Inc. - © 2018</p>
+      </footer>
+    </div>
+  </div>
+</div>
+<!-- End - Footer -->

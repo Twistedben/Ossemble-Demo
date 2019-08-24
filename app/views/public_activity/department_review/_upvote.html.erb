@@ -1,0 +1,22 @@
+<!--  The main partial rendered for activities being upvoted concerning department reviews (views/public_activity/review/_upvote.html.erb). -->
+<% if activity.recipient %>
+  <span id="activities_span" class="">
+    <span>
+      endorsed a 
+      <%= activity.trackable.category %>
+      Department Review titled:
+    </span>
+    <span class="bold">
+      <%= link_to activity.trackable.title, city_department_review_path(activity.trackable.city, activity.trackable), id: "activity_review_link", class: "" %>
+    </span>
+    <span id="upvote_review_activity">
+      - posted by: 
+      <span class="i">
+        <%= link_to activity.recipient.name, user_path(activity.recipient.city, activity.recipient) %>
+      </span>
+    </span>
+  </span>
+<% else %>
+  unendorsed a Department Review.
+
+<% end %>

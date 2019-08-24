@@ -1,0 +1,209 @@
+<!-- Index page to view all complaints in a given city (views/complaints/index.html.erb).-->
+  <h2 class="theme_font center-content">
+    <p class="center-content">
+      <%= link_to "#{@city.name}", city_path(@city), class: "title_link" %>
+      Complaints
+    </p>
+  </h2>
+  <hr>
+
+<!-- Begin - Main Wrapper for entire Complaints Index Page --> 
+<div id="complaint_index_wrapper" class="container">
+  <div class="row my-5">
+    <div class="center col-6 card pb-5">
+      <p class="h3 garamond">
+        Click below to file a complaint for <%= @city.name.titleize %>
+      </p>
+      <%= link_to "File a Complaint", new_city_complaint_path, class: "btn btn-warning btn-xlarge btn-lg bold center mb-5" %>
+    </div>
+  </div> 
+  <hr>
+  <!-- PROGRAMMER'S NOTE: Remove Offset, Create two columns of rows here like in New Complaint and add date created of complaint. -->
+  <% @complaints.each do |complaint| %> 
+  <!-- Begin - Main row for complaints -->
+  <div class="row center"> 
+    <!-- Begin - Row for User Information concerning Complaint. -->
+    <div class="row col-10 col-md-offset-1 card">
+      <div class="col-4 no-padding float-left no-margin" style="margin: 0px !important">
+        <%= image_tag complaint.user.avatar.variant(resize: "40x50!"), id: "navbar_profile_avatar" %>
+      </div>
+      <div class="col-8 float-left no-padding mt-4 no-margin">
+        <%= link_to complaint.user.name, user_path(complaint.user.friendly_id), class: 'text-big' %>
+      </div>
+      <!-- Begin - Complaint time information with if statements depending on current process and stage. -->
+      <div>
+        <p class="">
+          <i class="text-small">
+              Submitted: 
+            <span class="underline">
+              <%= time_ago_in_words(complaint.created_at) %> <!-- Shows time since Complaint was created. -->
+            </span> 
+              ago
+          </i>
+        </p>
+        <% if !complaint.verifying? && complaint.pending? %> <!-- If complaint verifying is false and complaint pending is true, display: -->
+          <p class="">
+            <i class="text-small">
+                Verified within 
+              <span class="underline">
+                <%= distance_of_time_in_words(complaint.created_at, complaint.verified_at) %> <!-- time since complaint was verified. -->
+              </span> 
+            </i>
+          </p>
+        <% elsif !complaint.pending? && complaint.filed? %> <!-- If complaint pending is false and complaint filed is true, display: -->
+          <p class="">
+            <i class="text-small">
+                Filed within 
+              <span class="underline">
+                <%= distance_of_time_in_words(complaint.verified_at, complaint.pending_at) %> <!-- time since complaint was pending. -->
+              </span> 
+            </i>
+          </p>
+        <% elsif !complaint.filed? && complaint.completed? %> <!-- If complaint filed is false and complaint completed is true, display: -->
+          <p class="">
+            <i class="text-small">
+                Completed within: 
+              <span class="underline">
+                <%= distance_of_time_in_words(complaint.pending_at, complaint.filed_at) %> %> <!-- time since complaint was filed. -->
+              </span> 
+            </i>
+          </p>
+        <% elsif complaint.completed? %> <!-- If complaint filed is false and complaint completed is true, display: -->
+          <p class="">
+            <i class="text-small">
+                Completed: 
+              <span class="underline">
+                <%= time_ago_in_words(complaint.completed_at) %> <!-- time since complaint was filed. -->
+              </span> 
+                ago
+            </i>
+          </p>
+        <% end %>
+      </div>  <!-- End - Complaint time information with if statements depending on current process and stage. -->
+    </div>  <!-- End - Row for User Information concerning Complaint. -->
+    <!-- Begin - Left Section of Complaints, containing user uploaded pictures -->
+    <div class="col-4 col-md-offset-1 well">
+    <!-- Image of Complaint here -->
+      <div class="card">
+        <p class="h3">
+          Image Placeholder
+        </p>
+      </div>
+    </div>  <!-- End - Left Section of Complaints, containing user uploaded pictures -->
+    <!-- Begin - Right section of Complaints containing all specific complaints' information. -->
+    <div class="col-6 well">
+      <!-- Begin - Card surrounding Complaint info -->
+      <div class="card">
+        <h3 class="mt-2">
+          <%= link_to complaint.complaint_category.category.titleize, city_complaint_path(@city, complaint) %> 
+        </h3>
+        <div> <!-- Process -->
+          <h4>
+            Process:  
+              <% if complaint.verifying? %>
+               <span class="i">
+                  <%= "Verification" %> 
+                  ( <%= time_ago_in_words(complaint.created_at) %> )
+              <% elsif complaint.pending? %>
+                  <%= "Waiting for Endorsements" %>
+                  ( <%= time_ago_in_words(complaint.verified_at) %> )
+              <% elsif complaint.filed? %>
+                  <%= "Sent to City Officials" %>
+                  ( <%= time_ago_in_words(complaint.pending_at) %> )
+              <% elsif complaint.completed? %>
+                  <%= "Completed" %>
+                  ( <%= time_ago_in_words(complaint.created_at) %> )
+                </span>
+              <% end %>
+          </h4>
+        </div>
+        <div> <!-- Score -->
+          <p>
+            <h4 class="text-muted">
+              <!-- PROGRAMMERS' NOTE: For a user show a Progress bar with current score. However, for an admin show the 
+                  increase of the score, starting at 0, with the Complete button showing the final score the Complete would commit.  -->
+              Current Score: <%= complaint.score %> %
+            </h4>
+          </p>
+        </div>
+        <div> <!-- Address -->
+          <p>
+            <small>
+              <%= complaint.address %>
+            </small>
+          </p>
+        </div>
+      <% if current_user.admin? %> <!-- Determines if User is a City Admin to interact with Complaints -->
+        <!-- Begin - Admin Response Buttons below Complaints' info -->
+        <div class="row my-3">
+          <div id="admin_complaint_btns" class="form-row center">
+            <%= button_to "Submit Plan + 15", {controller: "complaints",
+              action: "plan_submit",  id: complaint.id, remote: :true}, {class: 'btn btn-primary mx-2'} %> 
+            <%= button_to "Acknowledge + 5", {controller: "complaints",
+              action: "replied",  id: complaint.id, remote: :true}, {class: 'btn btn-primary mx-2'} %> 
+            <%= button_to "Complete at #{complaint.score} %", {controller: "complaints",
+              action: "completed",  id: complaint.id, remote: :true}, {class: 'btn btn-primary mx-2'} %> 
+          </div>
+        </div> <!-- End - Admin Response Buttons below Complaints' info -->
+      <% else %> 
+      <!-- Begin - Shows the Citys' response to the complaint to the user.
+            Since User is NOT an admin, this row will display City's Responses based on Complaints' Responses (planned/replied). -->
+        <!-- Begin - Row for Responses from cities -->
+        <div class="row my-3 col-12 center">
+          <div class="col-12 my-2 border-bottom border-top">
+            <p class="lead bold mt-2">
+              <%= @city.name %>'s  Response  
+            </p>
+          </div> 
+          <div class="col-6 center my-1">
+            <p>
+            <!-- Begin - If Statement whether the city has replied or not to the Complaint. -->
+            <% if complaint.replied? %>
+              <!-- Below - Displays if the City has replied. -->
+              <span class=""> 
+                <i class="fa fa-check text-success" aria-hidden="true"></i>
+              </span>
+              <p class="ml-2">
+                We hear you!
+              </p>
+            <% else %>
+              <!-- Below - Displays if the City HAS NOT replied. -->
+              <span class=""> 
+                <i class="fa fa-times text-danger" aria-hidden="true"></i>
+              </span> 
+              <p class="ml-2">
+                No Response yet
+              </p>
+            <% end %>
+            <!-- End - If Statement whether the city has replied or not to the Complaint. -->
+            </p>
+          </div>
+          <div class="col-6 center my-1">
+            <p>
+            <!-- Begin - If Statement whether the city has submitted a plan or not for the Complaint. -->
+            <% if complaint.planned? %>
+              <span class=""> 
+                <i class="fa fa-check text-success" aria-hidden="true"></i>
+              </span>
+              <p class="ml-2">
+                We have a plan!
+              </p>
+            <% else %>
+              <span class=""> 
+                <i class="fa fa-times text-danger" aria-hidden="true"></i>
+              </span>
+              <p class="ml-2">
+                No Plan yet
+              </p>
+            <% end %> <!-- End - If Statement whether the city has submitted a plan or not for the Complaint. -->
+            </p>
+          </div>
+        </div> <!-- End - Row for Responses from cities -->
+      <% end %> 
+      <!-- End - Shows the Citys' response to the complaint to the user.-->
+      </div>  <!-- End Card surrounding Complaint info --> 
+    </div>  <!-- End - Right section of Complaints containing all specific complaints' information. -->
+  </div> <!-- End - Main row for complaints -->
+  <hr>
+  <% end %> 
+</div> <!-- End - Main Wrapper for entire Complaints Index Page --> 

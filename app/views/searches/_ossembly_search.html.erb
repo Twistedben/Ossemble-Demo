@@ -1,0 +1,12 @@
+<!-- Partial to be rendered for Community Resource searching on index pages and Community_Score page.  Goes to 
+     Javascript is in community-search.coffee file in Javascripts folder. Refers to searches_controller -> community_search action.  -->  
+
+<!-- Below - Search form for Complaints, Department Reviews, and ity Reviews  -->
+
+<div id="search_container" class="col-all-10" title="Try typing: 'Topics' to see all topics, or 'Subtopics' to see all subtopics.">
+  <%= form_with url: ossembly_search_path(@city), local: true, method: :get, html: { class: "" } do |form| %>
+    <%= form.text_field :ossembly_search, placeholder: "Filter Forum Conversations & Petitions", data: { behavior: "ossembly_search", location: "#{@city.friendly_id}" }, style: "width: 90%", class: "form-control push-left" %>
+    <!-- Below -  Button is hidden because we don't want a button but a simple icon built into the search bar -->
+    <%= form.button "Search", style: "min-width: 70px", class: "vanish btn alt-action col-all-2 margin-l-3" %>
+  <% end %>
+</div>

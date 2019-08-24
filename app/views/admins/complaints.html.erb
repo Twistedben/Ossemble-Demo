@@ -1,0 +1,177 @@
+<!-- Complaints CMS Page for admins dashboard. Goes to admins_controller.rb, route: cities/lakewood/admin/:admin_id/complaints, and file folder: (views/admins/complaints.html.erb).   -->
+<%= render 'admins/admin_layouts/city_admin_navbar' %>
+<!-- Begin - Main content for community score page. -->
+<div class="content">
+  <div class="tier"> <!-- Begin - Main tier for page. -->
+    <!-- Begin - Filter panel rendering -->
+    <div class="col-d-2 col-t-10 col-p-12 center">
+
+    </div>
+    <div id="ms_ap_content" class="col-d-8 col-t-10 col-p-12 center margin-b-15" style="display: none">
+      <h3 class="mt-4">
+        Trending Community Score
+      </h3>
+      <div id="city_ms_cs"></div>
+      <h3>
+        Page Info
+      </h3>
+      <div id="city_pi_ms">
+      </div>
+      <h3>
+        Add a City Profile
+      </h3>
+      <div id="city_add_ms">
+      </div>
+      <h3>
+        Start a Poll
+      </h3>
+      <div id="city_start_ms">
+      </div>
+    </div>
+    
+    <div class="center col-d-7 col-t-10 col-p-12">
+      <!-- Begin - Row for Rendering of trending top filed complaints -->
+      <div class="tier curved_box_top bg-white">
+        <div class="col-all-12">
+          <p class="theme_color_black trending_font_size pull-left margin-all-10 margin-l-0 text-18" >
+            Trending Filed Complaints 
+          </p>
+          <div class="push-right">
+            View Panel
+          </div>
+        </div>
+        <div class="col-tier">
+          <div class="col-all-12">
+            <%= render 'complaints/complaints_list', obj: @trending_complaints %>
+          </div>
+        </div>  
+      </div>
+      <div class="tier curved_box_bottom bg-white"></div>
+      <!-- End -  Row for Rendering of trending top filed complaints -->
+      <!-- Begin - Row for Rendering of unaddressed complaints -->
+      <div class="tier curved_box_top bg-white">
+        <div class="col-all-12">
+          <p class="theme_color_black trending_font_size pull-left margin-all-10 margin-l-0 text-18" >
+            Trending & Needs Attention 
+          </p>
+          <div class="push-right">
+            View Panel
+          </div>
+        </div>
+        <div class="col-tier">
+          <div class="col-all-12">
+            <%= render 'complaints/complaints_list', obj: @unaddressed_complaints %>
+          </div>
+        </div>  
+      </div>
+      <div class="tier curved_box_bottom bg-white"></div>
+      <!-- End -  Row for Rendering of unaddressed complaints -->
+      <!-- Begin -  Row for showcase breakdown of Complaints-->
+      <div class="tier curved_box_top bg-white">
+        <div class="col-all-12">
+          <p class="theme_color_black trending_font_size pull-left margin-all-8 margin-l-0 text-18">
+            <%= "#{@admin_city.name} Complaints Breakdown".html_safe %>
+          </p>
+        </div>
+        <div class="col-tier">
+          <div class="col-all-4 card light-box-shadow" style="border: 1px solid rgba(128, 128, 128, .5);">
+            <div class="card-body no-padding">
+              <h3 class="card-header center-all no-margin theme_font padding-y-20">
+                Complaints Score
+              </h3>
+              <p class="center-all margin-y-10 text-26">
+                <%= display_complaint_score %> 
+              </p>
+              <hr class="no-margin width-100">
+              <p class="text-left margin-y-8 padding-l-8 text-16">
+                <%= "<span class='bold'>Total Complaints: </span>#{@total_complaints}".html_safe %> 
+              </p>
+              <hr class="no-margin width-100">
+              <p class="text-left margin-y-8 padding-l-8 text-16">
+                <%= "<span class='bold'>Complaints with Plans: </span>#{@planned_complaints.count}".html_safe %> 
+              </p>
+              <hr class="no-margin width-100">
+              <p class="text-left margin-y-8 padding-l-8 text-16">
+                <%= "<span class='bold'>Complaints with Replies: </span>#{@replied_complaints.count}".html_safe %> 
+              </p>
+              
+            </div>
+          </div>
+          <div class="col-all-8 card light-box-shadow no-left-border" style="border: 1px solid rgba(128, 128, 128, .5);">
+            <div class="card-body no-padding">
+              <h3 class="card-header center-all no-margin theme_font padding-y-20">
+                Complaints' Status
+              </h3>
+              <!-- Below - Left section of complaints status -->
+              <div class="col-all-6 push-left border-right">
+                <ul class="text-16 no-list-style no-padding margin-t-5 margin-b-0">
+                  <li class="padding-y-15 padding-l-8" title="Complaints that are awaiting verification by users">
+                    <span class="bold">
+                      Awaiting Confirmation:
+                    </span>
+                    <span class="">
+                      <%= @verifying_complaints.count %>
+                    </span>
+                  </li>
+                  <hr class="no-margin width-100">
+                  <li class="padding-y-15 padding-l-8"  title="Complaints that were endorsed enough to be sent to the city with a CAC email">
+                    <span class="bold">
+                      CAC & Filed:
+                    </span>
+                    <span class="">
+                      <%= @filed_complaints.count %>
+                    </span>
+                  </li>
+                  <hr class="no-margin width-100" style="color: black !important">
+                  <li class="padding-y-15 padding-l-8" title="Complaints that hit their deadline and failed, negatively impacting score">
+                    <span class="bold">
+                      Failed:
+                    </span>
+                    <span class="">
+                      <%= @failed_complaints.count %>
+                    </span>
+                  </li>
+                </ul>
+              </div>  
+              <!-- Below - Right section of complaints status -->
+              <div class="col-all-6 push-right">
+                <ul class="text-16 no-list-style no-padding margin-t-5 margin-b-0">
+                  <li class="padding-y-15 padding-l-8" title="Waiting endorsements to be filed">
+                    <span class="bold">
+                      Awaiting Endorsements:
+                    </span>
+                    <span class="">
+                      <%= @pending_complaints.count %>
+                    </span>
+                  </li>
+                  <hr class="no-margin width-100">
+                  <li class="padding-y-15 padding-l-8" title="Failed & Completed Complaints, impacting community score">
+                    <span class="bold">
+                      Scored:
+                    </span>
+                    <span class="">
+                      <%= @finished_complaints.count %>
+                    </span>
+                  </li>
+                  <hr class="no-margin width-100">                  
+                  <li class="padding-y-15 padding-l-8" title="Complaints marked as completed & addressed">
+                    <span class="bold">
+                      Completed:
+                    </span>
+                    <span class="">
+                      <%= @completed_complaints.count %>
+                    </span>
+                  </li>
+                </ul>
+              </div>  
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tier curved_box_bottom bg-white"></div>
+      <!-- End - Row for showcase of different scores-->
+    </div>
+    <!-- Below -  Render in action panel -->
+    <%= render 'layouts/city_dashboard_action_panel' %>
+  </div> <!-- Main page tier -->
+</div>

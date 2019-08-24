@@ -1,0 +1,1056 @@
+<!--  Main page where form sits for editing an existing review. We do not use the partial _review_form.html.erb for simplicity reasons and keeping code less messy since they go to different routes. -->
+
+<!-- Begin -  Form for Creating a new Department Review -->
+<div class="content"> 
+  <div class="col-d-10 col-t-11 col-p-12 center transparent"> 
+    <div class="trending_font_size mt-3 mb-0 ms_titles_ml">
+        Edit <%= @review.category %> Department Review
+    </div>
+    <div class="theme_color_black text-medium mb-3 col-tier">
+      <div id="wul-modal" class="">
+        <p id="show-modal" class="mb-0 pointer underline ms_titles_ml" @click="showModal = true">Department Review Guidelines</p>
+        <!-- use the modal component, pass in the prop -->
+        <modal v-if="showModal" @close="showModal = false">
+        </modal>
+      </div>
+    </div>
+     <!-- Below -  Renders the existing description, vanished, for being pasted into the description box from jquery below. -->
+      <%= simple_format(@review.description, {}, wrapper_tag: "div id='edit_text_wrap' class='vanish'") %>
+    <div class="light-box-shadow bg-white px-4 py-0" style="border: 1px solid rgba(128, 128, 128, .5)">
+      <%= simple_form_for @review, url: user_department_review_path, as: 'department_review', html: { multipart: true, autocomplete: 'off', class: 'form-horizontal col-all-12 form_ms_text' }, defaults: { wrapper_html: { class: 'tier center' } }  do |f| %>
+        <%= render 'layouts/errors', obj: @review %>
+        <!-- Below - Selecting New Department category to determine what score table to go to -->
+        <div class="col-tier center">
+          <div class="col-d-8 col-t-11 col-p-12 margin-t-10"> 
+            <%= f.label :scorable_type, class: 'pull-left theme_color_black text-xxmedium' do %>
+              Department to Review:
+            <% end %>
+            <select id="scorable_type_select" class="select_form form-control input-box-shadow" title="What department would you like to review?" autofocus="autofocus" required="required" name="department_review[scorable_type]">
+              <option value="GovernmentScore" <%= 'selected' if @review.category == "Government"   %>> Government   </option>
+              <option value="ParkScore"       <%= 'selected' if @review.category == "Parks"        %>> Parks        </option>
+              <option value="SchoolScore"     <%= 'selected' if @review.category == "Schools"      %>> Schools      </option>
+              <option value="PoliceScore"     <%= 'selected' if @review.category == "Police"       %>> Police       </option>
+              <option value="PublicScore"     <%= 'selected' if @review.category == "Public Works" %>> Public Works </option>
+            </select> 
+          </div>
+        </div>
+        <!-- Below - Entering New Department Review Title -->
+        <div class="col-tier center">
+          <div class="col-d-8 col-t-11 col-p-12 margin-t-10"> 
+            <%= f.label :title, class: 'pull-left theme_color_black text-xxmedium' do %>
+              Review Title <small>(optional)</small>:
+            <% end %>
+            <%= f.text_field :title, title: "Provide a short, but descriptive title for your review", maxlength: 70, placeholder: "EG: 'Great Staff' (Title will be generated if not entered - 60 Characters)", required: false, class: "form-control input-box-shadow " %>
+          </div>
+        </div>
+        <!-- Below - Score for New Department Review and Star Rating -->
+        <div class="col-tier center margin-t-30">
+          <%= f.label :score, id: "score_label", class: 'field_with_errors form_ms_text theme_color_black text-xxmedium'%>
+          <strong class="form_ms_text">:</strong>
+          <div id="department-star-rating" class="ml-3 mb-0">
+          <br>
+          </div>
+        </div>
+        <p class="margin-b-10">Score you had: <small><%= @review.score / 20 %> / 5</small></p>
+        <!-- Below - Entering New Department Review Love list -->
+        <div id="tags_list" class=""> 
+          <div class="col-tier center margin-t-0" title="Enter three reasons you like this department, separated with commas. Select from Dropdown or add your own!">
+            <div class="col-d-8 col-t-11 col-p-12"> 
+              <%= f.label :love_list, class: 'pull-left text-xxmedium theme_color_black field_with_errors' do %>
+                Tag What You Like <small>(3 tags, separated by commas)</small>: 
+              <% end %>
+              <ul id="wrapper" class="tags-input" style="background-color: white !important; list-style: none !important; padding-left: 0px !important;">
+               <p id="app-love1" class="col-tier mb-2"></p>
+                <li class="tags-new">
+                  <%= f.text_field :love_list, maxlength: 75, id: 'department_like_list',  class: "select_form input-box-shadow form-control", style: "border: 1px solid #aaaaaa"  %>
+                </li>
+              </ul>               
+              <p class="margin-y-10">Tags you had: <small><%= @review.love_list %></small></p>
+            </div>
+          </div> 
+          <!-- Below -  Edit Department Review improvement list -->
+          <div class="col-tier center margin-t-18" title="Enter three improvements this department should enact, separated with commas. Select from Dropdown or add your own!">
+            <div class="col-d-8 col-t-11 col-p-12"> 
+              <%= f.label :improve_list, class: 'pull-left text-xxmedium theme_color_black field_with_errors' do %>
+                Tag What Needs Improvement <small>(3 tags, separated by commas)</small>: 
+              <% end %>
+              <ul id="wrapper2" class="tags-input2"  style="background-color: white !important; list-style: none !important; padding-left: 0px !important;">
+               <p id="app-love2" class="col-tier mb-2"></p>
+                <li class="tags-new2">
+                  <%= f.text_field :improve_list, maxlength: 75, id: 'department_improve_list',  class: "select_form input-box-shadow form-control", style: "border: 1px solid #aaaaaa" %>
+                </li>
+              </ul>
+              <p class="margin-y-10">Tags you had: <small><%= @review.improve_list %></small></p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="loading" style="display:none; z-index: 15000">
+         <div class="center-all" style="border-radius: 10px !important">
+           <%= image_tag "icons/misc/loading.gif", alt: "Uploading", class: "", style: "width: 300px" %>
+         <div class="theme_color_dark mb-5 px-4">Please wait while your image uploads...</div>
+         </div>
+        </div>
+        
+        <!-- Below - Edit New Department Review Description -->
+        <div class="col-tier center">
+          <div class="col-all-12 margin-t-18"> 
+           <%= f.label :description, class: 'theme_color_black text-xxmedium' %>
+           <%= f.hidden_field :description, id: "post_description", required: true %>
+            <div id="editor-container" class="light-box-shadow" hidden="true"></div>
+            <div id="quill_container"  style="height: 250px !important;"></div>
+          </div>
+        </div>
+        <!-- Begin - Editing image upload row -->
+        <div class="col-tier margin-t-18">
+          <div class="col-all-12 margin-y-10"> 
+            <% if @review.image.attached? %> <!--  Review already has an image. -->
+              <div id="">
+                <div class="m-2">
+                  <%= image_tag @review.image.variant(resize: '400x400'), id: "uploaded_image", class: "m-0" %>
+                </div>
+              </div>
+              <div class="tier">
+                 <%= f.label :image, "Update Current Image".html_safe, class: "pull-left control-label" %>
+              </div>
+              <div class="tier">
+                <%= f.file_field :image, accept: 'image/*', class: "upload btn btn-info margin-y-5 light-btn-shadow", style: "width: 210px", onchange: "readURL(this);" %>
+              </div>
+              <div class="tier">
+                <img id="img_prev" class="vanish" src="#" alt="Image">
+              </div>
+              <p class="margin-t-5 small">If you'd like to change your review's image, select a new image by clicking Choose File and then Update.</p>
+            <% else %> <!-- Review doesn't have image -->
+              <div class="tier">
+                <%= f.label :image, "Upload Review Image", class: "pull-left control-label" %>
+              </div>
+              <div class="tier">
+                <%= f.file_field :image, accept: 'image/*', class: "upload btn btn-info margin-y-5 light-btn-shadow", style: "width: 220px", onchange: "readURL(this);" %>
+              </div>
+              <div class="tier">
+                <img id="img_prev" class="vanish" src="#" alt="Image">
+              </div>
+              <p class="margin-t-5 mb-0 small">If the image you are trying to upload is high resolution it may take a few moments to upload.</p>
+            <% end %> <!-- End of image check -->
+          </div>
+        </div>
+        <!-- End - Editing image upload row -->
+      </div>
+      <!-- Below -  Delete and Update buttons -->
+      <div class="form-actions">
+        <div class="tier mt-5">
+          <div class="col-all-6"> 
+            <%= f.submit "Update Review", class: "light-btn-shadow text-big form_btn btn btn-success mb-4 pull-left", id: "loadgif" %>
+          </div>
+          <div class="col-all-6"> 
+            <%= link_to "Delete Review", user_department_review_path, method: :delete, class: "text-big light-btn-shadow form_btn btn btn-danger push-right", data: {confirm: "Are you sure you want to delete this review?"} %>
+          </div>
+        </div>
+      </div>
+    <% end %> <!-- End - Simpleform Edit Department Review form block -->
+  </div>
+</div>
+
+<!--  PROGRAMMER'S NOTE: All jquery code for scoring and dropdown selection for new and edit page is inside javascripts/department_reviews.coffee -->
+
+<!-- Below -  Previews the uploaded image. Called by onchange for file upload. Also makes upload button bigger to show name of file. -->
+<script>
+function readURL(input) {
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+    $("#img_prev").show();
+    $("#department_review_image").width(280);
+    $(".img_prev_title").show();
+    reader.onload = function (e) {
+      $('#img_prev')
+        .attr('src', e.target.result)
+    };
+
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+</script>
+
+<script>
+alert("Please re-enter your tags and score! Thanks");
+//Below - Code for determining initial department category for taggins.
+$( document ).ready(function() {
+
+    $("#department_like_list").val('');
+    $("#department_improve_list").val('');
+    <% if @review.category == "Government" %>
+      $("#department_like_list").addClass("government_like_list");
+      $("#department_improve_list").addClass("government_improve_list");
+      $('#department_improve_list').attr('placeholder', "EG: 'Red Tape, Budget, Taxes'");
+      $('#department_like_list').attr('placeholder', "EG: 'Staff, Communication, Response Time'");
+      $( function() {
+          var government_like = [
+            'Staff',
+            'Communication',
+            'Public Policy',
+            'Property Taxes',
+            'Ballots / Elections',
+            'Taxes',
+            'Helpfulness',
+            'Budget',
+            'Response Time',
+            'Transparency',
+            'Little Red Tape',
+            'Public Relations',
+            'Outreach',
+            'Caring',
+            'Patience',
+            'Diligence'
+        ];
+          function split( val ) {
+            return val.split( /,\s*/ );
+          }
+          function extractLast( term ) {
+            return split( term ).pop();
+          }
+       
+          $( ".government_like_list" )
+            // don't navigate away from the field on tab when selecting an item
+            .on( "keydown", function( event ) {
+              if ( event.keyCode === $.ui.keyCode.TAB &&
+                  $( this ).autocomplete( "instance" ).menu.active ) {
+                event.preventDefault();
+              }
+            })
+            .autocomplete({
+              minLength: 0,
+              source: function( request, response ) {
+                // delegate back to autocomplete, but extract the last term
+                response( $.ui.autocomplete.filter(
+                  government_like, extractLast( request.term ) ) );
+              },
+              focus: function() {
+                // prevent value inserted on focus
+                return false;
+              },
+              select: function( event, ui ) {
+                var terms = split( this.value );
+                // remove the current input
+                terms.pop();
+                // add the selected item
+                terms.push( ui.item.value );
+                // add placeholder to get the comma-and-space at the end
+                terms.push( "" );
+                this.value = terms.join( ", " );
+                return false;
+              }
+            });
+        } );
+        $( function() {
+          var government_improve = [
+            'Staff',
+            'Communication',
+            'Public Policy',
+            'Property Taxes',
+            'Ballots / Elections',
+            'Taxes',
+            'Helpfulness',
+            'Budget',
+            'Response Time',
+            'Transparency',
+            'Red Tape',
+            'Public Relations',
+            'Outreach',
+            'Caring',
+            'Patience',
+            'Diligence'
+          ];
+          function split( val ) {
+            return val.split( /,\s*/ );
+          }
+          function extractLast( term ) {
+            return split( term ).pop();
+          }
+       
+          $( ".government_improve_list" )
+            // don't navigate away from the field on tab when selecting an item
+            .on( "keydown", function( event ) {
+              if ( event.keyCode === $.ui.keyCode.TAB &&
+                  $( this ).autocomplete( "instance" ).menu.active ) {
+                event.preventDefault();
+              }
+            })
+            .autocomplete({
+              minLength: 0,
+              source: function( request, response ) {
+                // delegate back to autocomplete, but extract the last term
+                response( $.ui.autocomplete.filter(
+                  government_improve, extractLast( request.term ) ) );
+              },
+              focus: function() {
+                // prevent value inserted on focus
+                return false;
+              },
+              select: function( event, ui ) {
+                var terms = split( this.value );
+                // remove the current input
+                terms.pop();
+                // add the selected item
+                terms.push( ui.item.value );
+                // add placeholder to get the comma-and-space at the end
+                terms.push( "" );
+                this.value = terms.join( ", " );
+                return false;
+              }
+            });
+        } );
+
+    <% elsif @review.category == "Parks" %>
+      $("#department_like_list").addClass("parks_like_list");
+      $("#department_improve_list").addClass("parks_improve_list");
+      $('#department_improve_list').attr('placeholder', "EG: 'Events, Tennis Courts, Soccer Fields'");
+      $('#department_like_list').attr('placeholder', "EG: 'Playgrounds, Lakes, Hours'");
+      $( function() {
+          var parks_like = [
+            'Playgrounds',
+            'Hours',
+            'Lighting',
+            'Green Space',
+            'Community Events',
+            'Family Friendliness',
+            'Cooking Out',
+            'Scenery',
+            'Youth Sports',
+            'Adult Sports',
+            'Sports / Recreation',
+            'Baseball Fields',
+            'Dog Friendliness',
+            'Accessibility',
+            'Equipment Quality',
+            'Pavilion',
+            'Paved Paths',
+            'Trail Paths',
+            'Quietness / Seculusion',
+            'Soccer Fields',
+            'Basketball Courts',
+            'Tennis Courts',
+            'Fishing',
+            'Lakes / Ponds',
+            'Biking Trails',
+            'Hiking Trails'
+          ];
+          function split( val ) {
+            return val.split( /,\s*/ );
+          }
+          function extractLast( term ) {
+            return split( term ).pop();
+          }
+       
+          $( ".parks_like_list" )
+            // don't navigate away from the field on tab when selecting an item
+            .on( "keydown", function( event ) {
+              if ( event.keyCode === $.ui.keyCode.TAB &&
+                  $( this ).autocomplete( "instance" ).menu.active ) {
+                event.preventDefault();
+              }
+            })
+            .autocomplete({
+              minLength: 0,
+              source: function( request, response ) {
+                // delegate back to autocomplete, but extract the last term
+                response( $.ui.autocomplete.filter(
+                  parks_like, extractLast( request.term ) ) );
+              },
+              focus: function() {
+                // prevent value inserted on focus
+                return false;
+              },
+              select: function( event, ui ) {
+                var terms = split( this.value );
+                // remove the current input
+                terms.pop();
+                // add the selected item
+                terms.push( ui.item.value );
+                // add placeholder to get the comma-and-space at the end
+                terms.push( "" );
+                this.value = terms.join( ", " );
+                return false;
+              }
+            });
+        } );
+        $( function() {
+          var parks_improve = [
+            'Playgrounds',
+            'Hours',
+            'Lighting',
+            'Green Space',
+            'Community Events',
+            'Family Friendliness',
+            'Cooking Out',
+            'Scenery',
+            'Youth Sports',
+            'Adult Sports',
+            'Sports / Recreation',
+            'Baseball Fields',
+            'Dog Friendliness',
+            'Accessibility',
+            'Equipment Quality',
+            'Pavilion',
+            'Paved Paths',
+            'Trail Paths',
+            'Quietness / Seculusion',
+            'Soccer Fields',
+            'Basketball Courts',
+            'Tennis Courts',
+            'Fishing',
+            'Lakes / Ponds',
+            'Biking Trails',
+            'Hiking Trails'
+          ];
+          function split( val ) {
+            return val.split( /,\s*/ );
+          }
+          function extractLast( term ) {
+            return split( term ).pop();
+          }
+       
+          $( ".parks_improve_list" )
+            // don't navigate away from the field on tab when selecting an item
+            .on( "keydown", function( event ) {
+              if ( event.keyCode === $.ui.keyCode.TAB &&
+                  $( this ).autocomplete( "instance" ).menu.active ) {
+                event.preventDefault();
+              }
+            })
+            .autocomplete({
+              minLength: 0,
+              source: function( request, response ) {
+                // delegate back to autocomplete, but extract the last term
+                response( $.ui.autocomplete.filter(
+                  parks_improve, extractLast( request.term ) ) );
+              },
+              focus: function() {
+                // prevent value inserted on focus
+                return false;
+              },
+              select: function( event, ui ) {
+                var terms = split( this.value );
+                // remove the current input
+                terms.pop();
+                // add the selected item
+                terms.push( ui.item.value );
+                // add placeholder to get the comma-and-space at the end
+                terms.push( "" );
+                this.value = terms.join( ", " );
+                return false;
+              }
+            });
+        } );
+
+    <% elsif @review.category == "Schools" %>
+      $("#department_like_list").addClass("schools_like_list");
+      $("#department_improve_list").addClass("schools_improve_list");
+      $('#department_improve_list').attr('placeholder', "EG: 'Sports Team, PTA, Extracurricular'");
+      $('#department_like_list').attr('placeholder', "EG: 'Teachers, Safety, Curriculum'");
+      $( function() {
+          var schools_like = [
+            'Curriculum',
+            'Accommodation',
+            'Discipline Policy',
+            'Policy',
+            'Teachers',
+            'Grade Grouping',
+            'Building Quality',
+            'Sport Facilities',
+            'Special Sport Facilities',
+            'Multi-Languages',
+            'Police On-grounds',
+            'Safety',
+            'Academic Extracurriculars',
+            'Sport Extracurriculars',
+            'Books Quality',
+            'Books Age',
+            'Technology',
+            'Computers',
+            'Library',
+            'Gyms',
+            'Surrounding Facilities',
+            'Faculty',
+            'Guidance Counselor',
+            'Health / Nurse',
+            'Auditoriums',
+            'Arts & Culture',
+            'Communication',
+            'Diversity',
+            'Student Needs',
+            'Food Options',
+            'Band',
+            'STEM Classes',
+            'Advanced Placement',
+            'College Credits',
+            'After-school Programs',
+            'PTA',
+            'Board of Education',
+            'Superintendent',
+            'Principal',
+            'Tutoring Availability',
+            'Acceptance',
+            'Special Needs',
+            'Support Staff',
+            'Transparency'
+          ];
+          function split( val ) {
+            return val.split( /,\s*/ );
+          }
+          function extractLast( term ) {
+            return split( term ).pop();
+          }
+       
+          $( ".schools_like_list" )
+            // don't navigate away from the field on tab when selecting an item
+            .on( "keydown", function( event ) {
+              if ( event.keyCode === $.ui.keyCode.TAB &&
+                  $( this ).autocomplete( "instance" ).menu.active ) {
+                event.preventDefault();
+              }
+            })
+            .autocomplete({
+              minLength: 0,
+              source: function( request, response ) {
+                // delegate back to autocomplete, but extract the last term
+                response( $.ui.autocomplete.filter(
+                  schools_like, extractLast( request.term ) ) );
+              },
+              focus: function() {
+                // prevent value inserted on focus
+                return false;
+              },
+              select: function( event, ui ) {
+                var terms = split( this.value );
+                // remove the current input
+                terms.pop();
+                // add the selected item
+                terms.push( ui.item.value );
+                // add placeholder to get the comma-and-space at the end
+                terms.push( "" );
+                this.value = terms.join( ", " );
+                return false;
+              }
+            });
+        } );
+        $( function() {
+          var schools_improve = [
+            'Curriculum',
+            'Accommodation',
+            'Discipline Policy',
+            'Policy',
+            'Teachers',
+            'Grade Grouping',
+            'Building Quality',
+            'Sport Facilities',
+            'Special Sport Facilities',
+            'Multi-Languages',
+            'Police On-grounds',
+            'Safety',
+            'Academic Extracurriculars',
+            'Sport Extracurriculars',
+            'Books Quality',
+            'Books Age',
+            'Technology',
+            'Computers',
+            'Library',
+            'Gyms',
+            'Surrounding Facilities',
+            'Faculty',
+            'Guidance Counselor',
+            'Health / Nurse',
+            'Auditoriums',
+            'Arts & Culture',
+            'Communication',
+            'Diversity',
+            'Student Needs',
+            'Food Options',
+            'Band',
+            'STEM Classes',
+            'Advanced Placement',
+            'College Credits',
+            'After-school Programs',
+            'PTA',
+            'Board of Education',
+            'Superintendent',
+            'Principal',
+            'Tutoring Availability',
+            'Acceptance',
+            'Special Needs',
+            'Support Staff',
+            'Transparency'
+          ];
+          function split( val ) {
+            return val.split( /,\s*/ );
+          }
+          function extractLast( term ) {
+            return split( term ).pop();
+          }
+       
+          $( ".schools_improve_list" )
+            // don't navigate away from the field on tab when selecting an item
+            .on( "keydown", function( event ) {
+              if ( event.keyCode === $.ui.keyCode.TAB &&
+                  $( this ).autocomplete( "instance" ).menu.active ) {
+                event.preventDefault();
+              }
+            })
+            .autocomplete({
+              minLength: 0,
+              source: function( request, response ) {
+                // delegate back to autocomplete, but extract the last term
+                response( $.ui.autocomplete.filter(
+                  schools_improve, extractLast( request.term ) ) );
+              },
+              focus: function() {
+                // prevent value inserted on focus
+                return false;
+              },
+              select: function( event, ui ) {
+                var terms = split( this.value );
+                // remove the current input
+                terms.pop();
+                // add the selected item
+                terms.push( ui.item.value );
+                // add placeholder to get the comma-and-space at the end
+                terms.push( "" );
+                this.value = terms.join( ", " );
+                return false;
+              }
+            });
+        } );
+
+    <% elsif @review.category == "Police" %>
+      $("#department_like_list").addClass("police_like_list");
+      $("#department_improve_list").addClass("police_improve_list");
+      $('#department_improve_list').attr('placeholder', "EG: 'Helpfulness, Training, Tickets'");
+      $('#department_like_list').attr('placeholder', "EG: 'Selfless, Leniency, Public Policy'");
+      $( function() {
+          var police_like = [
+            'Friendliness',
+            'Selflessness',
+            'Discipline',
+            'Communication',
+            'Transparency',
+            'Use of Force',
+            'Public Policy',
+            'Response Time',
+            'Staff',
+            'Budget',
+            'Public Relations',
+            'Outreach',
+            'Eagerness',
+            'Caring',
+            'Compassion',
+            'Patience',
+            'Traffic Policy',
+            'Training',
+            'Helpfulness',
+            'Leniency'
+          ];
+          function split( val ) {
+            return val.split( /,\s*/ );
+          }
+          function extractLast( term ) {
+            return split( term ).pop();
+          }
+       
+          $( ".police_like_list" )
+            // don't navigate away from the field on tab when selecting an item
+            .on( "keydown", function( event ) {
+              if ( event.keyCode === $.ui.keyCode.TAB &&
+                  $( this ).autocomplete( "instance" ).menu.active ) {
+                event.preventDefault();
+              }
+            })
+            .autocomplete({
+              minLength: 0,
+              source: function( request, response ) {
+                // delegate back to autocomplete, but extract the last term
+                response( $.ui.autocomplete.filter(
+                  police_like, extractLast( request.term ) ) );
+              },
+              focus: function() {
+                // prevent value inserted on focus
+                return false;
+              },
+              select: function( event, ui ) {
+                var terms = split( this.value );
+                // remove the current input
+                terms.pop();
+                // add the selected item
+                terms.push( ui.item.value );
+                // add placeholder to get the comma-and-space at the end
+                terms.push( "" );
+                this.value = terms.join( ", " );
+                return false;
+              }
+            });
+        } );
+        $( function() {
+          var police_improve = [
+            'Under-staffed',
+            'Over-staffed',
+            'Over-prosecution',
+            'Tickets',
+            'Friendliness',
+            'Selflessness',
+            'Discipline',
+            'Communication',
+            'Transparency',
+            'Use of Force',
+            'Helpfulness',
+            'Public Policy',
+            'Response Time',
+            'Staff',
+            'Budget',
+            'Public Relations',
+            'Outreach',
+            'Eagerness',
+            'Caring',
+            'Compassion',
+            'Patience',
+            'Traffic Policy',
+            'Training',
+            'Helpfulness',
+            'Leniency'
+          ];
+          function split( val ) {
+            return val.split( /,\s*/ );
+          }
+          function extractLast( term ) {
+            return split( term ).pop();
+          }
+       
+          $( ".police_improve_list" )
+            // don't navigate away from the field on tab when selecting an item
+            .on( "keydown", function( event ) {
+              if ( event.keyCode === $.ui.keyCode.TAB &&
+                  $( this ).autocomplete( "instance" ).menu.active ) {
+                event.preventDefault();
+              }
+            })
+            .autocomplete({
+              minLength: 0,
+              source: function( request, response ) {
+                // delegate back to autocomplete, but extract the last term
+                response( $.ui.autocomplete.filter(
+                  police_improve, extractLast( request.term ) ) );
+              },
+              focus: function() {
+                // prevent value inserted on focus
+                return false;
+              },
+              select: function( event, ui ) {
+                var terms = split( this.value );
+                // remove the current input
+                terms.pop();
+                // add the selected item
+                terms.push( ui.item.value );
+                // add placeholder to get the comma-and-space at the end
+                terms.push( "" );
+                this.value = terms.join( ", " );
+                return false;
+              }
+            });
+        } );
+    <% elsif @review.category == "Public Works" %>
+      $("#department_like_list").addClass("public_like_list");
+      $("#department_improve_list").addClass("public_improve_list");
+      $('#department_improve_list').attr('placeholder', "EG: 'Construction, Trash Pickup, Recycling'");
+      $('#department_like_list').attr('placeholder', "EG: 'Effectiveness, Water Quality, Roads'");
+      $( function() {
+          var public_like = [
+            'Communication',
+            'Effectiveness',
+            'Efficiency',
+            'Water Quality',
+            'Roads',
+            'Construction',
+            'Response Time',
+            'Trash Pickup',
+            'Service Department',
+            'Recycling',
+            'Staff',
+            'Snow Plowing',
+            'Road Safety',
+            'Little Red Tape',
+            'Budget'
+          ];
+          function split( val ) {
+            return val.split( /,\s*/ );
+          }
+          function extractLast( term ) {
+            return split( term ).pop();
+          }
+       
+          $( ".public_like_list" )
+            // don't navigate away from the field on tab when selecting an item
+            .on( "keydown", function( event ) {
+              if ( event.keyCode === $.ui.keyCode.TAB &&
+                  $( this ).autocomplete( "instance" ).menu.active ) {
+                event.preventDefault();
+              }
+            })
+            .autocomplete({
+              minLength: 0,
+              source: function( request, response ) {
+                // delegate back to autocomplete, but extract the last term
+                response( $.ui.autocomplete.filter(
+                  public_like, extractLast( request.term ) ) );
+              },
+              focus: function() {
+                // prevent value inserted on focus
+                return false;
+              },
+              select: function( event, ui ) {
+                var terms = split( this.value );
+                // remove the current input
+                terms.pop();
+                // add the selected item
+                terms.push( ui.item.value );
+                // add placeholder to get the comma-and-space at the end
+                terms.push( "" );
+                this.value = terms.join( ", " );
+                return false;
+              }
+            });
+        } );
+        $( function() {
+          var public_improve = [
+           'Red Tape',
+          'Communication',
+          'Effectiveness',
+          'Efficiency',
+          'Water Quality',
+          'Roads',
+          'Construction',
+          'Response Time',
+          'Trash Pickup',
+          'Service Department',
+          'Recycling',
+          'Staff',
+          'Snow Plowing',
+          'Road Safety',
+          'Budget'
+          ];
+          function split( val ) {
+            return val.split( /,\s*/ );
+          }
+          function extractLast( term ) {
+            return split( term ).pop();
+          }
+       
+          $( ".public_improve_list" )
+            // don't navigate away from the field on tab when selecting an item
+            .on( "keydown", function( event ) {
+              if ( event.keyCode === $.ui.keyCode.TAB &&
+                  $( this ).autocomplete( "instance" ).menu.active ) {
+                event.preventDefault();
+              }
+            })
+            .autocomplete({
+              minLength: 0,
+              source: function( request, response ) {
+                // delegate back to autocomplete, but extract the last term
+                response( $.ui.autocomplete.filter(
+                  public_improve, extractLast( request.term ) ) );
+              },
+              focus: function() {
+                // prevent value inserted on focus
+                return false;
+              },
+              select: function( event, ui ) {
+                var terms = split( this.value );
+                // remove the current input
+                terms.pop();
+                // add the selected item
+                terms.push( ui.item.value );
+                // add placeholder to get the comma-and-space at the end
+                terms.push( "" );
+                this.value = terms.join( ", " );
+                return false;
+              }
+            });
+        } );
+    <% end %>
+});
+// Code for the Department Review Tags 
+
+  function existingTag(text)
+{
+	var existing = false,
+		text = text.toLowerCase();
+
+	$(".tags").each(function(){
+		if ($(this).text().toLowerCase() == text) 
+		{
+			existing = true;
+			return "";
+		}
+	});
+
+	return existing;
+}
+
+$(function(){
+  $(".tags-new input").focus();
+  
+  $(".tags-new input").keyup(function(){
+
+		var tag = $(this).val().trim(),
+		length = tag.length;
+		if((tag.charAt(length - 1) == ',') && (tag != ","))
+		{
+			tag = tag.substring(0, length - 1);
+
+			if(!existingTag(tag))
+			{
+				$('<li class="tags"><span>' + tag + '</span><i class="fa fa-times"></i></i></li>').insertBefore($(".tags-new"));
+				$(this).val("");	
+			}
+			
+			else
+			{
+				$(this).val(tag);
+			}
+		}
+	});
+  
+  $(document).on("click", ".tags i", function(){
+    $(this).parent("li").remove();
+  });
+
+});
+</script>
+
+
+<!-- Code for the Improve Tags -->
+<script>
+  function existingTag(text)
+{
+	var existing = false,
+		text = text.toLowerCase();
+
+	$(".tags").each(function(){
+		if ($(this).text().toLowerCase() == text) 
+		{
+			existing = true;
+			return "";
+		}
+	});
+
+	return existing;
+}
+
+$(function(){
+  $(".tags-new2 input").focus();
+  
+  $(".tags-new2 input").keyup(function(){
+
+		var tag = $(this).val().trim(),
+		length = tag.length;
+		if((tag.charAt(length - 1) == ',') && (tag != ","))
+		{
+			tag = tag.substring(0, length - 1);
+
+			if(!existingTag(tag))
+			{
+				$('<li class="tags"><span>' + tag + '</span><i class="fa fa-times"></i></i></li>').insertBefore($(".tags-new2"));
+				$(this).val("");	
+			}
+			
+			else
+			{
+				$(this).val(tag);
+			}
+		}
+	});
+  
+  $(document).on("click", ".tags i", function(){
+    $(this).parent("li").remove();
+  });
+
+});
+</script>
+
+<script>
+// register modal component
+Vue.component('modal', {
+  template: '#modal-template'
+})
+
+// start app
+new Vue({
+  el: '#wul-modal',
+  data: {
+    showModal: false
+  }
+})
+</script>
+<!--  Below - VueJS Code for modal popup of guidelines for new Department Review -->
+<script type="text/x-template" id="modal-template">
+  <transition name="modal">
+    <div class="modal-mask">
+      <div class="modal-wrapper">
+        <div class="modal-body">
+          <slot name="body">
+            <div class="content">
+              <div class="col-all-10 center">
+                <div id="page_info_card_org" class="col-tier">
+                  <div id="page_info_card" class="col-all-12">
+                    <div class="col-all-12 light-box-shadow card" style="border: 1px solid rgba(128, 128, 128, .5); border-radius: 10px;">
+                      <div class="card-body theme_color_black p-4" style="">
+                        <div class="col-all-12 pull-left">
+                           <h3 class="mt-0 mb-2 ms_page_title">What You Love Guidelines</h3> 
+                           <p class="text-medium i mb-3">Please follow these posting guidelines to ensure your WUL review is valid and able to be posted.</p> 
+                           <section class="b">Please fill out all required fields below</section>
+                           <ul> 
+                            <li><b>Title</b> <span class="text-xsmall">(optional)</span> - Write a creative title to describe what you love about your city.</li>  
+                            <li><b>Score</b> - Click on the stars to rate your city and your expierence there. You may click halfway on a star for half ratings. <span class="i">EG: 4.5 out of 5 would be four and a half stars.</span></li>  
+                            <li><b>Tags</b> - Two fields for tags are avaiable, What You Love and What Needs Improvement. Write three things that you love about your city seperated by commas. Below What You Love, write three things that need improvement in your city seperated by commas.</li>
+                            <li><b>Description</b> - Please write a short description describing your review of your city, enough so others can clearly understand what your review is about.</li>
+                            <li><b>Image</b> <span class="text-xsmall">(optional)</span> - You may upload an image of What You Love about your city, it could be of your favorite place, resturant, or something you love about being there.</li>
+                          </ul>
+                          <p class="text-medium mb-2">Following these steps will ensure your What You Love review is filed properly.</p>
+                            <button class="btn btn-info modal-default-button text-xxmedium" @click="$emit('close')">
+                              Close
+                            </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div> 
+            </slot>
+          </div>
+        </div>
+      </div>
+    </div>
+  </transition>
+</script>
+
+<script>
+
+  var form = document.querySelector('.form-horizontal');
+  var quill = new Quill('#quill_container', {
+  modules: {
+    toolbar: [
+      ['bold', 'italic', 'underline', 'link'],
+      [{ list: 'ordered' }, { list: 'bullet' }]
+    ]
+  },
+  placeholder: 'Please write a descriptive review of this department. Elaborate on your experiences with it and provide as much detail as possible about your interaction with this city department. Minimum: 150 characters, Limit: 5,000 characters (about 750 words).',
+  theme: 'snow'  // or 'bubble'
+});
+
+
+form.onsubmit = function() {
+  var postContentInput = document.querySelector('#post_description');
+  postContentInput.value = quill.root.innerHTML;
+};
+
+// Below - Sets up a variable from the simple format rendering about on edit post
+var editDescription = $('#edit_text_wrap').text();
+$('.ql-editor p').text(editDescription);
+</script>

@@ -1,0 +1,28 @@
+<!-- Main Index Page for Cities, showing every city and links to them -->
+<h2 class="theme_font center-content">
+    <p class="center-content">
+      All Cities
+    </p>
+  </h2>
+  <hr>
+  
+<div class="content">
+  <% @cities.each do |city| %> 
+    <div class="tier my-4">
+      <ul class="list-group center-content col-d-12 col-t-12 col-p-12">
+        <li class="list-group-item col-d-6 col-t-6 col-p-12" style="margin-top: 5px; margin-bottom: 5px;">
+          <h3>
+            <%= link_to "#{city.name},", city, class:"title_link" %> 
+            <%= city.state_name %>
+          </h3>
+          <p>
+            <h4 class="text-muted">
+              <%= city.users.size %> Users
+            </h4>
+          </p>
+          <hr>
+        </li>
+      </ul>
+    </div>
+  <% end %> 
+</div>

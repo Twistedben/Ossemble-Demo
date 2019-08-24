@@ -1,0 +1,11 @@
+<!--  Main partial being rendered for Public Activity gem on User follow from Follows_controller. (views/public_activity/user/_follow.html.erb). -->
+<% if activity.trackable %>
+  <span id="activities_span" class="">
+    <span>
+      followed 
+    </span>
+    <%= link_to activity.trackable.name, user_path(activity.trackable.city, activity.trackable), id: "activity_complaint_link", class: "bold" %>
+  </span>
+<% else %>
+    unfollowed someone.
+<% end %>

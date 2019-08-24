@@ -1,0 +1,37 @@
+<script>
+ var ap_map = L.map('oss_action_map');
+ tile_layer = L.tileLayer('https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="&copy;"> <a href="https://wikimediafoundation.org/wiki/Maps_Terms_of_Use">Wikimedia</a></a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+}).addTo(ap_map);
+ap_map.dragging.disable();
+ap_map.touchZoom.disable();
+ap_map.doubleClickZoom.disable();
+ap_map.scrollWheelZoom.disable();
+
+// Below - Adds Workplace Shape's GeoJSON DB 
+var geojsonLayer, layer_group, workplace_geojson;
+  
+  workplace_geojson = [{
+    "type": "FeatureCollection",
+      "features" : [
+        <%= raw(@workplace.shape.geo) %>
+      ]
+  }];
+  
+  var feature_group = new L.FeatureGroup(); 
+  geojsonLayer = L.geoJson(workplace_geojson, {
+    onEachFeature: function(feature, layer) {
+      feature_group.addLayer(layer);
+    }
+  });
+  feature_group.setStyle({"color": "rgba(100, 84, 150, 0.75)"});
+  ap_map.addLayer(feature_group);
+  ap_map.fitBounds(feature_group.getBounds());
+
+
+// Below - Scaling Zoom and Disabling Drag/Zoom
+L.control.scale().addTo(ap_map);
+ap_map.options.minZoom = 9;
+ap_map.options.maxZoom = 16;
+
+</script>

@@ -1,0 +1,107 @@
+<div class="content">
+  <div class="tier"> <!-- Begin - Main tier for page. -->
+    <!-- Below -  Renders in the accordian from views/layouts/phones/... for mobile and tablet. -->
+    <%= render "layouts/phones/mobile_accordion" %>
+    <!-- Begin - City Review Information and Score. -->
+      <!-- Begin - Top Row Section of Container -->
+    <div class="col-d-7 col-t-11 col-p-12 padding-t-20 center">
+      <div class="col-all-12 card p-0">
+        <div id="header_show_card" class="col-all-12">
+          <div class="tier">
+            <div class="text-xlarge no-margin col-all-12">
+              <div class="mt-0 col-tier">
+                <div class="col-all-12 p-0 card-body text-medium pull-left">
+                  <div class="col-tier margin-b-20">
+                    <div class="col-all-2 well mb-0 p-2" style="height: 100px;">
+                    <!-- Below -  Displays the department's icon dependent on the type, inside DepartmentReviewsHelper -->
+                      <div class="center-all">
+                        <%= display_department_icons(@review) %>
+                      </div>
+                    </div>
+                    <div class="col-all-10 padding-l-15">
+                      <div class="tier mb-0">
+                        <span class="text-xlarge bold show_text_scale theme_color_dark">      
+                          <%= @review.title %>
+                        </span>
+                        <br>
+                        <span class="col-tier padding-y-3">
+                          <span style="width: 45px !important; height: 40px !important;">
+                            <%= display_show_avatar(@review.user) %>
+                          </span>
+                          <!-- Below - Users_helper.rb - Displays user name as a link and to determine if the user is from the city or a non-resident -->
+                          <span class="padding-t-10">
+                            <%= display_user_name(@review.user) %>
+                          </span>
+                        </span>
+                        <br>
+                        <div class="col-tier">
+                          <span class="text-big show_text_scale"> 
+                            Posted: <%= time_ago_in_words(@review.created_at).capitalize %> ago - 
+                          </span>
+                          <span class="padding-l-5 text-big show_text_scale">                      
+                            Scored:
+                          </span>
+                          <span class="bold text-big show_text_scale padding-l-5">
+                            <%= display_score(@review) %>
+                            <!-- Below -  If the user is a non-resident of the city they reviewed, displays an icon showing whether or not the review has yet been factored -->
+                            <%= display_scorable_icon(@review) %>
+                          </span>
+                        </div>
+                        <br>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-tier mt-2">
+                    <!-- Begin -  Filter tags Row -->
+                    <div class="" style="margin-right: 25px" >
+                      <%= display_endorse_button(@review, "department_reviews", "Review", upvote_city_department_review_path(@city, @review.id)) %>
+                    </div>
+                    <a class="btn mr-3 alt-action" href='<%= city_department_reviews_path(@city) %>' >
+                     Departments
+                    </a>
+                    <%= department_filter_link(@review) %>
+                    <!-- End -  Filter tags Row -->
+                    <!-- Below -  Users_helper.rb Displays the edit link if the user owns the resource, passing in the resource then the link to edit it. -->
+                    <div class="margin-l-auto">
+                      <%=  display_edit_link(@review, edit_user_department_review_path(@review.user, @review)) %>
+                    </div>
+                  </div>
+                  <!-- Below - Renders in Tags list in Header card unless there's an image for the review -->
+                  <%= render 'layouts/resources/tags_list', obj: @review unless @review.image.attached? %>
+                  <!-- Below -  Renders in image if there is one, otherwise tags list is rendered -->
+                  <%= render 'layouts/resources/resource_image', obj: @review if @review.image.attached? %>
+                  <!-- Below -  Renders in User actions row-->
+                  <%= render 'layouts/resources/user_action_tier', obj: @review %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Below - Renders in Tags list with title header below image if there is one; Otherwise, it was rendered above. -->
+      <%= render 'layouts/resources/tags_list', obj: @review if @review.image.attached? %>
+      <!-- Below -  Renders in WUL description below tags. -->
+      <%= render 'layouts/resources/resource_description', obj: @review %>
+      <!-- Begin -  Comments Section -->
+      <div id="new_comment_tier" class="no-top-border tier">
+        <div class="col-all-12">
+          <%= render 'comments/comment_form', obj: @review %>
+        </div>
+      </div>
+        <!-- Below - Rendering for existing Comments. -->
+      <div id="comments_list" class="tier margin-t-30 padding-x-10">
+        <div class="col-all-12">
+          <ul id="comments_ul" class="pl-0">
+            <div id="comment_flash" class="vanish panel panel-success light-box-shadow col-all-12" style="height: 3.5rem"><div class="col-tier margin-t-5"><p class="text-success bold center-all text-xxmedium no-margin col-all-12">Your comment has posted!</p></div></div>
+            <li class="comment_placeholder vanish"></li>
+            <%= render(partial: 'comments/comment', collection: @review.comments)%>
+          </ul>
+        </div>
+      </div>     
+    </div>
+    <div id="non_ms_ap_content" class="col-d-3 col-t-10" >
+      <%= render 'layouts/action_panel', obj: @review %>
+    </div>
+    <!-- End - Far right - Action panel with col-3 -->
+  </div>
+</div> <!-- End - Main page tier -->

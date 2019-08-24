@@ -1,0 +1,49 @@
+<!--  Main index page for an admin's library to navigate to saved posts/reports/suggestions or their own file uploads. -->
+
+<div class="content">
+  <div class="tier">
+    <%= render "layouts/phones/mobile_accordion" %>
+    <div id="workplace_department_container" class="col-d-7 col-t-11 col-p-12">
+      <div id="department_header_container" class="col-tier">
+        <p>
+          <%= current_workplace %> Departments
+        </p>
+      </div>
+      <!-- Below -  Renders departments that have already been created. -->
+      <div id="departments_list_container" class="col-tier">
+        <div class="col-all-12 light-box-shadow padding-all-15 card">
+          <!-- Below -  Checks if the workplace has departments or not, lists them if so, otherwise tells to create them below -->
+          <% if @workplace.workplace_departments.empty? && is_current_super_admin? %>
+            <p>
+              No Departments have yet been created for <%= current_workplace %>. Below, you can create departments for workplace members.
+            </p>
+          <% elsif @workplace.workplace_departments.empty? && !is_current_super_admin? %> 
+            <p>
+              No Departments have yet been created for <%= current_workplace %>. Ask the owner of this workplace to create departments that you can join.
+            </p>
+          <% else %>
+            <% @workplace.workplace_departments.each do |department| %>
+              <div id="department_container" class="col-tier">
+                <p class="b">
+                  <%= department.name %>:
+                </p>
+                <p class="padding-l-10">
+                  <%= department.description unless department.description.nil? %>
+                </p>
+              </div>
+            <% end %> 
+          <% end %> 
+        </div> 
+      </div> 
+      <!-- Below - Create new departments -->
+      <div id="department_header_container" class="col-tier">
+        <p>
+          Create New Departments
+        </p>
+      </div>
+      <!-- Below -  Renders the form to create new departments if the admin is a super admin -->
+      <%= render "department_form" if is_current_super_admin? %>
+    </div>
+    <%= render 'admins/admin_layouts/workplace_action_panel' %>
+  </div>
+</div>

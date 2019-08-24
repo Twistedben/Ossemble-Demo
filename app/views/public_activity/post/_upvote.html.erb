@@ -1,0 +1,26 @@
+<!--  The main partial rendered for activities being upvoted concerning posts (views/public_activity/post/_upvote). -->
+<% if activity.recipient %>
+  <span id="activities_span" class="">
+    <span>
+      endorsed a Post titled:
+    </span>
+    <%= link_to activity.trackable.title, subtopic_post_path(@user.city, activity.trackable.topic, activity.trackable.subtopic, activity.trackable), id: "activity_post_link", class: "bold" %>
+    <span>
+       in: 
+      <span class="i bold"> <%= activity.trackable.topic.name %> </span>
+      <span class="text-14"> 
+        /
+      </span>
+      <span class="i bold"> <%= activity.trackable.subtopic.name %> </span> 
+    </span>
+    <span id="upvote_comment_activity text-14">
+      - posted by: 
+      <span class="i">
+        <%= link_to activity.recipient.name, user_path(activity.recipient.city, activity.recipient) %>
+      </span>
+    </span>
+  </span>
+<% else %>
+  unendorsed a Post.
+
+<% end %>

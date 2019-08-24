@@ -1,0 +1,93 @@
+<!--  Main partial for comment form, both edit form and form inside show page for a new comment. -->
+<!-- Begin -   If statmenet checking edit or new comment. -->
+<!-- Below -  Renders the edit comment form -->
+<% if obj == @edit_comment %>
+  <div id="update_form_<%= @edit_comment.id %>">
+    <!-- Below -  Captures the written description if a post fails to be created to be then shuffled into quill using JS below -->
+    <%= simple_format(@edit_comment.description, {}, wrapper_tag: "div id='edit_text_wrap' class='vanish'") %>
+    <%= form_for @edit_comment, url: {action: 'update'}, html: { class: 'form-horizontal padding-x-5 pt-0 no-border'}, remote: true do |f| %>
+      <div class="col-all-12">
+       <!-- Begin - Header of Comment -->
+        <div class="tier">
+          <div class="form-group col-all-12 m-0"> 
+            <%= f.text_area :description, maxlength: 4000, placeholder: "Tell us what you think. Limit: 4,000 characters (about 600 words).", class: "form-control col-all-12 light-box-shadow", autofocus: true %>
+          </div>
+        </div>
+        <div class="tier">
+          <div class="col-all-12 pt-3 pb-0 ms_comp_submit"> 
+            <%= f.submit "Update", class: "btn action text-white push-right light-box-shadow light-text-shadow" %>
+          </div>
+    <% end %> <!--  Form for updating comment. -->
+          <div class="col-all-12 pt-3 pb-0 ms_comp_submit"> 
+            <a id="cancel_button_<%= @edit_comment.id %>" class="btn btn-danger push-right text-white light-box-shadow light-text-shadow ml-3 mb-4">  
+              <i class="fas fa-ban margin-x-8"></i>
+            </a>
+          </div>
+        </div> 
+      </div>
+    </div>
+    <script>
+    // Below - JS For editing comment form and cancel button.
+      var cancel_button = $('#cancel_button_<%= @edit_comment.id %>');
+      var form = $('#update_form_<%= @edit_comment.id %>');
+      var current_comment = $('li[name="<%= @edit_comment.id %>"]');
+      $(cancel_button).click(function()
+      {
+        $(form).slideUp("slow", "swing");
+        $(current_comment).delay(880).slideDown("slow", "swing");
+        
+      });
+      
+      // Below - Sets up a variable from the simple format rendering about on edit post
+      var editDescription = $('#edit_text_wrap').text();
+      $('#comment_description').text(editDescription);
+    </script>
+<% else %> <!-- Below -  Renders the new comment form -->
+  <div class="margin-t-20 tier">
+    <p class="page_info_title no-padding">
+      Comments
+    </p>
+  </div> 
+  <%= form_for [obj, Comment.new], url: {action: 'show'}, html: {id: "new_comment_form", class: 'form-horizontal transparent center padding-x-5 pt-0 no-border'}, remote: true do |f| %>
+    <div class="col-all-12">
+     <!-- Begin - Header of Comment -->
+      <div class="tier">
+        <div class="form-group col-all-12 m-0 margin-t-5"> 
+          <!--  Below - User is NOT from the given city -->
+          <%= f.text_area :description, maxlength: 4000, placeholder: "You must join Ossemble and create a profile to add to the discussion.", class: "form-control col-p-11 center light-box-shadow", disabled: true if is_guest?  %>
+          <!--  Below - User is from the given city -->
+          <%= f.hidden_field :description, id: "new_comment_quill", required: true %>            
+            <div id="editor-container" class="light-box-shadow;" hidden="true"></div>
+            <div id="quill_container"  style="height: 250px !important; background: white !important;"></div>
+        </div>
+      </div>
+      <script>
+          var form = document.querySelector('#new_comment_form');
+          var quill = new Quill('#quill_container', {
+          modules: {
+            toolbar: [
+              ['bold', 'italic', 'link'],
+              [{ list: 'ordered' }, { list: 'bullet' }]
+            ]
+          },
+          placeholder: 'Tell us what you think. Limit: 4,000 characters (about 600 words).',
+          theme: 'snow'  // or 'bubble'
+        });
+        
+        form.onsubmit = function() {
+          var postContentInput = document.querySelector('#new_comment_quill');
+          postContentInput.value = quill.root.innerHTML;
+        };
+        
+      </script>
+      <div class="tier">
+        <div class="col-all-12 pt-3 pb-0 ms_comp_submit"> 
+           <!--  Below - User is NOT  from the given city -->
+          <%= f.submit "Add Comment", class: "btn button-cs push-right form_btn", data: {confirm: "You must join Ossemble and create a profile to add to the discussion."}, disabled: true if is_guest?  %>
+           <!--  Below - User is from the given city -->
+          <%= f.submit "Add Comment", class: "btn button-cs push-right form_btn", onclick: "amplitude.getInstance().logEvent('Comment Posted');" unless is_guest?  %>
+        </div>
+      </div>
+  <% end %> <!--  New comment form -->
+    </div>
+<% end %> <!-- End - If statmenet checking edit or new comment  -->

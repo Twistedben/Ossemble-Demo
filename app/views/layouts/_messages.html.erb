@@ -1,0 +1,60 @@
+ <!-- Begin - Devise required Flash Notice Errors/Succeses For User Actions. -->
+<!-- Below - Main container going to edge to edge for displaying of flash messages. -->
+<div class="content">
+  <div class="tier">
+    <div id="flash_message_container" class="col-d-8 col-t-10 col-p-12 center">
+      <!-- Begin - Flash Messages for yellow Warning message using ':warning'. -->
+      <% if flash[:warning] %>
+        <div class="mb-0 center-content">
+        <p class="alert panel panel-warning alert-warning center message_alert_panel">
+          <a href="#" class="close" data-dismiss="alert">&#215;</a>
+            <%= raw flash[:warning] %>
+        </p>
+      </div>
+      <% end %>
+     <!-- End - Warning Message if statment for Flash warnings. -->
+      <!-- Begin - Flash Messages for green Success using ':notice' -->
+      <% if notice %>
+      <div class="mb-0 center-content">
+        <p class="alert panel panel-success alert-success center message_alert_panel">
+          <a href="#" class="close" data-dismiss="alert">&#215;</a>
+            <%= raw flash[:notice] %>
+        </p>
+      </div>
+      <% end %>       <!-- End - notice Message if statment for Flash notices. -->
+      <!-- Begin - Flash Messages for Red Failues using ':alert' -->
+      <% if alert %>
+      <div class="mb-0 center-content">
+        <p class="alert panel panel-danger alert-danger center message_alert_panel">
+          <a href="#" class="close" data-dismiss="alert">&#215;</a>
+            <%= raw flash[:alert] %>
+        </p>
+      </div>
+      <% end %> <!-- End - Alert Message if statment for Flash alerts -->
+      <% if flash[:badge] %>
+      <div class="mb-0 center-content badge-notification">
+        <p class="badge-text alert panel panel-success alert-success center message_alert_panel">
+          <a href="#" class="close" data-dismiss="alert">&#215;</a>
+            <%= raw flash[:badge] %>
+        </p>
+      </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<style>
+  .badge-notification {
+    position: fixed;
+    z-index: 2;
+    bottom: 0px;
+    right: 0px;
+  }
+  .badge-text {
+    font-size: 14px;
+  }
+</style>
+
+<script type="text/javascript">
+  $(".badge-notification").delay(3000).fadeOut(300);
+</script>

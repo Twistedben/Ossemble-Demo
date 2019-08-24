@@ -1,0 +1,736 @@
+.ms_vh_mt {
+  margin-top: 10%;
+  @media screen and (max-width: 767px) {
+  margin-top: 3%;
+                                         }
+}
+
+.ms_vid_mb {
+  @media screen and (max-width: 767px) {
+  margin-top: 3%;
+                                         }
+}
+
+.landingt-1 {
+  display: none;
+  @media screen and (max-width: 767px) {
+  display: block;
+                                         }
+}
+
+.landingt-2 {
+  display: block;
+  @media screen and (max-width: 767px) {
+  display: none;
+                                         }
+}
+
+.city-font-size {
+ font-size: 3.7rem;
+  @media (max-width: 800px) and (min-width: 768px) {
+    font-size: 3.2rem;
+  }
+}
+
+
+.carousel-indicators li {
+  background-color: #fff;
+  background-color: rgba(70,70,70,.25);
+  
+}
+
+.carousel-indicators .active {
+  background-color: #fff;
+}
+
+
+.carousel.carousel-fade .item {
+	-webkit-transition: opacity 0.5s ease-in-out;
+	-moz-transition: opacity 0.5s ease-in-out;
+	-ms-transition: opacity 0.5s ease-in-out;
+	-o-transition: opacity 0.5s ease-in-out;
+	transition: opacity 0.5s ease-in-out;
+	opacity:0;
+}
+
+.carousel.carousel-fade .active.item {
+	opacity:1;
+}
+
+.carousel.carousel-fade .active.left,
+.carousel.carousel-fade .active.right {
+	left: 0;
+	z-index: 2;
+	opacity: 0;
+	filter: alpha(opacity=0);
+}
+
+.carousel.carousel-fade .next,
+.carousel.carousel-fade .prev {
+	left: 0;
+	z-index: 1;
+}
+
+.carousel.carousel-fade .carousel-control {
+	z-index: 3;
+}
+
+.index_bg {
+  background: -webkit-gradient(linear, right top, left bottom, from(#663399) , to(white));
+  background: -webkit-linear-gradient(right top, #663399 , white);
+  background: -o-linear-gradient(right top, #663399 , white);
+  background: linear-gradient(to left bottom, #663399 , white);
+}
+
+#text {
+	display: inline-block;
+	vertical-align: middle;
+	color: #645496;
+	letter-spacing: 2px;
+	font-size: 50px;
+	font-weight: bold;
+}
+
+#cursor {
+	display: inline-block;
+	vertical-align: middle;
+	width: 3px;
+	height: 50px;
+	background-color: #645496;
+	animation: blink .75s step-end infinite;
+}
+
+@keyframes blink {
+	from, to { 
+		background-color: transparent 
+	}
+	50% { 
+		background-color: #645496; 
+	}
+}
+
+.carousel.fading .carousel-inner .carousel-fade > .item {
+  /* Override the properties for the default sliding carousel */
+  display: block;
+
+  /* Hide slides by default */
+  opacity: 0;
+
+  /* Set transition to opactity */
+  -moz-transition: 4s ease-in-out opacity !important;
+  -webkit-transition: 4s ease-in-out opacity !important;
+  -o-transition: 4s ease-in-out opacity !important;
+  transition: 4s ease-in-out opacity !important;
+  
+}
+
+/* Active slides are visible on transition end */
+.carousel.fading .carousel-inner .carousel-fade > .active,
+/* Next slide is visible during transition */
+.carousel.fading .carousel-inner .carousel-fade > .next.left {
+    opacity: 1;
+}
+.carousel.fading .carousel-inner .carousel-fade > .next,
+.carousel.fading .carousel-inner .carousel-fade > .active.left {
+    opacity: 0;
+}#index-bg {
+    background: asset-url('logos/bg-index.png') no-repeat center center fixed; 
+   -webkit-background-size: cover;
+   -moz-background-size: cover;
+   -o-background-size: cover;
+   background-size: cover;
+   background-position: -170px 55px;
+   
+   position: relative !important;
+   margin-top: 0rem !important;
+}
+
+#newlanding {
+  margin-top: -43px;
+  font-family: 'Roboto', serif;
+
+    
+  .navbar-light .navbar-nav .nav-link {
+    font-size: 1.0rem;
+    letter-spacing: 0.6px;
+    text-align: right;
+    padding-right: 5rem;
+    font-family: 'Roboto', serif;
+  }
+  
+  img {
+      width: 40%;
+      height: auto;
+      @media screen and (max-width: 767px) {
+      width: 30%;
+      height: auto;
+                                         }
+  }
+  
+  
+  
+  .navbar-nav > li > .dropdown-menu a{color: dimgray;  }
+  
+  .navbar-nav > li > .dropdown-menu {background-color: ghostwhite;  }
+  
+  .dropdown:hover>.dropdown-menu {
+      display: block;
+      border: none;
+  }
+  
+  li {
+    list-style: none;
+  }
+  
+  .navbar li {
+    display: inline;
+    float: left;
+  }
+  
+  .navbar a {
+    display: inline-block;
+    color: #fff;
+    text-decoration: none;
+    padding: 25px;
+    -webkit-transition: 0.3s all;
+    -o-transition: 0.3s all;
+    transition: 0.3s all;
+    font-family: 'Roboto', serif;
+  }
+  
+  .navbar a {
+    text-decoration: none;
+  }
+  
+  .navbar a:hover {
+    background-color: plum;
+  }
+  
+  
+  h2.blocktext {
+      text-align: center;
+      letter-spacing: 3px;
+      word-spacing: 10px;
+      margin-bottom: 0px;
+      color: #645496;
+      font-size: 7.5rem !important;
+      font-family: 'Roboto', serif;
+      @media screen and (max-width: 767px) {
+      font-size: 6rem !important;
+                                         }
+  }
+  
+  
+  h1.blocktext {
+      text-align: center;
+      letter-spacing: 3px;
+      word-spacing: 5px;
+      color: #645496;
+      font-family: 'Roboto', serif;
+      margin-top: 5px;
+      @media screen and (max-width: 767px) {
+      font-size: 2rem !important;
+                                         }
+  }
+  
+  h1.blocktext2 {
+      text-align: center;
+      letter-spacing: 2px;
+      word-spacing: 5px;
+      color: aliceblue;
+      font-size: 16pt;
+      font-family: 'Roboto', Times New Roman;
+      margin-top: 5px;
+      @media screen and (max-width: 767px) {
+      font-size: 14pt;
+                                         }
+  }
+  
+  
+  h1.block {
+      text-align: center;
+      letter-spacing: 3px;
+      color: aliceblue;
+      font-size: 15pt;
+      font-family: 'Roboto', serif;
+  }
+  
+  .heart {
+      margin-left: 14%;
+      padding: 50px;
+      width: 70%;
+      height: auto;
+  }
+  
+  h1.blocks {
+      text-align: center;
+      letter-spacing: 3px;
+      color: #585858;
+      font-size: 20pt;
+      font-size: 20pt;
+      font-family: 'Roboto', serif;
+  }
+  
+  h5.icon-text {
+      font-size: 2.6rem;
+      padding: 10px;
+      font-weight: bold;
+      color: #585858;
+      font-family: 'Roboto', serif;
+  }
+  
+  .icons-text {
+    font-size: 1.9rem !important;
+    text-indent: 6px;
+    @media screen and (max-width: 768px) {
+      text-indent: 6px;
+      font-size: 1.2em;
+
+    }
+      
+  }
+  
+  .page-header-box {
+      background-color: ghostwhite;
+      color: #4d2a6e;
+      padding: 20px;
+      font-family: 'Source Sans Pro', serif;
+      font-size: 18px;
+      @media screen and (max-width: 767px) {
+      font-size: 15px;
+      border: none !important;
+      border-radius: 0px !important;
+                                         }
+  }
+
+  .landing-ms-border {
+    @media screen and (max-width: 767px) {
+    border-top: 1px solid rgba(161, 101, 170, .2) !important;
+    border-bottom: 1px solid rgba(161, 101, 170, .2) !important;
+                                         }
+  }
+  
+  
+  .page-end-box {
+      text-align: center;
+      padding: 20px;
+      background-color: ghostwhite;
+      border-radius: 10px;
+      font-family: 'Roboto', serif;
+      @media screen and (max-width: 767px) {
+      padding: 10px;
+                                         }
+  }
+  
+  h2.block1{
+     text-align: center;
+      letter-spacing: 2.5px;
+      word-spacing: 10px;
+      margin-top: 140px;
+      color: #585858;
+      font-size: 45pt;
+      font-family: 'Roboto', serif;
+      font-weight: bold;
+      @media screen and (max-width: 767px) {
+      margin-top: 70px !important;
+      font-size: 22pt;
+                                         }
+      @media screen and (width: 768px) {
+      margin-top: 50px !important;
+      font-size: 25pt;
+      margin-bottom: 0px;
+                                         }
+  }
+  
+  p.def-text{
+  
+      padding: 10px;
+      color: #585858;
+      font-size: 2.2rem;
+      font-family: 'Source Sans Pro', serif;
+      @media screen and (max-width: 768px) {
+        text-indent: 10px;
+        font-size: 1.4em;
+        text-align: center;
+    }
+  }
+  
+  p.end-text{
+      text-align: center;
+      padding: 10px;
+      color: #585858;
+      font-size: 15pt; 
+      padding: 10px;
+      font-family: 'Source Sans Pro', serif;
+      @media screen and (max-width: 768px) {
+        font-size: 1.4em;
+    }
+  }
+  
+  .container-1 {
+      background-color: ghostwhite;
+  }
+  
+  .space {
+      padding: 30px;
+  }
+  
+  .video {
+      margin-top: 60px;
+      margin-bottom: 30px;
+      
+    @media screen and (width: 768px) {
+     margin-top: 150px;
+                                       }
+  
+    @media screen and (max-width: 767px) {
+      //height: 260px !important;
+      //width: 500px !important;
+      margin-top: 20px;
+      margin-bottom: 3%;
+                                         }
+                                         
+
+  }
+  
+  .buttons{
+      width: 30%;
+      margin: 22px;
+      float: left;
+      font-family: 'Roboto', serif;
+  }
+  
+  .buttons-two{
+     font-family: 'Roboto', serif;
+  }
+  
+  a.button-one{
+      text-align: center;
+      cursor: pointer;
+      font-size: 30px;
+      font-family: 'Roboto', serif;
+      position: relative;
+      border-radius: 4px;
+      border: 3px solid #645496;
+      background-color: white;
+      color: #645496;
+      padding: 20px;
+      -webkit-transition: all 0.5s ease;
+      -o-transition: all 0.5s ease;
+      transition: all 0.5s ease;
+  }
+
+  
+    .button-one:hover {
+      border-radius: 4px;
+      background-color: #645496 !important;
+      color: white !important;
+  }
+  
+  .button-one:hover span:after {
+    opacity: 1;
+    right: 0;
+  }
+  
+  .button-two{
+         text-align: center;
+      cursor: pointer;
+      font-size: 30px;
+      font-family: 'Roboto', serif;
+      position: relative;
+      border-radius: 4px;
+      border: 3px solid #645496;
+      background-color: white;
+      color: #645496;
+      padding: 20px;
+      -webkit-transition: all 0.5s ease;
+      -o-transition: all 0.5s ease;
+      transition: all 0.5s ease;
+  }
+  
+    .button-two:hover {
+      border-radius: 4px;
+      background-color: #645496 !important;
+      color: white !important;
+      padding: 20px;
+      width: 200px;
+      border: 1px solid white;
+  }
+  
+  .button-two span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+  }
+
+  .button-two:hover span:after {
+    opacity: 1;
+    right: 0;
+  }
+  
+  .button-three{
+      text-align: center;
+      cursor: pointer;
+      font-size:24px;
+      
+  }
+  
+  .button-three {
+      border-radius: 4px;
+      background-color: rebeccapurple;
+      color: white;
+      border: none;
+      padding: 20px;
+      width: 200px;
+      -webkit-transition: all 0.5s ease;
+      -o-transition: all 0.5s ease;
+      transition: all 0.5s ease;
+  }
+  
+    .button-two:hover span:after {
+    opacity: 1;
+    right: 0;
+  }
+  
+  .button-three:hover {
+    -webkit-box-shadow: 2px 2px 15px rgba(0, 0, 0, 1), -2px -2px 15px rgba(0, 0, 0, 1);
+            box-shadow: 2px 2px 15px rgba(0, 0, 0, 1), -2px -2px 15px rgba(0, 0, 0, 1);
+  }
+  
+  .landing_msmt {
+      margin-bottom: 60px; 
+      margin-top: 30px;
+      @media screen and (max-width: 767px) {
+      margin-bottom: 30px; 
+      margin-top: 10px;
+                                         }
+  }
+  
+  .br-ms {
+    @media screen and (max-width: 767px) {
+    border-radius: 10px 10px 0px 0px !important;
+                                         }
+  }
+  
+  .br-ms2 {
+    @media screen and (max-width: 767px) {
+    border-radius: 0px 0px 10px 10px !important;
+                                         }
+  }
+  
+  .peb-float {
+    float: left;
+    @media screen and (max-width: 767px) {
+    float: none !important;
+                                         }
+  }
+  
+  .peb-float2 {
+    float: right;
+    @media screen and (max-width: 767px) {
+    float: none !important;
+                                         }
+  }
+}
+
+.ms_vh_mt {
+  margin-top: 10%;
+  @media screen and (max-width: 767px) {
+  margin-top: 3%;
+                                         }
+}
+
+.ms_vid_mb {
+  @media screen and (max-width: 767px) {
+  margin-top: 3%;
+                                         }
+}
+
+.landingt-1 {
+  display: none;
+  @media screen and (max-width: 767px) {
+  display: block;
+                                         }
+}
+
+.landingt-2 {
+  display: block;
+  @media screen and (max-width: 767px) {
+  display: none;
+                                         }
+}
+
+.city-font-size {
+ font-size: 3.7rem;
+  @media (max-width: 800px) and (min-width: 768px) {
+    font-size: 3.2rem;
+  }
+}
+
+
+.carousel-indicators li {
+  background-color: #fff;
+  background-color: rgba(70,70,70,.25);
+  
+}
+
+.carousel-indicators .active {
+  background-color: #fff;
+}
+
+
+.carousel.carousel-fade .item {
+	-webkit-transition: opacity 0.5s ease-in-out;
+	-moz-transition: opacity 0.5s ease-in-out;
+	-ms-transition: opacity 0.5s ease-in-out;
+	-o-transition: opacity 0.5s ease-in-out;
+	transition: opacity 0.5s ease-in-out;
+	opacity:0;
+}
+
+.carousel.carousel-fade .active.item {
+	opacity:1;
+}
+
+.carousel.carousel-fade .active.left,
+.carousel.carousel-fade .active.right {
+	left: 0;
+	z-index: 2;
+	opacity: 0;
+	filter: alpha(opacity=0);
+}
+
+.carousel.carousel-fade .next,
+.carousel.carousel-fade .prev {
+	left: 0;
+	z-index: 1;
+}
+
+.carousel.carousel-fade .carousel-control {
+	z-index: 3;
+}
+
+.index_bg {
+  background: -webkit-gradient(linear, right top, left bottom, from(#663399) , to(white));
+  background: -webkit-linear-gradient(right top, #663399 , white);
+  background: -o-linear-gradient(right top, #663399 , white);
+  background: linear-gradient(to left bottom, #663399 , white);
+}
+
+#text {
+	display: inline-block;
+	vertical-align: middle;
+	color: #645496;
+	letter-spacing: 2px;
+	font-size: 50px;
+	font-weight: bold;
+	@media screen and (max-width: 1418px) {
+  font-size: 40px;
+                                         }
+  @media screen and (max-width: 768px) {
+  font-size: 20px;
+                                         }
+}
+
+#cursor {
+	display: inline-block;
+	vertical-align: middle;
+	width: 3px;
+	height: 50px;
+	background-color: #645496;
+	animation: blink .75s step-end infinite;
+	@media screen and (max-width: 768px) {
+  height: 19px;
+                                         }
+}
+
+@keyframes blink {
+	from, to { 
+		background-color: transparent 
+	}
+	50% { 
+		background-color: #645496; 
+	}
+}
+
+.carousel.fading .carousel-inner .carousel-fade > .item {
+  /* Override the properties for the default sliding carousel */
+  display: block;
+
+  /* Hide slides by default */
+  opacity: 0;
+
+  /* Set transition to opactity */
+  -moz-transition: 4s ease-in-out opacity !important;
+  -webkit-transition: 4s ease-in-out opacity !important;
+  -o-transition: 4s ease-in-out opacity !important;
+  transition: 4s ease-in-out opacity !important;
+  
+}
+
+/* Active slides are visible on transition end */
+.carousel.fading .carousel-inner .carousel-fade > .active,
+/* Next slide is visible during transition */
+.carousel.fading .carousel-inner .carousel-fade > .next.left {
+    opacity: 1;
+}
+.carousel.fading .carousel-inner .carousel-fade > .next,
+.carousel.fading .carousel-inner .carousel-fade > .active.left {
+    opacity: 0;
+}
+
+.landing_top_text {
+  font-size: 55px;
+  @media screen and (max-width: 1418px) {
+  font-size: 45px;
+                                         }
+  @media screen and (max-width: 768px) {
+  font-size: 24px;
+                                         }
+}
+
+.landing_gif_ms {
+  width: 65% !important;
+  @media screen and (max-width: 1418px) {
+  width: 75% !important;
+                                         }
+  @media screen and (max-width: 768px) {
+  width: 85% !important;
+  height: 420px !important;
+                                         }
+  @media screen and (max-width: 767px) {
+  width: 95% !important;
+  height: 360px !important;
+                                         }
+}
+
+.ms_cf_pad {
+  @media screen and (max-width: 768px) {
+  padding-left: 8px;
+  padding-right: 8px;
+                                         }
+}
+
+.land_ms_top_pad {
+  @media screen and (max-width: 768px) {
+  padding-top: 40px !important; 
+                                         }
+}
+
+.landing_titles_ms {
+  @media screen and (max-width: 768px) {
+  font-size: 26px !important; 
+                                         }
+}
+
+.landing_info_ms {
+  @media screen and (max-width: 768px) {
+  font-size: 18px !important; 
+                                         }
+}
+
+.landing_mb_ms {
+  @media screen and (max-width: 768px) {
+  margin-bottom: 0px !important; 
+                                         }
+}

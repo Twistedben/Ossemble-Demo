@@ -1,0 +1,38 @@
+<div class="content">
+  <div class="col-d-6 col-t-10 col-p-12 center">
+    <div class="transparent">
+    <div class="ms_titles_ml text-18 b theme_color_black trending_font_size text-18">
+      Create a new Password
+    </div>
+    <div class="light-box-shadow px-4 py-0 bg-white mb-5" style="border: 1px solid rgba(128, 128, 128, .5)">  
+      <div class="form-horizontal col-all-12 form_ms_text">
+        <div class="col-tier center">
+          <div class="col-all-12 margin-y-10"> 
+            <%= form_for(resource, as: resource_name, url: admin_password_path(resource_name), html: { method: :put }) do |f| %>
+              <%= devise_error_messages! %>
+              <%= f.hidden_field :reset_password_token %>
+            
+              <div class="form-inputs ml-4 mr-4 mb-5 col-d-10 col-t-10 col-p-11">
+                <%= f.label :password, "New password" %>
+                <% if @minimum_password_length %>
+                  <em>(<%= @minimum_password_length %> characters minimum)</em>
+                <% end %>
+                <%= f.password_field :password, autofocus: true, autocomplete: "off", class: "form-control light-input-shadow", placeholder: "Enter a New Password" %>
+              </div>
+              <div class="form-inputs ml-4 mr-4 mb-5 col-d-10 col-t-10 col-p-11">
+                <%= f.label :password_confirmation, "Confirm new password" %><br />
+                <%= f.password_field :password_confirmation, autocomplete: "off", class: "form-control light-input-shadow", placeholder: "Re-enter Password Above" %>
+              </div>
+              <div class="form-actions mb-3">
+                <%= f.submit "Change Password", class: "btn btn-primary btn-lg light-btn-shadow"  %>
+              </div>
+            <% end %>
+            </div>
+          </div>
+        </div>
+        <%= render "admins/shared/links" %>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="transparent temp-working-area"></div>

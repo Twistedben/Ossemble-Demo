@@ -1,0 +1,310 @@
+/* Style inputs with type="text", select elements and textareas */
+// CSS For all pages that have Forms in them.
+
+// Changes text color to red when there's an error on a form when validation fails after submit.
+.field_with_errors {
+  color: red !important;
+}
+// Select input styling used across the site with dropdown selection boxes inside forms.
+.select_form{
+  height: 35px !important;
+}
+// After user uploads an image, this class is added to it.
+#img_prev {
+  width: 400px !important;
+  height: 243px !important;
+  border: 3px dashed #D3D3D3 !important; 
+  padding: 2.5px !important;
+}
+// Below - Modifies Quill description boxes on all pages
+form .ql-toolbar {
+  border: 1px solid #aaaaaa !important;
+  border-radius: 4px;
+}
+#editor-container {
+  
+}
+#quill_container {
+  
+}
+// Below - CSS for all forms and labels
+form label {
+  font-size: 17px;
+  color: #585858 !important;
+  font-family: 'Roboto', Arial, Times New Roman;
+  letter-spacing: 1.3px;
+  small {
+    letter-spacing: 1px;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  }
+}
+// Below - Modifies the BS form-control class to add a more defined border.
+.form-control {
+    border: 1px solid #aaaaaa;
+    height: 38px !important;
+}
+// Below- Overrides BS blue focus on input boxes to Ossemble Purple.
+.form-control:focus {
+    border-color: #645496;
+    outline: 0;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(100,84,150,.6);
+}
+
+//CSS for Login form stepper
+
+#regForm {
+  background-color: #ffffff;
+  margin: 100px auto;
+  padding: 40px;
+  width: 80%;
+  min-width: 300px;
+}
+
+/* Style for signup page  */
+#signup-form {
+  @media screen and (min-width: 768px) {
+    padding: 10px;
+  }
+  @media screen and (max-width: 768px) {
+    
+  }
+  #submit_btn {
+    float: right;
+    margin-top: 2rem !important;
+    font-size: 18px !important;
+    padding: 5px 10px;
+    box-shadow: 1px 1px 12px rgba(0, 0, 0, 0.2);
+  }
+  input:not(#submit_btn) {
+    padding: 10px;
+    border: 1px solid #aaaaaa;
+    max-width: 400px !important;
+    height: 38px !important;
+  }
+  div.col-d-4.col-t-8.col-p-12 {
+    padding-left: 5px;
+    @media screen and (max-width: 999px) {
+      padding-left: 0px;
+    }
+  }
+  #last_name_tier{
+    @media screen and (max-width: 999px) {
+      margin: 15px 0px;
+    }
+  }
+  #first_name_div {
+    @media screen and (max-width: 605px) {
+      width: 100% !important;
+      min-width: 100% !important;
+      margin: 4px 0px !important;
+      padding-left: 0px !important;
+    }
+  }
+  #last_name_div {
+    padding: 0px 2px;
+    @media screen and (max-width: 605px) {
+      width: 100% !important;
+      min-width: 100% !important;
+      margin: 4px 0px !important;
+      padding-left: 0px !important;
+    }
+  }
+  #gender_div {
+    padding-left: 4px;
+    @media screen and (max-width: 605px) {
+      width: 100% !important;
+      min-width: 100% !important;
+      margin: 4px 0px !important;
+      padding-left: 0px !important;
+    }
+  }
+  .day {
+    margin: 0px 5px;
+  }
+  input#first_name, input#user_last_name, select#gender_select {
+    height: 38px !important;
+    max-width: 400px !important;
+    @media screen and (max-width: 730px) {
+      max-width: 170px !important;
+    }
+    @media screen and (max-width: 605px) {
+      width: 100% !important;
+      min-width: 83% !important;
+      max-width: 83% !important;
+      margin: 2px 0px !important;
+
+    }
+
+  }
+  select {
+    height: 38px !important;
+    max-width: 400px !important;
+  }
+  select.dob_tier {
+    width: 210px !important;
+    max-width: 210px !important;
+    @media screen and (max-width: 730px) {
+      max-width: 170px !important;
+    }
+    @media screen and (max-width: 605px) {
+      width: 100% !important;
+      min-width: 83% !important;
+      max-width: 83% !important;
+      margin-left: 0px !important;
+      margin-top: 8px;
+    }
+  }
+  input#user_avatar {
+    height: 50px !important;
+  }
+
+}
+
+.upload-img {
+    max-height: 300px !important;
+  }
+/* Mark input boxes that gets an error on validation: 
+Class si added by using JS like on User signup (registrations/new)*/
+.invalid {
+  box-shadow: 1px 1px 14px rgba(255, 0, 0, 0.40) !important;
+}
+
+/* Hide all steps by default: */
+.tab {
+  display: none;
+}
+
+/* Make circles that indicate the steps of the form: */
+.step {
+  height: 35px;
+  width: 35px;
+  margin: 0 2px;
+  background-color: #bbbbbb;
+  border: none; 
+  border-radius: 50%;
+  display: inline-block;
+  opacity: 0.6;
+}
+
+.step_style {
+  padding-top: 3.5px; 
+  padding-right: .5px; 
+  color: white;
+}
+/* Mark the active step: */
+.step.active {
+  opacity: 1;
+}
+
+/* Mark the steps that are finished and valid: */
+.step.finish {
+  background-color: #645496;
+}
+    
+// Below - All styling on Feedback page.
+#feedbackform {
+
+    input[type=text], select, textarea {
+        width: 100%; /* Full width */
+        padding: 12px; /* Some padding */  
+        border: 1px solid #ccc; /* Gray border */
+        border-radius: 4px; /* Rounded borders */
+        box-sizing: border-box; /* Make sure that padding and width stays in place */
+        margin-top: 6px; /* Add a top margin */
+        margin-bottom: 16px; /* Bottom margin */
+        resize: vertical /* Allow the user to vertically resize the textarea (not horizontally) */
+    }
+    
+    /* Style the submit button with a specific background color etc */
+    input[type=submit] {
+        background-color: #4CAF50;
+        color: white;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    
+    /* When moving the mouse over the submit button, add a darker green color */
+    input[type=submit]:hover {
+        background-color: #45a049;
+    }
+    
+
+}
+
+.ms-login-title {
+    display: none;
+   @media screen and (max-width: 767px) {
+    display: block;
+    margin-top: 15px !important;
+                                       }
+}
+
+.login-title {
+    display: block;
+    margin-top: 80px;
+   @media screen and (max-width: 767px) {
+    display: none;
+                                       }
+}
+
+
+.loading{
+    width: auto;
+    height: auto;
+    background: #E3EFF0;
+    font-weight:bold;
+
+    
+}
+.loading div{
+    margin: auto 0px;
+    text-align:center;
+    vertical-align:middle;
+}
+
+.tab-btn {
+  border-radius: 0px;
+  background-color: white !important; 
+  border-left: 1px solid rgba(128, 128, 128, .5);
+  border-right: 1px solid rgba(128, 128, 128, .5);
+  border-top: 1px solid rgba(128, 128, 128, .5);
+  border-bottom: 0px;
+  color: #585858;
+  font-size: 21px;
+}
+
+.tab-btn:active , .tab-btn:hover, .tab-btn:focus {
+  border-radius: 0px;
+  background-color: #645496 !important; 
+  border-left: 1px solid rgba(128, 128, 128, .5);
+  border-right: 1px solid rgba(128, 128, 128, .5);
+  border-top: 1px solid rgba(128, 128, 128, .5);
+  border-bottom: 0px;
+  font-size: 21px;
+  color: white !important;
+}
+
+.tab-btn2 {
+  border-radius: 0px;
+  background-color: #645496 !important; 
+  border-left: 1px solid rgba(128, 128, 128, .5);
+  border-right: 1px solid rgba(128, 128, 128, .5);
+  border-top: 1px solid rgba(128, 128, 128, .5);
+  border-bottom: 0px;
+  font-size: 21px;
+  color: white;
+}
+
+.tab-btn2:hover {
+  border-radius: 0px;
+  background-color: #645496 !important; 
+  border-left: 1px solid rgba(128, 128, 128, .5);
+  border-right: 1px solid rgba(128, 128, 128, .5);
+  border-top: 1px solid rgba(128, 128, 128, .5);
+  border-bottom: 0px;
+  font-size: 21px;
+  color: white;
+}
+

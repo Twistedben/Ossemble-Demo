@@ -1,0 +1,10 @@
+// update.js.erb (CommentsController#create)
+  var current_comment = $('li[name="<%= @edit_comment.id %>"]');
+  var form = $('#update_form_<%= @edit_comment.id %>');
+  $(form).slideUp("slow", "swing");
+  $(current_comment).slideUp("slow", "swing");
+  $(current_comment).addClass('vanish');
+  $(current_comment).html("<%= j render @edit_comment %>");
+  $(current_comment).delay(1000).slideDown("slow", "swing");
+  $(current_comment).effect("highlight", 3000, 2000);
+  $(form).delay(1000).slideUp("slow", "swing");

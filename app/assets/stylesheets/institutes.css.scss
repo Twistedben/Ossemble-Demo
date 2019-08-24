@@ -1,0 +1,47 @@
+// Stylesheet for institute related pages
+
+// Institute -> new.html.erb
+#institute-btns {
+  float:left;
+  label, a {
+    float: left;
+    width: 24%;
+    @media screen and (max-width: 1150px) {
+      width: 32.3%;
+    }
+    margin: 4px;
+    background-color:#EFEFEF;
+    border-radius: 4px;
+    border: 1px solid #D0D0D0;
+    overflow: auto;
+    span {
+      text-align: center;
+      font-size: 15px;
+      padding: 12px 0px;
+      display: block;
+      height: 100%;
+    }
+    input {
+      position:fixed;
+      opacity:0
+    }
+  }
+  input:checked + span, .selected {
+    background-color: #645496 !important;
+    color: white !important;
+    font-weight: bold;
+    box-shadow: 1px 2px 12px 1px rgba(0, 0, 0, 0.2);
+  }
+  .unselect:hover, .selected {
+    background-color: #645496 !important;
+    color: white !important;
+    box-shadow: 1px 2px 12px 1px rgba(0, 0, 0, 0.2);
+  }
+  .unselect {
+    border: 2px solid #645496 !important;
+    background-color: white;
+    color: #645496 !important;
+    box-shadow: 1px 2px 12px 1px rgba(0, 0, 0, 0.2);
+    margin: 2.5px;
+  }
+}

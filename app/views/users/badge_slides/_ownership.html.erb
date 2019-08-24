@@ -1,0 +1,58 @@
+<!--  Since the code for each badge is the same in HTML layout, we rendered it with obj, Partial for holding the four main badges, 
+  determined by the Obj, rendered from the users/reputation.html.erb partial, which is rendered from users/show.html.erb. -->
+  <div class="col-tier" title="Ownership: Level up by contributing to content for others to see!">
+    <div id="reputation_showcase" class="col-tier"> 
+      <div id="rep_badge_tier" class="col-all-12">
+        <div id="progress_column" class="col-d-11 col-t-11 col-p-12 center-all">
+          <div class="col-tier">
+            <div class="col-all-8">
+              <div class="tier"> 
+                <!-- Below -  Badge image -->
+                <div id="rep_image">
+                  <%= image_tag "badges/OssembleOwnership.svg", class: "image" %>
+                </div>                 
+                <!-- Below -  Name of the badge -->
+                <div id="rep_name" class="">
+                  <p>
+                    Ownership
+                  </p>
+                </div>
+              </div>
+            </div>
+            <!-- Below -  The Percentage until the next level -->
+            <div id="rep_percent" class="col-all-4">
+              <p>
+                <%= badge_percentage(@user, "ownership") %>%
+              </p>
+            </div>
+          </div>
+          <!-- Below -  Progress bar tier -->
+          <div class="col-tier">
+            <!-- Below - Browsers that support HTML5 progress element will ignore the html inside `progress` element. Whereas older browsers will ignore the `progress` element and instead render the html inside it. -->
+            <progress max="<%= @user.badge_ding_threshold("ownership") %>" value="<%= @user.ownership.score %>" class="progress_bar_value">
+              <div class="col-all-12 progress-bar">
+                <!-- Below -  Doesn't show except on old browsers -->
+                <span style="width: <%= badge_percentage(@user, "ownership") %>%"><%= badge_percentage(@user, "ownership") %>%</span>
+              </div>
+            </progress>
+          </div>
+          <!-- Below -  Displays the score progress of the badge and the level -->
+          <div id="rep_progress_tier" class="col-tier">
+            <div id="rep_score" class="col-all-6">
+              <p>
+                Score: 
+                <span> <%= badge_progress(@user, "ownership") %> </span>
+              </p>
+            </div>
+            <div id="rep_level" class="col-all-6">
+              <p>
+                Level: 
+                <span> <%= @user.ownership.level %> </span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

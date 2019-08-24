@@ -1,0 +1,485 @@
+// Stylesheet and CSS for wokrplaces and admin related workplace pages 
+  // Workplace Side Panel partial stylesheet 
+// Begin - Invite Member Page
+
+  #share_invite_link_btn {
+    padding: 10px 18px;
+    height: 99px;
+    box-shadow: 1px 3px 14px rgba(0, 0, 0, 0.2);
+    #copy_link_btn {
+      font-size: 20px;
+      color: #645496;
+    }
+    #url_input {
+      max-width: 195px;
+    }
+    &:hover {
+      #copy_link_btn {
+        color: white;
+      }
+    }
+  
+  }
+  
+// End - INvite Member
+
+// Begin - Workplace Directory
+  #directory_container {
+    margin-top: 15px;
+    margin-bottom: 55px; 
+    // Begin - Modal styling 
+    .contact_modal_container {
+      .modal-header {
+        padding: 8px;
+        background: #f2f2f2;
+        .close {
+          margin: 0px;
+          padding: 0px;
+          font-size: 19px;
+        }
+      }
+      #modal_label {
+        h4 {
+          margin: 10px auto 0px auto !important;
+        }
+      }
+      hr {
+        margin-bottom: 0px !important;
+        margin-top: 10px !important;
+      }
+      .modal-title {
+        margin: 0 auto;
+        padding-top: 10px;
+        font-family: "Roboto", "Helvetica Neue",Helvetica,Arial;
+      }
+      button.close {
+        font-size: 16px;
+        margin: 0px !important;
+      }
+      .modal-body {
+        margin: 5px 0px;
+        p {
+          font-size: 16px;
+          letter-spacing: 1.2px;
+        }
+        .contact_information {
+          font-size: 16px;
+        }
+      }
+      .modal-footer {
+        button {
+          padding: 3px 12px;
+        }
+      }
+    }
+    // End - Modal Styling
+    #directory_header_container {
+      p {
+        font-size: 26px;
+        text-align: center;
+        margin: 10px auto;
+        font-weight: bold;
+        font-family: "Roboto", "Helvetica Neue",Helvetica,Arial; ;
+      }
+    }
+    
+    #directory_card_container {
+      opacity: 0.96;
+      color: black;
+      margin: 7px;
+      width: 31.5%;
+      min-width: 250px;
+      max-width: 400px;
+      background-color: white;
+      border-radius: 10px;
+      border: 1px solid rgba(88, 88, 88, .5);
+      box-shadow: 1px 1px 14px rgba(0, 0, 0, 0.12), -1px -1px 14px rgba(0, 0, 0, 0.12);
+      @media screen and (max-width: 769px) {
+        opacity: 0.96;
+        color: black;
+        margin: 7px;
+        width: 31.5%;
+        min-width: 155px;
+        max-width: 400px;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 1px 1px 14px rgba(0, 0, 0, 0.12), -1px -1px 14px rgba(0, 0, 0, 0.12);
+        }
+      &:hover {
+        opacity: 1;
+        box-shadow: 1px 2px 16px #645496, -1px -1px 16px rgba(255, 251, 158, 0.10);
+        
+        .button-up {
+          border-radius: 4px;
+          background-color: #645496 !important;
+          color: white !important;
+          padding: 5px;
+        }
+      }
+      p#name{
+        color: black;
+        text-transform: none;
+        font-size: 130%;
+        font-weight: bold;
+        text-align: center;
+        letter-spacing: 1.4px;
+        font-family: "Roboto", "Helvetica Neue",Helvetica,Arial;
+        margin: -1px !important;
+        @media screen and (max-width: 769px) {
+        font-size: 110%;
+        font-weight: bold;
+        text-align: center;
+        }
+      }
+      p#department {
+        font-size: 17px;
+        text-align: center;
+        margin-bottom: 0px;
+        color: #585858;
+        @media screen and (max-width: 769px) {
+        font-size: 15px;
+        text-align: center;
+        }
+      }
+      p#directory_avatar {
+        margin: 0px auto;
+        padding-bottom: 20px;
+        padding-top: 10px;
+        align-items: center;
+        text-align: center;
+        img {
+          border-radius: 50%;
+          width: 105px !important;
+          height: 105px !important;
+          box-shadow: 1px 3px 16px rgba(0, 0, 0, .23);
+         @media screen and (max-width: 769px) {
+          width: 80px !important;
+          height: 80px !important;
+        }
+        }
+      }
+      
+      p#title {
+        font-size: 18px;
+        text-align: center;
+        padding: 10px 0px;
+        margin-bottom: 2px;
+        @media screen and (max-width: 769px) {
+        font-size: 15px;
+        text-align: center;
+        padding: 10px;
+        }
+      }
+      div.col-tier {
+        padding-bottom: 8px;
+        #workplace_user_dropdown_menu {
+          a:hover {
+            font-weight: bold;
+          }
+        }
+        #workplace_user_dropdown_btn {
+          float: right;
+          padding-right: 12px;
+          padding-bottom: 4px;
+        
+          i {
+            opacity: 0.9;
+            color: #645496 !important;
+            font-size: 18px;
+            float: right;
+            padding-left: 3px;
+            &:hover {
+              opacity: 1;
+            }
+          }
+        }
+        #workplace_user_dropdown_menu {
+          .dropdown-item {
+            display: block;
+            width: 100%;
+            padding: .25rem 1.5rem;
+            clear: both;
+            font-weight: 400;
+            color: #212529;
+            text-align: inherit;
+            white-space: nowrap;
+            background-color: transparent;
+            border: 0;
+            font-size: 16px;
+            i {
+              margin-right: 8px;
+              color: red !important;
+            }
+          }
+        }
+      }
+      .button-up {
+        display: inline-block;
+        margin: 0 auto !important;
+      }
+      
+    }
+  }
+
+// End - Workplace Directory
+
+// Begin - Workplace Edit Page
+#workplace_edit_container {
+  margin-top: 15px;
+  margin-bottom: 55px;
+  
+  #edit_header_container {
+    p {
+      font-size: 26px;
+      text-align: left;
+      font-weight: bold;
+      font-family: "Roboto", "Helvetica Neue",Helvetica,Arial; ;
+    }
+  }
+  #workplace_description {
+    min-height: 85px !important;
+    max-height: 155px !important;
+  }
+ 
+}
+
+#public_members_radio_container {
+  label {
+    cursor: pointer;
+    font-size: 15px;
+    position: relative;
+    border-radius: 4px;
+    border: 2px solid #645496;
+    background-color: white;
+    background: none;
+    color: #645496;
+    padding: 6px 10px;
+    width: 100px !important;
+    text-shadow: none !important;
+    box-shadow: 1.5px 1.5px 14px rgba(0, 0, 0, 0.2) !important;
+    -webkit-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;    
+    &.active {
+      border-radius: 4px;
+      background-color: #645496 !important;
+      color: white !important;
+    }
+  }
+}
+// End - Workplace Edit Page
+
+// Begin - Workplace After Signup Page
+#signup_accordion_container {
+ 
+  a#collapse_btn {
+    border-radius: 4px;
+    border: 2px solid #645496;
+    background-color: white;
+    color: #645496;
+    padding: 6px;
+    width: 200px;
+    height: 40px;
+    font-size: 17px;
+    transition: all 0.3s ease;
+    margin: 10px 18px;
+    &:hover {
+      font-size: 17px;
+      border-radius: 4px;
+      background-color: #645496 !important;
+      color: white !important;
+      padding: 5px;
+      height: 40px;
+    }
+    i {
+      padding-right: 5px;
+      font-size: 19px;
+    }
+  }
+  #after_signup_container {
+    margin-top: 15px;
+    box-shadow: 1px 3px 16px rgba(0, 0, 0, 0.23);
+    position: relative;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: .25rem;
+    padding: 18px;
+    #signup_header_container {
+      padding: 8px 8px 0px 0px;
+      p {
+        font-size: 26px;
+        text-align: left;
+        font-weight: bold;
+        font-family: "Roboto", "Helvetica Neue",Helvetica,Arial; ;
+      }
+      h4 {
+        font-style: italic;
+        margin-top: 0px;
+        line-height: 1.5;
+      }
+    }
+    form {
+      padding-left: 18px;
+    }
+    #workplace_description {
+      min-height: 85px !important;
+      max-height: 155px !important;
+      resize: none;
+    }
+    .form_tier {
+      padding: 12px 0px;
+    }
+    #department_accordion {
+      border-top: 1px solid rgba(0, 0, 0, 0.4);
+      margin: 15px 15px 15px 20px;
+      
+      .add_department_container {
+        margin-top: 10px;
+        a.add_fields {
+          border-radius: 4px;
+          border: 2px solid #645496;
+          background-color: white;
+          color: #645496;
+          padding: 6px;
+          width: 160px;
+          height: 35px;
+          transition: all 0.3s ease;
+          font-size: 15px;
+          &:hover {
+            border-radius: 4px;
+            background-color: #645496 !important;
+            color: white !important;
+            padding: 5px;
+          }
+          i {
+            margin-right: 8px;
+          }
+        }
+      }
+      div#department_forms {
+        margin-left: 10px;
+      }
+      textarea {
+        height: 90px !important;
+        resize: none !important;
+        overflow: auto;
+      }
+    }
+  }
+  #finish_workplace_btn {
+    margin-top: 25px;
+  }
+}
+ 
+  
+// End - Workplace After Signup Page
+
+// Begin - Workplace Departments Page
+#workplace_department_container {
+  margin-top: 15px;
+  margin-bottom: 55px;
+  
+  #department_header_container {
+    p {
+      font-size: 26px;
+      text-align: left;
+      font-weight: bold;
+      font-family: "Roboto", "Helvetica Neue",Helvetica,Arial; ;
+    }
+  }
+  #departments_list_container {
+    margin-bottom: 25px;
+    padding-right: 20px;
+        @media screen and (max-width: 999px) {
+    padding-right: 0px !important;
+                                        }
+    
+    p {
+      font-size: 17px;
+    }
+    #department_container {
+      padding: 12px 0px;
+      p {
+        margin: 0px;
+    
+      }
+      .remove_dep {
+        margin-left: auto !important;
+        padding-top: 2px;
+        a i {
+          font-size: 16px;
+          float: right;
+          color: red;
+        }      
+      }  
+    }
+    #department_container:not(:last-child) {
+      border-bottom: 1px groove rgba(0, 0, 0, 0.2);
+    }
+
+  }
+}
+
+.tour-modal-bg {
+  background-color: #2F1541;
+}
+
+
+  .image-upload > input
+{
+   display: none;
+}
+
+// End - Workplace Department Page
+
+  .loc_mt_ms {
+    @media screen and (max-width: 767px) {
+    margin-top: 18px !important;
+                                        }
+  }
+  
+    .no_padr_ms {
+    @media screen and (max-width: 999px) {
+    padding-right: 0px !important;
+                                        }
+  } 
+    
+.inv_no_pad {
+    @media screen and (max-width: 767px) {
+    padding: 0px !important;
+    margin-bottom: 15px;
+                                        }
+}
+
+.pub_info_ms {
+    @media screen and (max-width: 767px) {
+    font-size: 14px !important;
+    padding: 0px !important;
+    margin: 0px !important;
+    line-height: 20px;
+                                        }
+}
+
+.admin_cont_nopad {
+  @media screen and (max-width: 767px) {
+  padding: 0px !important;
+                                      }
+}
+
+.directory_nopad_ms {
+  @media screen and (max-width: 767px) {
+  padding: 10px !important;
+                                      }
+}
+
+#note_ms {
+  padding-top: 15px;
+  padding-bottom: 0px !important;
+  height: 35px;
+  @media screen and (max-width: 767px) {
+
+                                      }
+}

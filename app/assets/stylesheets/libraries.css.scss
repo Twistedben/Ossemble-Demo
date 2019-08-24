@@ -1,0 +1,175 @@
+// Stylesheet for library pages: index/show.html.erb
+
+.library_container {
+  margin-top: 15px;
+  margin-bottom: 55px;
+  #library_header_container {
+    p {
+      font-size: 26px;
+      text-align: center;
+      margin: 10px auto;
+      font-weight: bold;
+      font-family: "Roboto", "Helvetica Neue",Helvetica,Arial; ;
+    }
+  }
+ 
+}
+
+.library_container { 
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: 0px;
+  margin-left: 0px;
+  width: 100% !important;
+  
+  #library_personal_tier {
+    margin-top: 18px;    
+  }
+  
+  #library_workplace_posts_tier {
+    
+    .map_card {
+      margin-right: 25px !important;
+    }
+    .forum_card {
+      margin-left: 5px !important;
+    }
+  }
+  
+  .library_card_container {
+    opacity: 0.96;
+    margin-right: 10px;
+    color: black;
+    margin: 0 auto !important;
+    min-width: 250px;
+    max-width: 400px;
+    width: 30%;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 1px 1px 14px rgba(0, 0, 0, 0.12), -1px -1px 14px rgba(0, 0, 0, 0.12);
+  
+    &:hover {
+      opacity: 1;
+      box-shadow: 1px 1px 16px rgba(255, 251, 158, 0.10), -1px -1px 16px rgba(255, 251, 158, 0.10);
+      
+      .button-up {
+        border-radius: 4px;
+        background-color: #645496 !important;
+        color: white !important;
+        padding: 5px;
+      }
+    }
+    p.title{
+      // Begin - GFradient background for header title
+        background: -moz-linear-gradient(269deg, #645496 12%, #554780 70%) !important;/* FF3.6+ */
+        background: -webkit-gradient(linear, 269deg, color-stop(12%, 645496), color-stop(85%, 554780)) !important;/* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(269deg, #645496 12%, #554780 70%) !important;/* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(269deg, #645496 12%, #554780 80%) !important;/* Opera 11.10+ */
+        background: -ms-linear-gradient(269deg, #645496 12%, #554780 85%) !important;/* IE10+ */
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#1301FE', endColorstr='#F4F60C', GradientType='1') !important; /* for IE */
+        background: linear-gradient(269deg, #645496 12%, #554780 88%) !important;/* W3C */
+      // End - GFradient background for header title
+      color: white;
+      font-size: 200%;
+      font-weight: bold;
+      text-align: center;
+      padding: 10px;
+      box-shadow: 0 -8px 6px rgba(0,0,0,.1) inset;
+      text-transform: uppercase;
+      border: 1px solid rgba(0, 0, 0, 0.5);
+      border-radius: 10px 10px 0px 0px;
+      letter-spacing: 1.4px;
+      font-family: "Roboto", "Helvetica Neue",Helvetica,Arial;
+      margin: 0px !important;
+    }
+    p.center-all {
+      margin-bottom: 0px;
+    }
+    p#count {
+      font-size: 16px;
+      text-align: center;
+      margin-top: auto;
+    }
+    
+    .button-up {
+      display: inline-block;
+      margin: 0 auto !important;
+    }
+    
+    div.col-tier {
+      padding-bottom: 10px !important;
+    }
+  }
+    a.library_card i {
+      font-size: 85px;
+      color: #645496 !important;
+      margin: 1.5rem 0px;
+  }
+    a.library_card p {
+      padding: 0px;
+      position: relative;
+  }
+  
+  @media screen and (max-width: 1355px) {
+    #library_personal_tier {
+         
+      .library_card_container {
+        width: 29% !important;
+        margin: 0px 1% !important;
+  
+      }
+      .upload_card {
+          margin-left: 8% !important;
+        }
+      p.title { 
+        font-size: 140% !important;
+      }
+      p.center-all i {
+        font-size: 70px;
+      }
+      p#count {
+        font-size: 14px !important;
+      }
+    }
+  }
+  @media screen and (max-width: 900px) { 
+    #library_personal_tier {
+         
+      .library_card_container {
+        width: 35% !important;
+        margin: 0px auto !important;
+      }
+      .shared_uploads_card {
+        margin-left: 10px !important;
+      }
+      .upload_card {
+        margin-right: 10px !important;
+      }
+      .shared_posts_card {
+        margin-top: 15px !important;
+      }
+    }
+  }
+}
+
+
+
+@media only screen and (max-width: 600px) {
+  .library_container a.library_card{
+    border-radius: 0;
+    width: 100%;
+    margin-right: 0;
+  }
+  
+  .library_container a.library_card:hover{
+    transform: none;
+    box-shadow: none;
+  }
+  
+}
+
+.archive_mb_ms {
+  @media screen and (max-width: 767px) {
+  margin-bottom: 15px !important;
+                                      }
+}

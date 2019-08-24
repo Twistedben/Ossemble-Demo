@@ -1,0 +1,173 @@
+<!-- Main page for admin/city account/profile creation (views/admins/registrations/new.html.erb) -->
+<div class="content-fluid"> 
+  <div class="tier"> 
+    <div class="center col-all-12" style="max-width: 950px">
+      <!--  Begin - Form_For Devise & User Signup & Finishing User Profile Signup -->
+      <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name),
+          html: {novalidate: false, multipart: true, class: "form", style: "margin: 80px 0px 150px", role: "form"}) do |f| %>
+        <!-- Below - Error Message(s) Wrapper for User Signup -->
+        <%= devise_error_messages! %>
+        <div class="card padding-x-10 padding-t-10 light-box-shadow">
+          <h3 class="margin-t-0 padding-b-8 border-bottom">
+            <!-- Below -  If the admin is coming from an workplace invite email or invite shared link, provides invite token in params, if the workplace is public, the institute id, and changes title -->
+            <% if params[:invite_token] %>
+              <%= hidden_field_tag :invite_token, @token %>
+              <%= hidden_field_tag :workplace_id, @workplace_id %>
+              <%= hidden_field_tag "admin[institute_id]", @workplace.institute.id %>
+              <%= hidden_field_tag "admin[visitor]", @workplace.public %>
+              Join Ossemble & <%= params[:workplace_name] %>
+              <br>
+              <small>
+                Workplace: <%= @workplace.institute.name %>
+              </small>
+            <% else %> <!-- Fresh admin signup, so admin will be super admin and different headline -->
+              Join Ossemble - Workplace Profile
+              <%= hidden_field_tag "admin[super_admin]", :true %>
+            <% end %>
+          </h3>
+          <div id="signup-form" class="col-all-12 center">
+            <div class="tier"> 
+              <div class="col-d-12 col-t-12 col-p-12">
+                <div class="col-tier margin-b-15 padding-b-20 border-bottom"> 
+                  <!-- Begin -  NAME/ADDRESS/CITY: -->
+                  <div class="col-tier "> 
+                    <div id="" class="col-d-4 col-t-8 col-p-12">
+                      <%= f.label :first_name, "First Name", class: 'padding-x-3'  %> 
+                      <%= f.text_field :first_name, class: "form-control px-3 light-input-shadow", placeholder: "Enter First Name", required: true,  autocomplete: true, autofocus: true  %>
+                    </div>
+                    <div id="last_name_tier" class="col-d-4 col-t-8 col-p-12">
+                      <%= f.label :last_name, "Last Name", class: 'padding-x-3' %>
+                      <%= f.text_field :last_name, class: "form-control px-3 light-input-shadow", placeholder: "Enter Last Name",  required: true, autocomplete: true %>
+                    </div>
+                    <div class="col-d-4 col-t-8 col-p-12">
+                      <%= f.label :organization, "Organization / Department", class: 'padding-x-3' %>
+                      <%= f.text_field :organization, class: "form-control px-3 light-input-shadow", maxlength: 60, placeholder: "Department or Organization Name", required: true, autocomplete: false %>
+                    </div>                    
+                  </div>
+                </div>
+                  <!-- End -  NAME/ADDRESS/City:  -->
+                <!-- Begin -  Dep/EMAIL/PASS:  -->
+                <div class="tier margin-b-18"> 
+                  <div class="col-d-7 col-t-8 col-p-12">
+                    <div class="mb-4 pb-4">
+                      <div class="col-all-12">
+                        <%= f.label :email, "Email", class: 'padding-x-3' %>
+                        <%= f.email_field :email, type:"email", placeholder: "Yourcity@city.us.gov", class: "form-control px-3 light-input-shadow", required: true   %>
+                      </div>
+                      <div class="col-all-12 margin-y-15">
+                        <div class="control-label">
+                          <%= f.label :password %>
+                          <% if @minimum_password_length %>
+                          <% end %>
+                          <%= f.password_field :password, autocomplete: "off", placeholder: "Minimum 6 Characters", required: true,   class: "light-input-shadow form-control px-2" %>
+                        </div>
+                      </div>
+                      <div class="col-all-12">
+                        <%= f.label :phone_number, "Phone Number", class: 'padding-x-3' %>
+                        <%= f.phone_field :phone_number, class: "form-control px-3 light-input-shadow", placeholder: "Enter Phone Number ('555-555-5555')", required: true, autocomplete: true %>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-d-4 col-t-4 col-p-vanish">
+                    <div class="center-all">
+                      <%= image_tag "logos/Owl_Brand_Vertical_Transparent.png", alt: "Icon", class: "mb-0 mt-0", style: "width: 80%" %>
+                    </div>
+                    <p class="center-all margin-t-12 margin-b-0 theme_color_black text-18 bold primary_font">Join now and start collaborating across agencies!</p>
+                  </div>
+                  <!-- End -  EMAIL/PASS/Dep: -->
+                </div>  
+              </div>
+              <!-- Below -  Loading Image upload gif -->
+              <div class="loading" style="display:none; z-index: 15000">
+                <div class="center-all" style="border-radius: 10px !important">
+                  <%= image_tag "icons/misc/loading.gif", alt: "Uploading", class: "upload-img" %>
+                  <div class="theme_color_dark mb-5 px-4">Please wait while your image uploads...</div>
+                </div>
+              </div>
+              <!-- Below -  Action buttons at bottom. -->
+              <div class="col-tier">
+                <div class="col push-right margin-x-5">
+                  <%= f.submit "Create Profile", id: 'submit_btn', disabled: true, class: "btn button-cs form_btn", onclick: "amplitude.getInstance().logEvent('Create Profile - Admin');" %>
+                </div>
+              </div>
+            </div>      
+          </div>      
+        </div>
+      <% end %> <!-- End - Form_For Devise & User Signup -->
+    </div>
+  </div>
+</div>
+
+
+<script>
+// Begin - If statement checking if admin is coming from email invite or fresh signup.
+<% if params[:invite_token] %> // Admin coming from invite email, so text values of email, first name, last name, and department and city are 
+  $("#admin_email").prop('autocomplete', false);
+  $("#admin_last_name").prop('autocomplete', false);
+  $("#admin_first_name").prop('autocomplete', false);
+  $("#admin_email").val("<%= params[:email] %>");
+  $("#admin_first_name").val("<%= params[:first_name] %>");
+  $("#admin_last_name").val("<%= params[:last_name] %>");
+  $("#admin_organization").val("<%= @workplace.institute.name %>");
+<% end %>
+//JS For adding error red highlights on input fields and select boxes
+   if ($("#error_explanation:contains('Email')").length > 0) {
+     $("#admin_email").addClass("invalid")
+   };
+   if ($("#error_explanation:contains('Password')").length > 0) {
+     $("#admin_password").addClass("invalid")
+   };
+   if ($("#error_explanation:contains('First')").length > 0) {
+     $("#admin_first_name").addClass("invalid")
+   };
+   if ($("#error_explanation:contains('Last')").length > 0) {
+     $("#admin_last_name").addClass("invalid")
+   };
+   if ($("#error_explanation:contains('Phone')").length > 0) {
+     $("#admin_phone_number").addClass("invalid")
+   };
+   if ($("#error_explanation:contains('Organization')").length > 0) {
+     $("#admin_organization").addClass("invalid")
+   };
+  // Removes red highlight when the input box is changed
+    $("#admin_email, #admin_phone_number, #admin_last_name, #admin_first_name, #admin_password, #admin_organization").bind("keyup", function() {
+      if ($(this).hasClass("invalid")) {
+        $(this).removeClass('invalid')
+      }
+    });
+
+  // Below - Ensures all fields are selected before allowing submit button to enable
+  $('form').on('change', function() {
+      if(allFilled()) $('#submit_btn').removeAttr('disabled');
+  });
+  
+  // Below - When loadgif submit button is clicked, adds andamplitude event creation
+  $("#submit_btn").on('click', function() {
+    amplitude.getInstance().logEvent('New Profile Creation');
+  });
+  
+  // Makes sure input and select fields are not empty before allowing submit button
+  function allFilled() {
+      var filled = true;
+      $('#admin_first_name, #admin_last_name, #admin_email, #admin_organization').each(function() {
+          if ($(this).val() == '') filled = false;
+      });
+      return filled;
+  };
+
+// <!-- Below -  Previews the uploaded image. Called by onchange for file upload. Also makes upload button bigger to show name of file. -->
+function readURL(input) {
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+    $("#img_prev").show();
+    $(".img_prev_title").show();
+    $("#user_avatar").width(300);
+    reader.onload = function (e) {
+      $('#img_prev')
+        .attr('src', e.target.result)
+    };
+
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+</script>

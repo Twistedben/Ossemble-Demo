@@ -1,0 +1,79 @@
+<!-- Partial for rendering Update Profile Account Signup Form. Rendered from: (devise/registrations/edit.html.erb)-->
+<!-- Below -  Allows autocomplete for title of user -->
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<!--  Begin - Form_For Devise & User Signup & Finishing User Profile Signup.
+      "multipart => true" enables uploading of an Avatar -->
+  <div id="update_profile_title">
+    <p style="padding-left: 0px !important;">
+      Update Your Profile
+    </p>
+  </div>
+  <%= devise_error_messages! %>
+  <div class="card col-tier padding-all-10">
+    <div id="accordion_container">
+    <% if current_user.verified? %> <!--  If user has been verified, this tier shows inside the accordian drop down of private profice details.  -->
+      <!-- Below -  User is verified and completed the signup process -->
+      <%= render 'users/user_layouts/verified_user_update_form' %>
+    <% end %>
+    <!-- Begin -  Finish profile section for address and Zip. Shows in a separate accordion only if user has not yet verified their account.-->
+    <% if current_user.unverified_user? %> <!--  If the user hasn't filled in their address and zip. Otherwise this appears above in private info accordion. -->
+      <!-- Below -  User is not verified, so renders partial to verify and create a Location for user. -->
+      <%= render 'users/user_layouts/unverified_user_update_form' %>
+    <% end %>
+    <!-- Below - Renders public profile section for neighborhood and other fields. Partial determines if it's inside accordion or not Public Profile Section inside the accordion since they already entered their bio and neighborhood.-->
+    <%= render 'users/user_layouts/public_user_update_form' %>
+    </div>  
+  </div> 
+  <div class="tier">
+    <div class="col-all-12">
+      <%= button_to "Delete Profile", user_registration_url, data: { confirm: "Are you sure you want to permanently delete your account and profile?" }, method: :delete, id: "delete_profile_btn", class: "btn button-cs" %>
+    </div> 
+  </div>
+    <!-- End - Update/Delete Account Button Row -->
+      <!-- Below -  Follows Row if user isn't following any content yet -->
+   <%= render 'users/user_layouts/follow_some_content' if current_user.not_following?  %>
+<script>
+  $( function() {
+    $( "#accordion_container" ).accordion({
+      collapsible: true,
+      heightStyle: "content",
+      active: 1
+      
+    });
+  } );
+</script>
+<script>
+   
+    $( function() {
+    var userTitles = [
+      "Teacher",
+      "Mother",
+      "Veteran",
+      "Concerned Citizen", 
+      "Activist",
+      "Community Organizer",
+      "Father",
+      "Student",
+      "Community Leader",
+      "Helper",
+      "Business Owner",
+      "Government Worker",
+      "Taxpayer"
+    ];
+    $( "#user_title" ).autocomplete({
+      source: userTitles
+    });
+  } );
+</script>
+<!-- Below -  Loads in for JS autocomplete from the users citie's associated zip codes.. -->
+<%= javascript_tag "zipCodes = #{current_user.city.zip_codes.pluck(:zip).to_json.html_safe};" %>     
+<script>
+// Below - Provides zip code recommendations for zipcode text input field based on city.   
+    $( function() {
+    $( "#location_zip_code" ).autocomplete({
+      source: zipCodes
+    });
+  } );
+ 
+</script>

@@ -1,0 +1,120 @@
+<!--  Main Show Page for Individual Concerns in order to display additional information of the specific concern. (views/concerns/show.html.erb) -->
+  <div class="content">
+    <div class="tier"> <!-- Begin - Main tier for page. -->
+    <!-- Below -  Renders in the accordian from views/layouts/phones/... for mobile and tablet. -->
+    <%= render "layouts/phones/mobile_accordion" %>
+  <!-- Begin - Concern Information and Score. -->
+    <!-- Begin - Top Row Section of Container -->
+      <div class="col-d-7 col-t-11 col-p-12 padding-t-20 center">
+        <div id="header_show_card" class="col-all-12">
+          <div class="tier">
+            <div class="no-margin col-all-12">
+              <div class="mt-0 col-tier">
+                <div class="col-all-12 p-0 card-body pull-left">
+                  <div class="col-tier">
+                    <!-- Below -  Displays the concern's associated default icon. Goes to Concerns_helper.rb method dishaply_concern_show_icon. -->
+                     <%= display_concern_show_icon(@concern) %>
+                    <p class="text-xmedium mb-0" style="margin-left: 17px">
+                      <span id="show_page_title">      
+                        <%= "#{@concern.title} - <span class='no-bold'>#{@concern.address}</span>".html_safe %>
+                      </span>
+                      <br>
+                      <span class="tier mt-0">
+                        <span style="width: 45px !important; height: 40px !important;">
+                          <%= display_show_avatar(@concern.user) %>
+                        </span>
+                        <!-- Below - Users_helper.rb - Displays user name as a link and to determine if the user is from the city or a non-resident -->
+                        <span class="padding-t-10">
+                          <%= display_user_name(@concern.user) %>
+                        </span>
+                      </span>
+                      <br>
+                      <span class="relative" style="top: -20px">
+                        <span class="text-big show_text_scale"> 
+                          Posted: <%= time_ago_in_words(@concern.created_at).capitalize %> ago 
+                        </span>
+                      </span>
+                      <br>
+                    </p>
+                  </div>
+                </div>
+                <div class="col-tier mt-2">
+                <!-- Begin -  Filter tags Row -->
+                  <div class="" style="width: 90px; margin-right: 40px">
+                    <%= display_endorse_button(@concern, "concerns", "Concern", upvote_city_concern_path(@city, @concern.id)) %>
+                  </div>
+                  <a class="btn mr-3 alt-action" href='<%= city_concerns_path(@city) %>' >
+                    Map Pin
+                  </a>
+                  <a class="btn mr-3 alt-action" href='<%= concern_category_link(@concern) %>'>  
+                      <%= @concern.category %>
+                  </a>
+                  <!-- End -  Filter tags Row -->
+                  <div class="margin-l-auto">
+                    <!-- Below - Renders in helper method for endorse in upvotes_helper.rb. Instance method, name of controller, and then name of resource to display on the button itself. -->
+                    <%= link_to "<i class='theme_color_dark fas fa-pencil-alt'></i> Edit".html_safe, edit_user_concern_path(@concern.user), class: "title_link text-medium" if is_current_users?(@concern)  %>
+                    
+                  </div>
+                </div>
+              <!-- Below -  Renders in Concern description if there is no image -->
+              <%= render 'layouts/resources/resource_description', obj: @concern unless @concern.image.attached? %>
+              <!-- Below -  Renders in Concern description if there is no image -->
+              <%= render 'layouts/resources/resource_image', obj: @concern if @concern.image.attached? %>
+              <!-- Below -  Renders the follow and other user action buttons -->
+              <%= render 'layouts/resources/user_action_tier', obj: @concern %>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Below -  Renders in the concerns description -->
+        <%= render 'layouts/resources/resource_description', obj: @concern if @concern.image.attached? %>
+      <div class="mt-4">
+        <p class="text-22 b roboto trending_font_size pull-left">
+          Concern Location
+        </p>
+      </div> 
+      <div class="col-tier light-box-shadow border-y-none" style="border: 1px solid rgba(88, 88, 88, .2);">
+        <div class="card-body mb-0 well bg-white no-border-radius p-2" style="border-top: none !important">
+          <!-- Begin - Map Row for Concern -->
+          <div class="map_area"> 
+            <!-- Below - Calls in the map -->
+            <div class="ms_map bg-white no-border-radius" id="oss_map" style="border: 1px solid rgba(88, 88, 88, .2); border-top: none !important; border-bottom: none !important">
+              <%= render 'concern_show_map' %> <!-- Leaflet JS for Map -->
+            </div>
+          </div>  <!-- End - Map Row for Concern -->
+        </div>
+      </div>
+
+    </div>
+    <div id="non_ms_ap_content" class="col-d-3 col-t-10" >
+      <%= render 'layouts/action_panel', obj: @concern %>
+    </div>
+  </div>
+</div> <!-- End - Main page tier -->
+  
+<!-- Begin - Container for Title and form of Comments section. --> 
+<div class="content mt-0">
+  <div class="tier">
+    <div class="col-d-2 col-t-1"></div>
+      <div class="col-d-7 col-t-10 col-p-12">
+      <!-- Below - Renders in the form to create a new comment. -->
+    <div id="new_comment_tier" class="no-top-border tier">
+      <div class="col-all-12">
+        <%= render 'comments/comment_form', obj: @concern %>
+      </div>
+    </div>
+    <!-- Below - Rendering for existing Comments. -->
+    <div id="comments_list" class="tier margin-t-30 padding-x-10">
+      <div class="col-all-12">
+        <ul id="comments_ul" class="pl-0">
+          <div id="comment_flash" class="vanish panel panel-success light-box-shadow col-all-12" style="height: 3.5rem"><div class="col-tier margin-t-5"><p class="text-success bold center-all text-xxmedium no-margin col-all-12">Your comment has posted!</p></div></div>
+          <li class="comment_placeholder vanish"></li>
+          <%= render(partial: 'comments/comment', collection: @concern.comments)%>
+        </ul>
+        <!-- %= render 'comments/comments_list', collection: @post.comments, obj: @post_comments %>
+        -->
+        </div>
+      </div>     
+    </div>
+  </div>
+</div> <!-- End - Container for Title and form of Comments section. --> 

@@ -1,0 +1,95 @@
+<!--  Temporary landing page for Lakewood Summer Meltdown event to track user bouncerate. -->
+<div id="newlanding">
+<div class="wrapper" style="padding-bottom: 60px !important">
+
+  <div class="content">
+  <h2 class="blocktext col-d-10 col-t-10 col-p-12 center-all mt-0" style="padding-top: 45px !important; text-shadow: 2px 2px 3px rgba(150, 150, 150, 1)">
+    Thank You,<br> Lakewood Summer Meltdown Attendees! 
+  </h2>
+  <h1 class="block mb-0" style="text-shadow: 2px 2px 3px rgba(150, 150, 150, 1)">
+    For taking the time to hear about our new exciting startup.
+  </h1><br><br>
+  </div>
+  
+  <div class="page-end-box col-d-4 col-t-6 col-p-10 center-all light-box-shadow" style="background-color: #F8F8FF">
+  <h1 class="blocks center-all" style="line-height: 35.5px"><b>Use your voice today!</b></h1> 
+  <p class="end-text mb-0 pb-0">Begin by clicking the button below to use Ossemble.</p>
+  <br>
+  <div class="buttons-two col-all-12 pb-3">
+    <button class="button-one" onclick="javascript:document.location='<%= new_user_registration_path%>'"><span>Sign Up</span></button>
+  </div>
+  </div>
+ 
+
+</div>
+<div class="container-1"> 
+  <div class="col-all-12">
+  <div class="tier">
+  <div class="col-d-6 col-t-6 col-p-12 px-5" style="float-left;">
+  <h2 class="block1">What is Ossemble?</h2>
+  <p class="def-text center-all p-4 pr-0"><b>Ossemble</b> is a community-driven review site. Our goal is to help individuals make an impact and <b>move change forward.</b> This is accomplished by focusing on your <b>city of residence.</b> We believe that the best way to impact national change is by first focusing on our <b>local communities.</b></p>
+  </div>
+
+  <div class="video col-all-6 center-all" style="float-right">
+  <style>.embed-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 90%; border: 1px solid rgba(128, 128, 128, .5); } .embed-container iframe, .embed-container object, .embed-container embed { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }</style><div class='embed-container light-box-shadow center-all'><iframe src='https://www.youtube.com/embed/lYIhzrYpQhA' frameborder='0' allowfullscreen></iframe></div>
+  </div>
+
+  </div>
+  </div>
+
+  <div class="center-all">
+      <button class="button-two" style="bottom: -40px !important;" onclick="javascript:document.location='/about/communityscore'"><span>Learn More</span></button>
+  </div>
+</div>
+  <div class="space"></div>
+<div class="container3">
+  <div class="col-all-12">
+  <div class="tier">
+  <div class="col-d-10 center-all">
+  <div class="page-end-box peb-float center-all col-d-5 col-t-5 col-p-11 light-box-shadow landing_msmt">
+      <h1 class="blocks"><b>Request Your City</b></h1> 
+      <p class="end-text">If you'd like Ossemble to cover your own city, request it by clicking the button below.</p>
+      <div class="buttons-two">
+      <button class="button-three" onclick="ml_webform_742238('show')"><span>Request City</span></button>
+          </div>
+</div>
+
+<div class="page-end-box peb-float2 center-all col-d-5 col-t-5 col-p-11 light-box-shadow landing_msmt">
+  <h1 class="blocks center-all"><b>Explore</b></h1>
+  <p class="end-text">Click below to see Ossemble in action by exploring our founding city, Lakewood, Ohio!</p>
+  <div class="center-all">
+  <div class="buttons-two">
+      <button class="button-three center-all" onclick="javascript:document.location='<%= city_feed_path(City.find(1)) %>'"><span>Explore</span></button> 
+  </div>
+  </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<script>
+    var ml_webform_742238 = ml_account('webforms', '742238', 'l6h8p1', 'load');
+    ml_webform_742238('animation', 'fadeIn');
+</script>
+
+<script>
+  const textNode = document.querySelector('#jumbo_main_text,jumbo_slogan_text');
+const splitTextArr = textNode.innerText.split(" ");
+let finalMarkup = "";
+splitTextArr.forEach(buildMarkup);
+
+
+function buildMarkup(text, index) {
+  let spanText;
+  (index === 2) ? 
+  spanText = "<span>" + text + "</span><br />" : 
+  spanText = "<span>" + text + "</span> ";
+  
+  return finalMarkup += spanText;
+}
+
+textNode.innerHTML = finalMarkup;
+</script>

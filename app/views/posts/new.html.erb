@@ -1,0 +1,239 @@
+<!-- New Page for creating a new Post. -->
+<div id="" class="content"> 
+  <div class="col-d-10 col-t-10 col-p-12 center">
+    <!-- Below -  Captures the written description if a post fails to be created to be then shuffled into quill using JS below -->
+    <%= simple_format(@post.description, {}, wrapper_tag: "div id='new_text_wrap' class='vanish'") %>
+  <div class="ms_titles_ml trending_font_size mt-3 mb-0">
+      Conversation Post - <%= current_city %> Forum
+  </div>
+  <div class="theme_color_black text-medium mb-3 col-tier">
+    <div id="osspost-modal" class="">
+      <p id="show-modal" class="mb-0 mt-0 underline ms_titles_ml"><span class="pointer" @click="showModal = true">Forum Post Guidelines</span></p>
+      <!-- use the modal component, pass in the prop -->
+      <modal v-if="showModal" @close="showModal = false">
+      </modal>
+    </div>
+  </div>
+  <div class="col-tier">
+    <button id="select-suggestion" class="btn tab-btn2 col-all-6"><i class='fas fa-comments mr-3'></i>Conversation</button>
+    <%= link_to "<i class='fas fa-paste mr-3'></i>Petition".html_safe, new_city_petition_path(@city), id: " " , class: " btn tab-btn col-all-6", title: "Create a new Petition." %>
+  </div>
+  <div class="light-box-shadow p-4 bg-white" style="border: 1px solid rgba(128, 128, 128, .5)">
+    <%= simple_form_for @post, url: create_subtopic_post_path, as: 'post', html: { multipart: true, class: 'form-horizontal col-all-12 form_ms_text' }, defaults: { wrapper_html: { class: 'tier center' } }  do |f| %>
+      <%= render 'layouts/errors', obj: @post %>
+        <div id="post_input_fields" class="form-inputs">
+          <!-- Below -  New Post Title -->
+          <div class="col-tier center">
+            <div class="col-d-9 col-t-11 col-p-12"> 
+              <%= f.label :title, "Title", class: 'pull-left theme_color_black text-xxmedium' %>
+              <%= f.text_field :title, title: "Provide a short, but descriptive title for your post", maxlength: 70, autofocus: true, autocomplete: "off", placeholder: 'A short title to identify your post. Minimum: 5 Characters, Limit: 70 Characters.', class: "form-control input-box-shadow" %>
+            </div>
+          </div>
+          <!-- Below -  New Post Subtopic selection -->
+          <div class="col-tier center">
+            <div class="col-d-9 col-t-11 col-p-12 margin-t-18">   
+              <%= f.label :subtopic_id, "Forum's Subtopic", class: 'pull-left theme_color_black text-xxmedium' %>
+              <%= f.grouped_collection_select :subtopic_id, @topics.order(:id), :subtopics, :name, :id, :name, { divider: '---------' }, title: "The subtopic where your conversation belongs. Choosing the subtopic will automatically select the topic below.",  id: "subtopic_select", class: "select_form form-control input-box-shadow"%>
+            </div>
+          </div>
+          <!-- Below -  New Post Topic -->
+          <div id="topic_output" class="col-tier center">
+            <div class="margin-t-18 tier"> 
+              <%= f.label :topic_id, "Forum's Topic", class: 'pull-left theme_color_black text-xxmedium' %>
+            </div>
+            <div class="col-tier"> 
+              <div class="col-d-9 col-t-11 col-p-12">
+                <div disabled class="select_form form-control text-left margin-t-5" title="Where your post will fall under in the forum. The topic is determined by the subtopic chosen above and cannot be changed.">
+                  <p class="bold">Post's topic:<span class="margin-l-5 text-xmedium" id="post_topic"> </span> </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--  Loading GIF -->
+          <div class="loading" style="display:none; z-index: 15000">
+             <div class="center-all border-radius-10">
+               <%= image_tag "icons/misc/loading.gif", alt: "Uploading", class: "", style: "width: 300px" %>
+             <div class="theme_color_dark mb-5 px-4">Please wait while your image uploads...</div>
+             </div>
+          </div>
+          <!-- Below -  New Post Description -->
+          <div class="col-tier center">
+            <div class="col-all-12 margin-t-18"> 
+             <%= f.label :description, class: 'theme_color_black text-xxmedium' %>
+             <%= f.hidden_field :description, id: "post_description", required: true %>
+              <div id="editor-container" class="light-box-shadow" hidden="true"></div>
+              <div id="quill_container"  style="height: 250px !important;"></div>
+            </div>
+          </div>
+          <!-- Begin - New image upload row -->
+          <div class="col-tier center margin-y-12">
+            <div class="col-all-12"> 
+              <div class="tier">
+                 <%= f.label :image, "<i class='fas fa-file-image margin-r-8'></i>Upload Post Image <small> (optional - but encourged) </small>".html_safe, class: "pull-left control-label" %>
+              </div>
+              <div class="tier">
+                <%= f.file_field :image, accept: 'image/*', class: "upload btn btn-info margin-y-5 light-btn-shadow", style: "width: 220px", onchange: "readURL(this);" %>
+              </div>
+              <div class="tier">
+                <%= f.label :image, "Preview of Uploaded Image".html_safe, class: " vanish img_prev_title pull-left control-label mb-2" %>
+              </div>
+              <div class="tier">
+                <img id="img_prev" class="vanish" src="#" alt="Image">
+              </div>
+              <p class="margin-t-5 mb-2 text-13">Click choose files if you'd like your post to be accompanied by a picture.</p>
+              <p class="margin-t-5 mb-0 small">If the image you are trying to upload is high resolution it may take a few moments to upload.</p>
+            </div>
+          </div>
+          <!-- End - New image upload row -->
+        </div>
+      </div>
+      <div class="form-actions">
+        <div class="col-tier pt-3 mb-4">
+          <%= f.submit "Post Conversation", class: "form_btn btn action pull-left mb-0 light-btn-shadow", id: "loadgif" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<script>
+// Runs on load of page to append the selected subtopics' topic in the Topic field. Except on edit, this will load Let's Talk.
+  if ($('option:selected').parent('optgroup').attr('label') == 'Let\'s Talk'){
+    $('#post_topic').text('Let\'s Talk');
+    $('#post_topic').append('<i class="fas fa-bullhorn margin-l-10"></i>');
+  };
+  if ($('option:selected').parent('optgroup').attr('label') == 'Good Vibes'){
+    $('#post_topic').text('Good Vibes');
+    $('#post_topic').append('<i class="fas fa-dove margin-l-10"></i>');
+  };
+  if ($('option:selected').parent('optgroup').attr('label') == 'Schools'){
+    $('#post_topic').text('Schools');
+    $('#post_topic').append('<i class="fas fa-school margin-l-10"></i>');
+  };
+  if ($('option:selected').parent('optgroup').attr('label') == 'City Affairs'){
+    $('#post_topic').text('City Affairs');
+    $('#post_topic').append('<i class="fas fa-gavel margin-l-10"></i>');
+  };
+   
+  // When the subtopic selection changes, so does the Topic category output changes.
+  $('#subtopic_select').on('change', function() {
+    if ($('option:selected').parent('optgroup').attr('label') == 'Let\'s Talk'){
+      $('#post_topic').text('Let\'s Talk');
+      $('#post_topic').append('<i class="fas fa-bullhorn margin-l-10"></i>');
+    }
+    if ($('option:selected').parent('optgroup').attr('label') == 'Good Vibes'){
+      $('#post_topic').text('Good Vibes');
+      $('#post_topic').append('<i class="fas fa-dove margin-l-10"></i>');
+    }
+    if ($('option:selected').parent('optgroup').attr('label') == 'Schools'){
+      $('#post_topic').text('Schools');
+      $('#post_topic').append('<i class="fas fa-school margin-l-10"></i>');
+    }
+    if ($('option:selected').parent('optgroup').attr('label') == 'City Affairs'){
+      $('#post_topic').text('City Affairs');
+      $('#post_topic').append('<i class="fas fa-gavel margin-l-10"></i>');
+    }
+  });
+</script>
+
+<script>
+function readURL(input) {
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+    $("#img_prev").show();
+    $(".img_prev_title").show();
+    $("#post_image").width(280);
+    reader.onload = function (e) {
+      $('#img_prev')
+        .attr('src', e.target.result)
+    };
+
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+</script>
+
+<script>
+// register modal component
+Vue.component('modal', {
+  template: '#modal-template'
+})
+
+// start app
+new Vue({
+  el: '#osspost-modal',
+  data: {
+    showModal: false
+  }
+})
+</script>
+<!--  VUE.js model code for guidelines -->
+<script type="text/x-template" id="modal-template">
+  <transition name="modal">
+    <div class="modal-mask">
+      <div class="modal-wrapper">
+        <div class="modal-body">
+        <slot name="body">
+        <div class="content">
+          <div class="col-all-10 center">
+          <div id="page_info_card_org" class="col-tier">
+          <div id="page_info_card" class="col-all-12">
+          <div class="col-all-12 light-box-shadow card" style="border: 1px solid rgba(128, 128, 128, .5); border-radius: 10px;">
+            <div class="card-body theme_color_black" style="">
+              <div class="col-all-12 pull-left">
+               <h3 class="mt-0 mb-2 ms_page_title">Forum Post Guidelines</h3> 
+               <p class="text-medium i">Please follow these posting guidelines to ensure your Forum Post is valid and able to be posted.</p> 
+         <section class="b">Please fill out all required fields below</section>
+         <ul> 
+          <li><b>Title</b> - Write a descriptive title for your new post, that ties into the subtopic you select below.</li>  
+          <li><b>Subtopic</b> - Using the dropdown, select the subtopic you wish to have your new post listed under.</li>  
+          <li><b>Topic</b> - This field will be automatically updated based on the selection of your subtopic. No input from you is needed for this field.</li>
+          <li><b>Description</b> - Please write a short description describing your Forum Post, enough so others can clearly understand what your new post is about.</li>
+          <li><b>Image</b> <span class="text-xsmall">(optional)</span> - If you wish, you may add a picture to go with your new post. This could be a picture of your pet for Furry Friends, or something that is bothering you in Grinds My Gears.</li>
+        </ul>   
+        <p class="text-medium mb-2">Following these steps will ensure your Forum Post is filed properly.</p>
+        <button class="btn btn-info modal-default-button text-xxmedium" @click="$emit('close')">
+          Close
+        </button>
+          </div>
+          </div>
+          </div>
+          </div>
+        </div>
+        </div> 
+        </slot>
+        </div>
+      </div>
+    </div>
+  </div>
+</transition>
+</script>
+<script>
+
+  var form = document.querySelector('.form-horizontal');
+  var quill = new Quill('#quill_container', {
+  modules: {
+    toolbar: [
+      ['bold', 'italic', 'link'],
+      [{ list: 'ordered' }, { list: 'bullet' }]
+    ]
+  },
+  placeholder: 'Write a descriptive post for the Forum, relevant to the respective topic and subtopic you have chosen. Minimum: 100 Characters (about 15 words), Maximum: 5,000 Characters (about 745 words).',
+  theme: 'snow'  // or 'bubble'
+});
+
+
+form.onsubmit = function() {
+  var postContentInput = document.querySelector('#post_description');
+  postContentInput.value = quill.root.innerHTML;
+};
+
+// Below - Sets up a variable from the simple format rendering about on edit post
+var editDescription = $('#edit_text_wrap').text();
+$('.ql-editor p').text(editDescription);
+// Below - Shuffles in text from a failed resource submission's description
+var newDescription = $('#new_text_wrap').text();
+$('.ql-editor p').text(newDescription);
+</script>
+
+<!--  Javascript for Topic output can be found in coffee file: Posts.coffee in Javascripts folder. -->

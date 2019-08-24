@@ -1,0 +1,76 @@
+<!--  Main page for Petitions being rendered in Ossembly Forum. Renders in all Petitions in _petitions_list.html.erb partial, and is  filtered down by pending and filed petitions. -->
+
+<!-- Begin - Main content for Petitions page. -->
+<div class="content">
+  <div class="tier"> <!-- Begin - Main tier for page. -->
+    <!-- Below -  Renders in the accordian from views/layouts/phones/... for mobile and tablet. -->
+    <%= render "layouts/phones/mobile_accordion" %>
+    <div class="center col-d-7 col-t-11 col-p-12">
+      <!-- Begin - Petition Page Info -->
+      <div id="page_info_card_org" class="col-all-12">
+        <div id="page_info_card" class="margin-b-15 col-all-12">
+          <div class="tier ">
+            <div class="col-all-12">
+              <p class="page_info_title pull-left">
+                <%= "Petitions Feed" if current_page?(city_petitions_path(@city)) %>
+                <%= "Pending Petitions Feed" if current_page?(pending_city_petitions_path(@city)) %>
+                <%= "Filed & Sent Petitions Feed" if current_page?(filed_city_petitions_path(@city)) %>
+              </p>
+            </div>
+            <div class="col-all-12 light-box-shadow card" style="border: 1px solid rgba(128, 128, 128, .5)">
+              <div class="card-body theme_color_black">
+                <div class="col-d-9 col-t-12 col-p-12 pull-left">
+                  <!-- Begin -  Petition page info body check depending on process of petition -->
+                  <% if current_page?(city_petitions_path(@city)) %>
+                    <p class="text-big roboto"><i>Moving change forward is difficult. But when you are closer to the source that change can become a reality.</i></p> 
+                    <p class="text-medium mb-2">From here you can Sign a petition or cause you support.</p>
+                    <p class="text-medium mb-2">Once a threshold of citizens sign the petition, we will send it to your local representatives.</p>
+                    <section class="b">Example</section>
+                    <ul> 
+                      <li><b>A petition for the City Council to revise the current City-wide ban on Pitbulls.</b></li>
+                    </ul>
+                  <% elsif current_page?(pending_city_petitions_path(@city)) %>
+                    <p class="text-big roboto"><i>Before a petition can be sent it needs signatures from fellow citizens.</i></p> 
+                    <p class="text-medium mb-2">Pending Signatures are all petitions that need support.</p>
+                    <p class="text-medium mb-2">Here you may help move your community forward.</p>
+                  <% elsif current_page?(filed_city_petitions_path(@city)) %>
+                    <p class="text-big roboto"><i>These petitions have been sent to your local representatives.</i></p> 
+                    <p class="text-medium mb-2">Once a petition is sent it showcases your voice being recognized.</p>
+                    <p class="text-medium mb-2">Stay up to date with your city's response.</p>
+                  <% end %> <!--  End - Petition type check for page info body -->
+                </div>
+                <div class="page_info_icon_hide col-all-3 pull-right center-all pl-3 theme_color_dark" style="font-size: 100px; margin-top: 0px; height: 125px">
+                  <%= "<i class='fas fa-clipboard' style='position: relative; top: 5px;'></i>".html_safe if current_page?(city_petitions_path(@city)) %>
+                  <%= "<i class='fas fa-file-signature' style='position: relative; top: -10px;'></i>".html_safe if current_page?(pending_city_petitions_path(@city)) %>
+                  <%= "<i class='fas fa-clipboard-check' style='position: relative; top: -10px;'></i>".html_safe if current_page?(filed_city_petitions_path(@city)) %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End- Petition Page Info -->
+      <div class="tier">
+        <div class="col-tier padding-b-20">
+          <p class="trending_list_title col-p-12">
+            <!--  Trending List Title changes depeneding on the user's view of Petitions, like pending or filed. -->
+            Trending - Week
+          </p>
+          <%= render 'filters/feed_filter', obj: @petitions %>
+          <div>
+            <!-- Below - Renders in sort panel partial for ordering of complaints with the object complaints -->
+            <%= render 'layouts/sort_panel', obj: @petitions %>
+          </div>
+        </div>
+        <div class="col-tier">
+          <div class="col-all-12">
+             <%= render 'layouts/resources/resources_list', obj: @petitions %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="non_ms_ap_content" class="col-d-3 col-t-10" >
+      <%= render 'layouts/action_panel', obj: @petitions %>
+    </div>
+  </div> <!-- Main page tier -->
+</div>

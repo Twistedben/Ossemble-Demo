@@ -1,0 +1,150 @@
+<!--  Main list partial for being rendered for any resource such as complaint, petition, posts, department review, and city review. 
+    All helper methods are located in lists_helper.rb.
+-->
+
+<div id="resource_list">
+  <!-- Below - Renders in a message to create content if there are no resources to show yet. -->
+  <% if obj.empty? %>
+    <h3 class="center-all light-box-shadow padding-all-15 mt-0  bg-white">
+      <% if current_page?(city_feed_path(@city)) %>
+        <p>
+          No content to show yet for <%= @city.name %>. 
+        </p>
+        <% if current_user %> <!--  User is logged in, not a guest or admin -->
+          <p>
+            Start by reviewing <%= "your City" if hometown? %> <%= "#{@city.name}" unless hometown? %>. <%= link_to "Be the first to review it now!", new_city_review_path(@city), class:  "title_link" %>
+          </p>
+          <p>
+            Or start by clicking the Post button above.
+          </p>
+    
+        <% end %> <!-- End -  End of logged in check of a user -->
+      <% elsif current_page?(city_complaints_path(@city)) || is_current_page?("complaints", "verifying") || is_current_page?("complaints", "pending")|| is_current_page?("complaints", "finished") || is_current_page?("complaints", "filed") %> <!-- User is on complaints index  -->
+        <p>
+          No complaints have been voiced yet for <%= @city.name %>. 
+        </p>
+        <% if current_user %> <!--  User is logged in, not a guest or admin -->
+          <p>
+            Start by voicing a complaint for <%= "your City" if hometown? %> <%= "#{@city.name}" unless hometown? %>. <%= link_to "Be the first to voice one now!", new_city_complaint_path(@city), class:  "title_link" %>
+          </p>
+        <% end %> <!-- End -  End of logged in check of a user -->
+      <% elsif current_page?(city_review_index_path(@city)) || is_current_page?("city_reviews", "loves") || is_current_page?("city_reviews", "improves")  %> <!-- User is on city review index  -->
+        <p>
+          No city reviews to show yet for <%= @city.name %>. 
+        </p>
+        <% if current_user %> <!--  User is logged in, not a guest or admin -->
+          <p>
+            Start by reviewing <%= "your City" if hometown? %> <%= "#{@city.name}" unless hometown? %>. <%= link_to "Be the first to review it now!", new_city_review_path(@city), class:  "title_link" %>
+          </p>
+        <% end %> <!-- End -  End of logged in check of a user -->
+      <% elsif current_page?(city_department_reviews_path(@city)) || is_current_page?("department_reviews", "government") || is_current_page?("department_reviews", "police") || is_current_page?("department_reviews", "public_works")  || is_current_page?("department_reviews", "schools")  || is_current_page?("department_reviews", "parks") %> <!-- User is on city department index  -->
+        <p>
+          No department reviews to show yet for <%= @city.name %>. 
+        </p>
+        <% if current_user %> <!--  User is logged in, not a guest or admin -->
+          <p>
+            Start by reviewing one of <%= "your City's" if hometown? %> <%= "#{@city.name}'s" unless hometown? %> departments. <%= link_to "Be the first to review one now!", new_city_department_review_path(@city), class:  "title_link" %>
+          </p>
+        <% end %> <!-- End -  End of logged in check of a user -->
+      <% elsif current_page?(city_petitions_path(@city)) || is_current_page?("petitions", "pending") || is_current_page?("petitions", "filed") %> <!-- User is on petition index  -->
+        <p>
+          No petitions to show yet for <%= @city.name %>. 
+        </p>
+        <% if current_user %> <!--  User is logged in, not a guest or admin -->
+          <p>
+            Start by submitting a petition for <%= "your City" if hometown? %> <%= "#{@city.name}" unless hometown? %>. <%= link_to "Be the first to submit one now!", new_city_petition_path(@city), class:  "title_link" %>
+          </p>
+        <% end %> <!-- End -  End of logged in check of a user -->
+        
+      <% elsif current_page?(city_concerns_path(@city)) %> <!-- User is on petition index  -->
+        <p>
+          No concerns to show yet for <%= @city.name %>. 
+        </p>
+        <% if current_user %> <!--  User is logged in, not a guest or admin -->
+          <p>
+            Start by submitting a concerns for <%= "your City" if hometown? %> <%= "#{@city.name}" unless hometown? %>. <%= link_to "Be the first to submit one now!", new_city_concern_path(@city), class:  "title_link" %>
+          </p>
+        <% end %> <!-- End -  End of logged in check of a user -->        
+        
+      <% else %> <!-- User is on forum index, topics or subtopics  -->
+        <p>
+          No forum posts to show yet for <%= @city.name %>. 
+        </p>
+        <% if current_user %> <!--  User is logged in, not a guest or admin -->
+          <p>
+            Start by posting one of your own for <%= "your City" if hometown? %> <%= "#{@city.name}" unless hometown? %>. <%= link_to "Be the first to post now!", new_subtopic_post_path(@city), class:  "title_link" %>
+          </p>
+        <% end %> <!-- End -  End of logged in check of a user -->
+      <% end %> <!--  End - Current page check -->
+    </h3>
+  <% end %> <!-- End -  Check for resource being empty -->
+  <!-- Below - Renders in each complaint for a city. -->
+  <% obj.each do |resource| %> 
+    <div id="list_card_container">
+      <div class="col-tier">
+        <!-- Begin -  CONTENT TIER: Picture, user info, resource info, description, tags, etc. -->
+        <div id="image_container" class="col-d-2 col-t-3 col-p-10 transparent">
+          <!-- Below -  Renders the resources image, if one is attached or the default icon image if one isn't. -->
+          <%= display_list_image(resource) %>
+        </div>
+        <div id="content_container" class="col-d-10 col-t-9 col-p-12">
+          <div id="resource_info_container" class="col-all-12">
+            <a id="list_title" class="tier" href="<%= list_show_link(resource) %>">
+              <!-- Below -  Renders the resource's title and if complaint the address as well. -->
+              <%= display_list_title(resource) %>
+            </a>
+            <div id="avatar_name" class="tier">
+              <!-- Below -  Renders the resource's owner's avatar -->
+              <%= display_list_avatar(resource.user) %>
+              <!-- Below -  Renders the resource's owner's name and whether they're a non resident -->
+              <%= display_list_user_name(resource)   %>
+            </div>
+            <div id="time_score" class="tier">
+              <!-- Below -  Displays date the resource was posted and if a score is attached, that as well. -->
+              <%= display_time_and_score(resource) %>
+              <!-- Below -  Calls helper from Reviews_helper.rb file to display icon whether the review is scorable or not due to the fact it's a non-resident review -->
+              <%= display_scorable_icon(resource) %>
+            </div>
+          </div> 
+          <div id="list_tag_tier" class="col-all-12 tier">
+            <%= link_to "Map Pin", city_map_pins_path(), id: "filter_tag" , class: " " if resource.class.to_s == "Complaint" %>
+            <!-- Below - Renders the link for the topic of the filter, like Complaint, Peititon or for posts', the name of the topic associated, etc...  -->
+            <%= display_list_topic_tag_link(resource) %>
+            <!-- Below -  Renders the  subtopic link for the filter, like category for department review, city review love or improve and for Posts the subtopic of the post, etc..-->
+            <%= display_list_subtopic_tag_link(resource) %>
+            <!-- Below - Updates each complaint and petition rendered on the page, goes to list_helper.rb line 183 to check if resource is filed.  -->
+            <% update_filed_resource(resource) %>
+          </div>
+          <!-- Begin - DESCRIPTION: Description row -->
+          <div id="list_description_container" class="col-all-12">
+            <!-- Below -  Displays resource description or goal is petition, wrapped in an a tag with the link to its show page. -->
+            <%= display_list_description(resource) %>
+          </div>
+          <!-- End -  DESCRIPTION: -->
+        </div>
+      </div> <!-- End - CONTENT TIER: -->
+     <!-- Begin -  ACTION TIER: Endorse, Share, Comments and endorsements Row -->
+      
+      <div id="list_action_container" class="col-tier">
+         <!--  Twitter and facebook buttons. COmmented out due to Facebook List sharing issues.
+          <!-- Below -  Twitter share share. Goes to shares_helper.rb, passing in resource, website to share with, show page link, and then title.   -->
+          <!--  %= display_share_button(complaint, "Twitter", city_complaint_path(complaint.city, complaint),"#{complaint.city.name} Complaint: #{complaint.title} - #{complaint.address}: #{city_complaint_url(complaint.city, complaint)}") %>
+            <!-- Below -  Facebook share. Goes to shares_helper.rb, passing in resource, website to share with, show page link, and then title.   -->
+          <!--  %= display_share_button(complaint, "Facebook", city_complaint_path(complaint.city, complaint),"#{complaint.city.name} Complaint: #{complaint.title} - #{complaint.address}:") %>
+          -->
+          <!-- Below -  Renders in the endorse button for list from lists_helper.rb -->
+        <div id="endorse_container" class="col-d-2 col-t-3 col-p-4"> 
+          <%= display_list_endorse_button(resource) %>
+        </div>
+        
+        <a id="vote_container" class="col-d-3 col-t-4 col-p-4" href="<%= list_show_link(resource) %>">
+          <%= display_vote_count(resource) %> <!-- Displays endorsements count  -->
+        </a>
+        <a id="comment_container" class="col-d-3 col-t-4 col-p-4" href="<%= list_show_link(resource) %>">
+          <%= display_comment_count(resource) %> <!--  Displays comments count -->
+        </a>
+      </div>  <!-- End - ACTION TIER: Share, Comments and endorsements row -->
+      
+    </div>
+  <% end %>
+</div>

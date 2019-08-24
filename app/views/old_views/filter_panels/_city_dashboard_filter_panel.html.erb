@@ -1,0 +1,55 @@
+<!-- Begin - Main Partial for City Dashboard Filter (views/layouts/city_dashboard_filter_panel). -->
+<!-- Begin - City Dashboard Filter -->
+<!-- Below -  Renders the feed panel from within the filter panel -->
+<div class="col-all-12 center pr-3 cf_nopad">
+  <div class="col-tier">
+    <div class="card light-box-shadow mb-2 width-100 border-radius-10" style="border: 2px groove rgba(0, 0, 0, 0.35)">
+      <div class="card-body p-0 pb-2">
+        <div class="center-all p-3">
+          <span class="theme_font theme_color_black text-huge">
+            <%= @admin.city.name %> Dashboard
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="filter_panel_wrapper" class="col-d-12 center pl-0 pt-0">
+  <aside class="width-100">
+    <div id="filter_panel_content" class="p-0 mb-3 border-radius-10">
+      <div id="filter_panel_body" class="bg-faded center panel panel-default panel-profile no-border border-radius-10">
+        <div id="filter_panel_list_wrapper" class="panel-body no-border">
+          <ul id="filter_panel_list" class="list-group">
+
+            <li class= "mb-0 pull-left">
+              <%= link_to "<i class='fas fa-home margin-l-8 margin-r-10 ms_t_panel_head' aria-hidden='true'></i> Home".html_safe, institute_admin_path(current_admin.institute, current_admin), class: 'list-item' %>
+            </li>
+            <li class= "mb-0 pull-left">
+              <%= link_to "<i class='fas fa-users margin-l-8 margin-r-10 ms_t_panel_head' aria-hidden='true'></i> Profiles".html_safe, "#", data: { confirm: "Profiles Feature Coming Soon" }, class: 'list-item' %> <!--  city_admin_profiles_path(current_admin.institute, current_admin), -->
+            </li>
+            <li class= "mb-0 pull-left">
+              <%= link_to "<i class='fas fa-exclamation-triangle margin-l-8 margin-r-10 ms_t_panel_head' aria-hidden='true'></i> Complaints".html_safe, city_admin_complaints_path(current_admin.institute, current_admin), class: 'list-item' %>            
+            </li>
+            <li class= "mb-0 pull-left">
+              <%= link_to "<i class='fas fa-paste margin-l-8 margin-r-15 ms_t_panel_head' aria-hidden='true'></i> Petitions".html_safe, "#",  data: { confirm: "Petitions Feature Coming Soon" }, class: 'list-item'  %> <!--  city_admin_petitions_path(current_admin.institute, current_admin) -->  
+            </li>                   
+            <li class= "mb-0 pull-left">
+              <%= link_to "<i class='fas fa-chart-pie margin-l-8 margin-r-10 ms_t_panel_head' aria-hidden='true'></i> Statistics <small>(Pro)</small><i class='far fa-credit-card push-right text-13 margin-r-8 margin-t-12'></i>".html_safe, "#", data: { confirm: "Statistics Feature Coming Soon" }, class: 'list-item' %>  
+            </li>            
+            <li class= "mb-0 pull-left">
+              <%= link_to "<i class='fas fa-chart-bar margin-l-8 margin-r-12 ms_t_panel_head' aria-hidden='true'></i> Polls <small>(Pro)</small><i class='far fa-credit-card push-right text-13 margin-r-8 margin-t-12'></i>".html_safe, "#", data: { confirm: "Polls Feature Coming Soon" }, class: 'list-item' %>              
+            </li>
+            <li class= "mb-0 pull-left">
+              <%= link_to "<i class='fas fa-credit-card margin-l-8 margin-r-12 ms_t_panel_head' aria-hidden='true'></i> Payment Info".html_safe, "#", data: { confirm: "Subscription Feature Coming Soon" }, class: 'list-item' %>              
+            </li>
+            <li class= "mb-0 pull-left">
+              <%= link_to "<i class='fas fa-gear margin-l-8 margin-r-12 ms_t_panel_head' aria-hidden='true'></i> Settings".html_safe, "#", data: { confirm: "Settings Feature Coming Soon" }, class: 'list-item' %>              
+            </li>
+          </ul> 
+        </div>
+      </div>
+    </div>
+  </aside>
+</div>
+ <!-- End - City Dashboard Filter Panel -->
+<!-- End - HTML.ERB For City Dashboard Filter -->

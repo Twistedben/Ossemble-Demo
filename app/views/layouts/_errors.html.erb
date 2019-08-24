@@ -1,0 +1,26 @@
+<!-- Errors Partial to be used to display validation errors -->
+<% if obj.errors.any? %>
+<div class="content"> 
+  <div class="tier">
+    <div id="error-panel" class="col-all-12 margin-t-0 center">
+      <div class="panel panel-danger light-box-shadow">
+        <div class="panel-heading">
+          <h2 class="bold panel-title text-xbig">
+             <!-- First show the number of errors, then if > 1 add an 's' to error  -->
+            <%= obj.errors.count %> <%= (obj.errors.count > 1) ? "issues need" : "issue needs" %>
+              to be addressed:
+          </h2>
+          <div class="panel-body"> <!-- This is the second element for the test run  -->
+             <ul>
+            <% obj.errors.each_with_index do |msg, i|  %>
+            <!--  Now run through and display each error -->
+              <li class="text-big"><%= msg[1] %></li>
+            <% end %>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>  
+<% end %> 

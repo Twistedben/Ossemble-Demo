@@ -1,0 +1,79 @@
+// Main CSS file for Footer Partial across all Ossemble Pages
+
+/* Beginning - Footer Basic CSS */
+.footer-basic {
+  height: 170px;
+  padding-bottom: 10px !important;
+  background-color: #ffffff;
+  color: #4b4c4d;
+}
+
+
+.footer-basic ul {
+  padding: 0;
+  list-style: none;
+  text-align: center;
+  font-size: 18px;
+  line-height: 1.6;
+  margin-bottom: 0;
+  @media screen and (max-width: 576px) {
+    font-size: 14px !important;
+                                       }
+} 
+
+.ms-top {
+  @media screen and (max-width: 576px) {
+  top: -0px !important;
+                                     }
+}
+.footer-basic li {
+  padding: 0 10px;
+}
+
+.footer-basic ul a {
+  color: inherit;
+  text-decoration: none;
+  opacity: 0.8;
+}
+
+.footer-basic ul a:hover {
+  opacity: 1;
+}
+
+.footer-basic .social {
+  text-align: center;
+  padding-bottom: 10px;
+}
+
+.footer-basic .social > a {
+  font-size: 24px;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  display: inline-block;
+  text-align: center;
+  margin: 0 10px;
+  color: inherit;
+  opacity: 0.75;
+}
+
+.footer-basic .social > a:hover {
+  opacity: 1;
+}
+
+.footer-basic .copyright, .footer_city_link {
+  text-align: center;
+  font-size: 13px;
+  color: #aaa;
+  margin-bottom: 8px;
+  margin-top: 8px;
+  @media screen and (max-width: 321px) {
+    font-size: 12px !important;
+                                       }
+}  
+
+.hlb:hover {
+  color: black !important;
+}
+
+/* End - Footer Basic CSS  */

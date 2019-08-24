@@ -1,0 +1,108 @@
+<!--  Bridge page for a fresh admin signup, directed to after creating the workplace shape. Goes to workplace -> signup_invite_member
+        A clone of invite_member.html.erb page, but trimmed down and changed URLs and POST fo signup_create_member action.-->
+<div class="content">
+  <div class="col-d-9 col-t-10 col-p-12 center">
+    <div class="col-all-10 center">
+      <p class="alert panel panel-info alert-info text-black message_alert_panel text-center">
+        <a href="#" class="close" data-dismiss="alert">
+          &#215;
+        </a>
+        <span>
+          Leave a line and its fields blank if you'd like to invite less than three people to the Channel simultaneously. 
+          <br>
+          Or use the Share Invite Link button below to instantly create a shareable link to paste and send to others.
+        </span>
+      </p>
+    </div>
+    <h3 class="page_info_title text-26">
+      Email Invite to <%= @workplace.name %>
+    </h3>
+    <div class="col-tier center light-box-shadow horizontal-form padding-x-20 padding-b-20 padding-t-8 card">
+      <!-- Below -  GRabs 3 empty workplace -->
+      <%= form_tag signup_workplace_invite_path do %>
+        <% @workplace.invites.each do |workplace_invite| %>
+          <% if workplace_invite.email.nil? %>
+            <%= simple_fields_for "invite[]", workplace_invite, :url => signup_create_workplace_invite_path(@institute, @workplace, @invite), action: "create_member" do |invite| %>
+              <%= invite.hidden_field :workplace_id, :value => @workplace.id %>
+              <%= render 'workplace_invite_fields', f: invite %>
+            <% end %>
+          <% end %>
+        <% end %>
+        <div class="col-tier mt-3">
+          <div class="push-right margin-l-auto">
+            <%= submit_tag 'Send Out Invites', class: "form_btn button-cs btn mb-0", onclick: "amplitude.getInstance().logEvent('First Time Workplace Email Invites');"  %>
+          </div>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-body mt-0 mb-2">
+                <p class="mb-4 pb-3 b text-16">
+                  Copy and Paste the email below to your Email Client to quickly invite your coworkers to join you</p>
+              </div>
+              <button id="textareabtn" onclick="copyToClipboard" style="background-color: white !important; border: 0px !important;"><span class="relative pr-2" style="top: -5px">Copy Text: </span><i class="fas fa-clipboard text-24 theme_color_dark"></i></button>
+              <div class="col-tier">
+                <textarea id="p1" class="p-3 center" style="height: 270px; overflow: hidden; resize: none; width: 94%; border: 1px solid gray">
+<%= current_admin.name %> from <%= @workplace.institute.name %> would like you to join them on an <a href='<%= root_path %>'>Ossemble</a> channel, <%= current_workplace %>. Click the link and start collaborating! 
+Join <%= current_workplace %> by clicking below:
+<%=new_admin_registration_url(invite_token: Time.now, workplace: @workplace, institute: @workplace.institute.id, workplace_name: @workplace.name, workplace_id: @workplace.id)%>
+
+                </textarea>
+              </div>
+              <div class="modal-footer" style="border: none !important">
+                <button type="button" class="btn button-su" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- End -  Modal end -->
+      </div>
+      <h3 class="page_info_title text-26" style="margin-top: 28px">
+        Share Instant Invite Link
+      </h3>
+       <div class="card col-all-12 light-box-shadow">
+        <div class="col-tier p-4">
+          <div class="col-d-6 col-t-6 col-p-12">
+            <div id="share_invite_link_btn" class="btn button-cs" onclick="copyLink(); alert('Link Copied!')">
+              <%= link_to invite_workplace_share_link_path(@institute, @workplace), id: "copy_link_btn" , class: "pointer", onclick: "copyLink(); alert('Link Copied!')", method: :create, remote: true do %>
+                <i class='fas fa-link padding-r-8'></i>Share Invite Link
+                <input type="text" class="form-control pointer" id="url_input" aria-describedby="basic-addon2" value="<%=new_admin_registration_url(invite_token: Time.now, workplace: @workplace, institute: @workplace.institute.id, workplace_name: @workplace.name, workplace_id: @workplace.id)%>">
+              <% end %>
+            </div>
+          </div>
+          <div class="col-d-6 col-t-6 col-p-12 push-right">
+          <!-- Button trigger modal -->
+            <button type="button" title="A email template to copy and paste in an email client to send to co-workers." class="btn push-right button-cs padding-x-15" style="height: 45px; width: 180px; margin-top: 22px;" data-toggle="modal" data-target="#exampleModalCenter">
+              <i class='fas fa-mail-bulk padding-r-8'></i>Email Template
+            </button>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<script>
+// Below -- Allows copying URL
+
+ function copyLink() {
+  var copyText = document.getElementById('url_input');
+  copyText.select();
+  document.execCommand("copy");
+}
+  
+</script>
+<!-- 
+  % form_for @import, url: import_admins_path, multipart: true do |f| %>
+       %= file_field :file, accept: ".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" %>
+       %= submit "Upload" %> 
+  % end %>
+-->
+
+<script>
+$("#textareabtn").click(function(){
+    $("textarea").select();
+    document.execCommand('copy');
+});
+</script>

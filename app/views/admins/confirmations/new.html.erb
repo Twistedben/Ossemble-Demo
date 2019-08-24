@@ -1,0 +1,22 @@
+<!-- Devise page for resending City Admin confirmation email for Ossemble City profile creation (admins/confirmations/new). -->
+<h2 class="theme_font center-content">
+  <p class="center-content">
+    Resend City Profile Confirmation Email
+  </p>
+</h2>
+<hr>
+  
+<%= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f| %>
+  <%= devise_error_messages! %>
+
+  <div class="field">
+    <%= f.label :email %><br />
+    <%= f.email_field :email, autofocus: true, value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email) %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "Resend Confirmation Link" %>
+  </div>
+<% end %>
+
+<%= render "admins/shared/links" %>

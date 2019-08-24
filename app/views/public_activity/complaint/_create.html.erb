@@ -1,0 +1,11 @@
+<!--  Main partial being rendered for Public Activity gem on Complaint create. (views/public_activity/complaint/_create.html.erb). -->
+<% if activity.trackable %>
+  <span id="activities_span" class="">
+    <span>
+      created a Complaint titled:
+    </span>
+    <%= link_to activity.trackable.title, city_complaint_path(activity.trackable.city, activity.trackable), id: "activity_complaint_link", class: "bold" %>
+<% else %>
+    deleted a Complaint.
+  </span>
+<% end %>

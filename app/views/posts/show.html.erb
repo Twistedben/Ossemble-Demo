@@ -1,0 +1,103 @@
+<!-- Main show page for posts, under subtopics. (views/posts/show.html.erb)-->
+
+<!-- Begin - Container for post. --> 
+<div class="content">
+  <div class="tier"> <!-- Begin - Main tier for page. -->
+    <!-- Below -  Renders in the accordian from views/layouts/phones/... for mobile and tablet. -->
+    <%= render "layouts/phones/mobile_accordion" %>
+
+    <!-- Begin - Top Row Section of Container -->
+    <div class="col-d-7 col-t-11 col-p-12 padding-t-20 center">
+      <div class="col-all-12 card p-0">
+        <div id="header_show_card" class="col-all-12 card-body pb-0 no-border">
+          <div class="tier">
+            <div class="text-xlarge no-margin col-all-12">
+              <div class="mt-0 col-tier">
+                <div class="col-all-12 p-0 card-body text-medium pull-left">
+                  <div class="col-tier">
+                    <div class="well mb-0 p-2" style="width: 104px; height: 100px;">
+                      <!-- Below -  Displays the Heart or Exclaim icon depending on score category Review > 60 || < 60 -->
+                      <div class="center-all">
+                        <i class="theme_color_dark fas 
+                        <%= 'fa-bullhorn' if @post.topic == @lets_talk %>
+                        <%= 'fa-hand-peace' if @post.topic == @good_vibes %>
+                        <%= 'fa-gavel' if @post.topic == @city_affairs %>
+                        " style="font-size: 45px; position: relative; top: 17px"></i> 
+                      </div>
+                    </div>
+                    <p class="text-xmedium mb-0" style="margin-left: 17px">
+                      <span class="text-xlarge bold show_text_scale" style="color: #645496 !important;">      
+                         <%= @post.title %>
+                      </span>
+                      <br>
+                      <span class="tier mt-0">
+                        <span style="width: 45px !important; height: 40px !important;">
+                          <%= display_show_avatar(@post.user) %>
+                        </span>
+                        <!-- Below - Users_helper.rb -  Displays user name as a link and to determine if the user is from the city or a non-resident -->
+                        <span class="padding-t-10">
+                          <%= display_user_name(@post.user) %>
+                        </span>
+                      </span>
+                      <br>
+                      <span class="relative" style="top: -25px">
+                        <span class="text-big show_text_scale"> 
+                          Posted: <%= time_ago_in_words(@post.created_at).capitalize %> ago
+                        </span>
+                      </span>
+                      <br>
+                    </p>
+                  </div>
+                </div>
+                <div class="col-tier mt-2">
+                <!-- Begin -  Filter tags Row -->
+                <div class="mr-5" style="width: 90px">
+                  <%= display_endorse_button(@post, "posts", "Post", upvote_subtopic_post_path(@city, @post.topic, @post.subtopic, @post.id)) %>
+                </div>
+                  <a class="btn mr-3 alt-action light-text-shadow" href='<%= city_topic_path(@city, @post.topic) %>' >
+                    <%= @post.topic.name %> 
+                  </a>
+                  <a class="btn alt-action light-text-shadow" href='<%= subtopic_path(@city, @post.topic, @post.subtopic) %>'>
+                   <%= @post.subtopic.name %>
+                  </a>  
+                <!-- End -  Filter tags Row -->
+                <div class="margin-l-auto">
+                  <%= link_to "<i class='theme_color_dark fas fa-pencil-alt'></i> Edit".html_safe, edit_user_post_path(@post.user, @post), class: "title_link text-medium" if is_current_users?(@post) %>
+                </div>
+              </div>
+              <!-- Below -  Renders in Complaint description if there is no image -->
+              <%= render 'layouts/resources/resource_description', obj: @post unless @post.image.attached? %>
+              <!-- Below -  Renders in Complaint description if there is no image -->
+              <%= render 'layouts/resources/resource_image', obj: @post if @post.image.attached? %>
+              <!-- Below -  Renders the follow and other user action buttons -->
+              <%= render 'layouts/resources/user_action_tier', obj: @post %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <!-- Below -  Renders in the complaints description -->
+    <%= render 'layouts/resources/resource_description', obj: @post if @post.image.attached? %>
+    <!-- Below -  Comments Section -->   
+    <div class="transparent" style="margin-bottom: 35px !important;"></div>
+      <div id="new_comment_tier" class="no-top-border tier">
+        <div class="col-all-12">
+          <%= render 'comments/comment_form', obj: @post %>
+        </div>
+      </div>
+      <!-- Below - Rendering for existing Comments. -->
+      <div id="comments_list" class="margin-t-30 padding-x-10 tier">
+        <div class="col-all-12">
+          <ul id="comments_ul" class="pl-0">
+            <div id="comment_flash" class="vanish panel panel-success light-box-shadow col-all-12" style="height: 3.5rem"><div class="col-tier margin-t-5"><p class="text-success bold center-all text-xxmedium no-margin col-all-12">Your comment has posted!</p></div></div>
+            <li class="comment_placeholder vanish"></li>
+            <%= render(partial: 'comments/comment', collection: @post.comments)%>
+          </ul>
+        </div>
+      </div>     
+    </div> <!-- End - Top Row Section of Container -->
+    <div id="non_ms_ap_content" class="col-d-3 col-t-10">
+      <%= render 'layouts/action_panel', obj: @post %>
+    </div>
+  </div> <!-- End - Main page tier -->
+</div>   <!-- End - Main page Content -->

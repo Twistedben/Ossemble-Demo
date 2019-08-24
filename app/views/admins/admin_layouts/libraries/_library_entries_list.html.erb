@@ -1,0 +1,105 @@
+<!--  List partial for rendering resource.entriables from workplaces and admins (views/admins/admin_layouts/_workplace_resource.entriables_list.html.erb)
+-->
+
+<div id="resource_list" class="col-tier">
+  <!-- Below - Renders in a message to create content if there are no resource.entriables to show yet. -->
+  <% if obj.empty? %>
+    <div class="card center-all light-box-shadow padding-all-15 mt-0 bg-white col-tier">
+      <% if is_current_page?("admin_libraries", "library_uploads") %>
+        <h3 class="center-all padding-all-15 mt-0">
+           You have yet to upload anything. Click the Upload button above to start saving files, documents, and images.
+        </h3> 
+      <% elsif is_current_page?("admin_libraries", "library_maps") %>
+        <h3 class="center-all padding-all-15 mt-0">
+          You have yet to save any Workplace Map Posts to your library.
+        </h3> 
+      <% elsif is_current_page?("admin_libraries", "library_post_shares") %>
+        <h3 class="center-all padding-all-15 mt-0">
+          No one has yet to share any Workplace forum posts or map posts with you.
+        </h3> 
+      <% elsif is_current_page?("admin_libraries", "library_posts") %>
+        <h3 class="center-all padding-all-15 mt-0">
+          You have yet to save any Workplace Forum Posts to your library.
+        </h3> 
+      <% end %>
+    </div>
+  <% else %>
+    <!-- Below - Renders in each complaint for a city. -->
+    <% obj.each do |resource| %> 
+      <div id="list_card_container">
+        <div class="col-tier">
+          <!-- Begin -  CONTENT TIER: Picture, user info, resource.entriable info, description, tags, etc. -->
+          <div id="image_container" class="col-d-2 col-t-3 col-p-10 transparent">
+            <!-- Below -  Renders the resource.entriables image, if one is attached or the default icon image if one isn't. -->
+            <%= display_workplace_image(resource.entriable) %>
+          </div>
+          <div id="content_container" class="col-d-10 col-t-9 col-p-12">
+            <div id="resource.entriable_info_container" class="col-all-12">
+              <div class="tier">
+                <!-- Below -  Renders the Library Entries associated resource title. -->
+                <a id="list_title" class="col-all-11 text-20 pt-3" href="<%= list_show_link(resource.entriable) %>">
+                  <%= display_list_title(resource.entriable) %>
+                </a>
+                <%= link_to "<i class='fas fa-times-circle text-danger text-16 push-right'></i>".html_safe, remove_library_entry_path(resource.library, resource), id: " " , class: "col-all-1 push-right", method: :remove_entry, title: "Remove this saved post.", data: {confirm: "Remove #{resource.entriable.title} from your library?"}  %>
+              </div>
+              <div id="avatar_name" class="tier">
+                <!-- Below -  Renders the resource.entriable's owner's avatar -->
+                <%= display_small_city_avatar(resource.entriable.admin) %>
+                <!-- Below -  Renders the resource.entriable's owner's name and whether they're a non resident -->
+                <span class="margin-l-8 pt-2"><%= display_workplace_user_name(resource.entriable)   %></span>
+              </div>
+              <div id="time_score" class="tier padding-t-3">
+                <!-- Below -  Displays date the library entry resource was posted. -->
+                <%= "Posted: #{display_date_in_numbers(resource.entriable.created_at)}".html_safe %>
+              </div>
+              <div id="time_score" class="tier padding-y-3">
+                <!-- Below -  Displays date the library entry was saved. -->
+                
+                <%= if resource.shared? 
+                      "Shared: #{time_ago_in_words(resource.created_at)} ago".html_safe 
+                    else 
+                      "Saved: #{display_date_in_numbers(resource.created_at)}".html_safe 
+                    end  %>
+                <!-- Below -  Calls helper from Reviews_helper.rb file to display icon whether the review is scorable or not due to the fact it's a non-resident review -->
+              </div>
+            </div> 
+            <div id="list_tag_tier" class="col-all-12 tier">
+              <!-- Below - Renders the link for the topic of the filter, like Complaint, Peititon or for posts', the name of the topic associated, etc...  -->
+              <%= display_list_topic_tag_link(resource.entriable) %>
+              <!-- Below -  Renders the  subtopic link for the filter, like category for department review, city review love or improve and for Posts the subtopic of the post, etc..-->
+              <%= display_list_subtopic_tag_link(resource.entriable) %>
+              <!-- Below - If the resource.entriable is a complaint, a third tag is rendered with the process of the complaint. Goes to Complaints_helper.rb  -->
+            </div>
+            <!-- Begin - DESCRIPTION: Description row -->
+            <div id="list_description_container" class="col-all-12">
+              <!-- Below -  Displays resource.entriable description or goal is petition, wrapped in an a tag with the link to its show page. -->
+              <%= display_list_description(resource.entriable) %>
+            </div>
+            <!-- End -  DESCRIPTION: -->
+          </div>
+        </div> <!-- End - CONTENT TIER: -->
+       <!-- Begin -  ACTION TIER: Endorse, Share, Comments and endorsements Row -->
+        
+        <div id="list_action_container" class="col-tier">
+           <!--  Twitter and facebook buttons. COmmented out due to Facebook List sharing issues.
+            <!-- Below -  Twitter share share. Goes to shares_helper.rb, passing in resource.entriable, website to share with, show page link, and then title.   -->
+            <!--  %= display_share_button(complaint, "Twitter", city_complaint_path(complaint.city, complaint),"#{complaint.city.name} Complaint: #{complaint.title} - #{complaint.address}: #{city_complaint_url(complaint.city, complaint)}") %>
+              <!-- Below -  Facebook share. Goes to shares_helper.rb, passing in resource.entriable, website to share with, show page link, and then title.   -->
+            <!--  %= display_share_button(complaint, "Facebook", city_complaint_path(complaint.city, complaint),"#{complaint.city.name} Complaint: #{complaint.title} - #{complaint.address}:") %>
+            -->
+            <!-- Below -  Renders in the endorse button for list from lists_helper.rb -->
+          <div id="endorse_container" class="col-d-2 col-t-3 col-p-4"> 
+            <%= display_upvote_button(resource.entriable, workplace_show_link(resource.entriable)) %>
+          </div>
+          
+          <a id="vote_container" class="col-d-3 col-t-4 col-p-4" href="<%= workplace_show_link(resource.entriable) %>">
+            <%= display_vote_count(resource.entriable) %> <!-- Displays endorsements count  -->
+          </a>
+          <a id="comment_container" class="col-d-3 col-t-4 col-p-4" href="<%= workplace_show_link(resource.entriable) %>">
+            <%= display_comment_count(resource.entriable) %> <!--  Displays comments count -->
+          </a>
+        </div>  <!-- End - ACTION TIER: Share, Comments and endorsements row -->
+      </div>
+    <% end %>
+  <% end %>
+</div>

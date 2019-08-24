@@ -1,0 +1,16 @@
+// Stylesheet for styling of activities views and public_activity views (views/activities/index.html.erb), (views/public_activity/....)
+ 
+
+#activities_span a, #comments_city_activity a {
+  color: #645496 !important;
+  text-decoration: none !important;
+}
+#activities_span a:hover, #comments_city_activity a:hover, #activity_city_link:hover {
+  color: #645496 !important;
+  text-decoration: none !important;
+  text-shadow: .04em .04em #cea2cb;
+  border-bottom: 1px solid #645496;
+}
+#activity_city_link {
+  font-size: 12px;
+}

@@ -1,0 +1,11 @@
+<!--  A partial for rendering in the resources' image on the show pages for the resource (Posts, Complaints, Petitions, CityReviews, and DepartmentReviews).
+        Will be rendered in the header_show_card if the resource
+        has an image attached to it. Otherwise, description, or for reviews, tags list will be rendered. -->
+
+<div class="tier margin-t-15 col-all-12">
+  <div class="col-all-12 mx-0 px-0">
+    <div class="card-body center-all light-box-shadow">
+     <%= display_show_picture(obj) %> <!-- Displays the attached picture of the city_review.  -->
+    </div>
+  </div>
+</div>

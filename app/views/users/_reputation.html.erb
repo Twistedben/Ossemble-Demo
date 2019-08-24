@@ -1,0 +1,139 @@
+<!--  Partial for rendering a user's reputation information on User show page under the User_Action_panel.
+      CSS is found in users.css.scss file, line 108 where #reputation_showcase begins. -->
+<div id="reputation_tab" class="center-all w-100">
+  <div id="rep_carousel" class="col-tier carousel slide" data-ride="carousel">
+    <div class="carousel-inner">
+      <div id="ownership_slide" class="carousel-item">
+        <div class="d-block height-100 w-100 transparent" alt="Ownership">    
+          <%= render 'users/badge_slides/ownership', obj: @ownership %>
+        </div>
+      </div>
+      <div id="persistence_slide" class="carousel-item">
+        <div class="d-block height-100 w-100 transparent" alt="Persistence">    
+          <%= render 'users/badge_slides/persistence', obj: @persistence %>
+        </div>
+      </div>
+      <div id="communication_slide" class="carousel-item">
+        <div class="d-block height-100 w-100 transparent" alt="Communication">    
+          <%= render 'users/badge_slides/communication', obj: @communication %>
+        </div>
+      </div>
+      <div id="gratitude_slide" class="carousel-item">
+        <div class="d-block height-100 w-100 transparent" alt="Gratitude">    
+          <%= render 'users/badge_slides/gratitude', obj: @gratitude %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End -  Carousel container -->
+  
+  <!-- Begin -  Carousel Control -->
+  <div id="carousel_control" class="padding-b-18 border-bottom col-tier"> 
+    <div class="col-all-3">
+      <a class="margin-l-10 carousel-control-prev relative push-left" href="#rep_carousel" role="button" data-slide="prev">
+        <i class="carousel_arrow push-left fas fa-arrow-circle-left"  aria-hidden="true"></i>
+        <span class="sr-only">Previous</span>
+      </a>
+    </div>
+    <div id="carousel_steps" class="col-all-6">
+      <div class="center-all">
+        <i id="ownership_circle" class="fas fa-circle-notch" data-target="#rep_carousel" data-slide-to="0" title="Ownership Badge"></i>
+        <i id="persistence_circle" class="fas fa-circle-notch" data-target="#rep_carousel" data-slide-to="1" title="Persistence Badge"></i>
+        <i id="communication_circle" class="fas fa-circle-notch" data-target="#rep_carousel" data-slide-to="2" title="Communication Badge"></i>
+        <i id="gratitude_circle" class="fas fa-circle-notch" data-target="#rep_carousel" data-slide-to="3" title="Gratitude Badge"></i>
+      </div>
+    </div>
+    <div class="col-all-3">
+      <a class="margin-r-10 carousel-control-next relative push-right" href="#rep_carousel" role="button" data-slide="next">
+        <i class="carousel_arrow push-right fas fa-arrow-circle-right" aria-hidden="true"></i>
+        <span class="sr-only">Next</span>
+      </a>
+    </div>
+  </div>
+  <!-- End -  Carousel Control -->
+  <div id="bonus_badges_tier" class="col-tier">
+    <div class="col-tier">
+      <% if @user.unique_badges.empty? %>
+      <div id="no_bonus" class="col-tier">
+        <p class="text-center">
+          <%= @user.first_name %> has yet to earn a Bonus Badge
+        </p>
+        <div class="col-tier">
+          <div class="col-all-3" title="Ally: Has some allies and has made some friends!">
+            <%= image_tag "badges/OssembleAllies.svg", class: "image" %>
+          </div>
+          <div class="col-all-3" title="Friend Of The City: Can contribute to another city.">
+            <%= image_tag "badges/OssembleFriendoftheCity.svg", class: "image" %>
+          </div>
+          <div class="col-all-3" title="Moderator: A Moderator of a city.">
+            <%= image_tag "badges/OssembleModerators.svg", class: "image" %>
+          </div>
+          <div class="col-all-3" title="Pioneer: Was there when it all began and verified their account.">
+            <%= image_tag "badges/OssemblePioneering.svg", class: "image" %>
+          </div>
+        </div>
+      </div>
+      <% else %> <!-- User has been awarded a unique badge  -->
+        <div id="has_bonus" class="col-tier">
+          <p class="text-center">
+            <!-- Below -  Counts the users number of unique badges and pluralizes or singularizes it. -->
+            <%= @user.first_name %> has earned <%= @user.count_unique_badges %> Bonus Badge<%= "s" if @user.count_unique_badges != 1 %>
+          </p>
+          <div class="col-tier">
+            <div class="col-all-3" title="Ally: Has some allies and has made some friends!">
+              <%= image_tag "badges/OssembleAllies.svg", class: "image awarded" if @user.has_badge?("Ally") %>
+              <%= image_tag "badges/OssembleAllies.svg", class: "image unawarded" unless @user.has_badge?("Ally") %>
+            </div>
+            <div class="col-all-3" title="Friend Of The City: Can contribute to another city.">
+              <%= image_tag "badges/OssembleFriendoftheCity.svg", class: "image awarded" if @user.has_badge?("Friend of the City") %>
+              <%= image_tag "badges/OssembleFriendoftheCity.svg", class: "image unawarded" unless @user.has_badge?("Friend of the City") %>
+            </div>
+            <div class="col-all-3" title="Moderator: A Moderator of a city.">
+              <%= image_tag "badges/OssembleModerators.svg", class: "image awarded" if @user.has_badge?("Moderator") %>
+              <%= image_tag "badges/OssembleModerators.svg", class: "image unawarded" unless @user.has_badge?("Moderator") %>
+            </div>
+            <div class="col-all-3" title="Pioneer: Was there when it all began and verified their account.">
+              <%= image_tag "badges/OssemblePioneering.svg", class: "image awarded" if @user.has_badge?("Pioneer") %>
+              <%= image_tag "badges/OssemblePioneering.svg", class: "image unawarded" unless @user.has_badge?("Pioneer") %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+<!-- Below - JS Code to track circles in the slides-->
+<script> 
+  $("#ownership_slide").addClass('active');
+  $("#ownership_circle").removeClass("fa-circle-notch").addClass("fa-circle"); 
+  
+var cycle = $('#rep_carousel').on('slide.bs.carousel', function () {
+  
+  if ($("#persistence_slide").hasClass('active')) {
+    $("#ownership_circle").removeClass("fa-circle").addClass("fa-circle-notch");
+    $("#persistence_circle").removeClass("fa-circle-notch").addClass("fa-circle");
+    $("#communication_circle").removeClass("fa-circle").addClass("fa-circle-notch");
+    $("#gratitude_circle").removeClass("fa-circle").addClass("fa-circle-notch");
+
+  }
+  else if ($("#communication_slide").hasClass('active')) {
+    $("#ownership_circle").removeClass("fa-circle").addClass("fa-circle-notch");
+    $("#persistence_circle").removeClass("fa-circle").addClass("fa-circle-notch");
+    $("#communication_circle").removeClass("fa-circle-notch").addClass("fa-circle");
+    $("#gratitude_circle").removeClass("fa-circle").addClass("fa-circle-notch");
+  }
+  else if ($("#gratitude_slide").hasClass('active')) {
+    $("#ownership_circle").removeClass("fa-circle").addClass("fa-circle-notch");
+    $("#persistence_circle").removeClass("fa-circle").addClass("fa-circle-notch");
+    $("#communication_circle").removeClass("fa-circle").addClass("fa-circle-notch");
+    $("#gratitude_circle").removeClass("fa-circle-notch").addClass("fa-circle");
+  }
+  else if ($("#ownership_slide").hasClass('active')) {
+    $("#ownership_circle").removeClass("fa-circle-notch").addClass("fa-circle");
+    $("#persistence_circle").removeClass("fa-circle").addClass("fa-circle-notch");
+    $("#communication_circle").removeClass("fa-circle").addClass("fa-circle-notch");
+    $("#gratitude_circle").removeClass("fa-circle").addClass("fa-circle-notch");
+    
+  }
+});
+</script>

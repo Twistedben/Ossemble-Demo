@@ -1,0 +1,257 @@
+<!-- Main page for Navbar being rendered across the entire website from application.html.erb-->
+<div id="nav_wrap">
+  <nav id="navbar_main" class="light-box-shadow navbar navbar-expand-md navbar-fixed-top navbar-light">
+    <div class="content-fluid padding-x-0">
+      <div class="col-tier">
+        <div id="brand_wrapper" class="navbar-left" style="height: 50px">
+          <a href=' 
+          <%= 
+          if is_logged_in? # User is logged in and returns either admin's city path link or users city path link.
+            if current_admin.has_institute? 
+              workplace_feed_path(current_admin.institute, current_admin.institute.main_workplace)  
+            else 
+              root_path
+            end 
+          else   # Fail safe
+            root_path
+          end  
+            %> 
+          '>
+            <!-- Below - Mobile Brand Logo for Ossemble. -->
+            <%= image_tag 'logos/Owl_FavIcon.png', alt: "Ossemble", class: "navbar-brand navbar-left ms_owlshow p-1 pr-3 mr-2", id: "brand_ossemble", style: "padding-top: 0px !important;"  %>
+            <!-- Below - Desktop/Fullscreen Brand Logo for Ossemble. -->
+            <%= image_tag 'logos/Owl_Brand_Simplified_without_Bottom_Border.png', alt: "Ossemble", class: "navbar-brand navbar-left pb-3 p-1 pr-3 ms_owlhide", id: "brand_ossemble" %>
+          </a>
+        </div>
+        <!-- Begin - Page links of about and blog wrapper -->
+        <div id="navbar_page_links_wrapper" style="height: 57px;">
+          <div class="navbar-nav mt-2 ba_height ms_lm2">
+            <%= link_to "Features", features_path, id: "explore_link", title: "See what Ossemble has to offer!", class: "col-p-vanish nav-item nav-link pb-0 padding-l-10 theme_color_dark navbar_item_link ms_lm2", onclick: "amplitude.getInstance().logEvent('Learn More - Navbar');" unless is_logged_in? %>
+          </div>
+          <div class="navbar-nav mt-2 ba_height ms_lm">
+           <%= link_to "<i class='fas fa-info-circle mt-1 text-25'></i>".html_safe, about_path, id: "about_ms",  class: "nav-item nav-link pb-0 mr-2 ml-0 theme_color_dark navbar_item_link ms_lm", title: "Click to learn more about Ossemble.", onclick: "amplitude.getInstance().logEvent('Learn More - Navbar');" unless is_logged_in? %>
+          </div>
+        </div> <!-- End - Page links of about and blog wrapper -->
+        <div class="col-d-6 col-t-5 col-p-4 px-0">
+          <!-- Below -  If statement to not render the feeds navbar on certain pages -->
+          <% if is_guest_page? || is_chatroom_page? %>
+            <!--  Doesn't render on guest pages -->
+          <% else %> <!-- Isn't a guest page like Learn More or something, so renders navbar.  -->
+            <div class="col-all-12 p-0 ">
+              <div class="tier">
+                <div id="intro1_step2" class="pl-0 pr-2 pb-0 pt-3 center-all tier navbar_fix_ms">
+                  <!--  Link for navbar feed. Will change depending on visitor's location and status on website. -->
+                  <% if !is_workplace_page? %> <!-- Link is for a nonworkplace location, also checks for library page and links there if so  -->
+                    <a href="
+                      <% if controller_name == "notifications" %>
+                        <%= user_notifications_path %>
+                      <% elsif @admin || current_admin %>
+                        <% if is_library_page? %> 
+                          <%= admin_library_path(@institute, current_admin, current_admin.library) %>
+                        <% else %>
+                          <%= workplace_feed_path(current_admin.institute, current_admin.workplaces.first) unless current_admin.institute.nil? %>
+                          <%= new_institute_path() if current_admin.institute.nil? %>
+                        <% end %>
+                      <% elsif current_user %>
+                        <% if @city %>
+                          <%= city_feed_path(@city) %>
+                        <% else @user %>
+                          <%= city_feed_path(current_user.city) %> 
+                        <% end %>
+                      <% else %>
+                        
+                      <% end %>        
+                      "
+                      class="theme_color_dark bold title_link mr-3 text-20">
+                      <% if is_library_page? %> 
+                        <% if @upload %>
+                          Archive Upload
+                        <% else %>
+                          Your Archive
+                        <% end %>
+                      <% elsif controller_name == "notifications" %>
+                          Notifications
+                      <% elsif @institute %>
+                        <%= @institute.name %>
+                      <% elsif @admin && current_admin %>
+                        <%= current_admin.institute.name %>
+                      <% elsif current_user %>
+                        <%= current_user.city.name %> 
+                      <% else %> <!-- Failsafe to just render city if all of the above is false  -->
+                      
+                      <% end %>
+                      <%= "Feed" unless is_library_page? || controller_name == "notifications" || controller_name == "payments"  %>
+                    </a>
+                  <% else %> <!-- User is in a Workplace   -->  
+                    <a href="
+                      <% if is_undefined_workplace_page? %>
+                        <%= institute_workplaces_path(@institute) %>
+                      <% else %>
+                        <% if current_page?(workplace_directory_path(@institute, @workplace)) %>
+                          <%= workplace_directory_path(@institute, @workplace) %>
+                        <% else %>
+                          <%= workplace_feed_path(@institute, @workplace) %>
+                        <% end %>
+                      <% end %>
+                      "
+                      class="theme_color_dark bold title_link mr-3 text-20">
+                      <% if is_current_page?("workplaces", "index") || is_current_page?("workplaces", "new") %>
+                        <%= current_institute %> 
+                      
+                      <% else %>  
+                        <% if @admin %>
+                          <% if @workplace_post || @suggestion || @report || @map_post %>
+                            Edit Post
+                          <% else %>
+                            <!--  Fail Safe -->
+                          <% end %>
+                        <% else %>  
+                          <% if current_page?(workplace_directory_path(@institute, @workplace)) %>
+                            Channel Directory
+                          <% elsif current_page?(workplace_map_path(@institute, @workplace)) %>
+                            Channel Map
+                          <% else %>
+                            <% if @workplace %>
+                              <%= @workplace.name %>
+                            <% else %>
+                              Workplace Channel
+                            <% end %>
+                          <% end %>
+                        <% end %>
+                      <% end %>
+                    </a>
+                  <% end %> <!--  End - Page check for what the link displays -->
+                  <div class="dropdown">
+                    <!--  Button says Upload if the admin is in their library, otherwise will say Post and give options -->
+                    <% if is_library_page? %>
+                      <%= link_to "Upload", new_library_upload_path(@institute, @admin, @library), id: "post_dropdown_btn" , class: "btn button-cs", title: "Upload a document, file or image to your own personal archive and choose to share it." %>
+                    <% elsif controller_name != "notifications" || is_undefined_workplace_page?  %> <!-- Not in a library or notifications page so shows Post options  -->
+                      <button id="post_dropdown_btn" class="button-cs" href="#" role="button" title="Post in the forum or map on the Workplace Channel" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="amplitude.getInstance().logEvent('Post Navbar');">
+                        Post
+                      </button>
+                    <% else %>
+                    <!--  Fail Safe to do nothing -->
+                    <% end %>
+                    <div id="post_dropdown_menu" class="dropdown-menu dropdown-menu-left" aria-labelledby="post_dropdown_btn">
+                      <% if (current_admin && !is_workplace_page?) || (current_admin && is_undefined_workplace_page?)  %> <!-- Admin is logged in and not on workplace pages or is on undefined workplace pages -->
+                        <% if is_library_page? || is_guest_page? %> <!--  Admin is in their library -->
+                        
+                        <% end %>
+                      <% elsif current_admin && is_workplace_page?  %> <!-- Admin is logged in and on Workplace pages, not city pages   -->
+                        <div id="workplace_post_dropdown">
+                          <%= link_to "<i class='fas fa-comments'></i>Forum Post".html_safe, new_institute_workplace_workplace_post_path(@institute, @workplace), id: " " , class: " dropdown-item", title: "Create a new Conversation post.", onclick: "amplitude.getInstance().logEvent('Forum Post Navbar');", data: {turbolinks: false} %>
+                          <hr />
+                          <%= link_to "<i class='fas fa-map-marked-alt'></i>Map Post".html_safe, new_institute_workplace_workplace_map_post_path(@institute, @workplace), id: " " , class: " dropdown-item", title: "Create a Map Post to draw on city map.", onclick: "amplitude.getInstance().logEvent('Map Post Navbar');", data: {turbolinks: false} %>
+                        </div>
+                      <% else %>  <!--  User is logged in -->
+                        
+                      <% end %> <!--  End - Guest check for posting -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %> <!--  End - Page check for navbar rendering -->
+        <!-- End code for secondary nav bar --> 
+        </div>
+        <% if is_logged_in? %> <!-- Begin - If Statement showing Profile Link if loggedin, otherwise two log buttons --> 
+          <!-- Begin -  Displays Navbar Profile Dropdown for citizen users. -->
+          <div id="dropdown_logged_in" class="intro1_step3 dropdown show navbar-right margin-l-auto ms_t_padding mr-0" style="margin-top: 4.5px;">
+            <a class="dropdown-toggle margin-t-5" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <!-- Below -  Displays user avatar or default avatar, using view helper in application_helper.rb file. -->
+              <%= display_nav_avatar(current_user_or_admin) %>
+            </a>
+            <div id="profile_dropdown_menu" class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+              <!-- Confirmation is commented out for now
+                % if !current_user_or_admin.confirmed? %> <!--  User has not yet confirmed their account, so shows a link on navbar -->
+              <!--   <a href="#" onClick="alert('Your profile has yet to be confirmed via email. Visit your %= current_user_or_admin.email %> inbox and confirm it using the email that was sent to you.');"  class='padding-b-0 text-warning nav-item nav-link text-xxsmall bold light-text-shadow profile_title padding-x-0'>Unconfirmed</a>
+                % end %> <!--  End of confirmed check -->
+              <% if current_user %> <!--  Logged in user is a citizen user, so displays user based navbar dropdown items. -->
+                <h6 class="dropdown-header center-all p-1 mt-0"> 
+                  <%= link_to "#{current_user.name}", user_path(current_user.institute, current_user), id: 'user_profile_name', class: 'text-17 dropdown-item padding-x-12 center bold'  %> 
+                </h6>
+                <div class="dropdown-divider"></div>
+                <%= link_to "Hometown", city_feed_path(current_user.institute), id: "hometown_link", class: 'dropdown_link dropdown-item'  %> 
+                <hr>
+                <%= link_to "Conversations", all_conversations_path(), id: "hometown_link", class: 'dropdown_link dropdown-item'  %> 
+                <hr>
+                <!-- Below -  Provides a link to the user's profile unless they're already on their profile page, then displays link to settings -->
+                <%= link_to_unless_current("Profile", user_path(current_user.institute, current_user), html_options = {id: "profile_link", class: 'dropdown-item dropdown_link'})  do 
+                  link_to "Settings", edit_user_registration_path(current_user), id: "profile_link" , class: "dropdown-item dropdown_link" 
+                 end %>
+                <hr>
+                <%= link_to "Logout", destroy_user_session_path, method: :delete, id: "logout_link", class: 'dropdown_link dropdown-item'  %> 
+              <!-- End - Displays Navbar Profile Dropdown for citizen users. -->
+              <% elsif current_admin && current_admin.has_institute? %> <!--  User is a admin of a city -->
+              <!-- Begin -  Displays Navbar Profile Dropdown admin city users. -->
+                <h5 class="dropdown-header center-all p-1 margin-t-0"> 
+                  <%= link_to "#{current_admin.name}", institute_admin_path(current_admin.institute, current_admin), id: 'user_profile_name', class: 'dropdown-item p-1 center bold'  %> 
+                </h5>
+                <div class="dropdown-divider"></div>
+                <!-- Below -  Provides a link to the admins's profile unless they're already on their profile page, then displays link to settings -->
+                <div id="nav_link_dropdown_container" class="col-tier">
+                  <div class="dropdown_icon_container">
+                    <i class='fas fa-user-circle'></i>
+                  </div>
+                  <%= link_to_unless_current("My Profile", institute_admin_path(current_admin.institute, current_admin), html_options = {id: "profile_link", class: 'dropdown-item dropdown_link'})  do 
+                      link_to "Profile Settings", edit_admin_path(current_admin.institute, current_admin), id: "profile_link" , class: "dropdown-item dropdown_link" 
+                   end %>
+                </div>
+                <hr>
+                <div id="nav_link_dropdown_container" class="col-tier">
+                  <div class="dropdown_icon_container">
+                    <i class='fas fa-file-archive'></i>
+                  </div>
+                  <%= link_to "My Archive", admin_library_path(current_admin.institute,  current_admin, current_admin.library,), id: "profile_link", class: 'dropdown-item dropdown_link', title: "Your Archive holds all your saved posts and uploads." %> 
+                </div>
+                <div class="col-tier">
+                  <%= link_to "Home",     root_path,       id: "home_link",     class: 'footer_link'  %> 
+                  <span></span>
+                  <%= link_to "Contact",  contact_us_path, id: "contact_link",  class: 'footer_link'  %> 
+                  <span></span>
+                  <%= link_to "Policies", policies_path,   id: "policies_link", class: 'footer_link'  %> 
+                  <span></span>
+                  <%= link_to "Logout",   destroy_admin_session_path, method: :delete, id: "logout_link", class: 'footer_link'  %> 
+                  <span></span>
+                  <%= link_to "<i class='fas fa-cog'></i>".html_safe, edit_admin_path(current_admin.institute, current_admin), id: "settings_link", class: 'footer_link', title: "Go to Profile Settings"  %> 
+                </div>
+              <!-- End -  Displays Navbar Profile Dropdown admin users. -->
+              <!-- Below -  Displays navba dropdown for admins signing up for first time. -->
+              <% elsif current_admin && !current_admin.has_institute? %>
+                <div id="nav_link_dropdown_container" class="col-tier">
+                  <div class="dropdown_icon_container">
+                    <i class='fas fa-user'></i>
+                  </div>
+                  <%= link_to "Create Workplace", new_institute_path(), id: "profile_link", class: 'dropdown-item dropdown_link', title: "Create your first Workplace" %> 
+                </div>
+
+                <div class="col-tier">
+                  <%= link_to "Home",     root_path,       id: "home_link",     class: 'footer_link'  %> 
+                  <span></span>
+                  <%= link_to "Contact",  contact_us_path, id: "contact_link",  class: 'footer_link'  %> 
+                  <span></span>
+                  <%= link_to "Policies", policies_path,   id: "policies_link", class: 'footer_link'  %> 
+                  <span></span>
+                  <%= link_to "Logout",   destroy_admin_session_path, method: :delete, id: "logout_link", class: 'footer_link'  %> 
+                  <span></span>
+                  <%= link_to "<i class='fas fa-cog'></i>".html_safe, '#', id: "settings_link", class: 'footer_link', title: "Go to Profile Settings"  %> 
+                </div>
+
+              <% end %>
+             <!-- End -  If statement to check if logged in user is a citizen or an admin.--> 
+            </div>
+          </div>
+        <% else %>  <!-- Else statement displaying Login & Signup buttons since User is not signed in -->
+          <div class="navbar-right margin-l-auto">
+            <div class= "navbar-right push-right mt-4 ms_log_mr">
+                <%= link_to "<i class='fas fa-sign-in-alt'></i><span class='ms_icon_hide ml-2'>Login</span>".html_safe, new_admin_session_path, id: "login-su-btn", class: "btn button-su", title: "Login to your Profile." %>
+            </div>
+            <div class= "navbar-right push-right mt-4 ms_log_mr">
+                <%= link_to "Try Now", new_admin_registration_path(), onclick: "amplitude.getInstance().logEvent('Navbar - Signup Page - Try Now');", id: "login-su-btn2" , class: "btn button-su" %>
+            </div>
+          </div>
+        <% end %>                 <!-- End - If Statement for displaying Logged status -->
+      </div>
+    </div>
+  </nav>
+</div>

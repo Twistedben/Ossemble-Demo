@@ -1,0 +1,130 @@
+<!--  Main Show Page for Individual map posts in order to display additional information of the specific map post. (views/map posts/show.html.erb) -->
+<div class="content">
+  <div class="tier"> <!-- Begin - Main tier for page. -->
+    <!-- Below -  Renders in the accordian from views/layouts/phones/... for mobile and tablet. -->
+    <%= render "layouts/phones/mobile_accordion" %>
+  <!-- Begin - map post Information. -->
+    <!-- Begin - Top Row Section of Container -->
+    <div class="col-d-7 col-t-11 col-p-12 padding-t-20 center">
+      <%= render 'layouts/errors', obj: @entry %>
+      <div id="header_show_card" class="col-all-12">
+        <div class="tier">
+          <div class="no-margin col-all-12">
+            <div class="mt-0 col-tier">
+              <div class="col-all-12 p-0 card-body pull-left">
+                <%= link_to "<i class='theme_color_dark fas fa-pencil-alt'></i> Edit".html_safe, edit_workplace_map_post_path(@institute, @map_post.workplace, current_admin, @map_post), class: "title_link text-medium pull-right", data: {turbolinks: false} if belongs_to_admin?(@map_post)  %>
+
+                <div class="col-tier">
+                  <!-- Below -  Displays the map post's associated default icon. Goes to map posts_helper.rb method dishaply_map post_show_icon. -->
+                  <%= display_workplace_default_icon(@map_post, "show") %>
+                  <p class="text-xmedium mb-0" style="margin-left: 17px">
+                    <span id="show_page_title">      
+                      <%= "#{@map_post.title} - <span class='no-bold'>#{@map_post.address}</span>".html_safe %>
+                    </span>
+                    <br>
+                    <span class="tier my-2">
+                      <span style="width: 45px !important; height: 40px !important;">
+                        <%= display_show_avatar(@map_post.admin) %>
+                      </span>
+                      <!-- Below - Users_helper.rb - Displays user name as a link and to determine if the user is from the city or a non-resident -->
+                      <span class="padding-t-10 padding-l-8 text-18">
+                        <%= display_workplace_user_name(@map_post) %>
+                      </span>
+                    </span>
+                    <br>
+                    <span class="relative" style="top: -20px">
+                      <span class="text-big show_text_scale"> 
+                        Posted: <%= display_date_in_numbers(@map_post.created_at) %> 
+                      </span>
+                    </span>
+                    <br>
+                    <span class="relative" style="top: -20px">
+                      <span class="text-big show_text_scale"> 
+                        <% if @map_post.is_shared? %>
+                          Shared with: 
+                          <% @map_post.library_entries.shared.each do |receiver|  %> 
+                            <%= link_to "#{receiver.admin.name}", institute_admin_path(receiver.admin.institute, receiver.admin), id: " " , class: "title_link"  %> |
+                          <% end %>
+                        <% end %>
+                      </span>
+                    </span>
+                  </p>
+                </div>
+              </div>
+              <div class="col-tier mt-2">
+              <!-- Begin -  Filter tags Row -->
+                <div class="" style="width: 90px; margin-right: 40px">
+                  <%= display_upvote_button(@map_post, upvote_workplace_map_post_path(@institute, @workplace, @map_post.id)) %>
+                </div>
+                <a id="filter-tag" class="btn button-cs"  href='<%= workplace_map_posts_path(@institute, @workplace) %>' >
+                  Map
+                </a>
+                <a id="filter-tag" class="btn button-cs"  href='<%= map_category_filter_tag_url(@map_post) %>'>  
+                  <%=  @map_post.category %>
+                </a>
+                <!-- End -  Filter tags Row -->
+                <div class="margin-l-auto">
+                  <%= link_to "<i class='far fa-bookmark'></i>Archive".html_safe, save_map_post_to_library_path(@institute, @workplace, @map_post), id: "archive_btn", class: "btn button-cs", method: :post %>
+                  <!-- Below - Renders in helper method for endorse in upvotes_helper.rb. Instance method, name of controller, and then name of resource to display on the button itself. -->
+                </div>
+              </div>
+              <!-- Below -  Renders in map post description if there is no image -->
+              <%= render 'layouts/resources/resource_description', obj: @map_post unless @map_post.image.attached? %>
+              <!-- Below -  Renders in map post description if there is no image -->
+              <%= render 'layouts/resources/resource_image', obj: @map_post if @map_post.image.attached? %>
+              <!-- Below -  Renders the follow and other user action buttons -->
+              <%= render 'layouts/workplaces/admin_action_tier', obj: @map_post %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Below -  Renders in the map posts description -->
+      <%= render 'layouts/resources/resource_description', obj: @map_post if @map_post.image.attached? %>
+      <div class="mt-4">
+        <p class="text-22 b roboto trending_font_size pull-left">
+          Map Post Location
+        </p>
+      </div> 
+      <!-- Begin - Map Row for Map Post -->
+      <div id="workplace_show_post_map_container" class="col-tier">
+        <div class="col-all-12">
+          <div id="workplace_show_post_map">
+            <div class="leaflet-top leaflet-right">
+              <div id="change_map_btn_container">  <!-- here the legend -->
+                <input type="button" id="change_map" value="Change Map" onclick="changeMap();" class="btn button-cs" />
+              </div>
+            </div>  
+            <%= render 'workplace_show_map', obj: @map_post %> <!-- Leaflet JS for Map -->
+          </div>
+        </div>
+      </div>
+      <!-- End - Map Row for Map Post -->
+    </div>
+    <%= render 'admins/admin_layouts/workplace_action_panel', obj: @map_post %>
+  </div>
+</div> <!-- End - Main page tier -->
+  
+<!-- Begin - Container for Title and form of Comments section. --> 
+<div class="content mt-0">
+  <div class="tier">
+    <div class="col-d-2 col-t-1"></div>
+      <div class="col-d-7 col-t-10 col-p-12">
+      <!-- Below - Renders in the form to create a new comment. -->
+      <div id="new_comment_tier" class="no-top-border tier">
+        <div class="col-all-12">
+          <%= render 'admins/comments/comment_form', obj: @map_post %>
+        </div>
+      </div>
+      <!-- Below - Rendering for existing Comments. -->
+      <div id="comments_list" class="tier margin-t-30 padding-x-10">
+        <div class="col-all-12">
+          <ul id="comments_ul" class="pl-0">
+            <div id="comment_flash" class="vanish panel panel-success light-box-shadow col-all-12" style="height: 3.5rem"><div class="col-tier margin-t-5"><p class="text-success bold center-all text-xxmedium no-margin col-all-12">Your comment has posted!</p></div></div>
+            <li class="comment_placeholder vanish"></li>
+            <%= render(partial: 'admins/comments/comment', collection: @map_post.comments)%>
+          </ul>
+        </div>
+      </div>     
+    </div>
+  </div>
+</div> <!-- End - Container for Title and form of Comments section. --> 

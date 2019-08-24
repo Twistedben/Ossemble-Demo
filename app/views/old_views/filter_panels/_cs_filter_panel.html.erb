@@ -1,0 +1,74 @@
+<!-- Begin -Departments/Compaints Filter Panel -->
+<div id="filter_panel_wrapper" class="filtertoggle col-all-12 center pl-0 pt-0">
+  <aside style="width: 100% !important">
+    <div id="filter_panel_content" class="p-0 mb-4 border-radius-10">
+      <div id="filter_panel_body" class="panel-default panel-profile no-border border-radius-10">
+        <div id="filter_panel_list_wrapper" class="panel-body no-border">
+          <ul id="filter_panel_list" class="list-group">
+            <div class="">
+              <div class="mb-0 text-xbig city_feeds_pos b roboto" style="color: rgba(88, 88, 88, .9)">
+                Scores
+              </div>
+            </div>
+            <!-- Below - If satement checks whether to render the map page or list page -->
+            <% if current_page?(controller: 'community_scores', action: 'community_score_map')  || current_page?(controller: 'complaints', action: 'complaint_map') ||  current_page?(controller: 'complaints', action: 'verifying_map') || current_page?(controller: 'complaints', action: 'pending_map') || current_page?(controller: 'complaints', action: 'filed_map')|| current_page?(controller: 'complaints', action: 'finished_map')  %>
+            <li class="city_feeds_pos mb-0">
+              <a class="" style="text-decoration: none;" href="<%= city_review_index_path(@city) %>"><i class="fas fa-heart margin-r-10 margin-l-8 ms_t_panel_head"></i>What You Love</a>
+            </li>
+              <li class="dropdown city_feeds_pos mb-0 ">
+                <a class="dropdown" style="text-decoration: none;"><i class="fas fa-map-marker margin-r-10 margin-l-8 ms_t_panel_head"></i>Complaints<i class="pl-3 fas fa-caret-down"></i></a>
+                <ul class="dropdown-menu city_feeds_pos about_dd_style pt-0 mt-0">
+                  <li class="about_dd_hover city_feeds_pos"><a class="p-0 transparent" href="<%= complaint_map_path(@city)  %>"><i class="fas fa-map-marked margin-l-8 margin-r-8"></i><span class='ms_font_panel'>All Complaints</span></a></li>
+                  <li class="about_dd_hover city_feeds_pos"><a class="p-0 transparent" href="<%= verifying_map_path(@city) %>"><i class="fas fa-exclamation-triangle margin-l-8 margin-r-8"></i><span class='ms_font_panel'>Confirm Map</span></a></li>
+                  <li class="about_dd_hover city_feeds_pos"><a class="p-0 transparent" href="<%= pending_map_path(@city)   %>"><i class="far fa-arrow-alt-circle-up margin-l-8" style="margin-right: 11px"></i><span class='ms_font_panel'>Endorse! Map</span></a></li>
+                  <li class="about_dd_hover city_feeds_pos"><a class="p-0 transparent" href="<%= filed_map_path(@city)     %>"><i class="far fa-envelope margin-l-8" style="margin-right: 11px"></i><span class='ms_font_panel'>Filed Map</span></a></li>
+                  <li class="about_dd_hover city_feeds_pos"><a class="p-0 transparent" href="<%= finished_map_path(@city)  %>"><i class="fas fa-percent margin-l-8" style="margin-right: 12px"></i><span class='ms_font_panel'>Scored Map</span></a></li>
+                </ul>
+              </li>
+              <li class="dropdown city_feeds_pos mb-0 ">
+                <a class="dropdown" style="text-decoration: none;"><i class="fas fa-building margin-r-10 margin-l-8 ms_t_panel_head"></i>Departments<i class="pl-3 fas fa-caret-down"></i></a>
+                <ul class="dropdown-menu city_feeds_pos about_dd_style pt-0 mt-0">
+                  <span class="badge badge-primary badge-pill float-left"><!-- PROGRAMMER'S NOTE: Here the number of each scope should be displayed in a badge next to the filter category. --></span>
+                  <li class="about_dd_hover city_feeds_pos"><a class="p-0 transparent" href="<%= city_department_reviews_path(@city) %>"><i class="fas fa-building margin-l-8" style="margin-right: 13px"></i><span class='ms_font_panel'>All Departments</span></a></li>
+                  <li class="about_dd_hover city_feeds_pos"><a class="p-0 transparent" href="<%= government_city_department_reviews_path(@city) %>"><i class="fas fa-university margin-l-8" style="margin-right: 11px"></i><span class='ms_font_panel'>Government</span></a></li>
+                  <li class="about_dd_hover city_feeds_pos"><a class="p-0 transparent" href="<%= parks_city_department_reviews_path(@city)      %>"><i class="fas fa-tree margin-l-8" style="margin-right: 15px"></i><span class='ms_font_panel'>Parks</span></a></li>
+                  <li class="about_dd_hover city_feeds_pos"><a class="p-0 transparent" href="<%= schools_city_department_reviews_path(@city)    %>"><i class="fas fa-graduation-cap margin-l-8" style="margin-right: 7px"></i><span class='ms_font_panel'>Schools</span></a></li>
+                  <li class="about_dd_hover city_feeds_pos"><a class="p-0 transparent" href="<%= police_city_department_reviews_path(@city)    %>"><i class="fas fa-taxi margin-l-8" style="margin-right: 11px"></i><span class='ms_font_panel'>Police</span></a></li>
+                  <li class="about_dd_hover city_feeds_pos"><a class="p-0 transparent" href="<%= public_works_city_department_reviews_path(@city)    %>"><i class="fas fa-bus-alt margin-l-8" style="margin-right: 11px"></i><span class='ms_font_panel'>Public Works</span></a></li>
+                </ul>
+              </li>
+            <% else %> <!-- User is on list view -->
+            <li class="city_feeds_pos mb-0">
+              <a class="" style="text-decoration: none;" href="<%= city_review_index_path(@city) %>"><i class="fas fa-heart margin-r-10 margin-l-8 ms_t_panel_head"></i>What You Love</a>
+            </li>
+            <div>
+              <li class="dropdown city_feeds_pos mb-0">
+                <a class="dropdown" style="text-decoration: none;"><i class="fas fa-map-marker margin-r-10 margin-l-8 ms_t_panel_head"></i>Complaints<i class="pl-3 fas fa-caret-down"></i></a>
+                <ul class="dropdown-menu city_feeds_pos about_dd_style pt-0 mt-0">
+                  <li class="about_dd_hover city_feeds_pos"><a class="p-0 transparent" href="<%= city_complaints_path(@city) %>"><i class="fas fa-map-marker margin-l-12" style="margin-right: 11px"></i><span class='ms_font_panel'>All Complaints</span></a></li>
+                  <li class="about_dd_hover city_feeds_pos"><a class="p-0 transparent" href="<%= verifying_city_complaints_path(@city) %>"><i class="fas fa-exclamation-triangle margin-l-8 margin-r-8"></i><span class='ms_font_panel'>Confirm</span></a></li>
+                  <li class="about_dd_hover city_feeds_pos"><a class="p-0 transparent" href="<%= pending_city_complaints_path(@city)   %>"><i class="far fa-arrow-alt-circle-up margin-l-8 margin-r-10"></i><span class='ms_font_panel'>Endorse!</span></a></li>
+                  <li class="about_dd_hover city_feeds_pos"><a class="p-0 transparent" href="<%= filed_city_complaints_path(@city)     %>"><i class="far fa-envelope margin-l-8 margin-r-10"></i><span class='ms_font_panel'>Filed</span></a></li>
+                  <li class="about_dd_hover city_feeds_pos"><a class="p-0 transparent" href="<%= finished_city_complaints_path(@city)  %>"><i class="fas fa-percent margin-l-8" style="margin-right: 12px"></i><span class='ms_font_panel'>Scored</span></a></li>
+                  <li class="about_dd_hover city_feeds_pos"><a class="p-0 transparent" href="<%= complaint_map_path(@city)  %>"><i class="fas fa-map-marked margin-l-8 margin-r-8"></i><span class='ms_font_panel'>Complaints Map</span></a></li>
+                </ul>
+              </li>
+              <li class="dropdown city_feeds_pos mb-0">
+                <a class="dropdown"  style="text-decoration: none;"><i class="fas fa-building margin-r-10 margin-l-8 ms_t_panel_head"></i>Departments<i class="pl-3 fas fa-caret-down"></i></a>
+                <ul class="dropdown-menu city_feeds_pos about_dd_style pt-0 mt-0">
+                  <span class="badge badge-primary badge-pill float-left"><!-- PROGRAMMER'S NOTE: Here the number of each scope should be displayed in a badge next to the filter category. --></span>
+                  <li class="about_dd_hover city_feeds_pos"><a class="p-0 transparent" href="<%= city_department_reviews_path(@city) %>"><i class="fas fa-building margin-l-8" style="margin-right: 13px"></i><span class='ms_font_panel'>All Departments</span></a></li>
+                  <li class="about_dd_hover city_feeds_pos"><a class="p-0 transparent" href="<%= government_city_department_reviews_path(@city) %>"><i class="fas fa-university margin-l-8" style="margin-right: 11px"></i><span class='ms_font_panel'>Government</span></a></li>
+                  <li class="about_dd_hover city_feeds_pos"><a class="p-0 transparent" href="<%= parks_city_department_reviews_path(@city)      %>"><i class="fas fa-tree margin-l-12" style="margin-right: 12px"></i><span class='ms_font_panel'>Parks</span></a></li>
+                  <li class="about_dd_hover city_feeds_pos"><a class="p-0 transparent" href="<%= schools_city_department_reviews_path(@city)    %>"><i class="fas fa-graduation-cap margin-l-8" style="margin-right: 7px"></i><span class='ms_font_panel'>Schools</span></a></li>
+                  <li class="about_dd_hover city_feeds_pos"><a class="p-0 transparent" href="<%= police_city_department_reviews_path(@city)    %>"><i class="fas fa-taxi margin-l-8" style="margin-right: 11px"></i><span class='ms_font_panel'>Police</span></a></li>
+                  <li class="about_dd_hover city_feeds_pos"><a class="p-0 transparent" href="<%= public_works_city_department_reviews_path(@city)    %>"><i class="fas fa-bus-alt margin-l-8" style="margin-right: 11px"></i><span class='ms_font_panel'>Public Works</span></a></li>
+                </ul>
+              </li>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div> <!-- End -Departments/Compaints Filter Panel -->
+  </aside>
+</div>

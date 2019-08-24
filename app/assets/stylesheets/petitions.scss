@@ -1,0 +1,35 @@
+// Stylesheet for any PEtition related CSS (views/petitions/...)
+
+// Begin - Petitions New page
+  #edit_petition, #new_petition {
+    #petition_goal {
+        min-height: 75px !important;
+        max-height: 108px !important;
+    }
+    #petition_description {
+        min-height: 90px !important;
+        max-height: 900px !important;
+    }
+    #petition_issues {
+        min-height: 75px !important;
+        max-height: 108px !important;
+    }
+    #recipient_tier {
+        margin-top: 15px;
+        border: 1px solid rgba(0, 0, 0, 0.20);
+        padding: 12px;
+        border-radius: 4px;
+        box-shadow: 0.5px 0.5px 10px rgba(0, 0, 0, 0.2);
+        #recipient_tier_title {
+          font-size: 22px;
+            
+        }
+        #middle_additional_email {
+            padding: 0px 15px;
+            @media screen and (max-width: 768px) {
+                padding: 0px;
+            }
+        }
+    }
+  }
+// End - Petitions New page

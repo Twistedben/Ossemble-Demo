@@ -1,0 +1,96 @@
+<!-- Temporary place for detailed process information until it's put in for cities and their data. -->
+<% if @complaint.failed? || @complaint.completed? || @complaint.filed? %> <!-- Filed or finished chek for detailed process information button -->
+  <div class="tier">
+     <button class="btn btn-primary center-all mt-3" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+       Detailed Process Information
+    </button>
+    <div class="collapse col-all-12" id="collapseExample">
+      <div class="card mt-3">
+        <div class="card-body">
+          <ul class="pl-4">
+            <li class="">
+              <i class="text-xxsmall">
+                Date Submitted: 
+              <span class="underline">
+                <%= @complaint.created_at.strftime('%B %d, %Y %I:%M %p') %> <!-- Date of complaint's verification: -->
+              </span> 
+            </i>
+          </li>
+          <% if @complaint.verified_at != nil %> <!-- If complaint has been verified, display: -->
+            <li class="">
+              <i class="text-xxsmall">
+                Confirmed within: 
+              <span class="underline">
+                <%= distance_of_time_in_words(@complaint.created_at, @complaint.verified_at) %> <!-- time since complaint was created to verified. -->
+              </span> 
+            </i>
+          </li> 
+          <li class="">
+              <i class="text-xxsmall">
+                Date Confirmed: 
+              <span class="underline">
+                <%= @complaint.verified_at.strftime('%B %d, %Y %I:%M %p') %> <!-- Date of complaint's verification: -->
+              </span> 
+            </i>
+          </li>
+        <% end %>
+        <% if @complaint.filed_at != nil %> <!-- If complaint has been filed, display: -->
+          <li class="">
+            <i class="text-xxsmall" style="font-weight: none !important">
+                Filed within: 
+              <span class="underline">
+                <%= distance_of_time_in_words(@complaint.verified_at, @complaint.filed_at) %> <!-- time since complaint was pending. -->
+              </span> 
+            </i>
+          </li>                      
+          <li class="">
+            <i class="text-xxsmall" style="font-weight: none !important">
+                Date Filed: 
+              <span class="underline">
+                 <%= @complaint.filed_at.strftime('%B %d, %Y %I:%M %p') %> <!-- time since complaint was pending. -->
+              </span> 
+            </i>
+          </li>
+        <% end %>
+        <% if @complaint.completed_at != nil %> <!-- If complaint filed is false and complaint completed is true, display: -->
+          <li class="">
+            <i class="text-xxsmall">
+                Completed within: 
+              <span class="underline">
+                <%= distance_of_time_in_words(@complaint.filed_at, @complaint.completed_at) %> <!-- time since complaint was filed. -->
+              </span> 
+            </i>
+          </li>
+          <li class="">
+            <i class="text-xxsmall">
+                Date Completed: 
+              <span class="underline">
+                <%= @complaint.completed_at.strftime('%B %d, %Y %I:%M %p') %> <!-- time since complaint was filed. -->
+              </span> 
+            </i>
+          </li>
+        <% end %>
+        <% if @complaint.failed_at != nil %> <!-- If complaint failed is false and complaint completed is true, display: -->
+          <li class="">
+            <i class="text-xxsmall">
+                Failed within: 
+              <span class="underline">
+                <%= distance_of_time_in_words(@complaint.filed_at, @complaint.failed_at) %> <!-- time since complaint was filed. -->
+              </span> 
+            </i>
+          </li>
+          <li class="">
+            <i class="text-xxsmall">
+                Date Failed: 
+              <span class="underline">
+                <%= @complaint.failed_at.strftime('%B %d, %Y %I:%M %p') %> <!-- time since complaint was filed. -->
+              </span> 
+            </i>
+          </li>
+        <% end %>
+        </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %> <!-- Filed or finished chek for detailed process information button --> 

@@ -1,0 +1,17 @@
+<!--  Main partial being rendered for Public Activity gem on Complaint follow from Follows_controller. (views/public_activity/complaint/_follow.html.erb). -->
+<% if activity.trackable %>
+  <span id="activities_span" class="">
+    <span>
+      followed a Complaint titled:
+    </span>
+    <%= link_to activity.trackable.title, city_complaint_path(activity.trackable.city, activity.trackable), id: "activity_complaint_link", class: "bold" %>
+    <span id="follow_activity">
+      - posted by: 
+      <span class="i">
+        <%= link_to activity.recipient.name, user_path(activity.recipient.city, activity.recipient) %>
+      </span>
+    </span>
+  </span>
+<% else %>
+    unfollowed a Complaint.
+<% end %>

@@ -1,0 +1,185 @@
+<!--  Page for admins to invite more users to their workplace. -->
+<div class="content">
+  <div class="col-d-10 col-t-11 col-p-12 center">
+    <div class="col-all-10 center">
+      <p class="alert panel panel-info alert-info text-black message_alert_panel text-center">
+        <a href="#" class="close" data-dismiss="alert">
+          &#215;
+        </a>
+        <span>
+          Leave a line and its fields blank if you'd like to invite less than three people to the Channel simultaneously.
+        <br>
+          Or use the Share Invite Link button below to instantly create a shareable link to paste and send to others.
+        </span>
+      </p>
+    </div>
+    <h3 class="page_info_title text-26">
+      Email Invite to <%= @workplace.name %>
+    </h3>
+    <div class="col-tier center light-box-shadow horizontal-form padding-x-20 padding-b-20 padding-t-8 card">
+      <!-- Below -  GRabs 3 empty workplace -->
+      <%= form_tag new_workplace_invite_path do %>
+        <% @workplace.invites.each do |workplace_invite| %>
+          <% if workplace_invite.email.nil? %>
+            <%= simple_fields_for "invite[]", workplace_invite, :url => create_workplace_invite_path(@institute, @workplace, @invite), action: "create_member" do |invite| %>
+              <%= invite.hidden_field :workplace_id, :value => @workplace.id %>
+              <%= render 'workplace_invite_fields', f: invite %>
+            <% end %>
+          <% end %>
+        <% end %>
+        <div class="col-tier mt-3">
+          <div class="push-right margin-l-auto">
+            <%= submit_tag 'Send Out Invites', class: "form_btn button-cs btn mb-0", onclick: "amplitude.getInstance().logEvent('Workpalce Email Invites Sent');"  %>
+          </div>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-body mt-0 mb-2">
+                <p class="mb-4 pb-3 b text-17">
+                  Copy and Paste the email below to your Email Client to quickly invite your coworkers to join you</p>
+              </div>
+              <button id="textareabtn" onclick="copyToClipboard" style="background-color: white !important; border: 0px !important;"><span class="relative pr-2 text-16" style="top: -5px">Copy Text: </span><i class="fas fa-clipboard text-24 theme_color_dark"></i></button>
+              <div class="col-tier">
+                <textarea id="p1" class="p-3 center" style="height: 270px; overflow: hidden; resize: none; width: 94%; border: 1px solid gray">
+<%= current_admin.name %> from <%= @workplace.institute.name %> would like you to join them on an Ossemble channel, <%= current_workplace %>. Click the link and start collaborating! 
+Join <%= current_workplace %> by clicking below:
+<%=new_admin_registration_url(invite_token: Time.now, workplace: @workplace, institute: @workplace.institute.id, workplace_name: @workplace.name, workplace_id: @workplace.id)%>
+
+                </textarea>
+              </div>
+              <div class="modal-footer" style="border: none !important">
+                <button type="button" class="btn button-su" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- End -  Modal end -->
+      </div>
+      <!-- Begin -  ADD ADMIN TO WORKPLACE: Shows admins in organization but not in workplace, only if super_admin and there are admins to join-->
+      <% if is_current_super_admin? && @institute.admins.count > @workplace.admins.count %>
+        <div class="col-tier margin-t-20">
+          <h3 class="page_info_title text-26">
+            Add Existing Workplace Users  
+          </h3>
+          <div class="col-all-12 center light-box-shadow padding-x-20 pt-3 card">
+            <ul class="padding-l-0">
+              <% @institute.admins.each do |existing_admin| %>
+                <% unless existing_admin.belongs_to_workplace?(@workplace) %>
+                  <div class="col-tier border-bottom pb-3 mb-3 text-16">
+                    <div class="col-all-3 padding-t-3">
+                      <%= display_small_city_avatar(existing_admin) %>
+                      <a class="pl-1" href="<%= institute_admin_path(existing_admin.institute, existing_admin) %>">
+                        <%= existing_admin.name %>
+                      </a>
+                    </div>
+                    <div class="col-all-3 padding-t-3">
+                      <span class="">
+                        <%= existing_admin.department.nil? ? "Unspecified Department" : "#{existing_admin.department.name}"  %>
+                      </span>
+                    </div>
+                    <div class="col-all-3 padding-t-3">
+                      <span class="">
+                        <%= existing_admin.title %>
+                      </span>
+                    </div>
+                    <div class="col-all-3">
+                      <%= form_tag invite_existing_admin_path(@institute, @workplace, existing_admin), method: :post, remote: true do %>
+                       <%= button_tag "<i class='fas fa-user-plus theme_color_dark padding-r-5'></i>Add to Channel".html_safe, class:"btn button-cs text-16", onclick: "$(this).hide(); $('#add_#{existing_admin.id}').removeClass('vanish');"  %>
+                      <% end %>
+                      <button id="add_<%=existing_admin.id%>" class="btn action vanish" style="width: 105px"><i class='fas fa-user-check padding-r-8'></i>Added!</button>
+                    </div>
+                  </div>
+                <% end %>
+              <% end %>
+            </ul>
+          </div>
+        </div> 
+      <% end %>
+      <!-- End -  ADD ADMIN TO WORKPLACE: -->
+      <h3 class="page_info_title text-26" style="margin-top: 28px">
+        Share Instant Invite Link
+      </h3>
+       <div class="card col-all-12 light-box-shadow">
+        <div class="col-tier p-4">
+          <div class="col-d-6 col-t-6 col-p-12">
+            <div id="share_invite_link_btn" class="btn button-cs" onclick="copyLink(); alert('Link Copied!')">
+              <%= link_to invite_workplace_share_link_path(@institute, @workplace), id: "copy_link_btn" , class: "pointer", onclick: "copyLink();", method: :create, remote: true do %>
+                <i class='fas fa-link padding-r-8'></i>Share Invite Link
+                <input type="text" class="form-control pointer" id="url_input" aria-describedby="basic-addon2" value="<%=new_admin_registration_url(invite_token: Time.now, workplace: @workplace, institute: @workplace.institute.id, workplace_name: @workplace.name, workplace_id: @workplace.id)%>">
+              <% end %>
+            </div>
+          </div>
+          <div class="col-d-6 col-t-6 col-p-12 push-right">
+          <!-- Button trigger modal -->
+            <button type="button" title="A email template to copy and paste in an email client to send to co-workers." class="btn push-right button-cs padding-x-15" style="height: 45px; width: 180px; margin-top: 22px;" data-toggle="modal" data-target="#exampleModalCenter">
+              <i class='fas fa-mail-bulk padding-r-8'></i>Email Template
+            </button>
+          </div>
+        </div>
+      </div>
+    <% end %>
+
+    <!-- Below -  If there are outstanding or sent invites, then shows them here -->
+    <% if @workplace.invites.count > 0 %>
+      <div class="col-tier margin-t-20">
+        <h3 class="page_info_title text-26">
+          Sent Email Invites to <%= @workplace.name %>
+        </h3>
+        <div class="col-all-12 center light-box-shadow padding-x-10 pb-0 pt-3 card">
+          <ul class="padding-l-0">
+            <% @workplace.invites.where.not(email: nil).each do |workplace_invite| %>
+                <div class="col-tier border-bottom pb-3 mb-3">
+                  <span class="" style="width: 20%; padding-left: 20px">
+                    <b>
+                      To:
+                    </b>
+                    <%= workplace_invite.first_name %>
+                    <%= workplace_invite.last_name %>
+                  </span>
+                      
+                  <span class="" style="width: 30%; padding-left: 20px">
+                    <b>
+                      Email:
+                    </b>
+                    <%= workplace_invite.email %>
+                  </span>
+                      
+                  <span style="width: 25%; padding-left: 20px">
+                    <b>
+                      From:
+                    </b>
+                    <%= workplace_invite.sender.name %>
+                  </span>
+                      
+                  <span style="width: 25%; padding-left: 20px">
+                    <b>
+                      Sent on:
+                    </b>
+                    <%= display_date(workplace_invite.created_at) %>
+                  </span>
+                </div>
+            <% end %>
+          </ul>
+        </div>
+      </div>  
+    <% end %>
+  </div>
+</div>
+
+<script>
+// Below -- Allows copying URL
+
+ function copyLink() {
+  var copyText = document.getElementById('url_input');
+  copyText.select();
+  document.execCommand("copy");
+};
+
+$("#textareabtn").click(function(){
+    $("textarea").select();
+    document.execCommand('copy');
+});
+  
+</script>

@@ -1,0 +1,87 @@
+<!-- Map view for the given workplace. Renders in a map passing in the @workplace_map_resources. (views/workplace/workplace_map.html.erb) -->
+<!-- Begin - Main content for community score page. -->
+<div class="content">  
+  <div class="tier"> <!-- Begin - Main tier for page. -->
+    <!-- Below -  Renders in the accordian from views/layouts/phones/... for mobile and tablet. -->
+    <%= render "layouts/phones/mobile_accordion" %>
+    <div class="center col-d-7 col-t-11 col-p-12">
+    <!-- Begin - Map Page Info -->
+      <div id="page_info_card_org" class="col-all-12">
+        <div id="page_info_card" class="margin-b-15">
+          <div class="tier">
+            <div class="col-all-12">
+              <p class="page_info_title pull-left">
+                <%= current_workplace %> Map
+              </p>
+            </div>
+            <div class="col-tier light-box-shadow card" style="border: 1px solid rgba(128, 128, 128, .5)">
+              <div class="card-body theme_color_black">
+                <div class="col-d-9 col-t-12 col-p-12 pull-left">
+                 <p class="text-medium mb-3">The Map View for all Reports and Suggestions inside <%= @workplace.name %>.</p> 
+                 <p class="text-medium mb-2">Suggestions are indicated by the blue map pins with the <i class="mx-1 theme_color_dark fas fa-lightbulb"></i> icon.</p>
+                 <p class="text-medium mb-2">Reports are indicated by the red map pins with the <i class="mx-1 theme_color_dark fas fa-flag"></i> icon.</p>
+                 <p class="text-medium mb-2">To view the information of a pin, simply click within the pin.</p>
+                 <p class="text-medium mb-0">Clicking the title of a Report or Suggestion will take you to the desired Report or Suggestion page.</p>
+              </div>
+              <div class="page_info_icon_hide col-all-3 pull-right center-all pl-3 theme_color_dark" style="font-size: 100px; margin-top: 0px">
+                <i class="fas fa-map"></i>
+              </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+<!-- End- Map Page Info -->
+      <div class="tier transparent">
+        <div class="col-tier" style="text-align: left;">
+          <p class="trending_font_size pull-left" style="margin: 15px !important; margin-left: 0px !important; margin-bottom: 5px !important">
+            <%=  @workplace.name %> Map
+            
+          </p>
+          <div class="col p-0"></div>
+        </div>
+        <div class="col-all-12">
+          <p id="geo_output">
+          
+          </p>
+        </div>
+        <div class="col-tier margin-y-10">
+          <div class="col-all-6">
+            <label>Name</label>
+            <input id="geo_name" class="form-control" placeholder="City Name">
+          </div>
+          <div class="col-all-6">
+            <label>State ID</label>
+            <input id="geo_state_id" class="form-control" placeholder="State ID">
+          </div>
+          <div class="col-all-8">
+            <label>Geo Lat Long</label>
+            <textarea id="geo_lat_lng" class="form-control" style="height: 200px !important" placeholder="City Lat / Long"></textarea>
+          </div>
+          <div class="col-all-8">
+            <label>Geo ID</label>
+            <textarea id="geo_id" class="form-control" style="height: 100px !important" placeholder="City Lat / Long"></textarea>
+          </div>
+        </div>
+  <!--
+      <input type="hidden" name="workplace_shape[name]"     id="shape_name">
+      <input type="hidden" name="workplace_shape[geo]"      id="shape_geo">
+      <input type="hidden" name="workplace_shape[state_id]" id="shape_state">
+      <input type="hidden" name="workplace_shape[geo_id]"   id="shape_geo_id">
+  -->
+      </div>
+      <div class="col-d-12 margin-b-30">
+        <div class="tier">
+          <div class="col-md-12 well mb-0 p-2 light-box-shadow" style="border-radius: 0px !important; background-color: white; border: 1px solid rgba(128, 128, 128, .5);">
+            <!-- Begin - Map Row  -->
+            <div class="map_area">
+              <div id="oss_map" class="col-12 ms_map border-radius-none">
+                <%= render 'test_map' %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> <!-- Main page tier -->
+</div> <!-- End - Map area -->

@@ -1,0 +1,87 @@
+<!--  Main page for admins editing their city profile. (views/admins/registrations/edit.html.erb) -->
+<!-- NOTE! THIS PAGE IS NO LONGER IN USE, Admins/edit.html.erb HAS TAKEN ITS PLACE IN admins_controller.rb -->
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<!-- Below -  Renders in City Admin Navbar for navigation -->
+<%= render 'admins/admin_layouts/city_admin_navbar' %>
+
+<!--  Begin - Form_For Devise Admin Profile Update.
+      "multipart => true" enables uploading of an Avatar -->
+<div class="content">
+  <div class="tier"> <!-- Begin - Main tier for page. -->
+    <div class="col-d-10 col-t-12 col-p-12 center">
+      <div class="col-tier">
+        <p class="page_info_title text-26">
+          Update Your Workplace Profile
+        </p>
+      </div>
+      <%= devise_error_messages! %>
+      <div class="card col-tier">
+        <div id="accordion_container" class="padding-all-10" >
+          <%= render 'admins/admin_layouts/personal_admin_update_form' %>
+          <!-- Below - Renders public profile section for neighborhood and other fields. Partial determines if it's inside accordion or not Public Profile Section inside the accordion since they already entered their bio and neighborhood.-->
+      
+          <%= render 'admins/admin_layouts/public_admin_update_form' %>
+      
+          <!-- Below -  Renders in the contacts an admin has or to create them -->
+          <%= render 'admins/admin_layouts/admin_contact_form' %>
+        </div>  
+      </div> 
+      <div class="tier">
+        <div class="col-all-12">
+          <%= button_to "Delete Profile", admin_registration_url, data: { confirm: "Are you sure you want to delete this contact information?" }, method: :delete, id: "delete_profile_btn", class: "btn button-up" %>
+        </div> 
+      </div>
+    </div>
+  </div> <!-- Main page tier -->
+</div>
+
+
+<script>
+  $( function() {
+    $( "#accordion_container" ).accordion({
+      collapsible: true,
+      heightStyle: "content",
+      active: 1
+      
+    });
+  } );
+  
+     
+  
+  $( function() {
+    var titleType = [
+      "Mayor",
+      "City Administrator",
+      "Assistant",
+      "Deputy Mayor", 
+      "City Planner",
+      "Appointed Official",
+      "Elected Official",
+      "Councilman"
+    ];
+    $( "#city_user_title" ).autocomplete({
+      source: titleType
+    });
+  } );     
+  
+  $( function() {
+    var contactType = [
+      "Email",
+      "Website",
+      "Facebook",
+      "Instagram", 
+      "Phone Number",
+      "Twitter",
+      "YouTube",
+      "LinkedIn",
+      "Snapchat",
+      "Location",
+      "Address"
+    ];
+    $( "#admin_contact_name" ).autocomplete({
+      source: contactType
+    });
+  } );
+</script>

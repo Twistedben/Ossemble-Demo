@@ -1,0 +1,15 @@
+<div class="col-tier" >
+  <div class="col-all-12 p-0 new_nav_bar">
+    <div class="card new_nav_bar_style">
+      <div class="card-body p-2 center-all tier" style="position: relative; left: -30px !important;">
+        <span class="theme_color_dark b mr-3 text-xbig" style=""><%= @city.name %> Feed</span>
+        <a id="cs_btn" class="btn alt-action2 mr-2 text-xxmedium" href="<%= city_feed_path(@city) if @city %><%= city_feed_path(current_user_or_admin.city) unless @city %>">
+          Score
+        </a>
+        <a id="of_btn" class="btn alt-action2 text-xxmedium" href="<%= city_ossembly_path(@city) if @city %><%= city_ossembly_path(current_user_or_admin.city) unless @city %>">
+          Forum
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

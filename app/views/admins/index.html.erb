@@ -1,0 +1,85 @@
+<!-- Main page for admins dashboard, the index page. Goes to admins_controller.rb, route: cities/lakewood/admin, and file folder: (views/admins/index.html.erb).   -->
+
+<!-- Begin - Main content for community score page. -->
+<div class="content">
+  <div class="tier"> <!-- Begin - Main tier for page. -->
+    <!-- Begin - Filter panel rendering -->
+    <div class="col-d-2 col-t-10 col-p-12 center">
+      <%= render 'layouts/city_dashboard_filter_panel' %>
+    </div>
+    <div id="ms_ap_content" class="col-d-8 col-t-10 col-p-12 center margin-b-15" style="display: none">
+      <h3 class="mt-4">
+        Community Score Trending
+      </h3>
+      <div id="---"></div>
+      <h3>
+        Page Info
+      </h3>
+      <div id="---">
+      </div>
+      <h3>
+        Add Need City Profile
+      </h3>
+      <div id="---">
+      </div>
+      <h3>
+        Start a Poll
+      </h3>
+      <div id="---">
+      </div>
+    </div>
+    
+    <div class="center col-d-7 col-t-10 col-p-12">
+      <div class="tier curved_box_top bg-white">
+        <div class="col-all-12">
+          <p class="theme_color_black trending_font_size pull-left" style="margin: 10px !important; margin-left: 0px !important; font-size: 1.8rem">
+            Trending Top Complaints
+          </p>
+        </div>
+        <!-- Begin - Rendering of trending top complaints, WUL, and Departments -->
+        <div class="card light-box-shadow mt-0 magin-b-10 center-all" style="border: 1px solid rgba(128, 128, 128, .5); width: 100% !important;">
+          <div class="tier margin-y-8 ml-2">
+            <p class="text-muted col-all-12 card pr-0 border-none margin-b-0 margin-l-3">
+              Top Trending Comp #1
+            </p>
+          </div>
+        </div>
+        <div class="card light-box-shadow mt-0 magin-b-10 margin-t-15 center-all" style="border: 1px solid rgba(128, 128, 128, .5); width: 100% !important;">
+          <div class="tier margin-y-8 ml-2">
+            <p class="text-muted col-all-12 card pr-0 border-none margin-b-0 margin-l-3">
+              Top Trending Comp #2
+            </p>
+          </div>
+        </div>        
+      <!-- End - Rendering of trending top complaints, WUL, and Departments -->
+      </div>
+    
+      <div class="col-tier">
+        <div class="col-all-3 pr-2">
+          <div class="card light-box-shadow p-2" style="border: 1px solid rgba(128, 128, 128, .5);">
+          This is where the City Profile Data Insights (Pay Needed) Card goes
+          </div>
+        </div>
+        <div class="col-all-3 px-3">
+          <div class="card light-box-shadow p-2" style="border: 1px solid rgba(128, 128, 128, .5);">
+          This is where the Data City Overview #1 (Pay Needed) Card goes
+          </div>
+        </div>
+        <div class="col-all-6 pl-2">
+          <div class="card light-box-shadow p-2" style="border: 1px solid rgba(128, 128, 128, .5);">
+          This is where the Data City Overview #2 (Pay Needed) Card goes
+          </div>
+        </div>
+      </div>
+      <div class="col-tier mt-5">
+        <div class="col-all-12">
+          <div class="card light-box-shadow p-2" style="border: 1px solid rgba(128, 128, 128, .5);">
+          This is where the Data City Overview #3 (Pay Needed) Card goes
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Below -  Render in action panel -->
+    <%= render 'layouts/city_dashboard_action_panel' %>
+  </div> <!-- Main page tier -->
+</div>

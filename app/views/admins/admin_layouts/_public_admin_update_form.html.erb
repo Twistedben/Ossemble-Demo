@@ -1,0 +1,85 @@
+
+<!--  Partial rendered for public profile information for admin and has if statements to determine if it should be in accordion or outside  -->
+<h3 class="roboto" title="Public information that other Ossemble users in your Workplaces can see and use.">
+  Public Profile - Directory Details
+</h3>
+<%= form_for(@admin, url: admin_registration_path,
+    :html => {:multipart => true, id: "public_profile_form", class: "col-all-12 light-box-shadow mb-0 padding-all-15 directory_nopad_ms", style: "border: 1px solid rgba(128, 128, 128, 0.5);", role: "form"}) do |f| %>
+  <div id="public_profile_tier">
+    <!-- Begin - Extra info for user show page -->
+    <div id="extra_info_div" class="col-all-12 center"> 
+      <div class="alert alert-panel panel border light-box-shadow" style="border-color: #645496 !important">
+        <h4 class="bold padding-all-8 roboto pub_info_ms">
+          Information entered here will appear in the Channels's Directory, as well as on your Profile page, for other peers and co-workers to see.
+        </h4>
+      </div>
+      <div class="col-tier">
+        <div class="col-d-3 col-t-4 col-p-12 ui-widget px-2" title="What organization/department do you belong to?">
+          <div class="control-label pb-0">
+            <%= f.label :organization, "Organization/Department" %>
+          </div>
+          <%= f.text_field :organization, id: "city_user_title", class: "form-control", maxlength: 60, placeholder: "Your Title/Role (EG: 'Assistant, Administrator, etc..') 50 Characters" %> 
+        </div>
+        <div class="col-d-3 col-t-4 col-p-12 ui-widget px-2" title="What role, position, or title do you hold?">
+          <div class="control-label pb-0">
+            <%= f.label :title, "Role / Title" %>
+          </div>
+          <%= f.text_field :title, id: "city_user_title", class: "form-control", maxlength: 60, placeholder: "Your Title/Role (EG: 'Assistant, Administrator, etc..') 50 Characters" %> 
+        </div>
+        <div class="col-d-3 col-t-4 col-p-12 ui-widget px-2" title="What's your phone number?">
+          <div class="control-label pb-0">
+            <%= f.label :phone_number, "Phone Number" %>
+          </div>
+          <%= f.phone_field :phone_number, id: "city_user_title", class: "form-control", maxlength: 50, placeholder: "555-555-5555" %> 
+        </div>
+      </div>
+      <div class="col-tier margin-t-15"> 
+        <div class="col-d-9 col-t-10 col-p-12 px-2" title="A hundred and fifty characters that best summarizes who you are and what you're about.">
+          <div class="control-label mt-3 pb-0">
+            <%= f.label :bio, "Bio" %>
+          </div>
+            <%= f.text_area :bio, class: "form-control light-input-shadow", maxlength: 150, placeholder: "Write a short bio about yourself to let peers and co-workers know who you are and what you do. (Limit: 150 Characters)" %> 
+        </div>
+      </div>
+    
+      <div class="col-tier">  
+        <div class="col-d-6 col-t-6 col-p-12 profile_avatar_wrapper mt-5 pl-3"> <!-- Begin - Avatar Upload Column --> 
+         <!-- Below - If Statement for Avatar Uploading -->
+          <% if current_admin.avatar.attached? %> <!-- If User already has a avatar, show it and "remove" option -->
+            <div id="profile_avatar_border">
+              <div class="m-2">
+                <%= image_tag current_admin.avatar.variant(resize: '250x250!'), id: "upload_avatar", class: "m-0" %>
+              </div>
+            </div>
+            <div class="form-row margin-b-8">
+              <%= f.label :avatar, "Change Profile Picture", class: "margin-b-5 margin-t-15 margin-l-3 control-label" %>
+            </div>
+            <div class="form-row">
+              <%= f.file_field :avatar, accept: 'image/png,image/gif,image/jpeg', class: "upload btn btn-lg mb-0", onchange: "readURL(this);" %>
+            </div>
+          <% else %> <!-- User doesn't have an image attached -->
+            <div class="form-row margin-b-8">
+              <%= f.label :avatar, "Upload a Profile Picture", class: "my-0 control-label" %>
+            </div>
+            <div class="form-row">
+              <%= f.file_field :avatar, accept: 'image/png,image/gif,image/jpeg', class: "upload btn btn-lg mb-0",onchange: "readURL(this);" %>
+            </div>
+            <p class="margin-t-5 mb-0 text-13">If it's a high resolution photo, it may take a few moments to upload. </p>
+          <% end %>
+          <div class="tier">
+            <%= f.label :avatar, "Preview of Uploaded Image".html_safe, class: " vanish img_prev_title pull-left control-label mb-2" %>
+          </div>
+          <div class="tier">
+            <img id="img_prev" class="vanish" src="#" alt="Image">
+          </div>
+        </div>                    
+      </div> 
+      <!-- Begin - Update/Delete Account Button Row -->  
+      <div class="col-tier padding-r-10">    
+        <div class="col-all-6 pl-3">
+          <%= f.submit "Update Public Profile", id: "loadgif", class: "btn button-cs" %>
+        </div> 
+      </div> 
+    </div>
+  </div> <!-- End -  Public Info Section -->
+<% end %> <!-- End - Public Profile form -->

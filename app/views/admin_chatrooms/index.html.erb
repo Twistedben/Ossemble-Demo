@@ -1,0 +1,47 @@
+<div class="content">
+  <div class="tier">
+    <div class="col-all-2">
+      <% if admin_signed_in? %>
+      <h5>Chatrooms</h5>
+       <ul>
+        <% current_admin.admin_chatrooms.each do |chatroom| %>
+        <li>
+          <%= link_to chatroom.name, chatroom_path(chatroom) %>
+        </li>
+        <% end %>
+      </ul>
+      <% end %>
+    </div>
+    <div class="col-all-10">
+      <p id="notice"><%= notice %></p>
+
+      <h1>Chatrooms</h1>
+     
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th colspan="3"></th>
+          </tr>
+        </thead>
+      
+        <tbody>
+          <% @chatrooms.each do |chatroom| %>
+            <tr>
+              <td><%= chatroom.name %></td>
+              <td><%= link_to 'Show', chatroom_path(chatroom) %></td>
+              <td><%= link_to 'Edit', edit_chatroom_path(chatroom) %></td>
+              <td><%= link_to 'Destroy', chatroom_path(chatroom), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+              <td><%= link_to 'Join', chatroom_chatroom_path(chatroom), method: :post %></td>
+              <td><%= link_to 'Leave', chatroom_chatroom_path(chatroom), method: :delete %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      
+      <br>
+      
+      <%= link_to 'New Chatroom', new_chatroom_path %>
+      </div>
+    </div>
+  </div>

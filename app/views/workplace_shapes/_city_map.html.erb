@@ -1,0 +1,23 @@
+<!--  Partial rendered if the admin chooses City for map, containing census related buttons for app/javascript/census.coffee file -->
+
+<!-- Below -  Loads in census.coffee and CitySDK/npm -->
+
+<div id="city_map_tier" class="col-tier">
+  <div class="col-tier">
+    <div class="col-all-6">
+      <button id="call_census_btn" data-latitude="" data-longitude="" class="btn action call_census disabled">Highlight City</button> 
+    </div>
+    <div class="col-all-6">
+      <div id="arrow_btn" class="arrow"></div>
+    </div>
+    <button id="try_again_btn" data-latitude="" data-longitude="" class="btn center button-cs call_census vanish">Wrong City? Try Again</button>
+  </div>
+  <div id="last_try_tier" class="center vanish">
+    <p class="text-18">
+      <%= link_to "Still not your city? Click here to Refresh", new_workplace_shape_path(@institute, @workplace, map: "city"), id: "reset_page_link" , class: "title_link" %>
+    </p>
+    <p class="text-18">
+      <%= link_to "Or if you think there's an issue, contact us.", "mailto:support@ossemble.com?Subject=City%20Selection%20Boundary%20Issue", id: "mail_help_btn" , class: "title_link" %>
+    </p>
+  </div>
+</div>

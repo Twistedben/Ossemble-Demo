@@ -1,0 +1,56 @@
+<!--  Partial for rendering resource descriptions, like Posts, CityReviews, DepartmentReviews, Complaints, and Petitions. -->      
+
+<div class="col-tier mt-4">
+  <p class="text-22 trending_font_size">
+    <%= "City Review Description " if obj == @city_review %>
+    <%= "Department Review Description " if obj == @review %>
+    <%= "Complaint Description " if obj == @complaint && obj.image.attached? %>
+    <%= "Post Description " if obj == @post && obj.image.attached?  %>
+    <%= "Petition Description " if obj == @petition %>
+    <%= "Post Description " if obj == @workplace_post && obj.image.attached? %>
+    <%= "Suggestion Description " if obj == @suggestion && obj.image.attached? %>
+    <%= "Report Description " if obj == @report && obj.image.attached? %>
+    <%= "Upload Description " if obj == @upload && obj.image.attached? %>
+    <%= "Map Post Description " if obj == @map_post && obj.image.attached? %>
+  </p>
+  <div class="col-all-12 card light-box-shadow">
+    <div class="card-body ">
+      <% if obj == @petition %>
+        <div class="col-tier border-bottom margin-b-10">
+          <div class="push-left padding-t-10 padding-l-3">
+            <p class="text-20" style="font-family: Arial">
+              <%= "To the Attention of: #{obj.city.name} City Hall" if obj.recipient == nil && obj.additional_recipient == nil %>
+              <%= "To the Attention of: #{obj.city.name} City Hall and #{obj.recipient_slug}" if obj.recipient && obj.additional_recipient == nil %>
+              <%= "To the Attention of: #{obj.city.name} City Hall, #{obj.recipient_slug}, and #{obj.additional_recipient_slug}" if obj.recipient && obj.additional_recipient %>
+            </p>
+          </div>
+        </div>  
+      <% end %>  
+      <!-- Below -  Renders the City Review description in simple html format with the class found in global. -->
+      <%= simple_format(obj.description, {class: "show_page_description"}, wrapper_tag: 'div') %>
+      <!-- Below -  If the object is a petition or a complaint, then shows additional endorse button at bottom of description card. -->
+      <% if obj == @petition || obj == @complaint %>
+        <div class="col-tier">
+          <div class="push-left padding-t-15 padding-l-5">
+            <%= display_endorse_button(@petition, "petitions", "Petition", upvote_city_petition_path(@city, @petition.id)) if obj == @petition %>
+            <%= display_endorse_button(@complaint, "complaints", "Complaint", upvote_city_complaint_path(@city, @complaint.id))  if obj == @complaint %>
+          </div>
+          <!-- Below -  Displays additional email reciepients for a petition if there are them. -->
+        </div>
+      <!-- Below -  If it's a peittion or it's a workplace post, then if there's a file attached, this will render the link to download the file. -->
+      <% elsif obj == @petition || obj == @workplace_post || obj == @suggestion || obj == @report || obj == @upload || obj == @map_post%>
+        <% if obj.file.attached? %>
+          <div class="border-top col-tier">
+            <h3 class="margin-y-5 col-tier">
+              Attached Document
+            </h3>
+            <div class="push-left padding-t-8 padding-l-5">
+              <%= link_to "<i class='fas fa-paperclip margin-r-8 theme_color_dark'></i>Download File".html_safe, rails_blob_path(obj.file, disposition: :attachment), class: "text-20" %>
+              <%= image_tag obj.file.preview(resize: "400x400>") if obj.file.previewable? %>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>

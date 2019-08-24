@@ -1,0 +1,330 @@
+/* Stylesheet CSS for all show pages of Resources like Departments, City Reviews, Posts, Complaints, and Petitions. */
+
+
+// Used for the current user visiting their own page without an avatar
+.empty_avatar_box {
+  height: 120px;
+  @media screen and (max-width: 768px) {
+    height: 40px;
+  }
+}
+
+// Below - Show page title ID: @resource.title
+#show_page_title {
+  font-weight: bold;
+  font-size: 2.3rem;
+  padding-bottom: 10px;
+  color: #645496;
+}
+#header_show_card {
+  background-color: #fff;
+  border: none !important;
+  flex: 1 1 auto;
+  padding: 1.25rem 1.25rem 0rem !important;
+  box-shadow: 1px 3px 16px rgba(0, 0, 0, 0.23);
+  // Icon container for default icon that gets rendered from helper methods.
+  #icon_container {
+    width: 113px; height: 113px;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 10px;
+    box-shadow: 1px 1px 14px rgba(0, 0, 0, 0.2), -1px -1px 14px rgba(0, 0, 0, 0.2);
+    @media screen and (max-width: 550px) {
+     display: none !important;
+                                         }
+    // For the Other category's font awesome icon and other font awesome icons for default icons.
+    img {
+      width: 60px; 
+      height: 58px; 
+      margin: 20px auto;
+      vertical-align: middle;
+      display: flex;
+      align-items: center;
+      padding-top: auto;
+    }
+    i {
+      padding-top: 18px;
+      font-size: 55px;
+      color: #645496;
+    }
+  }
+  }
+// Below - User action row for follow, share, and counts row.
+#user_action_tier {
+  padding: 20px 0px !important;
+  // Below - Share dropdown menu border
+  .dropdown-menu {
+    border: 2px solid rgb(100, 84, 150);
+    position: absolute;
+    opacity: 1 !important;
+    padding: 10px;
+  }
+  // Below - Dropdown items' padding
+  .dropdown-item {
+    padding: 5px;
+  }
+  // Below - Makes dividers more opaque
+  .dropdown-divider {
+    border-top: 1px solid #9999998a;
+  }
+  // Below - Copy Link btn changes
+  #copy_link_btn {
+    text-align: left !important;
+    width: 100% !important;
+    background: none !important;
+  }
+  // Below - Share button
+  #share_dropdown_btn {
+    cursor: pointer;
+    font-size: 15px;
+    position: relative;
+    border-radius: 4px;
+    border: 2px solid #645496;
+    background-color: white;
+    background: none;
+    color: #645496;
+    padding: 6px 10px;
+    width: 100%;
+    text-shadow: none !important;
+    box-shadow: 1.5px 1.5px 14px rgba(0, 0, 0, 0.2) !important;
+    -webkit-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+  }
+  #share_dropdown_btn:hover, #share_dropdown_btn:active, #share_dropdown_btn:focus  {
+    border-radius: 4px;
+    background-color: #645496 !important;
+    color: white !important;
+  }
+  .social-share-button {
+       a {
+      font-size: 18px !important;
+      padding-left: 32px;
+    } 
+  }
+  // Below - Buttons under user action tier for show pages
+  .user_action_btn {
+    opacity: 0.75;
+    height: 37px;
+    padding-top: 8px;
+    box-shadow: 1px 2px 12px 1px rgba(0, 0, 0, 0.2);
+    text-shadow: 1px 1px 8px rgba(0, 0, 0, 0.9);
+    border: none;
+    color: white;
+    background: -moz-linear-gradient(269deg, #808080 33%, #707070 75%);/* FF3.6+ */
+    background: -webkit-gradient(linear, 269deg, color-stop(33%, 808080), color-stop(75%, 707070));/* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(269deg, #808080 33%, #707070 75%);/* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(269deg, #808080 33%, #707070 75%);/* Opera 11.10+ */
+    background: -ms-linear-gradient(269deg, #808080 33%, #707070 75%);/* IE10+ */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#1301FE', endColorstr='#F4F60C', GradientType='1'); /* for IE */
+    background: linear-gradient(269deg, #808080 33%, #707070 75%);/* W3C */
+  }
+  .user_action_btn:hover {
+   opacity: .9; 
+  }
+  .user_action_btn:action {
+   opacity: 1; 
+  }
+}
+// Department Icons Styling 
+#parks_icon {
+  position: relative !important;
+  margin-right: 8px;
+  width: 45px;
+  height: 45px;
+  top: 12px;
+  
+}
+.department_icon {
+  margin-right: 8px;
+  margin-top: 1.5rem !important;
+  font-size: 4rem !important;
+  color: #645496;
+} 
+// Uploaded images for Posts, COmplaints, and UWL 
+#uploaded_image {
+  max-height: 650px;
+  box-shadow: 2px 2px 20px 2px rgba(0, 0, 0, .25);
+}
+
+
+.comp_endorse_fix {
+   @media screen and (max-width: 570px) {
+  margin-top: 15px;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+        align-items: center;
+  position: relative;
+  text-align: center;
+  margin-left: auto !important;
+  margin-right: auto !important;
+                                       }
+}
+
+.show_desc_text {
+  font-size:  1.78rem;
+   @media screen and (max-width: 768px) {
+   font-size:  1.74rem;
+                                       }
+}
+
+.show_text_scale {
+   @media screen and (max-width: 600px) {
+   font-size:  1.6rem !important;
+                                       }
+}
+
+#testmodalstyle {
+  .modal-mask {
+  position: fixed;
+  z-index: 9998;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, .5);
+  display: table;
+  transition: opacity .3s ease;
+}
+
+.modal-wrapper {
+  display: table-cell;
+  padding-top: 0px !important;
+}
+
+.modal-container {
+  width: 600px;
+  height: 600px;
+  margin: 0px auto;
+  padding: 20px 30px;
+  background-color: #FFF !important;
+  border-radius: 2px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
+  transition: all .3s ease;
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+.modal-header h3 {
+  margin-top: 0;
+  color: #42b983;
+}
+
+.modal-body {
+  margin: 20px 0;
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+.modal-default-button {
+  float: right;
+}
+
+/*
+ * The following styles are auto-applied to elements with
+ * transition="modal" when their visibility is toggled
+ * by Vue.js.
+ *
+ * You can easily play with the modal transition by editing
+ * these styles.
+ */
+
+.modal-enter {
+  opacity: 0;
+}
+
+.modal-leave-active {
+  opacity: 0;
+}
+
+.modal-enter .modal-container,
+.modal-leave-active .modal-container {
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
+}
+}
+
+#testcharts {
+  
+}
+
+.wul-action {
+    background: -moz-linear-gradient(269deg, #645496 12%, #554780 75%) !important;/* FF3.6+ */
+    background: -webkit-gradient(linear, 269deg, color-stop(12%, 645496), color-stop(75%, 554780)) !important;/* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(269deg, #645496 12%, #554780 75%) !important;/* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(269deg, #645496 12%, #554780 75%) !important;/* Opera 11.10+ */
+    background: -ms-linear-gradient(269deg, #645496 12%, #554780 75%) !important;/* IE10+ */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#1301FE', endColorstr='#F4F60C', GradientType='1') !important; /* for IE */
+    background: linear-gradient(269deg, #645496 12%, #554780 75%) !important;/* W3C */
+    //background-color: #645496 !important;
+    color: white !important;
+    box-shadow: 1px 2px 12px 1px rgba(0, 0, 0, 0.2) !important;
+    border-radius: 5px !important;
+}
+
+.wul-action2 {
+    border: 2px solid #645496 !important;
+    background-color: white !important;
+    color: #645496;
+    height: 34px !important;
+    box-shadow: 1px 2px 12px 1px rgba(0, 0, 0, 0.2);
+    border-radius: 5px !important;
+}
+
+.ms-com-end-1 {
+  display: block;
+   @media screen and (max-width: 550px) {
+   display: none;
+                                       }
+}
+
+.ms-com-end-2 {
+  display: none;
+   @media screen and (max-width: 550px) {
+   display: block;
+                                       }
+}
+
+#follow_btn {
+   @media screen and (max-width: 550px) {
+   width: 155px !important;
+                                       }
+}
+
+#unfollow_btn {
+   @media screen and (max-width: 550px) {
+   width: 155px !important;
+                                       }
+}
+
+#share_dropdown_btn {
+   @media screen and (max-width: 550px) {
+   width: 155px !important;
+                                       }
+}
+
+.ms_end_com_width {
+     @media screen and (max-width: 550px) {
+   width: 155px !important;
+                                       }
+}
+
+.comment_description {
+  p {
+    margin-bottom: 0px;
+  }
+}
+
+#comments_list {
+  position: relative;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: rgba(224, 224, 224, .5);
+    background-clip: border-box;
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: .25rem;
+    padding: 12.5px !important;
+}

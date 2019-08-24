@@ -1,0 +1,72 @@
+<!-- Main Page for Map view of Complaints index page. (views/complaints/map_view.html.erb) -->
+
+<!-- Begin - Map area -->
+<!-- Begin - Main content for community score page. -->
+<div class="content">
+  <div class="tier"> <!-- Begin - Main tier for page. -->
+    <!-- Below -  Renders in the accordian from views/layouts/phones/... for mobile and tablet. -->
+    <%= render "layouts/phones/mobile_accordion" %>
+    <div class="center col-d-7 col-t-11 col-p-12">
+      <!-- Begin - Map Page Info -->
+      <div id="page_info_card_org" class="col-tier">
+        <div id="page_info_card" class="col-all-12">
+          <div class="tier mb-5">
+            <div class="col-all-12">
+              <p class="page_info_title pull-left">
+               Voiced Complaints Map
+              </p>
+            </div>
+    
+            <div class="col-all-12 light-box-shadow card" style="border: 1px solid rgba(128, 128, 128, .5)">
+              <div class="card-body theme_color_black">
+                <div class="col-d-9 col-t-12 col-p-12 pull-left">
+                 <p class="text-big" style="font-family: Roboto;"><i>Complaints processes are classifed by the following icons</i></p>
+                  <ul class="mb-0"> 
+                    <li><b>Comfirmed = <i class="fas fa-exclamation-triangle theme_color_dark"></i></b></li>  
+                    <li><b>Endorsed = <i class="far fa-arrow-alt-circle-up theme_color_dark"></i></b></li>  
+                    <li><b>Filed = <i class="far fa-envelope theme_color_dark"></i></b></li>
+                    <li><b>Scored = <i class="fas fa-percent theme_color_dark"></i></b></li>
+                  </ul>
+              </div>
+              <div class="page_info_icon_hide col-all-3 pull-right center-all pl-3 theme_color_dark" style="font-size: 100px; margin-top: 0px; height: 125px">
+                <i class="fas fa-map"></i>
+              </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+<!-- End- Map Page Info -->
+
+      <div class="tier curved_box_top" style="background-color: #FAFAFA">
+        <div class="col-tier" style="text-align: left;">
+          <p class="text-xlarge theme_color_black center-all" style="margin: 10px !important; margin-left: 0px !important">
+            Complaints Map
+          </p>
+          <div class="col p-0"></div>
+          
+        </div>
+      </div>
+     
+      <div class="col-d-12">
+        <div class="tier">
+          <div class="col-md-12 well mb-0 p-2" style="border-radius: 0px !important; background-color: #FAFAFA; border: 1px solid rgba(128, 128, 128, .5); border-left: 2px groove rgba(0, 0, 0, 0.35) !important; border-right: 2px groove rgba(0, 0, 0, 0.35) !important;">
+            <!-- Begin - Map Row  -->
+            <div class="map_area">
+              <!-- Below - Renders Community Score map partial inside views/department/department_map -->
+              <div  id="oss_map" class="col-all-12 no-border-radius ms_map">
+                <%= render 'community_scores/cs_map_view', obj: @complaints %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tier curved_box_bottom" style="background-color: #FAFAFA"></div>
+  <!-- End - Map area -->
+
+    </div>
+    <div id="non_ms_ap_content" class="col-d-3 col-t-10" >
+      <%= render 'layouts/action_panel', obj: @complaints %>
+    </div>
+  </div> <!-- Main page tier -->
+</div> <!-- End - Map area -->

@@ -1,0 +1,53 @@
+<!-- Main page for Contact. Code for controller is in controllers/visitors_controller.rb, contact_us. (Views/visitors/contact_us.html.erb). -->
+<div class="content">
+  <div class="col-d-8 col-t-10 col-p-12 center">
+  <div class="transparent">
+    
+  <div class="col-tier ms_titles_ml trending_font_size bold margin-all-10" style="float: none !important; margin-left: 0px !important; font-family: 'Roboto', Times New Roman; font-size: 1.7rem !important; margin: 8px 0px; color: #585858 !important;">
+    Contact Us Form
+  </div>
+    
+  <div class="light-box-shadow px-4 py-0 bg-white mb-5" style="border: 1px solid rgba(128, 128, 128, .5)">  
+
+    <div class="light-box-shadow mt-4 p-2 theme_color_black bg-light" style="margin-bottom: 16px !important; border: 1px solid rgba(128, 128, 128, .5); border-radius: 5px"> 
+      <p class="text-big mb-2 border-bottom pb-3 mb-3">
+      Thank you for using Ossemble, we are currently in beta and would appreciate any feedback you have in your message. 
+      </p>
+      <div style="text-align: center">
+        <section class="b">Some suggestions for feedback could be,</section>
+         <ul class="pl-0" style="list-style: none"> 
+          <li>&#9679; Feature Improvements</li>
+          <li>&#9679; Bugs / Fixes</li>  
+          <li>&#9679; UI / UX</li>  
+         </ul>
+       </div>
+      <p class="center-all text-xxsmall mb-2">
+        *We may include you in a survey to help improve our product.
+      </p>
+    </div>
+   
+    <form method="POST" action="https://formspree.io/ossemble@gmail.com" class="form-horizontal col-all-12 form_ms_text">
+      <div class="col-tier center">
+        <div class="col-all-12 margin-y-10"> 
+          <p class="theme_color_black text-xxmedium">Your Email</p>
+          <input type="email" name="email" placeholder="Your email: example@example.com" class="input-box-shadow col-d-6 col-t-6 col-p-12 form-control">
+        </div>
+      </div>
+      <div class="col-tier center">
+        <div class="col-all-12 margin-y-10"> 
+          <p class="theme_color_black text-xxmedium">Your Message</p>
+          <textarea name="message" placeholder="What is your issue or concern?" class="input-box-shadow col-all-12 form-control" style="min-height: 150px"></textarea>
+        </div>
+      </div>
+      <div class="form-actions">
+        <div class="col-tier py-4"> 
+          <button type="submit" class="form_btn btn padding-x-15 button-cs mb-0">Send</button>
+        </div>
+      </div>
+    </form>
+
+  </div>
+  </div>
+  </div>
+  <div style="height: 70px"></div>
+</div>

@@ -1,0 +1,194 @@
+<!-- Partial for rendering Finish Profile Account Signup Form. Mostly rendered because a user signed up using Facebook. Rendered from: (devise/registrations/edit.html.erb) if the user isn't valid-->
+
+<!--  Begin - Form_For Devise & User Signup & Finishing User Profile Signup.
+      "multipart => true" enables uploading of an Avatar -->
+  <div class="trending_font_size margin-t-5 margin-b-0 padding-l-10 padding-b-5">
+     Complete Profile Creation
+  </div>
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name),
+      :html => {:multipart => true, class: "form card p-4 light-box-shadow mb-5", style: "border: 1px solid rgba(128, 128, 128, 0.5);", role: "form"}) do |f| %>
+    <div class="">     <!-- Begin - Error Message(s) Wrapper for User Signup -->
+      <%= devise_error_messages! %>
+    </div>                            <!-- End - Error Message(s) Wrapper for User Signup -->
+    <div class="tier p-1 padding-b-0">            <!-- Begin - Name, Gender, & Date of Birth Form Row -->
+      <div class=" col-d-4 col-t-3 col-p-12 px-2">
+        <div class="control-label mt-2">
+          <%= f.label :first_name, "First Name", class: "px-2"  %> 
+        </div>
+          <%= f.text_field :first_name, id: "first_name", class: "form-control light-input-shadow", autofocus: true, placeholder: "Enter First Name" %>
+      </div>
+      <div class="col-d-4 col-t-3 col-p-12 px-2">
+        <div class="control-label mt-2">
+          <%= f.label :last_name, "Last Name", class: "px-2" %> 
+        </div>
+          <%= f.text_field :last_name, class: "form-control light-input-shadow", placeholder: "Enter Last Name" %>
+      </div>
+      <div class="col-d-4 col-t-3 col-p-12 px-2">
+        <div class="control-label mt-2">
+          <%= f.label :dob, "Birth Date", class: "px-2"   %> 
+        </div>
+          <%= f.date_field :dob, class: "form-control light-input-shadow" %>
+      </div>
+    </div>                          <!-- End - Name, Gender & DOB form row -->
+    <br>                           
+    <!-- Begin - Gender form Row -->
+    <div class="tier p-1 padding-y-0">
+      <div class=" col-d-4 col-t-4 col-p-12 px-2">
+        <p class="mb-0 mt-2">
+          <label class="control-label px-2"> 
+            Gender
+          </label>
+          <div class= "center">
+            <select id="gender_select" class="form-control px-2 select_form center light-input-shadow" name="user[gender]" prompt="Choose Your Gender">
+              <option>Choose Your Gender</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+        </p>
+      </div> <!-- End - Gender Form Row -->
+      <!-- Begin -  Address & Phone Number Form Row--> 
+      <div class="col-d-4 col-t-4 col-p-12 px-2">
+        <div class="control-label mt-2">
+          <%= f.label :address, "Primary Address", class: "px-2"   %> 
+        </div>
+          <%= f.text_field :address, autocomplete: "on", class: "form-control light-input-shadow", placeholder: "Enter Address: 1234 Main Street" %>
+      </div>
+      <div class="col-d-4 col-t-4 col-p-12 px-2">
+        <div class="control-label mt-2">
+          <%= f.label :address2, "Secondary Address", class: "px-2"   %> 
+          <small class="small_hide"> 
+            (optional) 
+          </small>
+        </div>
+          <%= f.text_field :address2, autocomplete: "on", class: "form-control  light-input-shadow", placeholder: "Apartment, Suite #" %>
+      </div>
+    </div>    <!--  Phonne number currently hideen on form due to "style-" and "disabled :true" -->
+    <div class="col-d-12 col-p-12 px-2 vanish">
+      <div class="control-label">
+        <%= f.label :phone_number, "Phone Number", class: "px-2"   %> 
+      </div>
+        <%= f.phone_field :phone_number, disabled: true, class: "form-control light-input-shadow", placeholder: "Enter Phone #: 555-555-5555" %>
+    </div> 
+    <br> <!-- End - Address & Phone Number Row -->
+    <div class="tier p-1 padding-t-0">  <!--  Beginning - Location Form Row  -->
+      <div class="col-d-4 col-t-4 col-p-12 px-2">
+        <div class="control-label mt-2 px-2">
+          <label>
+              City
+          </label>
+        </div> 
+          <!-- Below - Options of selecting from every city and we set the user's "city_id" field to the corresponding City table's City ID,
+              completing the User's Association to City.  -->
+        <%= f.collection_select :city_id, City.all, :id, :name, {prompt: "Choose a City"}, class: "select_form light-input-shadow form-control" %>
+      </div>
+      <div class="col-d-4 col-t-4 col-p-12 px-2">
+        <div class="control-label mt-2 px-2">
+          <%= f.label :state, "State", class: "px-2"   %> 
+            <small>
+              (Currently Ohio)
+            </small>
+        </div>
+          <%= f.collection_select :state, City.all, :state, :state, {prompt: "Choose a State"}, class: "select_form form-control light-input-shadow" %>
+      </div>
+      <div class="col-d-4 col-t-4 col-p-12 px-2">
+        <div class="control-label mt-2">
+          <%= f.label :zip, "Zip Code", class: "px-2"   %> <small> (5-Digit Zip)</small>
+        </div>
+          <%= f.collection_select :zip, City.all, :zip, :zip, {prompt: "Choose Zip-Code"}, maxlength: "5", class: "select_form form-control light-input-shadow" %>
+      </div>
+    </div> <!--  End - Location Form Row -->
+    <!-- Begin - Avatar Upload Row -->
+    <div class="col-d-8 col-p-12 p-1 mt-3 margin-l-5">  
+      <div class="profile_avatar_wrapper col-d-12 col-t-12 col-p-11 margin-t-12"> <!-- Begin - Avatar Upload Column --> 
+       <!-- Below - If Statement for Avatar Uploading -->
+        <% if current_user.avatar.attached? %> <!-- If User already has a avatar, show it and "remove" option -->
+          <div id="profile_avatar_border">
+            <div class="m-2">
+              <%= image_tag current_user.avatar.variant(resize: '250x250'), id: "upload_avatar", class: "m-0" %>
+            </div>
+          </div>
+          <div class="form-row">
+            <%= f.label :avatar, "Change Profile Picture", class: "margin-y-5 margin-l-3 control-label" %>
+          </div>
+          <div class="form-row">
+            <%= f.file_field :avatar, accept: 'image/png,image/gif,image/jpeg', class: "upload btn btn-primary btn-lg btn-xlarge mb-0 light-btn-shadow" %>
+          </div>
+          <small id="remove_cb_text">(Select 'Choose File', then click update profile)</small>
+        <% elsif current_user.is_facebook_user? %> <!-- User has facebook avatar  -->
+          <div id="profile_avatar_border">
+            <div class="margin-all-10">
+              <%= image_tag "#{current_user.image}?type=large", id: "upload_avatar", class: "margin-r-15" %>
+            </div>
+          </div>
+          <div class="form-row">
+            <%= f.label :avatar, "Change Profile Picture", class: "margin-y-5 margin-l-3 control-label" %>
+          </div>
+          <div class="form-row margin-b-5">
+            <%= f.file_field :avatar, accept: 'image/png,image/gif,image/jpeg', class: "upload btn btn-primary btn-lg btn-xlarge mb-0 light-btn-shadow" %>
+          </div>
+          <p id="remove_cb_text text-13 margin-y-8">Since you're using Facebook, you may want to change your profile image there.
+            <br> 
+            Otherwise, to change on Ossemble: Click 'Choose File', then 'Finish Profile'.
+          </p>
+
+        <% else %> <!-- User doesn't have an image attached -->
+          <div class="form-row">
+            <%= f.label :avatar, "Upload a Profile Picture", class: "my-0 control-label" %>
+          </div>
+          <div class="form-row">
+            <%= f.file_field :avatar, accept: 'image/png,image/gif,image/jpeg', class: "upload btn btn-primary btn-lg btn-xlarge mb-0 light-btn-shadow" %>
+          </div>
+        <% end %>
+      </div>                    
+    </div>          
+    <!-- End - Avatar Upload Row -->
+    <!-- Begin - Update/Delete Account Button Row -->  
+    <div class="form-row margin-t-12">    
+      <div class="col-all-6">
+        <%= f.submit "Finish Profile", id: "update_profile_btn", class: "push-left form_btn btn btn-success btn-lg btn-xlarge light-btn-shadow" %>
+      </div>      
+  <% end %> <!-- End - Form_For Devise & User Signup -->
+      <div class="col-all-6">
+        <%= button_to "Delete Profile", user_registration_url, data: { confirm: "Are you sure you want to permanently delete your account and profile?" }, method: :delete, id: "update_profile_btn", class: "push-right btn btn-danger margin-t-25 light-btn-shadow" %>
+      </div> 
+    </div> 
+    <!-- End - Update/Delete Account Button Row -->  
+    <!-- Below -  Account creation details, explaining why we need this info. -->
+   <div class="col-tier center margin-y-25 p-3 pl-4 light-box-shadow" style="border: 1px solid rgba(128, 128, 128, .5); border-radius: 5px; background-color: rgba(248, 249, 250, .4)">
+      <div class="col-all-7 pr-3">
+      <h4 class="center-text mb-3 theme_color_black bold underline">
+        Account Details
+      </h4>
+      <p class="mb-0 theme_color_black text-left">
+        <p>•	We ask for your full name to ensure real people are using Ossemble.</p>
+        <p>•	Real profiles are important to us because it helps promote constructive conversations and kindness.</p>
+        <p>•	Ossemble believes that it is never too early to get involved in our Nation’s political process, therefore our age restriction is 16+.</p>
+        <p>• Ossemble requires your home residence so we can connect you with your local municipalities.</p>
+        <p>• Your address is PRIVATE information and we will NOT share it with other users, governments, corporations, Russian spies, or anyone else.</p>
+        <p>• Address verification ensures that your voice is being heard and directed to the appropriate source.</p>
+
+      </p>
+      </div>
+      <div class="col-all-5 center-all mt-4">
+        <%= image_tag "badges/OssemblePioneering.svg", alt: "Icon", class: "mb-0", style: "height: 170px; width: 170px;" %>
+      </div>
+    </div>
+<!-- Below - JS Code to empty first name and last name input values and highlight the fields that need to be entered.-->
+<script> 
+$( document ).ready(function() {
+   $("#first_name").val('').addClass("invalid");
+   $("#user_last_name").val('').addClass("invalid");
+   if ($("#user_dob").val() == "" ) {
+     $("#user_dob").addClass("invalid");
+   }
+   if ($("#user_address").val() == "" ) {
+     $("#user_address").addClass("invalid");
+   }
+   if ($("#gender_select option:selected").text() == "Choose Your Gender" ) {
+     $("#gender_select").addClass("invalid");
+   }
+   
+ });
+</script>

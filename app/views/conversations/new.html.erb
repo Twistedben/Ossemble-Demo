@@ -1,0 +1,88 @@
+<div class="content">
+
+<div class="col-all-12 p-0 bg-white light-box-shadow">
+  <div class="tier">
+  <div class="col-tier border-bottom px-2 pt-3" style="background-color: rgba(200, 200, 200, .1)">
+  <div class="relative margin-r-8" style="top: -7px; ">
+    <%= link_to "<i class='fas fa-edit'></i>".html_safe, new_conversation_path, class:"new_mes_color text-22", title:"Message another user." %>
+  </div>
+  <div class="">
+    <%= link_to "All Conversations: #{(current_user.mailbox.conversations.count)} ", all_conversations_path(), id: " " , class: " ", title:"View all of your current and previous conversations." %>
+  </div>
+  </div>
+
+
+    <div class="col-d-2 col-t-3 col-p-4 px-2" style="background-color: rgba(100, 84, 150, .6)">
+      <p class="center-all text-18 border-bottom py-3 text-white">Messages</p>
+    <% @conversations.each do |conversation| %>
+  <div>
+    <% if conversation.is_unread?(current_user) %>
+
+      <strong>
+      <div class="">
+        <%= link_to conversation.participants.first.name, conversation_path(conversation) %> 
+          <span>
+            <i class="fas fa-comment-dots text-16" style="color: rgba(255, 0, 0, .9)"></i>          
+          </span>
+      </div>
+    </strong>
+    
+    <% else %>
+    
+    <div class="mt-2">
+      
+      <% conversation.participants.each do |participant| %>
+        <% unless participant == current_user %>
+          <%= link_to participant.name, conversation_path(conversation), class:"text-16 text-white" %> 
+         <% end %>
+      <% end %>
+      
+        <span class="text-white">-</span> 
+        <% if conversation.last_message.sender == current_user %>
+        <span>
+          <i class="fas fa-comment text-16" style="color: rgba(190, 190, 190, .7)" ></i>
+        </span>
+        <% else %>
+          <span>
+            <i class="fas fa-comment-dots text-16" style="color: rgba(255, 0, 0, .9)"></i>          
+          </span>
+        <% end %>
+    </div>
+    <% end %>
+  </div>
+  <% end %>
+</div>
+  <div id="conv_msg_log" class="my-2 col-d-10 col-t-9 col-p-8 pl-3" style="overflow-y: scroll; overflow-x: hidden; min-height: 400px !important; max-height: 520px !important;">
+    <p class="page_info_title">
+      New Message:
+    </p>
+  </div>
+<div class="col-d-2 col-t-3 col-p-4" style="background-color: rgba(100, 84, 150, .6)"></div>
+  <div class="col-d-10 col-t-9 col-p-8 px-3">
+   <%= form_tag conversations_path, method: :post do %>    
+    <div class="tier border-top pt-3">
+      <div class="mr-2 text-16 relative" style="top:-2px">
+        Recipient(s):
+      </div>
+      <%= select_tag :user_ids, options_from_collection_for_select(@recipients, :id, :name) %>
+    </div>
+     <div class="col-tier mb-3 pt-2">
+      <%= text_area_tag :body, nil, id: "conv_msg", class:"p-2 mt-3", autofocus: true, style:"max-height: 55px; min-height: 55px; resize: none !important; width: 100%; border: 2px groove #A8A8A8;", placeholder: "Enter your message here..." %>
+    </div>   
+    <div class="col-tier">
+      <%= submit_tag "Send Message", class:"vanish conv_btn btn action light-btn-shadow", style:"margin-top: 5px !important;" %>
+      <!-- %= f.file_field :attachment, class:"upload btn btn-info margin-b-5 mt-2 light-btn-shadow", style:"padding-top: 8px !important; width: 220px; height: 45px" %> -->
+    </div>
+    
+  <% end %>
+</div>
+  
+</div>
+</div>
+</div>
+
+<script>
+  var objDiv;
+  objDiv = document.getElementById('conv_msg_log');
+  objDiv.scrollTop = objDiv.scrollHeight;
+</script>

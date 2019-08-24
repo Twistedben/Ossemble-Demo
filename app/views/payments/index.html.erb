@@ -1,0 +1,355 @@
+<!--  Index page for processing payments inside of institute. Goes to payments_controller -->
+<!--  Main page for an admin to update their payment information. -->
+
+  <!-- Below -  Chargebeen API script -->
+  <script src="https://js.chargebee.com/v2/chargebee.js" data-cb-site="ossemble-test"></script>
+
+<div class="content margin-b-30">
+  <div class="tier"> <!-- Begin - Main tier for page. -->
+    <div class="col-d-1 col-t-vanish col-p-vanish">
+      <!--  blank Space -->
+    </div>
+    <div class="col-d-10 col-t-12 col-p-12 center">
+      <div class="col-tier">
+        <p class="page_info_title text-25">
+          <%= @institute.name %> Subscription 
+        </p>
+      </div>
+      <div id="institute_subscription_container" class="col-tier card light-box-shadow padding-all-18">
+        <div class="tier">
+          <div id="current_subscription_container" class="col-tier">
+            <div class="col-tier">
+              <div class="theme_color_black center-all mt-4 mb-2 light-text-shadow" style="line-height: 45px !important">
+                <h1 class="margin-t-0">
+                  Workplace Subscription
+                </h1>
+              </div>
+            </div>
+            <div class="col-d-4 col-t-7 col-p-12">
+              <div class="card_container">
+                <div class="header_container">
+                  <div class="col-tier header">
+                    <h3 class="">
+                      Current Subscription
+                    </h3>
+                  </div>
+                </div>
+                <div class="col-tier content_container">
+                  <div class="content_body">
+                    <p id="current_subscription" class="badge badge-pill" title="<%= @subscription.status.capitalize %>">
+                      <%= @subscription.plan.name %>
+                    </p>
+                    <p class="subscription_details">
+                      <small>
+                        <b>Workplace Channels:</b>
+                        <% if @subscription.plan.unlimited_workplaces? %>
+                          Unlimited
+                        <% else %>
+                         <%= @institute.workplaces.count %> / <%= @subscription.plan.workplace_count %>
+                        <% end %>
+                      <br>
+                      <b> Workplace Members: </b>
+                      <% if @subscription.plan.unlimited_users? %>
+                        Unlimited
+                      <% else %>
+                        <%= @institute.admins.count %> / <%= @subscription.plan.user_count %>
+                      <% end %>
+                      </small>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-d-4 col-t-7 col-p-12">
+              <div class="card_container">
+                <div class="header_container">
+                  <div class="col-tier header">
+                    <h3 class="">
+                      Subscription Status
+                    </h3>
+                  </div>
+                </div>
+                <div class="col-tier content_container">
+                  <div class="content_body">
+                    <p id="subscription_status" class="badge badge-pill" title="">
+                      <%= @subscription.status.capitalize %>
+                    </p>
+                    <p>
+                      <small>
+                        <%= @subscription.event_last_modified_at.nil? ? "" : "<b>Modified:</b> #{display_date(@subscription.event_last_modified_at)}".html_safe %>
+                      </small>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-d-4 col-t-7 col-p-12">
+              <div class="card_container">
+                <div class="header_container">
+                  <div class="col-tier header">
+                    <h3 class="">
+                        Manage Subscription
+                    </h3>
+                  </div>
+                </div>
+                <div class="col-tier content_container">
+                  <div class="content_body padding-t-8">
+                    <% if @subscription.chargebee_id.nil? %>
+                      <button class="btn action padding-r-18 center-content" disabled>
+                        <i class='fas fa-gear padding-x-8'></i>Settings
+                      </button>
+                      <p class="mt-3">
+                        <small>Upgrade below to a paid subscription</small>
+                      </p>
+                    <% else %>
+                      <a class="button-cs padding-r-18 center-content" href="javascript:void(0)" data-cb-type="portal" >
+                        <i class='fas fa-gear padding-x-8'></i>Settings
+                      </a>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-all-12 center" style="border-radius: 0px; max-width: 1400px">
+          <div class="tier">
+            <div class="col-tier border-bottom">
+              <div class="theme_color_black center-all mt-4 mb-2 light-text-shadow" style="line-height: 45px !important">
+                <h1>
+                  Available Subscriptions
+                </h1>
+                <h4>
+                    Every plan comes with a 14-day free trial
+                </h4>
+              </div>
+            </div>
+            <div class="col-d-4 col-t-7 col-p-12 mb-5 mt-4 px-3 center-all cl_price_nopad">
+              <div class="plan_card">
+                <div class="card-body p-0 light-box-shadow border-radius-10">
+                  <div id="plan_name" class="col-tier starter_header" >
+                    <p class="">
+                      Starter
+                    </p>
+                  </div>
+                  <div id="plan_price" class="col-tier">
+                    <p class="">
+                      $39.99 /mo
+                    </p>
+                  </div>
+                  <div id="features_header" class="col-tier">
+                    <p class="">
+                      Plan Features
+                    </p>
+                  </div>
+                  <div id="plan_features_container">
+                    <ul>
+                      <li class="">25 Users / Workplace Members</li>
+                      <li class="">1 Project Channel</li>
+                      <li class="">Unlimited Cloud Storage</li>
+                      <li class="strikethrough">Channel Map View</li>
+                      <li class="strikethrough">Stakeholder Directory</li>
+                    </ul>
+                  </div>
+                  <div id="upgrade_container" class="col-tier">
+                    <a class="button-cs buy_btn"  href="javascript:void(0)" data-cb-type="checkout" data-cb-plan-id="starter_plan">
+                      Upgrade
+                    </a>
+                  </div>
+
+                <!--
+                  <div class="col-tier">
+                    <p class="center-all roboto theme_color_black text-xxbig mt-2 mb-1 border-bottom b">
+                    Coming Soon
+                    </p>
+                  </div>
+                    <p class="center-all theme_color_black m-0">
+                      <p class="center-all roboto theme_color_black text-xxmedium mb-2">Internal Dashboard</p>
+                      <p class="center-all roboto theme_color_black text-xxmedium mb-2">Public Profiles</p>
+                      <p class="center-all roboto theme_color_black text-xxmedium mb-4">Plus More!</p>
+                    </p>
+                  <div class="col-tier pb-2" style="border-top: 1px solid rgba(220, 220, 220, .8);  background-color: #e0dedf; border-radius: 0px 0px 10px 10px">
+                    <div class="center-all my-3">
+                          
+                    </div>
+                  </div>
+                -->
+                </div>
+              </div>
+            </div>
+            <div class="col-d-4 col-t-7 col-p-12 mb-5 mt-4 px-3 center-all cl_price_nopad">
+              <div class="plan_card">
+                <div class="card-body p-0 light-box-shadow border-radius-10">
+                  <div id="plan_name" class="col-tier advanced_header" >
+                    <p id="" class="">
+                      Advanced
+                    </p>
+                  </div>
+                  <div id="plan_price" class="col-tier">
+                    <p class="">
+                      $99.99 /mo
+                    </p>
+                  </div>
+                  <div id="features_header" class="col-tier">
+                    <p class="">
+                      Plan Features
+                    </p>
+                  </div>
+                  <div id="plan_features_container" class="">
+                    <ul>
+                      <li class="">Unlimited Users / Workplace Members</li>
+                      <li class="">3 Project Channels</li>
+                      <li class="">Unlimited Cloud Storage</li>
+                      <li class="">Channel Map View</li>
+                      <li class="">Stakeholder Directory</li>
+                    </ul>
+                  </div>
+                  <div id="upgrade_container" class="col-tier">
+                    <a class="button-cs buy_btn"  href="javascript:void(0)" data-cb-type="checkout" data-cb-plan-id="advanced_plan"> 
+                      Upgrade
+                    </a>
+                  </div>
+                <!--
+                  <div class="col-tier">
+                    <p class="center-all roboto theme_color_black text-xxbig mt-2 mb-1 border-bottom b">
+                    Coming Soon
+                    </p>
+                  </div>
+                    <p class="center-all theme_color_black m-0">
+                      <p class="center-all roboto theme_color_black text-xxmedium mb-2">Internal Dashboard</p>
+                      <p class="center-all roboto theme_color_black text-xxmedium mb-2">Public Profiles</p>
+                      <p class="center-all roboto theme_color_black text-xxmedium mb-4">Plus More!</p>
+                    </p>
+                  <div class="col-tier pb-2" style="border-top: 1px solid rgba(220, 220, 220, .8);  background-color: #e0dedf; border-radius: 0px 0px 10px 10px">
+                    <div class="center-all my-3">
+                          
+                    </div>
+                  </div>
+                -->
+                </div>
+              </div>
+            </div>
+            <div class="col-d-4 col-t-7 col-p-12 mb-5 mt-4 px-3 center-all">
+              <div class="plan_card">
+                <div class="card-body p-0 light-box-shadow border-radius-10">
+                  <div id="plan_name" class="col-tier pro_header">
+                    <p class="">
+                      Pro
+                    </p>
+                  </div>
+                  <div id="plan_price" class="col-tier">
+                    <p class="">
+                      <small>
+                        Request a Quote
+                      </small>
+                    </p>
+                  </div>
+                  <div id="features_header" class="col-tier">
+                    <p class="">
+                      Plan Features
+                    </p>
+                  </div>
+                  <div id="plan_features_container" class="">
+                    <ul>
+                      <li class="">Everything Advanced Has</li>
+                      <li class="">Unlimited Users / Workplace Members</li>
+                      <li class="">Unlimited Cloud Storage</li>
+                      <li class="">Unlimited Project Channels</li>
+                      <li class="">All Workplace Features</li>
+                    </ul>
+                  </div>
+                  <div id="upgrade_container" class="col-tier">
+                    <a id="" class="button-cs buy_btn"  href="javascript:void(0)" data-cb-type="checkout" data-cb-plan-id="cbdemo_free">
+                      Contact
+                    </a>
+                  </div>
+
+                <!--
+                  <div class="col-tier">
+                    <p class="center-all roboto theme_color_black text-xxbig mt-2 mb-1 border-bottom b">
+                    Coming Soon
+                    </p>
+                  </div>
+                    <p class="center-all theme_color_black m-0">
+                      <p class="center-all roboto theme_color_black text-xxmedium mb-2">Internal Dashboard</p>
+                      <p class="center-all roboto theme_color_black text-xxmedium mb-2">Public Profiles</p>
+                      <p class="center-all roboto theme_color_black text-xxmedium mb-4">Plus More!</p>
+                    </p>
+                  <div class="col-tier pb-2" style="border-top: 1px solid rgba(220, 220, 220, .8);  background-color: #e0dedf; border-radius: 0px 0px 10px 10px">
+                    <div class="center-all my-3">
+                          
+                    </div>
+                  </div>
+                -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="" class="col-tier padding-all-20" >
+        
+        </div>  
+        <div class="tier">
+          <div class="col-all-12">
+      
+          </div> 
+        </div>
+      </div>
+    </div> <!-- Main page tier -->
+  </div>
+</div>
+<script>
+  /* Initialize a Chargebee instance after mounting the root component. */
+  var chargebeeInstance = Chargebee.init({
+    site: "ossemble-test",
+    enableRedirectMode: true,
+  });
+  $("a.buy_btn").on("click", function() {
+  event.preventDefault();
+  chargebeeInstance.openCheckout({
+    hostedPage: function() {
+      // Hit your end point that returns hosted page object as response
+      // This sample end point will call checkout new api
+      // https://apidocs.chargebee.com/docs/api/hosted_pages#checkout_new_subscription
+      // If you want to use paypal, go cardless and plaid, pass embed parameter as false
+      return $.ajax({
+        method: "post",
+        url: "https://apidocs.chargebee.com/docs/api/hosted_pages#checkout_new_subscription"
+      });
+    },
+    loaded: function() {
+      console.log("checkout opened");
+    },
+    error: function() {
+    },
+    close: function() {
+      console.log("checkout closed");
+    },
+    success: function(hostedPageId) {
+      console.log(hostedPageId);
+      // Hosted page id will be unique token for the checkout that happened
+      // You can pass this hosted page id to your backend 
+      // and then call our retrieve hosted page api to get subscription details
+      // https://apidocs.chargebee.com/docs/api/hosted_pages#retrieve_a_hosted_page
+    },
+    step: function(value) {
+        // value -> which step in checkout
+        console.log(value);
+    }
+  });
+}); 
+</script>
+<script>
+  // Adds color to badge for current subscription depending on status
+ $( document ).ready(function() {
+  <% if @subscription.active? %>
+    $("#current_subscription").addClass("active");
+    $("#subscription_status").addClass("active");
+  <% else %>
+    $("#current_subscription").addClass("inactive");
+    $("#subscription_status").addClass("inactive");
+  <% end %>
+
+ });
+
+</script>

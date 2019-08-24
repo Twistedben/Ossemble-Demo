@@ -1,0 +1,61 @@
+<!-- Begin - Complaints List Progress Bar -->
+<div class="progress mb-3">
+  <% vote_percentage = (complaint.vote_threshold * 100).to_i %>
+  <div class="text-center progress-bar 
+    <% if !complaint.failed? && vote_percentage >= 20 %> bg-success
+    <% elsif complaint.failed? %> bg-danger
+    <% else %> bg-warning
+    <% end %>" 
+       role="progressbar" aria-valuenow='<%= vote_percentage %>' aria-valuemin="0" aria-valuemax="100" style="width: <%= vote_percentage %>%">
+    <div class="text-big bold ml-3"style="align-text: center; color: white; width: 6rem; display: flex">
+      <p class="center"> 
+        <% if vote_percentage == 0 %> <!-- No one has yet endorsed the complaint. -->
+          <div class="text-xsmall">
+            No Endorsements
+          </div>
+        <% else %>   <!-- THe vote percentage is greated than 0 meaning someone has endrosed it. -->
+          <%= vote_percentage %> %
+        <% end %>
+      </p>
+    </div>
+  </div>
+</div>
+<!-- End - Complaints List Progress Bar -->
+
+<!-- Begin - Departments List Progress Bar -->
+<div class="row pl-3 pr-4" style="height: 30px !important">
+      <div class="col-md-12 media progress p-0 card-body ms_small_margin"> <!-- Put Ruby code to dictate the standing of the department -->
+    <!-- Below - Progress Bar -->
+        <div class="progress-bar bg-success" role="progressbar" aria-valuenow='<%= department.score.to_i %>' aria-valuemin="0" aria-valuemax="100" style="width: <%= department.score.to_i %>%"></div>
+      </div>
+    </div>
+<!-- End - Departments List Progress Bar -->
+
+<!-- Begin - Complaints Show Progress Bar -->
+<div class="col-tier media progress p-0 mb-0 mt-1" style="height: 40px;"> 
+  <div class="text-center progress-bar 
+    <% if @vote_percentage >= 20 %> bg-success
+    <% else %> bg-warning
+    <% end %>" 
+       role="progressbar" aria-valuenow='<%= @vote_percentage %>' aria-valuemin="0" aria-valuemax="100" style="width: <%= @vote_percentage %>%">
+    <p class="center text-xmedium"> 
+      <% if @vote_percentage == 0 %> <!-- No one has yet endorsed the complaint. -->
+        <span style="color: black; font-weight: bold;">No Endorsements</span>
+      <% else %>   <!-- THe vote percentage is greated than 0 meaning someone has endrosed it. -->
+        <%= @vote_percentage %> %
+      <% end %>
+    </p>
+  </div>
+</div>
+<!-- End - Complaints Show Progress Bar -->
+
+<!-- Start Departments Show Progress Bar -->
+<div class="tier border-top mx-0 card" style="height: 45px; text-align: center; border: 0px !important;">
+  <div class="col-d-12 col-t-12 col-p-12 media progress p-0 card-body" style="margin: auto;"> 
+<!-- Below - Progress Bar -->
+    <div class="progress-bar bg-success" role="progressbar" aria-valuenow='<%= @department.score.to_i %>' aria-valuemin="0" aria-valuemax="100" style="width: <%= @department.score.to_i %>%"></div>
+  </div>
+</div>
+<!-- End - Departments Show Progress Bar -->  
+      
+        

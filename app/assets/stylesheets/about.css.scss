@@ -1,0 +1,155 @@
+// Begin- Main CSS file for the About page
+
+.about_cont {
+  border: 1px solid rgba(88, 88, 88, .3); 
+  border-radius: 25px; 
+}
+
+.ms_msi {
+  line-height: 20px;
+  font-weight: bold;
+  @media screen and (max-width: 576px) {
+    font-size: 13px !important;
+                                       }
+}
+
+.ms_img_logo {
+  @media screen and (max-width: 576px) {
+   height: auto; 
+   width: auto;
+ 
+                                       }
+}
+.button-about{
+      text-align: center;
+      cursor: pointer;
+      font-size: 18px;
+      position: relative;
+  }
+  
+  .button-about {
+      border-radius: 4px;
+      border: 2px solid #645496;
+      background-color: white;
+      color: #645496;
+      padding: 5px 10px;
+      height: 35px;
+      -webkit-transition: all 0.3s ease;
+      -o-transition: all 0.3s ease;
+      transition: all 0.3s ease;
+  }
+  
+    .button-about:hover, .button-about:focus, .button-about:active {
+      border-radius: 4px;
+      background-color: #645496 !important;
+      color: white !important;
+  }
+  
+  .button-about:hover span:after {
+    opacity: 1;
+    right: 0;
+  }
+
+#about_dropdown_menu {
+  opacity: 1 !important;
+  padding: 15px;
+  
+  hr {
+    margin-top: 3px !important; 
+    margin-bottom: 3px !important;
+    width: 100%;
+  }
+  #user_profile_name:active {
+    background-color: transparent;
+    color: black;
+                            }
+  .dropdown-item:not(#user_profile_name) {
+    font-size: 18px; color: #000;
+    padding-left: 0px;
+    padding-right: 0px;
+                                         }
+  .dropdown-item:hover:not(#user_profile_name) {
+    background-color: transparent !important;
+    text-shadow: .02em .02em #000;
+                                                }
+  .dropdown-item:active {
+    background-color: transparent !important;
+    text-decoration: underline;
+                        }
+  a:not(#user_profile_name) {
+    font-size: 18px !important;
+    padding: 5px 0px;
+  }
+  
+ 
+}
+.ms_mx_hiw {
+  margin-right: 40px;
+  margin-left: 40px;
+   @media screen and (max-width: 576px) {
+    margin-right: 10px;
+    margin-left: 10px;
+    
+                                     } 
+}
+// End - Main CSS file for the About page
+
+// Begin - CSS for Inspiration Page
+
+.ms_owl_coin {
+   @media screen and (max-width: 576px) {
+    height: 70px !important;
+    width: 70px !important;
+    margin-top: 0px !important; 
+    margin-left: 0px !important;                                    
+      
+                                       } 
+}
+
+.ms_owl_logo_ins {
+   @media screen and (max-width: 576px) {
+    height: 60px !important;
+    width: 60px !important;
+    margin-top: 0px !important; 
+    margin-left: 0px !important;                                    
+      
+                                       } 
+}
+
+.ms_owl_logo {
+  @media screen and (max-width: 576px) {
+    height: 125px !important;
+    width: 300px !important;
+                                         } 
+}
+
+
+.about_caro {
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  outline: black;
+  background-image: none;
+}
+
+.carousel-control-next-icon:after
+{
+  
+  font-size: 55px;
+  color: #645496;
+  margin-left: 15px;
+}
+
+.carousel-control-prev-icon:after {
+  font-size: 55px;
+  color: #645496;
+  margin-right: 35px;
+}
+}
+
+.ms_rep_mt {
+  @media screen and (max-width: 900px) {
+  margin-top: 10px !important;
+                                         } 
+}
+
+// End - CSS for Inspiration Page

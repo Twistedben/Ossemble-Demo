@@ -1,0 +1,23 @@
+<!--  HTML ERB Partial that holds Javascript Alert for finishing profile Signup and a BS Alert Error
+to finish Entering Profile Information -->
+
+<script> // Begin - Javascript Alert Popup to finish profile signup
+  // Below - Forgoes JS Popup alert if there are errors in Signup Process
+  <% if @user.errors.empty? %> 
+    alert("Welcome! Please finish your Ossemble Profile by filling in the form on this page.")
+  <% end %>
+  // End - Javascript Alert Popup to finish profile signup
+</script> 
+
+  <div class="panel mb-0" style="background-color: transparent !important; box-shadow: none !important">
+    <p class="col-all-12 alert panel panel-warning alert-warning light-box-shadow alert_ms_text" style="font-weight: bold; background-color: #F8F9FA !important;">
+      <a href="#" class="close" data-dismiss="alert">&#215;</a>
+        Please finish your Profile setup by uploading an avatar of your face and filling out empty box below. We require 
+        this information to verify that you're an active voter and concerned citizen of your city. See our 
+        <a href="#" class="title_link" style="padding-left: 0px !important"> 
+          PRIVACY NOTICE PAGE LINK HERE 
+        </a> 
+        to fully understand why we require this information and the extent to which we protect your 
+        important rights to privacy.
+    </p>
+  </div>

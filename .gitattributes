@@ -1,0 +1,5 @@
+packs/* linguist-vendored
+public/* linguist-vendored
+*.rb linguist-detectable=true
+*.html.erb linguist-detectable=true
+*.rb linguist-language=Ruby

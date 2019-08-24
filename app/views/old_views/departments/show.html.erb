@@ -1,0 +1,105 @@
+<!--  Main Show Page for Individual Departments to show information of selected Department. (views/departments/show.html.erb) -->
+
+<!-- Begin - Container for list of row reviews for department. --> 
+
+<div class="content">
+  <div class="tier"> <!-- Begin - Main tier for page. -->
+    <!-- Begin - Filter panel rendering -->
+    <div class="col-d-2 col-t-10 col-p-12 center">
+      <%= render 'layouts/city_feeds_panel' %>
+      <%= render 'layouts/cs_filter_panel' %>
+    </div>
+    <div id="ms_ap_content" class="col-d-8 col-t-10 col-p-12 center" style="display: none; margin-bottom: 15px !important">
+  <h3 class="mt-4">
+    <%= "Rate your City" if current_user %>
+    <%= "Join Us!" if current_or_guest_user.guest? unless current_admin %>
+    <%= "City Dashboard" if is_admin? %>
+  </h3>
+  <div id="action_panel_msfile">
+    
+  </div>
+  <h3>
+    <%= "Voice a Complaint" if current_user %>
+    <%= "Request a City" if current_or_guest_user.guest? unless current_admin %>
+    <%= "Start a Poll" if is_admin?  %>
+  </h3>
+  <div id="action_panel_msreview">
+    
+  </div>
+  <h3><%= @city.name %> Community Score</h3>
+  <div id="action_panel_mstop">
+  
+  </div>
+</div>
+<!-- Begin - Department Information and Score. -->
+  <!-- Begin - Top Row Section of Container -->
+<div class="col-d-7 col-t-10 col-p-12 center">
+  <div class="tier curved_box_top" style="border-bottom: none !important">
+    <div class="center-all">
+      <p class="text-xlarge theme_color_black light-box-shadow" style="margin: 10px !important; margin-left: 17px !important">
+        <p class="card-title center-all bold text-xlarge" style="color: #585858;"><%= "#{@department.name}" %></p>
+      </p>
+    </div>
+  </div>
+  <div class="col-d-12 col-t-12 col-p-12 well mb-0 card well-border bg-white" style="border-radius: 0px !important; border-bottom: 1px solid rgba(169, 169, 169, 0.6) !important; border-radius: 0px !important; border-top: none !important; border-left: 2px groove rgba(0, 0, 0, 0.35); border-right: 2px groove rgba(0, 0, 0, 0.35);">
+   <div class="col-tier light-box-shadow">
+    <div class="col-tier mb-0">
+      <div class="col-d-6 col-t-12 col-p-12 card p-0" style="height: 21rem;">
+        <div class="card-body">
+          <p class="card-text h2">
+            Image goes here
+          </p>
+        </div>
+      </div>
+      <div class="col-d-6 col-t-12 col-p-12 card p-0" style="height: 21rem">
+        <div class="card-body pt-3">
+          <h3 class="card-title center bold " style="color: #585858; font-size: 26px">
+            <p class="h4 scoreStyle float-right" style="margin-bottom: 15px; margin-top: 0px;">
+              <%= @department.score.to_i %>%
+            </p>
+          </h3>
+          <div class="col-d-12 p-0 mt-5">
+            <div class="tier" style="margin-top: 100px !important">
+            <ul class="list-group list-group-flush no-margin float-left" style="line-height: 1rem;">
+              <li class="list-group-item text-left p-0 ms_address float-left" style="margin-top: 20px; color: #696969; border: 0px solid #fff;">
+                <p class="mt-3">
+                  <%= @department.address %>
+                </p>
+                <p>
+                  <%= @department.city.name %>
+                </p>
+                <p class="mb-0">
+                  <%= "#{@department.city.state_name.titleize}, #{@department.city.zip_code}" %>
+                </p>
+              </li>
+            </ul>
+            <div class="badge ml-2 float-right pull-right ms_reviews" style="background-color: #787878; height: 18px !important; margin-left: auto !important">
+              <%= @department.reviews.size %> Total Reviews <!-- Displays number of reviews next to "Write a review" button -->
+            </div>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+   </div>
+  </div>
+  <div class="tier mb-0">
+    <div class="col-all-12 well mb-0 well-border bg-white pb-0" style="border-radius: 0px !important; border-bottom: none !important; border-left: 2px groove rgba(0, 0, 0, 0.35); border-right: 2px groove rgba(0, 0, 0, 0.35);">
+      <div class="map_area"> <!-- Begin - Map Row for Department -->
+        <!-- Below - Calls in the map -->
+        <div id="oss_map" class="col-d-12 col-t-10 col-p-12 ms_map light-box-shadow" style="border-radius: 0px !important; border: 1px solid rgba(88, 88, 88, .2);">
+          <%= render 'department_map' %> <!-- Leaflet JS for Map -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="curved_box_bottom" style="border-top: none !important"></div>
+</div>
+<div id="non_ms_ap_content" class="col-d-3 col-t-10" >
+  <%= render 'layouts/action_panel', obj: @department %>
+</div>
+    <!-- End - Far right - Action panel with col-3 -->
+  </div> <!-- End - Main page tier -->
+</div>   <!-- End - Main page content container -->
+
+<%= render 'reviews/reviews_list', obj: @department_reviews %> 

@@ -1,0 +1,58 @@
+<!-- Map view for the given workplace. Renders in a map passing in the @workplace_map_resources. (views/workplace/workplace_map.html.erb) -->
+
+<div class="content">
+  <div class="tier"> <!-- Begin - Main tier for page. -->
+    <!-- Below -  Renders in the accordian from views/layouts/phones/... for mobile and tablet. -->
+    <%= render "layouts/phones/mobile_accordion" %>
+    <div class="center col-d-7 col-t-11 col-p-12">
+    <!-- Begin - Map Page Info -->
+      <div id="page_info_card_org" class="col-all-12">
+        <div id="page_info_card" class="margin-b-15">
+          <div class="tier">
+            <div class="col-all-12">
+              <p class="page_info_title pull-left">
+                <%= current_workplace %>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+<!-- End- Map Page Info -->
+      <p>
+        <button class="btn button-cs p-2 text-16" type="button" data-toggle="collapse" data-target="#mapInfo" aria-expanded="false" aria-controls="collapseExample">
+          Workplace Map Info
+        </button>
+      </p>
+      <div class="collapse" id="mapInfo">
+        <div class="card card-body theme_color_black mb-3">
+          <div class="col-tier">
+           <p class="text-xxmedium mb-3 b">The Map View for all Reports and Suggestions inside <%= @workplace.name %>.</p> 
+           <p class="text-xxmedium mb-2">Suggestions are indicated by the blue map pins with the <i class="mx-1 theme_color_dark fas fa-lightbulb"></i> icon.</p>
+           <p class="text-xxmedium mb-2">Reports are indicated by the red map pins with the <i class="mx-1 theme_color_dark fas fa-flag"></i> icon.</p>
+           <p class="text-xxmedium mb-2">To view the information of a pin, simply click within the pin.</p>
+           <p class="text-xxmedium mb-0">Clicking the title of a Report or Suggestion will take you to the desired Report or Suggestion page.</p>
+         </div>              
+        </div>
+      </div>
+      <div class="col-d-12 margin-b-30">
+        <div class="tier">
+          <div class="col-md-12 well mb-0 p-2 light-box-shadow" style="border-radius: 0px !important; background-color: white; border: 1px solid rgba(128, 128, 128, .5);">
+            <!-- Begin - Map Row  -->
+            <div class="map_area">
+              <!-- Below - Renders Community Score map partial inside views/department/department_map -->
+              <div class="col-12 ms_map" id="oss_map" style="border-radius: 0px !important">
+                <div class="leaflet-top leaflet-right">
+                  <div id="change_map_btn_container">  <!-- here the legend -->
+                    <input type="button" id="change_map" value="Change Map" onclick="changeMap();" class="btn button-cs" />
+                  </div>
+                </div>  
+                <%= render 'workplace_map', obj: @workplace_map_resources %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <%= render 'admins/admin_layouts/workplace_action_panel' %>
+  </div> <!-- Main page tier -->
+</div> <!-- End - Map area -->

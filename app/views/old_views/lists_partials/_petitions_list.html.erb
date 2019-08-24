@@ -1,0 +1,103 @@
+<!--  Main partial for rendering in Petitions in list view from index and Ossembly index pages. -->
+<!-- Main partial for listing of petitions within subtopics and topics. Rendered in from Ossembly (views/ossembly/index.html.erb), Topics Show (views/topics/show.html.erb) and Subtopics Show (views/subtopics/show.html.erb). -->
+<div id="petitions_list">
+  <% if obj.empty? && !current_page?(city_ossembly_path(@city)) %>
+    <h2 class="center-all light-box-shadow py-3 mt-0 bg-white">
+      No <span class="i">Petitions</span> to show yet. 
+      <a class="title_link" href="<%= new_city_petition_path(@city) %>">
+        Submit one now!
+      </a> 
+    </h2>
+  <% end %>
+  <!-- Below - Renders in each petition for a given instance variable. -->
+  <% obj.each do |petition| %> 
+    <div class="col-d-12 card bs_hover light-box-shadow no-border-radius padding-y-0 margin-b-15 padding-x-20" style="border: 1px solid rgba(128, 128, 128, .5)">
+      <div class="pull-right mt-0 no-padding">
+        <!-- Below - If statement determining if any images are attached to the petition. -->
+        <% if petition.image.attached? %>   <!-- petition HAS images attached -->
+          <div class="col-d-2 col-t-3 col-p-12 pull-left mb-2 mr-4 margin-t-18">
+            <div style="min-height: 14rem">
+              <%= link_to image_tag(petition.image.variant(combine_options: {crop: "1100x1100+0+0", gravity: "center"}), id: "uploaded_image", class: "center-content comp_ms_image" ), city_petition_path(@city, petition) %> 
+            </div>
+            <div class="center-all mt-4">
+              <!-- Below - Renders in helper method for endorse in upvotes_helper.rb. Instance method, name of controller, and then name of resource to display on the button itself. -->
+              <%= display_endorse_button(petition, "petitions", "List", city_petition_path(@city, petition)) %>
+            </div>
+          </div>
+        <% else %>  <!-- petition does NOT have any images attached to it. -->
+          <div class="col-d-2 col-t-3 col-p-12 pull-left mb-2 mr-4 margin-t-18">
+            <p class="well margin-y-0 center-all center-vertical p-2 ms_box_hide" style="min-height: 14rem">
+              <!-- Below - Displays different icons depending on petition process status. -->
+              <%= "<i class='fas fa-file-signature center-all' style='font-size: 65px'></i>".html_safe if petition.pending %>
+              <%= "<i class='fas fa-clipboard-check center-all' style='font-size: 65px'></i>".html_safe if petition.filed %>
+            </p>
+            <div class="center-all mt-4">
+              <!-- Below - Renders in helper method for endorse in upvotes_helper.rb. Instance method, name of controller, and then name of resource to display on the button itself. -->
+              <%= display_endorse_button(petition, "petitions", "List", city_petition_path(@city, petition)) %>
+            </div>
+          </div>
+        <% end %>   <!-- End - petition Images Check -->
+        <!-- End - If statement determining if any images are attached to the petition. -->
+          <div id="resource_list" class="mt-3 tier col-p-12">
+            <h4 class="ms_small_margin pl-0 pr-0 mt-3 ml-0 text-large mb-2">
+              <%= link_to "#{petition.title.truncate(38)}", city_petition_path(@city, petition), class: "title_link" %>
+            </h4>
+            <p class="text-muted text-medium mt-1 mb-0 col-all-12" style="height: 57px">
+              <span class="tier">
+                <span style="width: 35px !important; height: 30px !important;">
+                  <%= display_list_avatar(petition.user) %>
+                </span>
+                <span class="relative" style="top: 4px; left: 5px;">
+                  <%= link_to petition.user.name, user_path(petition.user.friendly_id), class: 'text-medium text-muted' %>
+                </span>
+              </span>
+                <br>
+                <span class="relative" style="top: -20px">
+                  <span class="text-medium"> 
+                   <b>Posted:</b> <%= time_ago_in_words(petition.created_at).capitalize %> ago
+                  </span>
+               </span>
+            </p>
+            <div class="col-all-12 pull-left tier">
+              <a class="btn mr-3 alt-action" href='<%= city_petitions_path(@city) %>' >
+               Petition
+              </a>
+              <a class="btn alt-action" href="
+                    <%= pending_city_petitions_path(@city) if petition.pending %>
+                    <%= filed_city_petitions_path(@city) if petition.filed %>
+                    ">
+               <%= petition.process %>
+              </a>
+            </div>
+            <div class="col-all-12 ms_comp_margin tier ms_comp_no_padding">
+              <div class= "mb-0">
+                <p class="mb-0 depAdd ms_comp_margin2 pull-left mt-2 ml-0" style="font-size: 1.8rem !important; color: black; text-align: justify; text-justify: inter-word;">
+                  <small>
+                   <%= petition.description.truncate(170) %>
+                  </small>
+                </p>
+              </div>
+            </div>
+            <div class="col-all-12 px-0" style="margin-top: -8px">
+            <!-- Begin -  Sharing Row -->
+            <div id="share_tier" class="tier">
+                <!--  Twitter and facebook buttons. COmmented out due to Facebook List sharing issues.
+                <!-- Below -  Twitter share share. Goes to shares_helper.rb, passing in resource, website to share with, show page link, and then title.   -->
+             <!--   %= display_share_button(petition, "Twitter", city_petition_path(petition.city, petition),"#{petition.city.name} Petition: #{petition.title} - #{city_petition_url(petition.city, petition)}") %>
+                <!-- Below -  Facebook share. Goes to shares_helper.rb, passing in resource, website to share with, show page link, and then title.   -->
+             <!--   %= display_share_button(petition, "Facebook", city_petition_path(petition.city, petition),"#{petition.city.name} Petition: #{petition.title}:") %>
+              -->
+              <div class="theme_color_black padding-t-8">
+                <%= display_vote_count(petition) %> <!-- Displays endorsements count  -->
+              </div>
+              <div class="theme_color_black mx-3 padding-t-8">
+                <%= display_comment_count(petition) %> <!--  Displays comments count -->
+              </div>
+            </div>
+            <!-- End -  Filter tags Row -->
+          </div> 
+          </div>
+      </div>
+    </div>
+  <% end %>
+</div>

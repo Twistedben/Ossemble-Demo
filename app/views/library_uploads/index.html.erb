@@ -1,0 +1,20 @@
+<!--  Main index page for feed of an admin's personal uploads. -->
+
+<div class="content">
+  <div class="tier">
+    <%= render "layouts/phones/mobile_accordion" %>
+    <div class="center col-d-7 col-t-11 col-p-12">
+      <div class="tier">  
+        <div class="col-tier padding-b-5">
+          <p class="trending_list_title col-p-12">
+            Your Uploads
+          </p>
+        </div>
+        <%=  render 'admins/admin_layouts/libraries/library_uploads_list', obj: @uploads %>
+      </div>
+    </div>
+    <!--
+    %= render 'admins/admin_layouts/workplace_action_panel' %> 
+    -->
+  </div>
+</div>

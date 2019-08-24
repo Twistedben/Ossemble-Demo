@@ -1,0 +1,89 @@
+<!--  Main Show Page for Individual Suggestions in order to display additional information of the specific suggestion. (views/suggestions/show.html.erb) -->
+<div class="content">
+  <div class="tier"> <!-- Begin - Main tier for page. -->
+    <!-- Begin - Top Row Section of Container -->
+    <div class="col-d-7 col-t-11 col-p-12 padding-t-20 center">
+      <div id="header_show_card" class="col-all-12" style="padding-bottom: 12.5px !important">
+        <div class="tier">
+          <div class="no-margin col-all-12">
+            <div class="mt-0 col-tier">
+              <div class="col-all-12 p-0 card-body pull-left">
+                <div class="col-tier">
+                  <!-- Below -  Displays the suggestion's associated default icon. Goes to Suggestions_helper.rb method dishaply_suggestion_show_icon. -->
+                  <%= display_workplace_default_icon(@upload, "show") %>
+                  <p class="text-xmedium mb-0" style="margin-left: 17px">
+                    <span id="show_page_title">      
+                      <%= @upload.title %>
+                    </span>
+                    <br>
+                    <span class="tier my-2">
+                      <span style="width: 45px !important; height: 40px !important;">
+                        <%= display_show_avatar(@upload.admin) %>
+                      </span>
+                      <!-- Below - Users_helper.rb - Displays user name as a link and to determine if the user is from the city or a non-resident -->
+                      <span class="padding-t-10 padding-l-8 text-18">
+                        <%= display_workplace_user_name(@upload) %>
+                      </span>
+                    </span>
+                    <br>
+                    <span class="relative" style="top: -20px">
+                      <span class="text-big show_text_scale"> 
+                        Uploaded: <%= display_date_in_numbers(@upload.created_at) %> 
+                      </span>
+                    </span>
+                    <br>
+                    <span class="relative" style="top: -20px">
+                      <span class="text-big show_text_scale"> 
+                        <% if @upload.is_shared? %>
+                          Shared with: 
+                          <% @upload.library_entries.shared.each do |receiver|  %> 
+                            <%= link_to "#{receiver.admin.name}", institute_admin_path(receiver.admin.institute, receiver.admin), id: " " , class: "title_link"  %> |
+                          <% end %>
+                        <% end %>
+                      </span>
+                    </span>
+                    
+                  </p>
+                  <!-- Below -   Edit link -->
+                  <div class="margin-l-auto">
+                    <%= link_to "<i class='theme_color_dark fas fa-pencil-alt'></i> Edit Your Upload".html_safe, edit_library_upload_path(@institute, @admin, @library, @upload), class: "title_link text-17" if belongs_to_admin?(@upload)  %>
+                  </div>
+                </div>
+              </div>
+              <!-- Below -  Renders in Suggestion description if there is no image -->
+              <%= render 'layouts/resources/resource_description', obj: @upload unless @upload.image.attached? %>
+              <!-- Below -  Renders in Suggestion description if there is no image -->
+              <%= render 'layouts/resources/resource_image', obj: @upload if @upload.image.attached? %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Below -  Renders in the suggestions description -->
+      <%= render 'layouts/resources/resource_description', obj: @upload if @upload.image.attached? %>
+    </div>
+  </div>
+</div> <!-- End - Main page tier -->
+  
+<!-- Begin - Container for Title and form of Comments section. --> 
+<div class="content mt-0">
+  <div class="tier">
+    <div class="col-d-7 col-t-11 col-p-12 padding-t-20 center">
+      <!-- Below - Renders in the form to create a new comment. -->
+      <div id="new_comment_tier" class="no-top-border tier">
+        <div class="col-all-12">
+          <%= render 'admins/comments/comment_form', obj: @upload %>
+        </div>
+      </div>
+      <!-- Below - Rendering for existing Comments. -->
+      <div id="comments_list" class="tier margin-t-30 padding-x-10">
+        <div class="col-all-12">
+          <ul id="comments_ul" class="pl-0">
+            <div id="comment_flash" class="vanish panel panel-success light-box-shadow col-all-12" style="height: 3.5rem"><div class="col-tier margin-t-5"><p class="text-success bold center-all text-xxmedium no-margin col-all-12">Your comment has posted!</p></div></div>
+            <li class="comment_placeholder vanish"></li>
+            <%= render(partial: 'admins/comments/comment', collection: @upload.comments)%>
+          </ul>
+        </div>
+      </div>     
+    </div>
+  </div>
+</div> <!-- End - Container for Title and form of Comments section. --> 

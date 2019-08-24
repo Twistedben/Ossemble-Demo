@@ -1,0 +1,19 @@
+<!--  Main partial being rendered for Public Activity gem on Posts create. (views/public_activity/post/_create.html.erb). -->
+<% if activity.trackable %>
+  <span id="activities_span" class="">
+    <span>
+      created a Post titled:
+    </span>
+    <%= link_to activity.trackable.title, subtopic_post_path(activity.trackable.city, activity.trackable.topic, activity.trackable.subtopic, activity.trackable), id: "activity_post_link", class: "bold" %>
+    <span>
+       in:
+      <span class="i bold"> <%= activity.trackable.topic.name %> </span>
+      <span class="text-14"> 
+        /
+      </span>
+      <span class="i bold"> <%= activity.trackable.subtopic.name %> </span> 
+    </span>
+<% else %>
+    deleted a post.
+  </span>
+<% end %>

@@ -1,0 +1,544 @@
+
+<script>
+ var map = L.map('oss_map').setView([<%= @department.latitude %>, <%= @department.longitude %>], 17);
+ L.tileLayer('https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="&copy;"> <a href="https://wikimediafoundation.org/wiki/Maps_Terms_of_Use">Wikimedia</a></a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+}).addTo(map);
+        
+        
+    map.addControl(new L.Control.Fullscreen()); // Button for fullscreen
+        
+    var lc = L.control.locate({ // Recent button/Position
+    position: 'topleft',
+    drawCircle: false,
+    flyTo: true,
+    showPopup: false,
+    drawMarker: false,
+    icon: 'fas fa-bullseye',
+    strings: {
+        title: "Recenter My Location"
+      }
+    
+}).addTo(map);
+    
+    // Below - Scaling Zoom and Disabling Drag/Zoom
+    
+    L.control.scale().addTo(map);
+    map.options.minZoom = 14;
+    map.options.maxZoom = 17;
+    
+    map.dragging.disable();
+    map.touchZoom.disable();
+    map.doubleClickZoom.disable();
+    map.scrollWheelZoom.disable();
+
+    // This is where the markers start. 
+    
+    L.AwesomeMarkers.Icon.prototype.options.prefix = 'fa';
+         
+    // Government Markers
+    
+ var gov1 = L.marker([41.484187,-81.823722], {
+ 
+    icon: L.AwesomeMarkers.icon({
+        icon: 'fire-extinguisher',
+        markerColor: 'red',
+        iconColor: '#F8FAEE',           
+    })    
+        
+}).bindPopup("<b>Fire Station 2</b><br>18124 Detroit Avenue<br>Lakewood, Ohio 44107").openPopup();
+   
+    var gov2 = L.marker([41.478453,-81.825113], {
+ 
+    icon: L.AwesomeMarkers.icon({
+        icon: 'tint',
+        markerColor: 'green',
+        iconColor: '#F8FAEE',           
+    })    
+        
+}).bindPopup("<b>Water and Wastewater Collection</b><br>1699 Metropark Drive<br>Lakewood, Ohio 44107").openPopup();
+    
+    var gov3 = L.marker([41.477545,-81.810324], {
+ 
+    icon: L.AwesomeMarkers.icon({
+        icon: 'user-md',
+        markerColor: 'darkred',
+        iconColor: '#F8FAEE',           
+    })    
+        
+}).bindPopup("<b>Divison of Aging</b><br>16024 Madison Avenue<br>Lakewood, Ohio 44107").openPopup();
+    
+    var gov4 = L.marker([41.476784,-81.799316], {
+ 
+    icon: L.AwesomeMarkers.icon({
+        icon: 'fire-extinguisher',
+        markerColor: 'red',
+        iconColor: '#F8FAEE',           
+    })    
+        
+}).bindPopup("<b>Fire Station 1</b><br>14601 Madison Avenue<br>Lakewood, Ohio 44107").openPopup();
+    
+   var gov5 = L.marker([41.489056,-81.777991], {
+ 
+    icon: L.AwesomeMarkers.icon({
+        icon: 'fire-extinguisher',
+        markerColor: 'red',
+        iconColor: '#F8FAEE',           
+    })    
+        
+}).bindPopup("<b>Fire Station 3</b><br>12567 Clifton Boulevard<br>Lakewood, Ohio 44107").openPopup();
+    
+    var gov6 = L.marker([41.484976,-81.777794], {
+ 
+    icon: L.AwesomeMarkers.icon({
+        icon: 'fas fa-taxi',
+        markerColor: 'darkblue',
+        iconColor: '#F8FAEE',           
+    })    
+        
+}).bindPopup("<b>Divison of Police</b><br>12650 Detroit Avenue<br>Lakewood, Ohio 44107").openPopup();
+    
+   var gov7 = L.marker([41.484982,-81.777036], {
+ 
+    icon: L.AwesomeMarkers.icon({
+        icon: 'university',
+        markerColor: 'darkred',
+        iconColor: '#F8FAEE',           
+    })    
+        
+}).bindPopup("<b>Lakewood City Hall</b><br>12650 Detroit Avenue<br>Lakewood, Ohio 44107").openPopup();
+         
+    var gov8 = L.marker([41.484039,-81.778021], {
+ 
+    icon: L.AwesomeMarkers.icon({
+        icon: 'dollar-sign',
+        markerColor: 'darkred',
+        iconColor: '#F8FAEE',           
+    })    
+        
+}).bindPopup("<b>Divison of Municipal Income Tax</b><br>12805 Detroit Avenue<br>Lakewood, Ohio 44107").openPopup();
+    
+    var gov9 = L.marker([41.477222,-81.778197], {
+ 
+    icon: L.AwesomeMarkers.icon({
+        icon: 'far fa-user',
+        markerColor: 'darkred',
+        iconColor: '#F8FAEE',           
+    })    
+        
+}).bindPopup("<b>Divison of Youth</b><br>12900 Madison Avenue<br>Lakewood, Ohio 44107").openPopup();
+    
+ var gov10 = L.marker([41.469659,-81.779548], {
+ 
+    icon: L.AwesomeMarkers.icon({
+        icon: 'recycle',
+        markerColor: 'green',
+        iconColor: '#F8FAEE',           
+    })    
+        
+}).bindPopup("<b>Refuse & Recycling Center</b><br>12920 Berea Road<br>Lakewood, Ohio 44107").openPopup();
+    
+    var gov11 = L.marker([41.484020,-81.796819], {
+ 
+    icon: L.AwesomeMarkers.icon({
+        icon: 'h-square',
+        markerColor: 'red',
+        iconColor: '#F8FAEE',           
+    })    
+        
+}).bindPopup("<b>Lakewood Hospital</b><br>14519 Detroit Avenue<br>Lakewood, Ohio 44107").openPopup();
+    
+       
+    // Library Markers
+    
+   var lib1 = L.marker([41.484683,-81.804237], {
+ 
+    icon: L.AwesomeMarkers.icon({
+        icon: 'book',
+        markerColor: 'cadetblue',
+        iconColor: '#F8FAEE',           
+    })    
+        
+}).bindPopup("<b>Lakewood Public Library Main Branch</b><br>15425 Detroit Avenue<br>Lakewood, Ohio 44107").openPopup();
+    
+   var lib2 = L.marker([41.476762,-81.781560], {
+ 
+    icon: L.AwesomeMarkers.icon({
+        icon: 'book',
+        markerColor: 'cadetblue',
+        iconColor: '#F8FAEE',           
+    })    
+        
+}).bindPopup("<b>Lakewood Public Library Madison Branch</b><br>13229 Madison Avenue<br>Lakewood, Ohio 44107").openPopup();
+       
+    // Parks Markers
+    
+    var park1 = L.marker([41.483207,-81.829270], {
+ 
+    icon: L.AwesomeMarkers.icon({
+        icon: 'tree',
+        markerColor: 'darkgreen',
+        iconColor: '#F8FAEE',           
+    })    
+        
+}).bindPopup("<b>Sloane Park</b><br>1355 Sloane Avenue<br>Lakewood, Ohio 44107").openPopup();
+    
+   var park2 = L.marker([41.477895,-81.827009], {
+ 
+    icon: L.AwesomeMarkers.icon({
+        icon: 'paw',
+        markerColor: 'darkgreen',
+        iconColor: '#F8FAEE',           
+    })    
+        
+}).bindPopup("<b>Lakewood Dog Park</b><br>1699 Valley Parkway<br>Lakewood, Ohio 44107").openPopup();
+    
+   var park3 = L.marker([41.483086,-81.826431], {
+ 
+    icon: L.AwesomeMarkers.icon({
+        icon: 'tree',
+        markerColor: 'darkgreen',
+        iconColor: '#F8FAEE',           
+    })    
+        
+}).bindPopup("<b>Park Row Park</b><br>1386 Park Row<br>Lakewood, Ohio 44107").openPopup(); 
+    
+   var park4 =  L.marker([41.490690,-81.822138], {
+ 
+    icon: L.AwesomeMarkers.icon({
+        icon: 'tree',
+        markerColor: 'darkgreen',
+        iconColor: '#F8FAEE',           
+    })    
+        
+}).bindPopup("<b>Celeste Park</b><br>1181 W Clifton Boulevard<br>Lakewood, OH 44107").openPopup(); 
+    
+   var park5 =  L.marker([41.487377,-81.819453], {
+ 
+    icon: L.AwesomeMarkers.icon({
+        icon: 'tree',
+        markerColor: 'darkgreen',
+        iconColor: '#F8FAEE',           
+    })    
+        
+}).bindPopup("<b>Webb Park</b><br>1301 Webb Road<br>Lakewood, Ohio 44107").openPopup(); 
+    
+   var park6 =  L.marker([41.478409,-81.823146], {
+ 
+    icon: L.AwesomeMarkers.icon({
+        icon: 'paw',
+        markerColor: 'darkred',
+        iconColor: '#F8FAEE',           
+    })    
+        
+}).bindPopup("<b>Lakewood Animal Shelter</b><br>1299 Metropark Dr<br>Cleveland, OH 44107").openPopup();
+    
+   var park7 =  L.marker([41.485696,-81.813769], {
+ 
+    icon: L.AwesomeMarkers.icon({
+        icon: 'tree',
+        markerColor: 'darkgreen',
+        iconColor: '#F8FAEE',           
+    })    
+        
+}).bindPopup("<b>Edwards Park</b><br>16800 Detroit Road<br>Lakewood, Ohio 44107").openPopup(); 
+    
+
+   var park8 =  L.marker([41.477606,-81.808872], {
+ 
+    icon: L.AwesomeMarkers.icon({
+        icon: 'tree',
+        markerColor: 'darkgreen',
+        iconColor: '#F8FAEE',           
+    })    
+        
+}).bindPopup("<b>Wagar Park</b><br>15900 Madison Avenue<br>Lakewood, Ohio 44107").openPopup(); 
+    
+   var park9 =  L.marker([41.470387,-81.817589], {
+ 
+    icon: L.AwesomeMarkers.icon({
+        icon: 'tree',
+        markerColor: 'darkgreen',
+        iconColor: '#F8FAEE',           
+    })    
+        
+}).bindPopup("<b>Niagara Park</b><br>Lakewood Hts & Niagara<br>Lakewood, Ohio 44107").openPopup(); 
+    
+   var park10 =  L.marker([41.486853,-81.804296], {
+ 
+    icon: L.AwesomeMarkers.icon({
+        icon: 'tree',
+        markerColor: 'darkgreen',
+        iconColor: '#F8FAEE',           
+    })    
+        
+}).bindPopup("<b>Kauffman Park</b><br>15450 Detroit Ave<br>Lakewood, OH 44107").openPopup(); 
+    
+    
+    var park11 =  L.marker([41.494571,-81.797014], {
+ 
+    icon: L.AwesomeMarkers.icon({
+        icon: 'tree',
+        markerColor: 'darkgreen',
+        iconColor: '#F8FAEE',           
+    })    
+        
+}).bindPopup("<b>Lakewood Park</b><br>14532 Lake Avenue<br>Lakewood, Ohio 44107").openPopup(); 
+    
+    
+   var park12 =  L.marker([41.484860,-81.800675], {
+ 
+    icon: L.AwesomeMarkers.icon({
+        icon: 'tree',
+        markerColor: 'darkgreen',
+        iconColor: '#F8FAEE',           
+    })    
+        
+}).bindPopup("<b>City Center Park</b><br>Cook and Detroit<br>Lakewood, Ohio 44107").openPopup(); 
+    
+     var park13 = L.marker([41.485531,-81.799296], {
+ 
+    icon: L.AwesomeMarkers.icon({
+        icon: 'tree',
+        markerColor: 'darkgreen',
+        iconColor: '#F8FAEE',           
+    })    
+        
+}).bindPopup("<b>Issac Warren Park</b><br>Warren, North of Detroit<br>Lakewood, Ohio 44107").openPopup(); 
+    
+   var park14 =  L.marker([41.487253,-81.788986], {
+ 
+    icon: L.AwesomeMarkers.icon({
+        icon: 'tree',
+        markerColor: 'darkgreen',
+        iconColor: '#F8FAEE',           
+    })    
+        
+}).bindPopup("<b>Merl Park</b><br>Bunts & Merl<br>Lakewood, Ohio 44107").openPopup(); 
+    
+   var park15 =  L.marker([41.474649,-81.780810], {
+ 
+    icon: L.AwesomeMarkers.icon({
+        icon: 'tree',
+        markerColor: 'darkgreen',
+        iconColor: '#F8FAEE',           
+    })    
+        
+}).bindPopup("<b>Madison Park</b><br>13029 Madison Avenue<br>Lakewood, Ohio 44107").openPopup(); 
+    
+    var park16 =  L.marker([41.487187,-81.777168], {
+ 
+    icon: L.AwesomeMarkers.icon({
+        icon: 'tree',
+        markerColor: 'darkgreen',
+        iconColor: '#F8FAEE',           
+    })    
+        
+}).bindPopup("<b>Cove Park</b><br>1294 Cove Avenue<br>Lakewood, Ohio 44107").openPopup(); 
+    
+    var park17 =  L.marker([41.487775,-81.773153], {
+ 
+    icon: L.AwesomeMarkers.icon({
+        icon: 'tree',
+        markerColor: 'darkgreen',
+        iconColor: '#F8FAEE',           
+    })    
+        
+}).bindPopup("<b>Clifton Prado Park</b><br>1265 Clifton Prado<br>Lakewood, Ohio 44107").openPopup(); 
+    
+    var park18 =  L.marker([41.476798,-81.768907], {
+ 
+    icon: L.AwesomeMarkers.icon({
+        icon: 'tree',
+        markerColor: 'darkgreen',
+        iconColor: '#F8FAEE',           
+    })    
+        
+}).bindPopup("<b>Lakewood Mini Park</b><br>Madison & W. 117th<br>Lakewood, Ohio 44107").openPopup();
+    
+    // Schools Markers
+    
+     var sch1 = L.marker([41.489133,-81.821928], {
+ 
+    icon: L.AwesomeMarkers.icon({
+        icon: 'graduation-cap',
+        markerColor: 'darkpurple',
+        iconColor: '#F8FAEE',           
+    })    
+        
+}).bindPopup("<b>Horace Mann Elementary School</b><br>1215 West Clifton Boulevard<br>Lakewood, Ohio 44107").openPopup();
+    
+    var sch2 = L.marker([41.476705,-81.812589], {
+ 
+    icon: L.AwesomeMarkers.icon({
+        icon: 'graduation-cap',
+        markerColor: 'darkpurple',
+        iconColor: '#F8FAEE',           
+    })    
+        
+}).bindPopup("<b>Harding Middle School</b><br>16601 Madison Avenue<br>Lakewood, Ohio 44107").openPopup();
+    
+    var sch3 = L.marker([41.470758,-81.810839], {
+ 
+    icon: L.AwesomeMarkers.icon({
+        icon: 'graduation-cap',
+        markerColor: 'darkpurple',
+        iconColor: '#F8FAEE',           
+    })    
+        
+}).bindPopup("<b>Hayes Elementary School</b><br>16401 Delaware Avenue<br>Lakewood, Ohio 44107").openPopup();
+    
+   var sch4 = L.marker([41.494278,-81.799866], {
+ 
+    icon: L.AwesomeMarkers.icon({
+        icon: 'graduation-cap',
+        markerColor: 'darkpurple',
+        iconColor: '#F8FAEE',           
+    })    
+        
+}).bindPopup("<b>Lakewood Catholic Academy</b><br>14808 Lake Avenue<br>Lakewood, Ohio 44107").openPopup();
+    
+   var sch5 = L.marker([41.484462,-81.799250], {
+ 
+    icon: L.AwesomeMarkers.icon({
+        icon: 'graduation-cap',
+        markerColor: 'darkpurple',
+        iconColor: '#F8FAEE',           
+    })    
+        
+}).bindPopup("<b>University of Akron Lakewood</b><br>1415 Warren Road<br>Lakewood, Ohio 44107").openPopup();
+    
+    var sch6 = L.marker([41.483109,-81.801602], {
+ 
+    icon: L.AwesomeMarkers.icon({
+        icon: 'graduation-cap',
+        markerColor: 'darkpurple',
+        iconColor: '#F8FAEE',           
+    })    
+        
+}).bindPopup("<b>Grant Elementary School</b><br>1470 Victoria Avenue<br>Lakewood, OH 44107").openPopup();
+    
+      var sch7 = L.marker([41.490998,-81.806474], {
+ 
+    icon: L.AwesomeMarkers.icon({
+        icon: 'graduation-cap',
+        markerColor: 'darkpurple',
+        iconColor: '#F8FAEE',           
+    })    
+        
+}).bindPopup("<b>Lincoln Elementary School</b><br>15615 Clifton Boulevard<br>Lakewood, OH 44107").openPopup();
+    
+   var sch8 =  L.marker([41.480750,-81.791968], {
+ 
+    icon: L.AwesomeMarkers.icon({
+        icon: 'graduation-cap',
+        markerColor: 'darkpurple',
+        iconColor: '#F8FAEE',           
+    })    
+        
+}).bindPopup("<b>Lakewood High School</b><br>14100 Franklin Boulevard<br>Lakewood, Ohio 44107").openPopup();
+    
+    var sch9 =  L.marker([41.490278,-81.784725], {
+ 
+    icon: L.AwesomeMarkers.icon({
+        icon: 'graduation-cap',
+        markerColor: 'darkpurple',
+        iconColor: '#F8FAEE',           
+    })    
+        
+}).bindPopup("<b>Emerson Elementary School</b><br>13439 Clifton Boulevard<br>Lakewood, Ohio 44107").openPopup();
+    
+   var sch10 =  L.marker([41.486048,-81.784801], {
+ 
+    icon: L.AwesomeMarkers.icon({
+        icon: 'graduation-cap',
+        markerColor: 'darkpurple',
+        iconColor: '#F8FAEE',           
+    })    
+        
+}).bindPopup("<b>St. Edward High School</b><br>13500 Detroit Avenue<br>Lakewood, Ohio 44107").openPopup();
+    
+    var sch11 = L.marker([41.480439,-81.785767], {
+ 
+    icon: L.AwesomeMarkers.icon({
+        icon: 'graduation-cap',
+        markerColor: 'darkpurple',
+        iconColor: '#F8FAEE',           
+    })    
+        
+}).bindPopup("<b>Lakewood City Academy</b><br>13465 Franklin Boulevard<br>Lakewood, OH 44107").openPopup();
+    
+   var sch12 = L.marker([41.485781,-81.779702], {
+ 
+    icon: L.AwesomeMarkers.icon({
+        icon: 'graduation-cap',
+        markerColor: 'darkpurple',
+        iconColor: '#F8FAEE',           
+    })    
+        
+}).bindPopup("<b>Garfield Middle School</b><br>13114 Detroit Avenue<br>Lakewood, Ohio 44107").openPopup();
+    
+   var sch13 = L.marker([41.475009,-81.777645], {
+ 
+    icon: L.AwesomeMarkers.icon({
+        icon: 'graduation-cap',
+        markerColor: 'darkpurple',
+        iconColor: '#F8FAEE',           
+    })    
+        
+}).bindPopup("<b>Harrison Elementary School</b><br>2080 Quail Street<br>Lakewood, Ohio 44107").openPopup();
+    
+    var sch14 = L.marker([41.483939,-81.769683], {
+ 
+    icon: L.AwesomeMarkers.icon({
+        icon: 'graduation-cap',
+        markerColor: 'darkpurple',
+        iconColor: '#F8FAEE',           
+    })    
+        
+}).bindPopup("<b>Virginia Marti Art & Design School</b><br>11724 Detroit Avenue<br>Lakewood, Ohio 44107").openPopup();
+    
+    // Quick fix waste marker
+    
+    /* L.marker([0,0], {
+ 
+    icon: L.AwesomeMarkers.icon({
+        icon: '#fix',
+        markerColor: 'darkpurple',
+        iconColor: '#F8FAEE',           
+    })    
+        
+}).bindPopup("<b>#</b><br>#").openPopup(); */
+    
+    // Layer Groups
+    
+    // Begin - Variables for holding the category of department. 
+    
+    var libraries = L.layerGroup([lib1, lib2]); // May be deleted
+    
+    var government = L.layerGroup([gov1, gov2, gov3, gov4, gov5, gov6, gov7, gov8, gov9, gov10, gov11]);
+    
+    var parks = L.layerGroup([park1, park2, park3, park4, park5, park6, park7, park8, park9, park10, park11, park12, park13, park14, park15, park16, park17, park18]);
+    
+    var schools = L.layerGroup([sch1, sch2, sch3, sch4, sch5, sch6, sch7, sch8, sch9, sch10, sch11, sch12, sch13, sch14,]);
+    
+     // End - Variables for holding the category of department.
+    
+    // Make it so only the layer that is used when clicking is displayed (IE: Fire Station shows only departments layer.)
+    map.addLayer(government)
+    map.addLayer(libraries)
+    map.addLayer(parks)
+    map.addLayer(schools)
+    
+    var overlayMaps = {
+        // Begin - Variables named by string. First it's the String for the variable to be displayed. The other value is the variable itself. Quoted values appear on filter panel.
+        "Government" : government,
+        "Libraries" : libraries, // May be deleted
+        "Parks" : parks,
+        "Schools" : schools,
+        // Begin - Variables named by strin. First it's the String for the variable to be displayed. The other value is the variable itself. Quoted values appear on filter panel.
+    }
+
+    L.control.layers(null, overlayMaps, ).addTo(map);
+ 
+</script>

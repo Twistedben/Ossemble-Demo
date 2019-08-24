@@ -1,0 +1,78 @@
+<!--  Main page for an individual workplace, the entire workplace feed. (workplaces/show.html.erb) -->
+<div class="content">
+  <div class="tier">
+    <%= render "layouts/phones/mobile_accordion" %>
+    <div class="center col-d-7 col-t-11 col-p-12" >
+      <div class="tier">  
+        <div class="col-tier padding-b-5">
+          <p class="trending_list_title col-p-12">
+            Collaborative Feed
+          </p>
+        </div>
+        <div id="intro1_step1">
+          <%=  render 'admins/admin_layouts/workplace_resources_list', obj: @posts %>
+        </div>
+      </div>
+    </div>
+      <%= render 'admins/admin_layouts/workplace_action_panel' %>
+  </div>
+</div>
+<!-- Below -  If it's a fresh signup, runs a cript to show the tour on page load -->
+<% if params[:after_signup] == "true" %>
+  <script> 
+  $( document ).ready(function() {
+    $("#tour_btn").click(); 
+  });
+  </script>
+<% end %>
+
+<script>
+var intro1 = introJs();
+intro1.setOptions({
+    tooltipPosition : 'top',
+    steps: [
+        {
+            element: '#intro1_step1',
+            intro: 'Welcome to Ossemble, here you can find a list of all Map and Forum posts from your selected channel.',
+            position: 'top'
+        },            {
+            element: '#intro1_step2',
+            intro: 'Clicking the post button will allow you to choose wether you want to make a new forum post, or map post. If you want to create a new post, this is where you should start.',
+            position: 'bottom'
+        },
+        {
+            element: '.intro1_step3',
+            intro: 'The profile dropdown is where you may view your profile, archive posts, contact us, Ossemble policies, and logout.',
+            position: 'bottom'
+        },
+        {
+            element: '.intro1_step4',
+            intro: 'The side panel is one of the main tools of navigating Ossemble. Here you can view breakdowns of current posts, invite new members, see notifications, and change settings.',
+            position: 'right'
+        },
+        {
+            element: '.intro1_step5',
+            intro: 'The Channel Info Panels, located on the right side, offers informaton about the current channel. As well as displaying a map of the current workplace location. Clicking the map will load a new page detailing all map pins of your workplace.',
+            position: 'left'
+        }
+    ]
+});
+
+window.addEventListener('load', function () {
+    var doneTour = localStorage.getItem('EventTour') === 'Completed';
+    if (doneTour) {
+        return;
+    }
+    else {
+        intro1.start()
+
+        intro1.oncomplete(function () {
+            localStorage.setItem('EventTour', 'Completed');
+        });
+
+        intro1.onexit(function () {
+            localStorage.setItem('EventTour', 'Completed');
+        });
+    }
+});
+</script>

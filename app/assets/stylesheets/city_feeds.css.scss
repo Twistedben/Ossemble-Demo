@@ -1,0 +1,137 @@
+// Place all the styles related to the CommunityScore controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.trending_font_size {
+  @media screen and (max-width: 768px) {
+    font-size: 1.6rem !important;
+                                       }
+}
+
+.bs_hover:hover {
+   background-color: rgba(255, 255, 255, .3);
+   box-shadow: 1px 3px 18px rgba(255, 250, 205, .3);
+}
+
+.ms_titles_ml {
+  margin-left: 0px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  @media screen and (max-width: 1230px) {
+    margin-left: 15px;
+                                       }
+}
+
+.ms_titles_ml2 {
+  margin-left: 0px;
+  margin-bottom: 5px !important;
+  margin-top: 0px;
+  @media screen and (max-width: 1230px) {
+    margin-left: 15px;
+                                       }
+}
+
+ #sidr {
+    display: none !important;
+    @media screen  and (max-width: 999px) {
+    display: block !important;
+                                       }
+}
+
+.input_search {
+  flex-basis: 0;
+  flex-grow: 1;
+  max-width: 100%;
+  @media screen  and (max-width: 999px) {
+    flex-basis: auto !important;
+    width: 100% !important;
+                                       }
+}
+
+.ms_view_fix {
+  display: block;
+  @media screen  and (max-width: 999px) {
+  display: none;
+                                       }
+}
+
+.ms_view_fix2 {
+  display: none;
+  @media screen  and (max-width: 999px) {
+  display: block;
+                                       }
+}
+
+.ms_input_pad {
+  @media screen  and (max-width: 999px) {
+  padding-top: 0px !important;
+                                       }
+}
+
+.filter_dd:hover {
+  box-shadow: 1px 3px 16px rgba(0, 0, 0, .23);
+}
+
+.trending_font_size {
+  @media screen and (max-width: 768px) {
+    font-size: 1.6rem !important;
+                                       }
+}
+
+.bs_hover:hover {
+   background-color: rgba(255, 255, 255, .3);
+   box-shadow: 1px 3px 18px rgba(255, 250, 205, .3);
+}
+
+.ms_titles_ml {
+  margin-left: 0px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  @media screen and (max-width: 1230px) {
+    margin-left: 15px;
+                                       }
+}
+
+.ms_titles_ml2 {
+  margin-left: 0px;
+  margin-bottom: 5px !important;
+  margin-top: 0px;
+  @media screen and (max-width: 1230px) {
+    margin-left: 15px;
+                                       }
+}
+
+
+.input_search {
+  flex-basis: 0;
+  flex-grow: 1;
+  max-width: 100%;
+  @media screen  and (max-width: 999px) {
+    flex-basis: auto !important;
+    width: 100% !important;
+                                       }
+}
+
+.ms_view_fix {
+  display: block;
+  @media screen  and (max-width: 999px) {
+  display: none;
+                                       }
+}
+
+.ms_view_fix2 {
+  display: none;
+  @media screen  and (max-width: 999px) {
+  display: block;
+                                       }
+}
+
+.ms_input_pad {
+  @media screen  and (max-width: 999px) {
+  padding-top: 0px !important;
+                                       }
+}
+
+.filter_dd:hover {
+  box-shadow: 1px 3px 16px rgba(0, 0, 0, .23);
+}

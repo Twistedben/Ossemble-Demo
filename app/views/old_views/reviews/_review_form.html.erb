@@ -1,0 +1,147 @@
+<!-- Partial for creating a new Review for a department, containing the form layout -->
+<!-- Begin - Form Container -->
+<div class="col-d-10 col-t-10 col-p-12 center">
+  <div class="curved_box_top light-box-shadow">
+    <div class="theme_color_black trending_font_size mt-3 text-large">
+      Department Review
+    </div>
+    <div class="theme_color_black text-medium mb-3">
+    <script type="text/x-template" id="modal-template">
+      <transition name="modal">
+        <div class="modal-mask">
+          <div class="modal-wrapper">
+            <div class="modal-body">
+            <slot name="body">
+            <div class="content">
+              <div class="col-all-10 center">
+              <div id="page_info_card_org" class="col-tier">
+              <div id="page_info_card" class="col-all-12">
+              <div class="col-all-12 light-box-shadow card" style="border: 1px solid rgba(128, 128, 128, .5); border-radius: 10px;">
+                <div class="card-body theme_color_black" style="">
+                  <div class="col-all-12 pull-left">
+                   <h3 class="mt-0 mb-2 ms_page_title">Department Review Guidelines</h3> 
+                   <p class="text-medium i mb-3">Please follow these posting guidelines to ensure your Department review is valid and able to be posted.</p> 
+                   <section class="b">Please fill out all required fields below</section>
+                   <ul> 
+                    <li><b>Score</b> - Click on the stars to rate the department. You may click halfway on a star for half ratings. <span class="i">EG: 4.5 out of 5 would be four and a half stars.</span></li>  
+                    <li><b>Description</b> - Please write a short description describing your review of this department, enough so others can clearly understand what your review is about.</li>
+                    </ul>
+                    <p class="text-medium mb-2">Following these steps will ensure your Department review is filed properly.</p>
+                    <button class="btn btn-info modal-default-button text-xxmedium" @click="$emit('close')">
+                      Close
+                    </button>
+                </div>
+                </div>
+                </div>
+              </div>
+            </div>
+            </div> 
+            </slot>
+            </div>
+          </div>
+        </div>
+      </div>
+    </transition>
+    </script>
+<div id="depreview-modal" class="">
+  <p id="show-modal" class="mb-0 pointer underline" @click="showModal = true">Department Review Guidelines</p>
+  <!-- use the modal component, pass in the prop -->
+  <modal v-if="showModal" @close="showModal = false">
+  </modal>
+</div>
+</div>
+    <!-- Begin - Review Form for Department --> 
+    <div class="light-box-shadow p-4" style="border: 1px solid rgba(128, 128, 128, .5)">
+      <%= simple_form_for @review, url: create_city_department_review_path, as: 'review', html: { class: 'form-horizontal center col-all-12 form_ms_text theme_color_black', style: 'font-size: 16px !important' },
+          defaults: { wrapper_html: { class: 'col-tier center' } } do |f| %>
+        <%= render 'layouts/errors', obj: @review %>
+        <div id="" class="tier col-all-12"> 
+          <div id="" class="margin-t-3"> 
+            <%= f.label :score, id: "score_label", class: 'form-control-label form_ms_text theme_color_black', style: 'font-size: 16px !important' %><strong class="form_ms_text theme_color_black" style="font-size: 16px">:</strong>
+          </div>
+          <div id="" class="col-all-10"> 
+            <div id="star-rating" class="margin-b-0 ml-3">
+              <br>
+            </div>
+          </div>
+        </div>
+        <div class="col-tier">
+          <%= f.input :description, as: :text, class: "input-box-shadow margin-y-10", hint: 'Describe your experience with this department (Minimum: 150 Characters, Limit: 3,000 Characters)', required: false %>
+        </div>
+      </div>
+      <div class="form-actions">
+        <div class="col-tier margin-t-20"> 
+          <%= f.button :submit, "Submit Review", class: "form_btn btn btn-success margin-y-0 pull-left"%>
+        </div>
+      </div>  
+  <% end %>
+   
+  </div>
+  <div class="curved_box_bottom" style="border-top: none !important"></div>
+  </div>
+
+  <!-- Below - If there are errors on the page, the footer will move down properly to the bottom of the page. However, if there are no errors, we need #temp_review_div to push the footer down -->
+  <% if @review.errors.any? %>
+  <% else %>
+  <div id="temp_review_div" class="col-tier"></div> <!-- Pushes the page footer down to create room and proper spacing. Does not show if there are errors on the page. -->
+  <% end %>
+
+
+<!-- End - Review Form for Department -->
+
+<!-- Below - jQuery Raty Star Plugin Script -->
+<script>
+  $('#star-rating').raty({
+   
+    scoreName: 'review[score]',
+    half: true,                      // Allows half stars to be logged. In this case it's ".5" tacked on the end. We multiply by 20 for a decanumeral increment.
+    size: 30,                       // Size of stars for selection
+    starOff : 'fa fa-star-o',
+    // starOn  : 'fa fa-university',
+    //starHalf: 'fa fa-fw fa-university-half',
+                 
+    hints: ['Failing', 'Derelict', 'Expected', 'Great', 'Fantastic']
+  });
+  $('#review_description').attr("placeholder","Write your review here.");
+  $('#review_description').addClass('light-box-shadow');
+</script>
+
+<script>
+$( document ).ready(function() {
+if ($(window).width() < 1000 ) {
+  $('#action_panel_middle').appendTo('#action_panel_msmiddle');
+  $('#ms_ap_content').css("display", "block");
+  $('#non_ms_ap_content').css("display", "none");
+} else {
+  $('#action_panel_middle').appendTo('#action_panel_org');
+  $('#ms_ap_content').css("display", "none");
+  $('#non_ms_ap_content').css("display", "block");
+}});
+
+$( window ).resize(function() {
+if ($(window).width() < 1000) {
+  $('#action_panel_middle').appendTo('#action_panel_msmiddle');
+  $('#ms_ap_content').css("display", "block");
+  $('#non_ms_ap_content').css("display", "none");
+} else {
+$('#action_panel_middle').appendTo('#action_panel_org');
+$('#ms_ap_content').css("display", "none");
+$('#non_ms_ap_content').css("display", "block");
+}});
+
+</script>
+
+<script>
+// register modal component
+Vue.component('modal', {
+  template: '#modal-template'
+})
+
+// start app
+new Vue({
+  el: '#depreview-modal',
+  data: {
+    showModal: false
+  }
+})
+</script>

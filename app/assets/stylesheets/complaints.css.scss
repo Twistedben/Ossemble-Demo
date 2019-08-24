@@ -1,0 +1,252 @@
+// Stylesheet File for any CSS related to Complaints and Complaints views folder (views/complaints/...).
+
+// Begin - Styling for Complaints Index
+#admin_complaint_btns {
+         
+  input:hover {
+    color:  #cea2cb;
+    text-decoration: underline;
+              }
+  
+}
+
+.ms_comp_submit {
+  @media screen and (max-width: 768px) {
+  margin-left: 6px !important;
+                                        }
+}
+
+.ms_map_hide {
+  @media screen and (max-width: 768px) {
+  position: fixed; 
+  top: 10%;
+                                        }
+}
+// End - Styling for Complaints Index
+
+// Begin - Styling for Complaints Show Page
+.ms_comp_margin {
+  margin-top: 0px;
+   @media screen and (max-width: 767px) {
+    margin-top: 0px !important;
+                                       }
+}
+
+.ms_comp_height {
+  height: 55px;
+  @media screen and (max-width: 768px) {
+    height: 60px !important;
+                                       }
+}
+
+.ms_comp_name {
+  @media screen and (max-width: 768px) {
+    font-size: 14px !important;
+                                       }
+}
+.ms_comp_process {
+  @media screen and (max-width: 768px) {
+    font-size: 12px !important;
+    float: left !important;
+                                       }
+}
+
+.ms_comp_process {
+  padding-left: 10px;
+  @media screen and (max-width: 768px) {
+    padding-left: 0px !important;
+                                       }
+}
+
+.ms_comp_posttime {
+  @media screen and (max-width: 768px) {
+    font-size: 12px !important;
+                                       }
+}
+
+.ms_comp_hr {
+  width: 66% !important;
+  @media screen and (max-width: 768px) {
+    width: 99% !important;
+                                       }
+}
+
+.ms_comp_comment_name {
+  font-size: 1.5rem !important;
+  @media screen and (max-width: 768px) {
+    font-size: 1.2rem !important;
+                                       }
+}
+
+.ms_comp_signature{
+  @media screen and (max-width: 768px) {
+    font-size: 18px !important;
+    line-height: 26px;
+                                       }
+}
+
+.ms_comp_no_padding {
+  @media screen and (max-width: 768px) {
+   padding: 0px !important;
+                                       }
+}
+
+.ms_comp_process_size {
+  font-size: 12px;
+  @media screen and (max-width: 768px) {
+   font-size: 13px;
+   float: left !important;
+                                       }
+}
+
+.comp_ms_image {
+  @media screen and (max-width: 550px) {
+   width: 70% !important;
+   height: 150px !important;
+                                       }
+   @media screen and (max-width: 767px) {
+   width: 60%;
+   height: 250px;
+                                       }
+  @media screen and (min-width: 768px) {
+   width: 132.92px !important;
+   height: 140px !important;
+                                       }
+}
+
+.ms_comments_mb {
+  @media screen and (max-width: 768px) {
+  margin-bottom: 10px !important;
+                                        }
+}
+
+.ms_my_adminbtn {
+  @media screen and (max-width: 767px) {
+  margin-bottom: 15px !important;
+  margin-top: 15px !important;
+                                        }
+}
+
+
+.ms_box_hide {
+  @media screen and (max-width: 767px) {
+   display: none !important;
+                                        }
+}
+
+.ms_nomt_fix {
+  margin-top: 10px;
+  @media screen and (max-width: 767px) {
+  margin-top: 0px !important;
+                                       }
+}
+
+.ms_nomt_fix2 {
+  margin-top: 12px;
+  @media screen and (max-width: 767px) {
+  margin-top: 0px !important;
+  margin-bottom: 0px !important;
+                                       }
+}
+
+// End - Styling for Complaints Show Page
+
+
+// Begin - Complaint Modal CSS
+#complaint-modal { 
+.modal-mask {
+  position: fixed;
+  z-index: 9998;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, .5);
+  display: table;
+  transition: opacity .3s ease;
+  table-layout: fixed;
+}
+
+.modal-wrapper {
+  display: table-cell;
+  vertical-align: middle;
+  @media screen and (max-width: 600px) {
+   padding-top: 45px !important;
+   vertical-align: top !important;
+                                       }
+}
+
+.modal-container {
+  width: auto;
+  margin: 0px auto;
+  padding: 20px 30px;
+  background-color: #fff;
+  border-radius: 2px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
+  transition: all .3s ease;
+}
+
+.modal-header h3 {
+  margin-top: 0;
+  color: #42b983;
+}
+
+.modal-body {
+  margin: 20px 0;
+}
+
+.modal-default-button {
+  float: right;
+}
+
+/*
+ * The following styles are auto-applied to elements with
+ * transition="modal" when their visibility is toggled
+ * by Vue.js.
+ *
+ * You can easily play with the modal transition by editing
+ * these styles.
+ */
+
+.modal-enter {
+  opacity: 0;
+}
+
+.modal-leave-active {
+  opacity: 0;
+}
+
+.modal-enter .modal-container,
+.modal-leave-active .modal-container {
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
+}
+
+}
+// End - Complaint Modal CSS
+
+.list_score_ms {
+  display: block;
+  @media screen and (max-width: 767px) {
+   display: none;
+                                       }
+}
+
+.list_score_ms2 {
+  display: none;
+  @media screen and (max-width: 767px) {
+   display: block;
+                                       }
+}
+
+.ms_list_margin {
+  @media screen and (max-width: 767px) {
+   margin-top: 15px !important;
+                                       }
+}
+
+.ms_list_margin2 {
+  @media screen and (max-width: 767px) {
+   margin-top: 0px !important;
+                                       }
+}

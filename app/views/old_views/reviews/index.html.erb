@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h2 class="theme_font center-content">
+  <p class="center-content">
+      Reviews for
+      <%= link_to "#{@city.name}, #{@department.name}", city_department_path(@city, @department) %>
+  </p>
+</h2>
+<hr>
+<table>
+  <thead>
+    <tr>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @reviews.each do |review| %>
+      <tr>
+        <td><%= link_to 'Show', city_department_review_path(@city, @department, review) %></td>
+        <td><%= link_to 'Edit', edit_city_department_review_path(@city, @department, review) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+%= link_to 'New Review', new_city_department_review_path(@department) %>

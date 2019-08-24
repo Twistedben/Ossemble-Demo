@@ -1,0 +1,16 @@
+<!--  Partial for rendering unauthorized message on pages that require a certain subscription plan.
+     The @reason variable is provided by controller dependent on the place it's called from  -->
+<div id="flash_message_container" class="col-d-8 col-t-10 col-p-12 center">
+  <div class="mb-0 center-content">
+    <p class="alert panel panel-danger alert-danger center message_alert_panel">
+      <a href="#" class="close" data-dismiss="alert">×</a>
+      <% if @page_access == "true" %>
+        Your current <%= @institute.plan.name %> Subscription plan doesn't have access to the <%= @location %>. Please upgrade your subscription plan to gain access.
+      <% elsif @new_user == "true" %>
+        The <%= @institute.plan.name %> Subscription plan for this Workplace has a limit of <%= @location %>. <%= @contact %>
+      <% else %>
+        Your current <%= @institute.plan.name %> Subscription plan has a limit of <%= @location %>. Please upgrade your Subscription plan to increase or remove this restriction.
+      <% end %>
+    </p>
+  </div>
+</div>

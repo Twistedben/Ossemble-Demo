@@ -1,0 +1,7 @@
+// AJAX file for following that gets executed from FollowsController during the create action when a user clicks the Follow button.
+
+  $("#follow_btn").text("Followed!");
+  $("#follow_btn").addClass("follow_button_shake");
+  $("#follow_btn").attr("disabled", true);
+  $("#follow_btn").append("<i class='fas fa-angle-double-right margin-l-5'></i>");
+  

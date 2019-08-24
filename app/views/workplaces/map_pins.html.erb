@@ -1,0 +1,17 @@
+<!--  Main index page for feed concerning an individual Workplace's map pin posts like suggestions and reports. -->
+<div class="content">
+  <div class="tier">
+    <%= render "layouts/phones/mobile_accordion" %>
+    <div class="center col-d-7 col-t-11 col-p-12">
+      <div class="tier">  
+        <div class="col-tier padding-b-5">
+          <p class="trending_list_title col-p-12">
+            Trending Map Pins
+          </p>
+        </div>
+        <%=  render 'admins/admin_layouts/workplace_resources_list', obj: @map_pins %>
+      </div>
+    </div>
+    <%= render 'admins/admin_layouts/workplace_action_panel' %>
+  </div>
+</div>

@@ -1,0 +1,38 @@
+<!-- Main Page for Updating User Profile or Finishing Signup Process (devise/registrations/edit.html.erb).
+      Rendering Forms and partials from views/users/user_layouts/ -->
+  
+<!-- Begin - If Statement to determine whether to render Finish Profile Signup Page or Update Existing Profile Page -->
+  <!-- Begin - Determining if finish Profile Signup Page -->
+<% if user_not_valid? %>
+  <div class="content">
+    <div class="tier">
+      <div class="col-d-2 col-t-vanish col-p-vanish">
+       
+      </div>
+      <!--  Below - renders a JS alert popup and BS alert error to finish Profile signup -->
+      
+      <!-- Below - Rendering content Form for Finishing Profile Signup Page -->
+      <div class="center col-d-9 col-t-10 col-p-12">
+        <%= render 'users/user_layouts/finish_signup_form' %>
+      </div>
+    </div>
+  </div>
+    <!-- End - Determining if User is finishing profile signup page -->
+<% else %> <!-- Begin - Determining if finish Profile Signup Page -->
+  <div class="content">
+    <div class="tier"> <!-- Begin - Main tier for page. -->
+      <div class="col-d-1 col-t-vanish col-p-vanish">
+        <!--  blank Space -->
+      </div>
+      <div class="col-d-10 col-t-12 col-p-12">
+        <!-- PROGRAMMERS NOTE: Commented out for now as we avoid using confirmation of accounts.
+        Below -  If user hasn't confirmed their account yet, message below will display on their profile. 
+        %= render 'users/user_layouts/unconfirmed_user_message' unless current_user.confirmed?  %>
+        -->
+        <%= render 'users/user_layouts/update_signup_form' %>
+      </div>
+    </div> <!-- Main page tier -->
+  </div>
+<% end %> <!-- End - Determining if User is finishing profile signup page -->
+<!-- End - If Statement to determine whether to render Finish Profile Signup Page or Update Existing Profile Page -->
+

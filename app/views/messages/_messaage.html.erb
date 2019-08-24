@@ -1,0 +1,18 @@
+<div class="col-tier padding-y-8">
+  <%= display_message_avatar(receipt.message.sender) %>
+  <div class="relative" style="top: -2px; left: 5px">
+    <span class="bold"><%= receipt.message.sender.name %></span>
+    <span class="theme_color_black">- <%= time_ago_in_words(receipt.created_at) %> ago</span>
+    <br />
+    <div class="my-1">
+      <%= receipt.message.body %>
+    </div>
+
+    <% if receipt.message.attachment? %> 
+      <strong class="mt-2 mr-1 theme_color_dark">Attachment -</strong>
+      <%= link_to receipt.message.attachment.file.filename, receipt.message.attachment.url, target: :blank, class:"underline theme_color_dark" %>
+    <% end %>
+  </div>
+
+
+</div>

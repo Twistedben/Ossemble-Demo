@@ -1,0 +1,264 @@
+<!-- New Page for creating a new Workplace Post.  -->
+<div class="content">
+  <div class="col-all-2"></div> 
+  <div class="col-d-8 col-t-10 col-p-12 center">
+    <!-- Below -  Captures the written description if a post fails to be created to be then shuffled into quill using JS below -->
+    <%= simple_format(@workplace_post.description, {}, wrapper_tag: "div id='new_text_wrap' class='vanish'") %>
+  <div class="ms_titles_ml trending_font_size mt-3 mb-0">
+      Workplace Post - <%= current_workplace %>
+  </div>
+  <div class="theme_color_black text-medium mb-3 col-tier">
+    <div id="osspost-modal" class="">
+      <!-- use the modal component, pass in the prop -->
+      <modal v-if="showModal" @close="showModal = false">
+      </modal>
+    </div>
+  </div>
+  <div class="light-box-shadow p-4 bg-white" style="border: 1px solid rgba(128, 128, 128, .5)">
+    <%= simple_form_for @workplace_post, url: create_workplace_post_path, as: 'workplace_post', html: { multipart: true, class: 'form-horizontal col-all-12 form_ms_text' }, defaults: { wrapper_html: { class: 'tier center' } }  do |f| %>
+      <%= render 'layouts/errors', obj: @workplace_post %>
+        <div id="post_input_fields" class="form-inputs">
+          <!-- Below -  New Post Title -->
+          <%= f.label :title, "Select Category", class: 'pull-left theme_color_black text-xxmedium' %>
+          <div class="col-tier">
+            <div class="col-all-12 center-all">
+              <div id="report-btns" class="margin-b-20 intro4_step1">
+                <label class="unselect pointer" style="margin-right: 10px !important; margin-bottom: 10px !important;"><input type="radio" name="workplace_post[post_category_id]" value="1"><span>General</span></label>
+                <label class="unselect pointer" style="margin-right: 10px !important; margin-bottom: 10px !important;"><input type="radio" name="workplace_post[post_category_id]" value="2"><span>Announcement</span></label>
+                <label class="unselect pointer" style="margin-right: 10px !important; margin-bottom: 10px !important;"><input type="radio" name="workplace_post[post_category_id]" value="3"><span>Idea</span></label>
+                <label class="unselect pointer" style="margin-right: 10px !important; margin-bottom: 10px !important;"><input type="radio" name="workplace_post[post_category_id]" value="4"><span>Improvement</span></label>
+                <label class="unselect pointer" style="margin-right: 10px !important; margin-bottom: 10px !important;"><input type="radio" name="workplace_post[post_category_id]" value="5"><span>Other</span></label>
+                <label title="Click to be redirected to the Map Post form." style="margin-right: 10px !important; margin-bottom: 10px !important;" class="unselect"><input type="radio"><a class="text_btn_hover" href="<%= new_institute_workplace_workplace_map_post_path(@institute, @workplace) %>"><span class="pointer" style="height: 36px;"><i class='pr-3 fas fa-map-marked-alt text-18'></i>Map</span></a></label>
+              </div>
+            </div>
+          </div>
+          <div class="col-tier">
+            <div class="col-d-8 col-t-8 col-p-12 pr-3 intro4_step2"> 
+              <%= f.label :title, "Title", class: 'pull-left theme_color_black text-xxmedium' %>
+              <%= f.text_field :title, title: "A short title to identify your post. Minimum: 5 Characters, Limit: 60 Characters.", maxlength: 70, autofocus: true, autocomplete: "off", placeholder: 'A short title to identify your post. Minimum: 5 Characters, Limit: 60 Characters.', class: "form-control input-box-shadow" %>
+            </div>
+          </div>
+          <!--  Loading GIF -->
+          <div class="loading" style="display:none; z-index: 15000">
+             <div class="center-all border-radius-10">
+               <%= image_tag "icons/misc/loading.gif", alt: "Uploading", class: "", style: "width: 300px" %>
+             <div class="theme_color_dark mb-5 px-4">Please wait while your image uploads...</div>
+             </div>
+          </div>
+          <!-- Below -  New Post Description -->
+          <div class="col-tier center">
+            <div class="col-all-12 margin-t-18 intro4_step3"> 
+             <%= f.label :description, class: 'theme_color_black text-xxmedium' %>
+             <%= f.hidden_field :description, id: "post_description", required: true %>
+              <div id="editor-container" class="light-box-shadow" hidden="true"></div>
+              <div id="quill_container"  style="height: 250px !important;"></div>
+            </div>
+          </div>
+          <!-- Below -  Area for post to be shared with other admins -->
+          <div class="col-all-12 margin-t-18 margin-b-25">
+           <div class="tier intro4_step4">
+             <button class="theme_color_dark pl-0" title="Click to tag other members so they are notified of this post, this is optional." type="button" style="background: transparent !important; border: none !important; height: 38px; font-size: 2.5rem">
+               <i class="fas fa-at pl-0"></i><i class="fas fa-user ml-1"></i>
+             </button>
+              <div style="width: 58%">
+                <%= f.text_field :tags, data: {behavior: "autocomplete"}, title: "Tag other users to share upload with (EG: '@john')", placeholder: "Tag anyone you'd like to share this with (EG: '@john')", class: "form-control input-box-shadow"  %>
+              </div>
+               <div style="margin-left: auto !important;">
+                <div class="image-upload">
+                 <label for="image-input">
+                   <i class="fas fa-file-image margin-r-8 text-35 theme_color_dark" title="Add an image to your conversation." style="cursor: pointer;"></i>
+                 </label>
+                 <%= f.file_field :image, accept: 'image/*', onchange: "readURL(this);", id:"image-input" %>
+                </div>
+                </div>
+                <div class="image-upload">
+                 <label for="file-input">
+                   <i class="ml-3 fas fa-paperclip margin-r-8 text-35 theme_color_dark"  title="Upload a document/file that pertains to your conversation. You can upload a PDF, Doc, PowerPoint, etc.." style="cursor: pointer;"></i>
+                 </label>
+                 <%= f.file_field :file, accept: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.openxmlformats-officedocument.presentationml.slideshow, application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint, application/pdf, text/*', onchange: "readFile(this);", id:"file-input" %>
+                </div>
+                
+                <div id="new_doc" class="my-3 vanish col-tier" style="height: 30px !important;">
+                  <div class="theme_color_dark text-18 b">
+                    <i class="fas fa-paperclip"><span class="ml-2">You have attached a new document</span></i>
+                  </div>
+                </div>
+                
+                <%= f.label :image, "Preview of Uploaded Image".html_safe, class: "mt-3 vanish img_prev_title pull-left control-label mb-2" %>
+              <div class="col-tier">
+                <img id="img_prev" class="vanish" src="#" alt="Image">
+              </div>
+           </div>
+          </div>
+        </div>
+        <div class="col-tier">
+          <div class="col-all-12 mb-0"> 
+            <%= f.submit "Submit Post", id: "loadgif", class: "form_btn btn padding-x-15 button-cs mb-0 push-right pull-right float-right", onclick: "amplitude.getInstance().logEvent('Workplace Post Created');" %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+<!-- Below -  Renders in the list of admins from instance variable @admins in controller, with the path provided by controller as well, where to grab the admins list from for @mentioning them -->
+<%= render 'layouts/tagging_admins_script', obj: @workplace_admins_path %>
+<script>
+function readURL(input) {
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+    $("#img_prev").show();
+    $(".img_prev_title").show();
+    $("#post_image").width(280);
+    reader.onload = function (e) {
+      $('#img_prev')
+        .attr('src', e.target.result)
+    };
+
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+
+function readFile(input) {
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+    $("#new_doc").show();
+    reader.onload = function (e) {
+      $('#new_doc')
+        .attr('src', e.target.result)
+    };
+
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+</script>
+
+<script>
+// register modal component
+Vue.component('modal', {
+  template: '#modal-template'
+})
+
+// start app
+new Vue({
+  el: '#osspost-modal',
+  data: {
+    showModal: false
+  }
+})
+</script>
+<!--  VUE.js model code for guidelines -->
+<script type="text/x-template" id="modal-template">
+  <transition name="modal">
+    <div class="modal-mask">
+      <div class="modal-wrapper">
+        <div class="modal-body">
+        <slot name="body">
+        <div class="content">
+          <div class="col-all-10 center">
+          <div id="page_info_card_org" class="col-tier">
+          <div id="page_info_card" class="col-all-12">
+          <div class="col-all-12 light-box-shadow card" style="border: 1px solid rgba(128, 128, 128, .5); border-radius: 10px;">
+            <div class="card-body theme_color_black" style="">
+              <div class="col-all-12 pull-left">
+               <h3 class="mt-0 mb-2 ms_page_title">Forum Post Guidelines</h3> 
+               <p class="text-medium i">Please follow these posting guidelines to ensure your Forum Post is valid and able to be posted.</p> 
+         <section class="b">Please fill out all required fields below</section>
+         <ul> 
+          <li><b>Title</b> - Write a descriptive title for your new post, that ties into the subtopic you select below.</li>  
+          <li><b>Subtopic</b> - Using the dropdown, select the subtopic you wish to have your new post listed under.</li>  
+          <li><b>Topic</b> - This field will be automatically updated based on the selection of your subtopic. No input from you is needed for this field.</li>
+          <li><b>Description</b> - Please write a short description describing your Forum Post, enough so others can clearly understand what your new post is about.</li>
+          <li><b>Image</b> <span class="text-xsmall">(optional)</span> - If you wish, you may add a picture to go with your new post. This could be a picture of your pet for Furry Friends, or something that is bothering you in Grinds My Gears.</li>
+        </ul>   
+        <p class="text-medium mb-2">Following these steps will ensure your Forum Post is filed properly.</p>
+        <button class="btn btn-info modal-default-button text-xxmedium" @click="$emit('close')">
+          Close
+        </button>
+          </div>
+          </div>
+          </div>
+          </div>
+        </div>
+        </div> 
+        </slot>
+        </div>
+      </div>
+    </div>
+  </div>
+</transition>
+</script>
+<script>
+
+  var form = document.querySelector('.form-horizontal');
+  var quill = new Quill('#quill_container', {
+  modules: {
+    toolbar: [
+      ['bold', 'italic', 'link'],
+      [{ list: 'ordered' }, { list: 'bullet' }]
+    ]
+  },
+  placeholder: 'Write a descriptive post for the Forum. Minimum: 50 Characters (about 8 words), Maximum: 6,000 Characters (about 900 words).',
+  theme: 'snow'  // or 'bubble'
+});
+
+
+form.onsubmit = function() {
+  var postContentInput = document.querySelector('#post_description');
+  postContentInput.value = quill.root.innerHTML;
+};
+
+// Below - Sets up a variable from the simple format rendering about on edit post
+var editDescription = $('#edit_text_wrap').text();
+$('.ql-editor p').text(editDescription);
+// Below - Shuffles in text from a failed resource submission's description
+var newDescription = $('#new_text_wrap').text();
+$('.ql-editor p').text(newDescription);
+</script>
+
+<!--  Javascript for Topic output can be found in coffee file: Posts.coffee in Javascripts folder. -->
+
+<script>
+var intro4 = introJs();
+intro4.setOptions({
+    tooltipPosition : 'bottom',
+    steps: [
+        {
+            element: '.intro4_step1',
+            intro: 'Choose a category for your new Forum Post, you may also click Map on the right to be redirected to the Map Post page.',
+            position: 'bottom'
+        },            {
+            element: '.intro4_step2',
+            intro: 'After choosing a category for your Forum Post, enter a valid title to describe it.',
+            position: 'bottom'
+        },
+        {
+            element: '.intro4_step3',
+            intro: 'You may write a description of your new Map Post here, there is a minimum of 50 characters.',
+            position: 'bottom'
+        },
+        {
+            element: '.intro4_step4',
+            intro: 'You can optionally tag other members of your workplace for this post here. On the left you can upload a picture to accompany your new Forum Post or attach a document. When finished click "Submit Post" on the bottom right to create your new Forum Post.',
+            position: 'bottom'
+        }
+    ]
+});
+
+window.addEventListener('load', function () {
+    var doneTour = localStorage.getItem('EventTour') === 'Completed';
+    if (doneTour) {
+        return;
+    }
+    else {
+        intro4.start()
+
+        intro4.oncomplete(function () {
+            localStorage.setItem('EventTour', 'Completed');
+        });
+
+        intro4.onexit(function () {
+            localStorage.setItem('EventTour', 'Completed');
+        });
+    }
+});
+</script> 

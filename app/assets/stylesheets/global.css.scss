@@ -1,0 +1,964 @@
+// Main CSS Page for all Global Changes to CSS 
+$primary-color: #C361F1 !important;
+
+// Begin - Font face
+@font-face {
+  font-family: 'MarcellusSC-Regular';
+  src: font-url('MarcellusSC/MarcellusSC-Regular.ttf');
+  font-weight: normal;
+  font-style: normal;
+} 
+// End - Font face
+
+// Makes the page on mobile extend to the full width. 
+html, body
+{
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+    overflow-x: visible;
+    background-color: #EBECEF !important;
+    padding-right: 0px !important;
+}
+// Adds margin to the top of the main page so there's a gap from page title to navbar.
+main {
+  margin-top: 2rem !important;
+  background-color: #EBECEF !important;
+
+// Below - ID assigned to Main element when admin is logged in due to workplace side panel, otherwise this css isn't applied to Main element
+  &#main_admin  {
+    
+    @media screen and (min-width: 1000px) {
+      margin-left: 80px;
+    }
+    @media screen and (max-width: 999px) {
+      margin-right: 10px !important;
+      padding-right: 0px !important;
+      margin-left: 38px !important;
+    }
+  }
+}
+// Maxes images responsive. Override if necessary with !important.
+img {
+    max-width: 100%;
+}
+// Main Color for Website (rgba(195, 97, 241))
+.theme_color { 
+  color: $primary-color !important;
+  }
+  
+// Main Purple Colors for website. Dark to light.
+.theme_color_dark {
+  // rgb(100, 84, 150)
+  color: #645496 !important;
+}
+.theme_color_medium {
+  color: #a165aa !important;
+}
+.theme_color_light {
+  // rgba(206, 162, 203)
+  color: #cea2cb !important;
+}
+.theme_color_black {
+  color: #585858 !important;
+}
+.theme_color_darkest {
+  // rgba(64, 53, 96, 1.0)
+  color: #403560 !important;
+}
+// Main Font for Website Page Titles.
+.theme_font, .adamina { 
+  font-family: Adamina, Times New Roman;
+// Primary Font for Logo.
+}
+.primary_font, .marcellus {
+  font-family: 'Marcellus', serif;
+}
+// Main Secondary Font used for sub-headlines.
+.secondary_font, .source {
+  font-family: Source Sans Pro, sans-serif;
+}
+// Is the class for most titles on pages, like above cards and feeds.
+.trending_font_size, .trending_list_title, .page_info_title {
+  font-family: 'Roboto', Times New Roman;
+  font-size: 2rem !important;
+  margin: 8px 0px;
+  color: #585858 !important;
+  float: left !important;
+  align-self: flex-start !important;
+  font-weight: bold;
+  padding-right: 0px !important;
+  padding-top: 10px !important;
+  @media screen and (max-width: 1230px) {
+    margin-left: 10px;
+                                     }
+}
+  .page_info_title.comment_title {
+    @media screen and (max-width: 768px) {
+      padding-left: 15px !important;
+                                     }
+  }
+// Div Container that holds search bars in feeds, like community_search and ossembly_search.
+#search_container {
+  padding: 10px 0px;
+  @media screen and (max-width: 768px) {
+    padding-left: 12px;
+                                     }
+}
+// Description for body of posts, wul, comments, complaints, and reviews.
+.show_page_description {
+  line-height: 1.6;
+  font-size: 1.7rem !important;
+  color: black !important;
+  padding: .6rem !important;
+  text-indent: 10px;
+  @media screen and (max-width: 768px) {
+  font-size:  1.75rem;
+    
+                                  }
+a {
+  text-decoration: underline !important;
+  color: #1C86EE;
+  }
+a:hover {
+  text-decoration: underline !important;
+  color: #104E8B;
+  } 
+}
+.roboto {
+  font-family: 'Roboto', Times New Roman;
+}
+// Background color of the dark theme color 
+.bg-theme-dark, .bg_theme_dark {
+  background: -moz-linear-gradient(269deg, #645496 12%, #554780 75%);/* FF3.6+ */
+  background: -webkit-gradient(linear, 269deg, color-stop(12%, 645496), color-stop(75%, 554780));/* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(269deg, #645496 12%, #554780 75%);/* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(269deg, #645496 12%, #554780 75%);/* Opera 11.10+ */
+  background: -ms-linear-gradient(269deg, #645496 12%, #554780 75%);/* IE10+ */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#1301FE', endColorstr='#F4F60C', GradientType='1'); /* for IE */
+  background: linear-gradient(269deg, #645496 12%, #554780 75%);/* W3C */
+  //background-color: #645496 !important;
+}
+// Body parent inside HR tags for CSS.
+body  {
+  // Below makes Horizontal Rules default top/bottom margin to 15px instead of 20px, centers them, and length at 50% of page, and colors to theme color.
+  hr {
+    width: 60%;
+    margin: 15px auto;
+    border-color: rgba(195, 97, 241, 0.3);
+    border-style: groove;
+     }
+  }
+
+// Turns an image into a circle
+.circle-avatar {
+  border-radius: 50%;
+}
+// Force to bottom of existing page 
+.force-to-bottom {
+  bottom: 0;
+  position: fixed;
+  width: 100%;
+}
+// Makes elements centered, using the class="center"
+.center {
+  margin: 0 auto !important;
+  }
+// Makes everything centered
+.center-all {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  position: relative;
+  text-align: center;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+// Centers vertically
+.center-vertical, .vertical-center {
+  vertical-align: middle;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+// Centers text
+.center-text, .text-center {
+  text-align: center !important;
+}
+// Justifys text
+.justify-text, .text-justify {
+  text-align: justify !important;
+}
+// Left align text
+.left-text, .text-left {
+  text-align: left !important;
+}
+// Makes single element aligned center, using class="center-self"
+.center-self {
+  -webkit-align-self: center;
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
+  margin: 0 auto !important;
+}
+// Makes items inside a div centered, using class="center-content"
+.center-content {
+  -ms-flex-line-pack: center;
+      align-content: center;
+  display: -webkit-flex; /* Safari */
+  -webkit-align-items: center; /* Safari 7.0+ */
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  position: relative;
+  text-align: center;
+  margin: 0 auto !important;
+}
+// Making links appear in our THeme Color when already visited
+a {
+  color: #000;
+}
+// Making Links have the underline for Theme Color
+  a:hover {
+    text-decoration: none !important;
+ // text-decoration-color: rgba(195, 97, 241, 0.5);
+  //color: $primary-color;
+  //text-shadow: .04em .04em black;
+  //text-decoration: underline;
+  }
+
+// Begin - Text modification Classes
+  // Makes Text Bold
+  .bold, .b {font-weight: bold;}
+  .no-bold, .no-b, .bold-none {font-weight: normal !important;}
+  // Makes Text Underlined
+  .underline {text-decoration: underline; }
+  // Emphasizes text, making italics
+  .i, .italics {font-style: italic; }
+  // Indents text 
+  .text-indent, .indent {text-indent: 8px;}
+// End - Text Modification  Classes
+// Begin - Border Classes
+  // Removes all border
+  .no-border, .border-none {border-top: none !important; border-right: none !important; border-bottom: none !important; border-left: none !important;}
+  // Creates a top, grooved border with the theme_color at 50% transparancy as it's color.
+  .border-top {border-top: 1px; border-color: rgba(195, 97, 241, 0.5); border-top-style: groove;}
+  // Creates a bottom, grooved border with the theme_color at 50% transparancy as it's color.
+  .border-bottom {border-bottom: 1px; border-color: rgba(195, 97, 241, 0.5); border-bottom-style: groove;}
+  // Creates a right, grooved border with the theme_color at 50% transparancy as it's color.
+  .border-right {border-right: 1px; border-color: rgba(195, 97, 241, 0.5); border-right-style: groove;}
+  // Creates a left, grooved border with the theme_color at 50% transparancy as it's color.
+  .border-left {border-left: 1px; border-color: rgba(195,97,241,0.5); border-left-style: groove;}
+  //Well color and left+right border colors
+  .well-border {border: 1px solid rgba(128, 128, 128, .5);}
+  // Removes Top border
+  .no-top-border, .no-border-top {border-top: none !important;}
+  // Removes right border
+  .no-right-border, .no-border-right {border-right: none !important;}
+  // Removes bottom border
+  .no-bottom-border, .no-border-bottom {border-bottom: none !important;}
+  // Removes left border
+  .no-left-border, .no-border-left {border-left: none !important;}
+  // Removes top and bottom border
+  .no-y-border { border-top: none !important; border-bottom: none !important}
+  // Removes left and right border
+  .no-x-border { border-right: none !important; border-left: none !important}
+  // Border Radius None class to remove and radius or curve on borders
+  .border-radius-none, .no-border-radius { border-radius: 0px !important; }
+  // Adds ubiquituous slight curved border for border radius.
+  .border-radius-10 {   border-radius: 10px !important;  }
+  .border-radius-5 {   border-radius: 5px !important;  }
+// End - Border classes
+// Badge background color for Badge classes 
+.badge {
+  background-color: rgba(6, 6, 6, 0.15) !important;
+  color: rgba(6, 6, 6, 0.8);
+}
+// Begin - Custom Text Sizes:
+  //Turns Text From Xtra SMall to Xtra Huge (Text sizes from 10px to 30px)
+  .text-small, .text-10{font-size: 1rem!important}
+  .text-11{font-size: 1.1rem!important}
+  .text-xsmall, .text-12{font-size: 1.2rem!important}
+  .text-xxsmall, .text-13{font-size: 1.3rem!important}
+  .text-medium, .text-14{font-size: 1.4rem!important}
+  .text-xmedium, .text-15{font-size: 1.5rem!important}
+  .text-xxmedium, .text-16{font-size: 1.6rem!important}
+  .text-big, .text-17{font-size: 1.7rem!important}
+  .text-xbig, .text-18{font-size: 1.8rem!important}
+  .text-xxbig, .text-19{font-size: 1.9rem!important}
+  .text-large, .text-20{font-size: 2rem!important}
+  .text-21{font-size: 2.1rem!important}
+  .text-xlarge, .text-22{font-size: 2.2rem!important}
+  .text-23{font-size: 2.3rem!important}
+  .text-xxlarge, .text-24{font-size: 2.4rem!important}
+  .text-25{font-size: 2.5rem!important}
+  .text-huge, .text-26{font-size: 2.6rem!important}
+  .text-27{font-size: 2.7rem!important}
+  .text-xhuge, .text-28{font-size: 2.8rem!important}
+  .text-29{font-size: 2.9rem!important}
+  .text-xxhuge, .text-30{font-size: 3rem!important}
+  .text-31{font-size: 3.1rem!important}
+  .text-massive, .text-32{font-size: 3.2rem!important}
+  .text-33{font-size: 3.3rem!important}
+  .text-xmassive, .text-34{font-size: 3.4rem!important}
+  .text-35{font-size: 3.5rem!important}
+  .text-xxmassive, .text-36{font-size: 3.6rem!important}
+  .text-37{font-size: 3.7rem!important}
+  .text-100 {font-size: 100px !important;}
+// End - Custom Text Sizes
+
+// Used for page info font awesome icons.
+.page_info_icon > i, .page_info_icon_hide {
+  display: block; 
+  font-size: 100px !important; 
+  margin-top: 25px; 
+  padding-left: 15px;
+    @media screen and (max-width: 999px) {
+    display: none;
+    }
+  }
+
+  
+// Begin - CSS for the Title Links on Many Pages
+  .title_link {
+    color: #645496 !important;
+    text-decoration: none !important;
+    font-weight: bold;
+  }
+  .small_link { 
+    color: #645496 !important;
+    text-decoration: none !important;
+  }
+  
+  .title_link:hover, .small_link:hover {
+  color: #645496 !important;
+  text-decoration: underline !important;
+  text-shadow: .04em .04em #cea2cb;
+  }
+  
+  .title_link:active, .small_link:hover {
+    color: #a165aa !important;
+    text-decoration: none;
+    text-shadow: .04em .04em black;
+  }
+  
+  .feeds_link:hover {
+    border-bottom: 1.5px solid #645496 !important;
+    text-shadow: 1px 1px 1px rgba(100, 84, 150, 0.8) !important;
+    text-decoration: none !important;
+    opacity: 1 !important;
+  }
+  
+  .feeds_link:active {
+  color: #a165aa !important;
+  text-decoration: none;
+  opacity: 1 !important;
+  border-bottom: 2px solid #645496;
+  }
+
+// End - CSS For links on many pages
+// Transparent Class
+.transparent {
+  background-color: transparent !important;
+}
+
+// Global Z-index Class
+.ms-z-index {
+   @media screen and (max-width: 768px) {
+    z-index: 1 !important;
+                                       }
+}
+
+// Begin - DeetzStrap Mark 2
+
+  // Begin - Custom media screens for mobile phones, tablets and desktop.
+  @media only screen and (max-width: 767px) {
+    // For mobile phones: we use col-p-* 
+      .col-p-1 {width: 8.33%;}
+      .col-p-2 {width: 16.66%;}
+      .col-p-3 {width: 25%;}
+      .col-p-4 {width: 33.33%;}
+      .col-p-5 {width: 41.66%;}
+      .col-p-6 {width: 50%;}
+      .col-p-7 {width: 58.33%;}
+      .col-p-8 {width: 66.66%;}
+      .col-p-9 {width: 75%;}
+      .col-p-10 {width: 83.33%;}
+      .col-p-11 {width: 91.66%;}
+      .col-p-12 {width: 100%;}
+      // Below - Vanish on phone
+      .col-p-vanish { display: none}
+
+  }
+  
+  @media only screen and (min-width: 768px) and (max-width: 999px) {
+  // For tablets: we use col-t-*  
+      .col-t-1 {width: 8.33%;}
+      .col-t-2 {width: 16.66%;}
+      .col-t-3 {width: 25%;}
+      .col-t-4 {width: 33.33%;}
+      .col-t-5 {width: 41.66%;}
+      .col-t-6 {width: 50%;}
+      .col-t-7 {width: 58.33%;}
+      .col-t-8 {width: 66.66%;}
+      .col-t-9 {width: 75%;}
+      .col-t-10 {width: 83.33%;}
+      .col-t-11 {width: 91.66%;}
+      .col-t-12 {width: 100%;}
+      // Below - Vanish on tablet 
+      .col-t-vanish { display: none}
+
+  }
+  @media screen and (min-width: 1000px) {
+      // For desktop: we use  col-d-*
+      .col-d-1 {width: 8.33%;}
+      .col-d-2 {width: 16.66%;}
+      .col-d-3 {width: 25%;}
+      .col-d-4 {width: 33.33%;}
+      .col-d-5 {width: 41.66%;}
+      .col-d-6 {width: 50%;}
+      .col-d-7 {width: 58.33%;}
+      .col-d-8 {width: 66.66%;}
+      .col-d-9 {width: 75%;}
+      .col-d-10 {width: 83.33%;}
+      .col-d-11 {width: 91.66%;}
+      .col-d-12 {width: 100%;}
+      // Below - Vanish on desktop
+      .col-d-vanish { display: none}
+      
+  }
+  // For every screen no matter the size:
+.col-all-1{width: 8.33%}
+.col-all-2{width: 16.66%}
+.col-all-3{width: 25%}
+.col-all-4{width: 33.33%}
+.col-all-5{width: 41.66%}
+.col-all-6{width: 50%}
+.col-all-7{width: 58.33%}
+.col-all-8{width: 66.66%}
+.col-all-9{width: 75%}
+.col-all-10{width: 83.33%}
+.col-all-11{width: 91.66%}
+.col-all-12{width: 100%}
+
+// End - Custom Media screens for all screens, mobile phones, tablets and desktop.
+
+// Content creates a container for the site.
+  // Laptop Screen
+  .content {
+    @media screen and (max-width: 1439px) {
+      max-width: 1330px;
+      margin: 0 auto 25px auto !important;
+      
+                                          }
+  // Desktop Monitor + 23"
+    @media screen and (min-width: 1440px) {
+      max-width: 1450px;
+      margin: 0 auto 35px auto !important;
+                                          }  
+  // Desktop Monitor + 26"
+    @media screen and (min-width: 1650px) {
+      max-width: 1550px;
+      margin:  0 auto 45px auto !important;
+                                          }
+  }
+// Below - Content fluid to expand the whole length of the page.
+.content-fluid {
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+// Tier creates a row in content.
+.tier {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  margin-right: 0px;
+  margin-left: 0px;
+}
+  .tier:before, 
+    .tier:after {
+        content:"";
+        display: inline-block ;
+        clear:both;
+  }
+
+// Text tier, removes flex-wrap: wrap which broke text extending divs.
+.text-tier {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin-right: 0px;
+  margin-left: 0px;
+}
+
+// Below Adds a tier with 100% width
+.col-tier {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  margin-right: 0px;
+  margin-left: 0px;
+  width: 100% !important;
+}
+  .col-tier:before, 
+    .col-tier:after {
+        content:"";
+        display: inline-block ;
+        clear:both;
+  }
+// Cardboard class for aesthetics of nearly every container on the site. Replaces Bootstraps .card class.
+.cardboard {
+    position: relative;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: .25rem;
+}
+// Push left will float and align left
+.push-left {
+  float: left !important;
+  align-self: flex-start !important;
+}
+// Push right will float and align right
+.push-right {
+  float: right !important;
+  align-self: flex-end !important;
+}
+// A static height that adds working room and a background fo testing new divs and areas.
+.temp-working-area {
+  height: 350px;
+  opacity: 0.1;
+  background-color: white;
+}
+// Makes text white
+.text-white {
+  color: white !important;
+}
+// Takes away box shadow effects
+.no-box-shadow { 
+  box-shadow: none !important;
+}
+// Takes away text decoration and underline 
+.no-underline { 
+  text-decoration: none !important;
+} 
+// Takes away text shadow
+.no-text-shadow { 
+  text-shadow: none !important;
+}
+// Begin - Strike design, like on Login Page
+    .strike {
+      display: block;
+      text-align: center;
+      overflow: hidden;
+      white-space: nowrap; 
+  }
+    .strike > span {
+        position: relative;
+        display: inline-block;
+    }
+    .strike > span:before,
+    .strike > span:after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        width: 9999px;
+        height: 1px;
+        background: #645496;
+    }
+    .strike > span:before {
+        right: 100%;
+        margin-right: 5px;
+    }
+    .strike > span:after {
+        left: 100%;
+        margin-left: 5px;
+    }
+// End - Strike design, like on Login Page
+
+// Turns width or height into 100%
+.width-100     { width: 100%  !important; }
+.height-100     { height: 100%  !important;}
+// Turns the mouse into a pointer.
+.pointer {cursor: pointer !important;}
+// Curved border box on top
+.curved_box_top {
+  border: 2px groove rgba(0, 0, 0, 0.35);
+  -webkit-border-radius: 10px 10px 0px 0px;/*Safari, Chrome*/
+  -moz-border-radius: 10px 10px 0px 0px;/*Firefox*/
+  border-radius: 10px 10px 0px 0px !important;
+  background-color: rgba(255, 255, 255, 1);
+  border-bottom: none !important;
+  padding-left: 20px !important;
+  padding-right: 20px !important;
+}
+// Curved border box on bottom 
+.curved_box_bottom {
+  border: 2px groove rgba(0, 0, 0, 0.35);
+  border-top: none !important;
+  -webkit-border-radius: 0px 0px 10px 10px;/*Safari, Chrome*/
+  -moz-border-radius: 0px 0px 10px 10px;/*Firefox*/
+  border-radius: 0px 0px 10px 10px !important;
+  height: 25px;
+  margin-bottom: 3rem !important;
+  background-color: rgba(255, 255, 255, 1);
+}
+// Light border
+.light-border { 
+  border: 1px solid rgba(128, 128, 128, .5)
+}
+
+// Begin - Custom Margin Classes
+  // Adds margin top 
+  .margin-t-0  {  margin-top: 0px !important;  }
+  .margin-t-3  {  margin-top: 3px !important;  }
+  .margin-t-5  {  margin-top: 5px !important;  }
+  .margin-t-8  {  margin-top: 8px !important;  }
+  .margin-t-10 {  margin-top: 10px !important; }
+  .margin-t-12 {  margin-top: 12px !important; }
+  .margin-t-13 {  margin-top: 13px !important; }
+  .margin-t-15 {  margin-top: 15px !important; }
+  .margin-t-18 {  margin-top: 18px !important; }
+  .margin-t-20 {  margin-top: 20px !important; }
+  .margin-t-23 {  margin-top: 23px !important; }
+  .margin-t-25 {  margin-top: 25px !important; }
+  .margin-t-28 {  margin-top: 28px !important; }
+  .margin-t-30 {  margin-top: 30px !important; }
+  // Adds margin bottom 
+  .margin-b-0  {  margin-bottom: 0px !important;  }
+  .margin-b-3  {  margin-bottom: 3px !important;  }
+  .margin-b-5  {  margin-bottom: 5px !important;  }
+  .margin-b-8  {  margin-bottom: 8px !important;  }
+  .margin-b-10 {  margin-bottom: 10px !important; }
+  .margin-b-12 {  margin-bottom: 12px !important; }
+  .margin-b-13 {  margin-bottom: 13px !important; }
+  .margin-b-15 {  margin-bottom: 15px !important; }
+  .margin-b-18 {  margin-bottom: 18px !important; }
+  .margin-b-20 {  margin-bottom: 20px !important; }
+  .margin-b-23 {  margin-bottom: 23px !important; }
+  .margin-b-25 {  margin-bottom: 25px !important; }
+  .margin-b-28 {  margin-bottom: 28px !important; }
+  .margin-b-30 {  margin-bottom: 30px !important; }
+  // Adds margin right 
+  .margin-r-0  {  margin-right: 0px !important;  }
+  .margin-r-3  {  margin-right: 3px !important;  }
+  .margin-r-5  {  margin-right: 5px !important;  }
+  .margin-r-8  {  margin-right: 8px !important;  }
+  .margin-r-10 {  margin-right: 10px !important; }
+  .margin-r-12 {  margin-right: 12px !important; }
+  .margin-r-13 {  margin-right: 13px !important; }
+  .margin-r-15 {  margin-right: 15px !important; }
+  .margin-r-18 {  margin-right: 18px !important; }
+  .margin-r-20 {  margin-right: 20px !important; }
+  .margin-r-23 {  margin-right: 23px !important; }
+  .margin-r-25 {  margin-right: 25px !important; }
+  .margin-r-28 {  margin-right: 28px !important; }
+  .margin-r-30 {  margin-right: 30px !important; }
+  // Adds margin left
+  .margin-l-0  {  margin-left: 0px !important;  }
+  .margin-l-3  {  margin-left: 3px !important;  }
+  .margin-l-5  {  margin-left: 5px !important;  }
+  .margin-l-8  {  margin-left: 8px !important;  }
+  .margin-l-10 {  margin-left: 10px !important; }
+  .margin-l-12 {  margin-left: 12px !important; }
+  .margin-l-13 {  margin-left: 13px !important; }
+  .margin-l-15 {  margin-left: 15px !important; }
+  .margin-l-18 {  margin-left: 18px !important; }
+  .margin-l-20 {  margin-left: 20px !important; }
+  .margin-l-23 {  margin-left: 23px !important; }
+  .margin-l-25 {  margin-left: 25px !important; }
+  .margin-l-28 {  margin-left: 28px !important; }
+  .margin-l-30 {  margin-left: 30px !important; }
+  // Adds margin to bottom and top 
+  .margin-y-0  {  margin-bottom: 0px !important;  margin-top: 0px !important;   }
+  .margin-y-2  {  margin-bottom: 2px !important;  margin-top: 2px !important;   }
+  .margin-y-3  {  margin-bottom: 3px !important;  margin-top: 3px !important;   }
+  .margin-y-5  {  margin-bottom: 5px !important;  margin-top: 5px !important;   }
+  .margin-y-8  {  margin-bottom: 8px !important;  margin-top: 8px !important;   }
+  .margin-y-10 {  margin-bottom: 10px !important; margin-top: 10px !important;  }
+  .margin-y-12 {  margin-bottom: 12px !important; margin-top: 12px !important;  }
+  .margin-y-13 {  margin-bottom: 13px !important; margin-top: 13px !important;  }
+  .margin-y-15 {  margin-bottom: 15px !important; margin-top: 15px !important;  }
+  .margin-y-18 {  margin-bottom: 18px !important; margin-top: 18px !important;  }
+  .margin-y-20 {  margin-bottom: 20px !important; margin-top: 20px !important;  }
+  .margin-y-23 {  margin-bottom: 23px !important; margin-top: 23px !important;  }
+  .margin-y-25 {  margin-bottom: 25px !important; margin-top: 25px !important;  }
+  .margin-y-28 {  margin-bottom: 28px !important; margin-top: 28px !important;  }
+  .margin-y-30 {  margin-bottom: 30px !important; margin-top: 30px !important;  } 
+  // Adds margin to everything. 
+  .margin-x-0  {  margin-right: 0px !important;  margin-left: 0px !important;   }
+  .margin-x-2  {  margin-right: 2px !important;  margin-left: 2px !important;   }
+  .margin-x-3  {  margin-right: 3px !important;  margin-left: 3px !important;   }
+  .margin-x-5  {  margin-right: 5px !important;  margin-left: 5px !important;   }
+  .margin-x-8  {  margin-right: 8px !important;  margin-left: 8px !important;   }
+  .margin-x-10 {  margin-right: 10px !important; margin-left: 10px !important;  }
+  .margin-x-12 {  margin-right: 12px !important; margin-left: 12px !important;  }
+  .margin-x-13 {  margin-right: 13px !important; margin-left: 13px !important;  }
+  .margin-x-15 {  margin-right: 15px !important; margin-left: 15px !important;  }
+  .margin-x-18 {  margin-right: 18px !important; margin-left: 18px !important;  }
+  .margin-x-20 {  margin-right: 20px !important; margin-left: 20px !important;  }
+  .margin-x-23 {  margin-right: 23px !important; margin-left: 23px !important;  }
+  .margin-x-25 {  margin-right: 25px !important; margin-left: 25px !important;  }
+  .margin-x-28 {  margin-right: 28px !important; margin-left: 28px !important;  }
+  .margin-x-30 {  margin-right: 30px !important; margin-left: 30px !important;  }
+  // Adds margin to right and left 
+  .margin-all-0  {  margin-right: 0px !important;  margin-left: 0px !important;  margin-bottom: 0px !important;  margin-top: 0px !important;  }
+  .margin-all-2  {  margin-right: 2px !important;  margin-left: 2px !important;  margin-bottom: 2px !important;  margin-top: 2px !important;  }
+  .margin-all-3  {  margin-right: 3px !important;  margin-left: 3px !important;  margin-bottom: 3px !important;  margin-top: 3px !important;  }
+  .margin-all-5  {  margin-right: 5px !important;  margin-left: 5px !important;  margin-bottom: 5px !important;  margin-top: 5px !important;  }
+  .margin-all-8  {  margin-right: 8px !important;  margin-left: 8px !important;  margin-bottom: 8px !important;  margin-top: 8px !important;  }
+  .margin-all-10 {  margin-right: 10px !important; margin-left: 10px !important; margin-bottom: 10px !important;  margin-top: 10px !important; }
+  .margin-all-12 {  margin-right: 12px !important; margin-left: 12px !important; margin-bottom: 12px !important;  margin-top: 12px !important; }
+  .margin-all-13 {  margin-right: 13px !important; margin-left: 13px !important; margin-bottom: 13px !important;  margin-top: 13px !important; }
+  .margin-all-15 {  margin-right: 15px !important; margin-left: 15px !important;  margin-bottom: 15px !important;  margin-top: 15px !important;  }
+  .margin-all-18 {  margin-right: 18px !important; margin-left: 18px !important;  margin-bottom: 18px !important;  margin-top: 18px !important;  }
+  .margin-all-20 {  margin-right: 20px !important; margin-left: 20px !important;  margin-bottom: 20px !important;  margin-top: 20px !important;  }
+  .margin-all-23 {  margin-right: 23px !important; margin-left: 23px !important;  margin-bottom: 23px !important;  margin-top: 23px !important;  }
+  .margin-all-25 {  margin-right: 25px !important; margin-left: 25px !important;  margin-bottom: 25px !important;  margin-top: 25px !important;  }
+  .margin-all-28 {  margin-right: 28px !important; margin-left: 28px !important;  margin-bottom: 28px !important;  margin-top: 28px !important;  }
+  .margin-all-30 {  margin-right: 30px !important; margin-left: 30px !important;  margin-bottom: 30px !important;  margin-top: 30px !important;  }
+// Below - MArgin Left auto and margin right auto and both
+  .margin-l-auto { margin-left: auto !important }
+  .margin-r-auto { margin-right: auto !important}
+  .margin-x-auto { margin-left: auto !important; margin-right: auto !important}
+// End - Custom Margin Classes
+// Begin - Custom Padding Classes
+  // Adds padding Top 
+  .padding-t-0  {  padding-top: 0px !important;  }
+  .padding-t-3  {  padding-top: 3px !important;  }
+  .padding-t-5  {  padding-top: 5px !important;  }
+  .padding-t-8  {  padding-top: 8px !important;  }
+  .padding-t-10 {  padding-top: 10px !important; }
+  .padding-t-12 {  padding-top: 12px !important; }
+  .padding-t-15 {  padding-top: 15px !important; }
+  .padding-t-18 {  padding-top: 18px !important; }
+  .padding-t-20 {  padding-top: 20px !important; }
+  .padding-t-23 {  padding-top: 23px !important; }
+  .padding-t-25 {  padding-top: 25px !important; }
+  .padding-t-28 {  padding-top: 28px !important; }
+  .padding-t-30 {  padding-top: 30px !important; }
+  // Adds Padding Right
+  .padding-r-0  {  padding-right: 0px !important;  }
+  .padding-r-3  {  padding-right: 3px !important;  }
+  .padding-r-5  {  padding-right: 5px !important;  }
+  .padding-r-8  {  padding-right: 8px !important;  }
+  .padding-r-10 {  padding-right: 10px !important; }
+  .padding-r-12 {  padding-right: 12px !important; }
+  .padding-r-15 {  padding-right: 15px !important; }
+  .padding-r-18 {  padding-right: 18px !important; }
+  .padding-r-20 {  padding-right: 20px !important; }
+  .padding-r-23 {  padding-right: 23px !important; }
+  .padding-r-25 {  padding-right: 25px !important; }
+  .padding-r-28 {  padding-right: 28px !important; }
+  .padding-r-30 {  padding-right: 30px !important; }
+  // Adds Padding Bottom
+  .padding-b-0  {  padding-bottom: 0px !important;  }
+  .padding-b-3  {  padding-bottom: 3px !important;  }
+  .padding-b-5  {  padding-bottom: 5px !important;  }
+  .padding-b-8  {  padding-bottom: 8px !important;  }
+  .padding-b-10 {  padding-bottom: 10px !important; }
+  .padding-b-12 {  padding-bottom: 12px !important; }
+  .padding-b-15 {  padding-bottom: 15px !important; }
+  .padding-b-18 {  padding-bottom: 18px !important; }
+  .padding-b-20 {  padding-bottom: 20px !important; }
+  .padding-b-23 {  padding-bottom: 23px !important; }
+  .padding-b-25 {  padding-bottom: 25px !important; }
+  .padding-b-28 {  padding-bottom: 28px !important; }
+  .padding-b-30 {  padding-bottom: 30px !important; }
+  // Adds Padding Left
+  .padding-l-0  {  padding-left: 0px !important;  }
+  .padding-l-3  {  padding-left: 3px !important;  }
+  .padding-l-5  {  padding-left: 5px !important;  }
+  .padding-l-8  {  padding-left: 8px !important;  }
+  .padding-l-10 {  padding-left: 10px !important; }
+  .padding-l-12 {  padding-left: 12px !important; }
+  .padding-l-15 {  padding-left: 15px !important; }
+  .padding-l-18 {  padding-left: 18px !important; }
+  .padding-l-20 {  padding-left: 20px !important; }
+  .padding-l-23 {  padding-left: 23px !important; }
+  .padding-l-25 {  padding-left: 25px !important; }
+  .padding-l-28 {  padding-left: 28px !important; }
+  .padding-l-30 {  padding-left: 30px !important; }
+  // Adds Padding top and bottom
+  .padding-y-0  {  padding-top: 0px  !important; padding-bottom: 0px !important;  }
+  .padding-y-2  {  padding-top: 2px  !important; padding-bottom: 2px !important;  }
+  .padding-y-3  {  padding-top: 3px  !important; padding-bottom: 3px !important;  }
+  .padding-y-5  {  padding-top: 5px  !important; padding-bottom: 5px !important;  }
+  .padding-y-8  {  padding-top: 8px  !important; padding-bottom: 8px !important;  }
+  .padding-y-10 {  padding-top: 10px !important; padding-bottom: 10px !important; }
+  .padding-y-12 {  padding-top: 12px !important; padding-bottom: 12px !important; }
+  .padding-y-15 {  padding-top: 15px !important; padding-bottom: 15px !important; }
+  .padding-y-18 {  padding-top: 18px !important; padding-bottom: 18px !important; }
+  .padding-y-20 {  padding-top: 20px !important; padding-bottom: 20px !important; }
+  .padding-y-23 {  padding-top: 23px !important; padding-bottom: 23px !important; }
+  .padding-y-25 {  padding-top: 25px !important; padding-bottom: 25px !important; }
+  .padding-y-28 {  padding-top: 28px !important; padding-bottom: 28px !important; }
+  .padding-y-30 {  padding-top: 30px !important; padding-bottom: 30px !important; }  
+  // Adds Padding left and right
+  .padding-x-0  {  padding-right: 0px  !important; padding-left: 0px !important;  }
+  .padding-x-2  {  padding-right: 2px  !important; padding-left: 2px !important;  }
+  .padding-x-3  {  padding-right: 3px  !important; padding-left: 3px !important;  }
+  .padding-x-5  {  padding-right: 5px  !important; padding-left: 5px !important;  }
+  .padding-x-8  {  padding-right: 8px  !important; padding-left: 8px !important;  }
+  .padding-x-10 {  padding-right: 10px !important; padding-left: 10px !important; }
+  .padding-x-12 {  padding-right: 12px !important; padding-left: 12px !important; }
+  .padding-x-15 {  padding-right: 15px !important; padding-left: 15px !important; }
+  .padding-x-18 {  padding-right: 18px !important; padding-left: 18px !important; }
+  .padding-x-20 {  padding-right: 20px !important; padding-left: 20px !important; }
+  .padding-x-23 {  padding-right: 23px !important; padding-left: 23px !important; }
+  .padding-x-25 {  padding-right: 25px !important; padding-left: 25px !important; }
+  .padding-x-28 {  padding-right: 28px !important; padding-left: 28px !important; }
+  .padding-x-30 {  padding-right: 30px !important; padding-left: 30px !important; }
+  // Adds margin to right and left 
+  .padding-all-0  {  padding-right: 0px !important;  padding-left: 0px !important;  padding-bottom: 0px !important;  padding-top: 0px !important;  }
+  .padding-all-2  {  padding-right: 2px !important;  padding-left: 2px !important;  padding-bottom: 2px !important;  padding-top: 2px !important;  }
+  .padding-all-3  {  padding-right: 3px !important;  padding-left: 3px !important;  padding-bottom: 3px !important;  padding-top: 3px !important;  }
+  .padding-all-5  {  padding-right: 5px !important;  padding-left: 5px !important;  padding-bottom: 5px !important;  padding-top: 5px !important;  }
+  .padding-all-8  {  padding-right: 8px !important;  padding-left: 8px !important;  padding-bottom: 8px !important;  padding-top: 8px !important;  }
+  .padding-all-10 {  padding-right: 10px !important; padding-left: 10px !important; padding-bottom: 10px !important;  padding-top: 10px !important; }
+  .padding-all-12 {  padding-right: 12px !important; padding-left: 12px !important; padding-bottom: 12px !important;  padding-top: 12px !important; }
+  .padding-all-13 {  padding-right: 13px !important; padding-left: 13px !important; padding-bottom: 13px !important;  padding-top: 13px !important; }
+  .padding-all-15 {  padding-right: 15px !important; padding-left: 15px !important;  padding-bottom: 15px !important;  padding-top: 15px !important;  }
+  .padding-all-18 {  padding-right: 18px !important; padding-left: 18px !important;  padding-bottom: 18px !important;  padding-top: 18px !important;  }
+  .padding-all-20 {  padding-right: 20px !important; padding-left: 20px !important;  padding-bottom: 20px !important;  padding-top: 20px !important;  }
+  .padding-all-23 {  padding-right: 23px !important; padding-left: 23px !important;  padding-bottom: 23px !important;  padding-top: 23px !important;  }
+  .padding-all-25 {  padding-right: 25px !important; padding-left: 25px !important;  padding-bottom: 25px !important;  padding-top: 25px !important;  }
+  .padding-all-28 {  padding-right: 28px !important; padding-left: 28px !important;  padding-bottom: 28px !important;  padding-top: 28px !important;  }
+  .padding-all-30 {  padding-right: 30px !important; padding-left: 30px !important;  padding-bottom: 30px !important;  padding-top: 30px !important;  }
+// End - Custom Padding Classes
+// Takes away any margin, whether top, right, bottom, or left.
+.no-margin {margin: 0px !important;}
+// Takes away all padding in all directions.
+.no-padding {padding: 0px !important;}
+// Being - Different Shadow Levels
+  // FOr input boxes
+  .light-input-shadow {
+    box-shadow: 0.5px 0.5px 10px rgba(0, 0, 0, .15);
+  }
+  // Adds the subtless light box shadow.
+  .lightest-shadow, .lightest-box-shadow { 
+    box-shadow: 0 .125rem .25rem rgba(0,0,0,.075);
+  }  
+  // Most widely used shadow, light but noticable.
+  .light-box-shadow, .light-shadow {
+    box-shadow: 1px 3px 16px rgba(0, 0, 0, .21);
+  }
+  // Medium shadow
+  .medium-box-shadow, .medium-shadow {
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.25);
+  }
+  // Heavy shadow
+  .heavy-box-shadow, .heavy-shadow {
+    box-shadow: 0 1rem 3rem rgba(0,0,0,.30);
+  }
+  // Adds a light outer box shadow to compliment light box shadow in order to create a full shadow effect.
+  .light-outer-box-shadow, .light-outer-shadow {
+    box-shadow: -1px -3px 16px rgba(0, 0, 0, .25);
+  }
+  // Adds a subtle box shadow to input
+  .input-box-shadow {
+    box-shadow: 0.5px 0.5px 10px rgba(0, 0, 0, .20);
+  }
+  // Adds a light text shadow.
+  .light-text-shadow {
+    text-shadow: 2px 2px 4px rgba(150, 150, 150, .3);
+  }
+  .light-btn-shadow {
+    box-shadow: 1px 2px 12px 1px rgba(0, 0, 0, 0.20)
+  }
+// End - Different Shadow levels
+// Hides the element without making it leave DOM.
+.disappear {
+  visibility: hidden;
+}
+// Applies visible to bring a disappeared element back into view. 
+.appear {
+  visibility: visible;
+}
+// Completely removes element and its spacing, by using Display, opposite of disvanish.
+.vanish {
+  display: none;
+}
+// Brings element back into view, by using Display, opposite of vanish.
+.disvanish {
+  display: block;
+}
+// Allows element to be relative
+.relative {
+  position: relative !important;
+}
+// Removes list style for ul and ol lists
+.no-list-style {
+  list-style: none !important;
+}
+
+// Puts overflow on auto as opposed to visible
+.overflow-auto {
+  overflow :auto;
+}
+// Background is removed
+.background-none{
+  background: none !important;
+}
+
+// CSS for social share buttons in list view
+  #share_tier {
+    margin: 8px 0px;
+    .social-share-button {
+      float: left !important;
+      padding-top: 8px;
+      padding-right: 10px;
+    a {
+      padding-right: 10px;
+      padding-left: 0px;
+    }
+      
+    }
+  }
+  .ssb-icon {
+    padding-left: 35px;
+    font-size: 15px;
+  }
+// Makes text color black
+.text-black {
+  color: black !important;
+}
+// CHanges Bootstrap dropdown menu class to the ossemble purple border 
+.dropdown-menu {
+  border: 2px solid #645496 !important;
+}
+// Begin - Quill Text editor on new pages for description boxes
+  #quill_container { 
+    height: 250px !important;
+    font-size: 17px !important;
+    box-shadow: 1px 7px 18px rgba(0, 0, 0, .18)!important;
+  }
+.strikethrough {
+  text-decoration: line-through;
+}
+  // End - DeetzStrap Mark 2
+
+.mw-100 {
+  width: 100% !important;
+}

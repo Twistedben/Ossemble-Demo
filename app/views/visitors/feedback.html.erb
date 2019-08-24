@@ -1,0 +1,62 @@
+<!--  Main page for feedback. Code for controller is in controllers/visitors_controller.rb, contact_us. (Views/visitors/feedback.html.erb). -->
+<div class="content">
+  <div class="col-d-8 col-t-10 col-p-12 center">
+  <div class="curved_box_top light-box-shadow">
+    
+  <div class="theme_color_black trending_font_size my-3">
+    Feedback Form
+  </div>
+    
+  <div class="light-box-shadow px-4 py-0" style="border: 1px solid rgba(128, 128, 128, .5)">  
+  <form class="col-d-10 col-t-11 col-p-12 center" id="feedbackform" action="action_page.php">
+
+    <label class="mb-0 mt-4" for="hear">How did you hear about us?</label>
+    <input class="input-box-shadow" type="text" id="hear" placeholder="Facebook, organic search, word of mouth?">
+
+    <label class="mb-0" for="like">What do you like about our service?</label>
+    <input class="input-box-shadow" type="text" id="like" placeholder="Something you enjoy about Ossemble.">
+    
+    <label class="mb-0" for="improve">What can we improve on?</label>
+    <input class="input-box-shadow" type="text" id="improve" placeholder="Something we can change about Ossemble.">
+    
+    <label class="mb-0" for="rate">How would you rate your expierence using Ossemble? <small>(10 being the best)</small></label>
+    <select class="input-box-shadow" id="rate" name="rate">
+      <option selected="selected" disabled="disabled">Choose from a scale of 1-10</option>
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+      <option value="6">6</option>
+      <option value="7">7</option>
+      <option value="8">8</option>
+      <option value="9">9</option>
+      <option value="10">10</option>
+    </select>
+    
+    <label class="mb-0" for="ossrate">Currently how well does your local government address your concerns. <small>(10 being the best)</small></label>
+    <select class="input-box-shadow" id="ossrate" name="rate">
+      <option selected="selected" disabled="disabled">Choose from a scale of 1-10</option>
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+      <option value="6">6</option>
+      <option value="7">7</option>
+      <option value="8">8</option>
+      <option value="9">9</option>
+      <option value="10">10</option>
+    </select>
+
+    <label class="mb-0" for="subject">Extra Information</label>
+    <textarea class="input-box-shadow" id="subject" name="final" placeholder="What else would you like to tell us?" style="height:200px"></textarea>
+
+    <button type="button" class="btn btn-success text-big light-btn-shadow mb-4">Submit</button>
+
+  </form>
+  </div>
+  </div>
+  <div class="curved_box_bottom no-top-border"></div>
+  </div>
+</div>

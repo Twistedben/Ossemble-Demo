@@ -1,0 +1,159 @@
+// Style sheet for views/payments 
+#institute_subscription_container {
+  .plan_card {
+    background-color: #f9f9f9; 
+    border-radius: 10px;
+    border: 1px solid rgba(0,0,0,.125);
+  }
+  #current_subscription_container {
+    .col-d-4.col-t-7.col-p-12 {
+      padding-right: 10px;
+      margin: 8px auto;
+      .card_container {
+        background-color: #f9f9f9;
+        border: 1px solid rgba(0, 0, 0, 0.35);
+        border-radius: 5px;
+        
+        box-shadow: 1px 3px 16px rgba(0, 0, 0, 0.21);
+     
+        .header_container {
+          background-color: rgba(153, 153, 153, 0.25);
+        }
+      }
+    }
+    h3 {
+      font-family: 'Roboto', Times New Roman;
+      font-weight: bold;
+      margin: 0px auto;
+    }
+    .header {
+      padding: 15px 0px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+    }
+    .content_container {
+      padding: 10px 0px;
+      height: 130px;
+    }
+    .content_body {
+      margin: 5px auto;
+      height: 45px;
+      small {
+        text-align: center;
+        font-size: 18px;
+      }
+      .subscription_details {
+        line-height: 30px;
+        margin-top: 5px
+      }
+    }
+    #current_subscription, #subscription_status {
+      font-size: 20px;
+      padding: 10px 15px;
+      align-content: center;
+      display: -webkit-flex;
+      -webkit-align-items: center;
+      display: flex;
+      align-items: center;
+      position: relative;
+      text-align: center;
+      margin: 0 auto !important;
+      &.active {
+        background-color: rgba(38, 195, 6, 0.404) !important;
+      }
+      &.inactive {
+        background-color: rgb(255, 0, 0) !important;
+        color: white;
+      }
+    }
+  }
+  #plan_name {
+    border-radius: 10px 10px 0px 0px;
+    &.starter_header {
+      background-color: rgb(190, 1, 248);
+    }
+    &.advanced_header {
+      background-color: rgb(135, 33, 194);
+    }
+    &.pro_header {
+      background-color: rgb(108, 0, 151);
+    }
+
+  
+    p {
+      text-align: center;
+      margin: 8px auto;
+      font-family: 'Roboto', Times New Roman;
+      font-size: 29px;
+      font-weight: bold;
+      letter-spacing: 3.6px;
+      color: white;
+      text-shadow: 1px 1px 4px black, 1px 1px 20px white;
+      text-transform: uppercase;
+    }
+  }
+  #plan_price {
+    background-color: white;
+    border-bottom: .5px solid rgba(0,0,0,0.5);
+    border-top: .5px solid rgba(0,0,0,0.5);
+    p {
+      text-align: center;
+      margin: 8px auto;
+      font-family: 'Roboto', Times New Roman;
+      font-size: 28px;
+      font-weight: bold;
+      letter-spacing: 1.2px
+    }
+  }
+  #features_header {
+    padding: 8px 0px 0px;
+    p {
+      font-family: 'Roboto', Times New Roman;
+      margin: 5px auto;
+      font-size: 23px;
+      letter-spacing: 1.75px;
+      border-color: rgba(195, 97, 241, 0.5);
+      font-weight: bold;
+      text-decoration: underline;
+    }
+  }
+  #plan_features_container {
+    text-align: center;
+    padding: 5px;
+    border-bottom: .5px solid rgba(0,0,0,0.5);
+    ul {
+      font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+      list-style: none;
+      padding: 0px;
+      li {
+        color: #585858 !important;
+        margin: 0px;
+        font-size: 17px;
+        border-bottom: .5px solid rgba(0, 0, 0, 0.5);
+        padding-left: 15%;
+        text-align: left;
+        height: 52px;
+        line-height: 52px;
+        &:last-child {
+          border: none;
+        }
+      }
+    }
+    
+  }
+  #upgrade_container {
+    background-color: white; 
+    margin: 0px auto;
+    border-radius: 10px;
+    a.button-cs {
+      padding: 6px;
+      height: 45px;
+      width: 110px;
+      font-size: 20px;
+      margin: 10px auto;
+      cursor: pointer !important;
+      &:hover, &:focus, &:active {
+        color: white;
+      }
+    }
+  }
+}

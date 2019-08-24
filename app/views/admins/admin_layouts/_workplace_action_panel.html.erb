@@ -1,0 +1,188 @@
+<!-- Main partial for rendering the action panel inside admin's workplace pages (views/admins/admin_layouts/_workplace_action_panel.html.erb). -->
+
+<div id="action_panel_desktop" class="col-d-3">
+  <div id="action_panel_org" class="pull-right pl-0 col-all-12">
+    <div id="action_panel_top" class="mx-3 pb-0 relative no-border intro1_step5">
+      <% if is_current_page?("workplaces", "index") %> <!-- If the current page is workplace index, then show Lakewood workplaces box  -->
+        <div class="col-all-12">
+          <p class="b trending_font_size margin-t-8">
+            <%= current_institute %> Workplaces
+          </p>
+          <div class="col-all-12 card light-box-shadow center" style="border: 1px solid rgba(128, 128, 128, .5)">
+            <div class="center padding-t-0 margin-l-auto margin-b-10 height-100">
+              <div class="col-tier margin-b-5 padding-all-15 border-bottom"> 
+                  <p class="page_info_title margin-t-0 padding-t-0 padding-b-3 border-bottom">
+
+                  </p>
+
+              </div>
+              <div id="cacc-modal" class="center-all col-tier">
+                <button id="cs-modal-button" @click="showCsModal = true" type="button" data-toggle="tooltip" data-placement="top" title="View information on this workplace." class="center text-18 p-0 title_link transparent no-border theme_color_dark">
+                   
+                </button>
+                <csmodal v-if="showCsModal" @close="showCsModal = false"></csmodal>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% else %>
+        <!-- Begin -  WORKPLACEINFO BOX: When not on workplace index, shows workplace info. -->
+        <div class="col-all-12">
+          <p class="b trending_font_size margin-t-8">
+            Channel Info
+          </p>
+          <div class="col-all-12 card light-box-shadow center" style="border: 1px solid rgba(128, 128, 128, .5)">
+            <div class="center padding-t-0 margin-l-auto height-100">
+              <div class="col-tier padding-all-12"> 
+                <div class="col-tier border-bottom padding-b-5">
+                  <p class="page_info_title margin-y-0 padding-t-5">
+                    <%= @workplace.name %>  
+                  </p>
+                </div>
+                <%= simple_format(@workplace.description, class: "margin-b-0 padding-t-8 text-16") %> 
+                <!-- Below -  If admin is a Super Admin, then shows edit icon by workplace description -->
+                <% if is_current_super_admin? %>
+                  <div class="col-tier">
+                    <%= link_to "<i class='fas fa-edit theme_color_dark'></i>".html_safe, edit_institute_workplace_path(@institute, @workplace), id: " " , class: "margin-l-auto text-18", title: "Edit Workplace description" %>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- End -  WORKPLACEINFO Box -->
+      <% end %>
+      <!-- Begin - MAP:  Map section -->
+      <div class="col-all-12 mb-5">
+        <p class="theme_color_black b trending_font_size margin-y-10">
+          <% if @workplace %>
+            Channel Map
+          <% else %>
+            <%= current_city %> Map
+          <% end %>
+        </p>
+        <div class="col-all-12 mb-0 p-2 card light-box-shadow center no-border-radius" style="background-color: #FAFAFA; border: 1px solid rgba(128, 128, 128, .5);">
+         <% if @workplace %>
+           <a href="<%= workplace_map_path(@institute, @workplace)  %>">
+         <% else %>
+           <!-- <a href="%= community_score_map_path(@city)  %>">
+         <% end %>
+          <!-- Begin - Map Row  -->
+          <div class="map_area">
+            <!-- Below - Renders Community Score map partial inside views/department/department_map -->
+            <div id="oss_action_map" class="col-all-12 no-border-radius ms_map" style="height: 200px !important;">
+              <%= render 'layouts/action_panel_map' %>
+            </div>
+          </div>
+         </a>
+         <div class="mt-2 border-top pt-2">
+          <%= link_to "<span class='relative post_ap_text' style='top: -3px;'><i class='fas fa-plus padding-r-3' ></i> Post on Map</span>".html_safe, new_institute_workplace_workplace_map_post_path(@institute, @workplace), id: "login-su-btn", class: "btn button-su post_ap_text", style: "width: inherit !important; padding: 4px !important; height: 25px !important;", title: "Drawn on the city map and create a post.", onclick: "amplitude.getInstance().logEvent('Map Post on AP');", data: {turbolinks: false} %>
+         </div>
+        </div>
+      </div>
+      <!-- End - MAP: Complaints Map section -->      
+      <div class="col-all-12 mt-5">
+        <!-- Button trigger modal -->
+        <button type="button" id="tour_btn" class="btn button-cs" data-toggle="modal" data-target="#tour-modal">
+          Take Tour
+        </button>
+        <!-- Modal -->
+        <div class="modal fade" id="tour-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog mw-100" role="document" style="margin: 0; padding: 0; top:auto; right:auto; left:auto; bottom:0 !important; position: fixed;">
+            <div class="modal-content tour-modal-bg" style="height: 400px; border-radius: 0px !important;">
+              <div class="modal-header p-2" style="border: none !important;">
+                <h3 class="modal-title text-white b" id="exampleModalLabel">Guide to Ossemble</h3>
+              </div>
+              <div class="modal-body pt-2">
+                <div class="col-all-12 center-all" style="max-width: 1150px;">
+                  <div class="tier">
+                  <div id="carouselExampleIndicators" class="carousel slide carousel-fade" data-ride="carousel" data-interval="false">
+                    <ol class="carousel-indicators relative" style="top: 315px; left: 550px; width: 100px !important;">
+                      <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                      <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                      <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                      <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
+                      <li data-target="#carouselExampleIndicators" data-slide-to="4"></li>
+                      <li data-target="#carouselExampleIndicators" data-slide-to="5"></li>
+                    </ol>
+                    <div class="carousel-inner" style="width: 1140px;">
+                      <div class="carousel-item active">
+                        <%= image_tag "https://s3.us-east-2.amazonaws.com/ossemble.com/GIFs/tourfeed.gif", alt: "Tour - Feed", class: "ml-2 pull-right border relative", style: "top: ; width: 580px; height: 310px;" %>
+                       <div class=" relative" style="top: 10px; right: 10px;">
+                        <span class="b text-white" style="font-size: 22px; text-shadow: black 1px 1px 2px;">Collaborative Feed</span>
+                        <br>
+                        <div class="text-white text-16 relative" style="top: 12px; left: 45px; width: 480px !important; text-shadow: black 1px 1px 2px;">
+                          Here is where your Channel's Forum Posts and Map Posts are displayed. You may click on them for further information allowing you to comment on and upvote them.
+                        </div>
+                       </div>
+                      </div>
+                      <div class="carousel-item">
+                        <%= image_tag "https://s3.us-east-2.amazonaws.com/ossemble.com/GIFs/post.gif", alt: "Tour - Posting", class: "ml-2 pull-right border relative", style: "top: ; width: 580px; height: 310px;" %>
+                       <div class=" relative" style="top: 10px; right: 10px;">
+                        <span class="b text-white" style="font-size: 22px; text-shadow: black 1px 1px 2px;">How to Post</span>
+                        <br>
+                        <div class="text-white text-16 relative" style="top: 12px; left: 45px; width: 480px !important; text-shadow: black 1px 1px 2px;">
+                          Click the Post button located above, which will open a dropdown. From here select either Forum Post or Map Post. 
+                        </div>
+                       </div>
+                      </div>
+                      <div class="carousel-item">
+                        <%= image_tag "https://s3.us-east-2.amazonaws.com/ossemble.com/GIFs/mappost.gif", alt: "Tour - Map Post", class: "ml-2 pull-right border relative", style: "top: ; width: 580px; height: 310px;" %>
+                       <div class=" relative" style="top: 10px; right: 10px;">
+                        <span class="b text-white" style="font-size: 22px; text-shadow: black 1px 1px 2px;">Map Explanation</span>
+                        <br>
+                        <div class="text-white text-16 relative" style="top: 12px; left: 45px; width: 480px !important; text-shadow: black 1px 1px 2px;">
+                          You may place a marker and draw shapes to be saved and displayed. Clicking the map on the right panel will display the Channel's map.
+                        </div>
+                       </div>
+                      </div>
+                      <div class="carousel-item">
+                        <%= image_tag "https://s3.us-east-2.amazonaws.com/ossemble.com/GIFs/invite.gif", alt: "Tour - Invite", class: "ml-2 pull-right border relative", style: "top: ; width: 580px; height: 310px;" %>
+                       <div class=" relative" style="top: 10px; right: 10px;">
+                        <span class="b text-white" style="font-size: 22px; text-shadow: black 1px 1px 2px;">Add others to Channels</span>
+                        <br>
+                        <div class="text-white text-16 relative" style="top: 12px; left: 45px; width: 480px !important; text-shadow: black 1px 1px 2px;">
+                          At the bottom of the side panel menu, click Invite Member. Fill out the input fields, or copy the invite link or email template.
+                        </div>
+                       </div>
+                      </div>
+                      <div class="carousel-item">
+                        <%= image_tag "https://s3.us-east-2.amazonaws.com/ossemble.com/GIFs/archive.gif", alt: "Tour - Archive", class: "ml-2 pull-right border relative", style: "top: ; width: 580px; height: 310px;" %>
+                       <div class=" relative" style="top: 10px; right: 10px;">
+                        <span class="b text-white" style="font-size: 22px; text-shadow: black 1px 1px 2px;">Your Archive</span>
+                        <br>
+                        <div class="text-white text-16 relative" style="top: 12px; left: 45px; width: 480px !important; text-shadow: black 1px 1px 2px;">
+                          Click on your profile picture and then My Archive to access this page. All of your saved posts or posts shared with you are located here. You may also upload your own files here privately.
+                        </div>
+                       </div>
+                      </div>
+                      <div class="carousel-item">
+                        <%= image_tag "https://s3.us-east-2.amazonaws.com/ossemble.com/GIFs/directory2.gif", alt: "Tour - Directory", class: "ml-2 pull-right border relative", style: "top: ; width: 580px; height: 310px;" %>
+                       <div class=" relative" style="top: 10px; right: 10px;">
+                        <span class="b text-white" style="font-size: 22px; text-shadow: black 1px 1px 2px;">The Directory</span>
+                        <br>
+                        <div class="text-white text-16 relative" style="top: 12px; left: 45px; width: 480px !important; text-shadow: black 1px 1px 2px;">
+                          Located in the left side panel, the directory contains all co-workers contact information and job title.
+                        </div>
+                       </div>
+                      </div>
+                    </div>
+                    <div class="carousel-control-prev text-white" style="height: 0px;" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                      <span class="carousel_arrow relative button-su p-2" style="background-color: white; height: 25px; border-radius: 50% !important; font-size: 20px; left: 340px; top: 320px;" aria-hidden="true"><span class="relative" style="top: -9px; left: -1px;"><i class="fas fa-chevron-left" style="font-size: 18px !important;"></i></span></span>
+                      <span class="sr-only">Next</span>
+                    </div>
+                    <div class="carousel-control-next text-white" style="height: 0px;" href="#carouselExampleIndicators" role="button" data-slide="next">
+                      <span class="carousel_arrow relative button-su py-2 px-3" style="background-color: white; height: 25px; border-radius: 20px !important; font-size: 16px; left: -578px; top: 320px;" aria-hidden="true"><span class="relative" style="top: -5px">Next</span></span>
+                      <span class="sr-only">Next</span>
+                    </div>
+                  </div>
+                 </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

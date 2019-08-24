@@ -1,0 +1,101 @@
+<!--  Partial rendered from User Registrations Edit if the user is unverified in order to create a Location row to associate with user and
+  to veirify user's profile. -->
+<h3 class="margin-t-10 mb-0 roboto" title="Information that Ossemble uses to enhance your experience and others do not see.">
+    Private Profile Details
+</h3>
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name),
+  :html => {:multipart => true, id: "verified_profile_form", class: "col-all-12 form light-box-shadow", style: "border: 1px solid rgba(128, 128, 128, 0.5);", role: "form"}) do |f| %>
+  <div id="private_info_tier" class="tier pt-2">    
+    <div class="col-tier padding-b-0">            <!-- Begin - Name, Gender, & Date of Birth Form Row -->
+      <div class="col-d-4 col-t-4 col-p-6 px-2">
+        <div class="control-label">
+          <%= f.label :first_name, "First Name" %> 
+        </div>
+          <%= f.text_field :first_name, id: "first_name", class: "form-control light-input-shadow", autofocus: true, placeholder: "Enter First Name" %>
+      </div>
+      <div class="col-d-4 col-t-4 col-p-6 px-2">
+        <div class="control-label">
+          <%= f.label :last_name, "Last Name" %> 
+        </div>
+          <%= f.text_field :last_name, class: "form-control light-input-shadow", placeholder: "Enter Last Name" %>
+      </div>
+      <div class="col-d-4 col-t-4 col-p-12 px-2">
+        <div class="control-label">
+          <%= f.label :dob, "Birth Date" %> 
+        </div>
+          <%= f.date_field :dob, class: "form-control light-input-shadow" %>
+      </div>
+    </div>                          
+    <!-- End - Name & DOB form row -->
+    <!-- Begin - Email & Location Form Row -->
+    <div class="col-tier margin-y-10">
+      <div class=" col-d-4 col-t-4 col-p-6 px-2">
+        <div class="control-label">
+          <%= f.label :email, "Email Address" %>
+        </div>
+        <!-- Below -  Disables email input field if the user is from facebook. -->
+          <%= f.email_field :email, type:"text", class: "form-control light-input-shadow", placeholder: "Enter Email Address: youremail@example.com" unless current_user.is_facebook_user? %>
+          <%= f.email_field :email, type:"text", class: "form-control light-input-shadow", disabled: true, placeholder: "Your account was created via Facebook" if current_user.is_facebook_user? %>
+      </div>  
+      <div class="col-d-4 col-t-4 col-p-6 px-2">
+        <div class="control-label">
+          <label>
+              City
+          </label>
+        </div> 
+        <!-- Below - Options of selecting from every city and we set the user's "city_id" field to the corresponding City table's City ID,
+              completing the User's Association to City.  -->
+        <%= f.collection_select :city_id, City.all, :id, :name, {prompt: "Choose a City"}, class: "select_form light-input-shadow form-control" %>
+      </div>
+      <div class="col-d-4 col-t-4 col-p-6 px-2">
+        <div class="control-label">
+          <%= f.label :state, "State"  %> 
+            <small>
+              (Currently Ohio)
+            </small>
+        </div>
+          <%= f.collection_select :state, State.all, :name, :name, {prompt: "Choose a State"}, class: "select_form form-control light-input-shadow" %>
+      </div>
+    </div>   
+  </div>  <!-- End -  Private Profile Info -->
+  <div class="col-tier">    
+    <div class="col-all-6">
+      <%= f.submit "Update Profile", id: "update_profile_btn", class: "push-left form_btn btn action btn-lg" %>
+    </div> 
+  </div> 
+<% end %> <!--  End - First form if user is just updating their main profile and has already verified.-->
+
+<h3 class="roboto">
+  Finish & Verify Your Profile
+</h3>
+<%= form_for(@location, url: create_location_path(current_user),
+  :html => {:multipart => true, id: "unverified_profile_form", class: "form light-box-shadow", style: "border: 1px solid rgba(128, 128, 128, 0.5);", role: "form"}) do |f| %>
+  <div id="finish_profile_tier" class="tier padding-y-20">
+    <div class="col-d-4 col-t-4 col-p-12 px-2 padding-b-12">
+      <div class="control-label">
+        <%= f.label :street, "Primary Address"  %> 
+      </div>
+      <%= f.text_field :street, autocomplete: "on", class: "form-control light-input-shadow", placeholder: "1234 Main Street" %>
+    </div>
+    <div class="col-d-4 col-t-4 col-p-12 px-2 padding-b-12">
+      <div class="control-label">
+        <%= f.label :street2, "Secondary Address" %> 
+        <small class="small_hide"> 
+          (optional) 
+        </small>
+      </div>
+        <%= f.text_field :street2, autocomplete: "on", class: "form-control light-input-shadow", placeholder: "Apartment, Suite #" %>
+    </div>
+    <div class="col-d-4 col-t-4 col-p-12 px-2 padding-b-12">
+      <div class="control-label">
+        <%= f.label :zip_code, "Zip Code" %> <small> (5-Digit Zip)</small>
+      </div>
+        <%= f.text_field :zip_code, autocomplete: "on", maxlength: "5", placeholder: "5-Digit Zip-Code" , class: "form-control light-input-shadow" %>
+    </div>
+  </div>
+  <div class="col-tier">    
+    <div class="col-all-6">
+      <%= f.submit "Verify Profile", id: "update_profile_btn", class: "push-left form_btn btn action btn-lg" %>
+    </div> 
+  </div> 
+<% end %> <!-- End -  Finish profile section for address and Zip. -->

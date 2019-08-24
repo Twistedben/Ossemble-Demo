@@ -1,0 +1,355 @@
+// Stylesheet for trending and index pages for list of resources, all resources like petitions, complaints, reviews, and posts, and tied mainly to resources_list partial. (views/layouts/_resources_list.html.erb)
+
+// Below - On hover action for card
+#list_card_container:hover {
+  background-color: rgba(255, 255, 255, .3);
+  box-shadow: 1px 3px 18px rgba(255, 250, 205, .3);
+}
+#trending_ap_box {
+
+  #list_avatar {
+    border-radius: 50%;
+  }
+  #list_image {
+    box-shadow: 1px 1px 16px rgba(0, 0, 0, 0.2);
+    @media screen and (max-width: 999px) {
+
+    }
+  }
+  a {
+    @media screen and (max-width: 900px) {
+    font-size: 17px !important;
+    }
+  }
+  
+}
+
+// Below - Parent container card for the whole list resource, everything is nested under this for css.
+#list_card_container {
+  border: 1px solid rgba(128, 128, 128, .5);
+  box-shadow: 1px 3px 16px rgba(0, 0, 0, 0.23);
+  padding: 0px 20px;
+  margin: 0px auto 18px auto;
+  border-radius: 0px;
+  position: relative;
+  display: -ms-flexbox;  display: flex; -ms-flex-direction: column; flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  width: 100%;
+  // Below - Limits width of card on mobile and centers it.
+  @media screen and (max-width: 768px) {
+    max-width: 680px !important;
+  }
+  
+  @media screen and (max-width: 767px) {
+    padding-top: 10px !important;
+  }
+  // Below - Container for content in a list card
+  #content_container {
+    padding-left: 15px;
+    @media screen and (max-width: 767px) {
+     padding-left: 0px; 
+    }
+  }
+  // Below - User's image avatar or facebook picture or owl icon.
+  #list_avatar {
+    border-radius: 50% !important;
+    height: 35px !important;
+    width: 35px !important;
+    margin-right: 10px;
+  }
+  // Contains title, avatar, user's name, and date posted and score
+  #resource_info_container {
+    @media screen and (max-width: 768px) {
+      padding: 0px 0px 5px 0px;
+    }
+    // Below - List title 
+    #list_title {
+      margin: 1rem 0rem;
+      padding: 0rem;
+      font-size: 2rem !important;
+      @media screen and (max-width: 768px) {
+        font-size: 2.1rem !important;
+      }
+
+    }
+    // Below - User name
+    #user_name {
+      font-size: 16px;
+      padding-top: 6px;
+      @media screen and (max-width: 768px) {
+        font-size: 17px !important;
+      }
+    }
+    // Below - time and score tier
+    #time_score {
+      padding: 3px 0px;
+    }
+  }
+  // Below - Container for default icon and attached images.
+  #image_container { 
+    margin: 20px 0px;
+    max-height: 14rem !important;
+    float: left;
+    box-shadow: 1px 1px 14px rgba(0, 0, 0, 0.2), -1px -1px 14px rgba(0, 0, 0, 0.2);
+    @media screen and (max-width: 767px) {
+      max-height: 270px !important;
+      max-width: 380px !important;
+      margin: 5px auto !important;
+     }
+    // Below - Image that is attached to the resource
+    #list_image {
+      padding-top: 0px;
+      max-height: 140px;
+      height: 100%;
+      @media screen and (max-width: 767px) {
+        max-height: 275px !important;
+        max-width: 380px !important;
+        margin: 0 auto !important;
+        display: flex;
+        display: -webkit-flex;
+      }
+    }
+    // Below - Default icon that dispolays since no image is attached from Font Awesome
+    i {
+      font-size: 50px !important;
+      text-align: center;
+      margin: 0 auto !important;
+    }
+    // Below - For default icon that has an attached image tag from assests, like complaints. Div is inside the lists_helper
+    #default_icon_container {
+      height: 100%;
+      vertical-align: middle;
+      display: flex;
+      align-items: center;
+      @media screen and (max-width: 767px) {
+        display: none !important;
+      }
+      img {
+        width: 60px; 
+        height: 58px; 
+        margin: 0px auto;
+        vertical-align: middle;
+        display: flex;
+        align-items: center;
+      }
+      // Below - For an Other complainbt without an image in assets from font awesome
+    }
+    // Container for Tags instead of icon container so it doesn't disappear on mobile
+    #default_tag_container {
+      height: 100%;
+      display: flex;
+      padding: 7px;
+      @media screen and (max-width: 767px) {
+
+      }
+      // Below - For Department Reviews & City Reviews love list
+      #love_tags {
+        font-family: Roboto, Times New Roman;
+        letter-spacing: 1.3px;
+        color: #645496;
+        font-weight: bold;
+        padding: 0px;
+        
+        p {
+          display: inline-block;
+          min-width: 10px;
+          font-size: 12px;
+          margin-bottom: 0px;
+          height: 30%;
+          margin-top: 5px;
+          font-weight: 700;
+          line-height: 1.3;
+          text-align: left;
+          text-align-last: center;
+          color: #645496;
+          text-shadow: 1px 2px rgba(0,0,0,0.1);
+          
+          @media screen and (max-width: 767px) {
+            font-size: 16px !important;
+        }
+
+        }
+      }
+    }
+  }
+  // Below - List tags styling
+  #list_tag_tier {
+    float: left;
+    padding: 5px 0px;
+    @media screen and (max-width: 768px) {
+      padding: 6px 0px !important;
+    }
+ 
+    a {
+      margin-right: 8px;
+      @media screen and (max-width: 768px) {
+        font-size: 16px !important;
+      }
+    }
+  }
+  // THe first filter tag button link, like Complaint, Petition, etc.
+  #filter_tag {
+    text-align: center;
+    cursor: pointer;
+    font-size: 15px;
+    height: 34px !important;
+    position: relative !important;
+    border-radius: 4px;
+    border: 2px solid #645496;
+    background-color: white;
+    color: #645496;
+    padding: 5px 10px;
+    -webkit-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+  }
+  #filter_tag:hover  {
+    border-radius: 4px;
+    background-color: #645496 !important;
+    color: white !important;
+  }
+  // Below - Description of the resource in the list.
+  #list_description_container {
+    p {
+      font-size: 14px;
+      margin: 2px 0px;
+      @media screen and (max-width: 768px) {
+        font-size: 16px !important;
+      }
+    }
+  }
+  // Endorse, comments and vote count tier
+  #list_action_container {
+    padding: 10px 0px;
+    #endorse_container {
+      // Endorse buttons in list
+      #endorse_btn {
+        text-align: center;
+        cursor: pointer;
+        font-size: 15px;
+        position: relative;
+        border-radius: 4px;
+        border: 2px solid #645496;
+        background-color: white;
+        background: none;
+        color: #645496;
+        padding: 6px 10px;
+        width: 100% !important;
+        text-shadow: none !important;
+        box-shadow: 1.5px 1.5px 14px rgba(0, 0, 0, 0.2) !important;
+        -webkit-transition: all 0.3s ease;
+        -o-transition: all 0.3s ease;
+        transition: all 0.3s ease;
+        @media screen and (max-width: 900px) {
+          width: 75% !important;
+        }
+        @media screen and (min-width: 768px) {
+          text-align: center !important;
+
+        }
+      }
+       #endorse_btn:hover  {
+        border-radius: 4px;
+        background-color: #645496 !important;
+        color: white !important;
+      }
+      #endorsed_btn {
+        text-align: center;
+        cursor: pointer;
+        font-size: 15px;
+        position: relative;
+        border-radius: 4px;
+        border: 2px solid #645496;
+        background: none;
+        color: #645496;
+        padding: 6px 10px;
+        width: 100% !important;
+        text-shadow: 1px 1px 8px rgba(0, 0, 0, 0.2) !important;
+        border-radius: 4px;
+        background-color: #645496 !important;
+        color: white !important;
+        @media screen and (max-width: 767px) {
+          width: 80% !important;
+        }
+      }
+      
+    }
+    #vote_container {
+      margin: 0px;
+      padding-top: 8px;
+      font-size: 15px;
+      @media screen and (min-width: 768px) {
+        padding-left: 12px;
+      }
+      @media screen and (max-width: 550px) {
+       font-size: 14px; 
+      }
+    }
+    #comment_container {
+      margin: 0px;
+      padding-top: 8px;
+      font-size: 15px;
+      @media screen and (max-width: 550px) {
+       font-size: 14px; 
+      }
+
+    }
+  }
+  
+}
+
+.trending_image {
+  padding-top: 0px;
+  max-height: 140px;
+  height: 100%;
+  margin-bottom: 10px;
+  @media screen and (max-width: 767px) {
+    max-height: 175px !important;
+    max-width: 280px !important;
+    margin: 0 auto !important;
+    display: flex;
+    display: -webkit-flex;
+}
+  @media screen and (max-width: 999px) {
+    max-height: 80% !important;
+    max-width: 80% !important;
+    margin: 0 auto !important;
+    display: flex;
+    display: -webkit-flex;
+}
+}
+
+.ms_ap_title_mt {
+  margin-bottom: 0px;
+  @media screen and (max-width: 767px) {
+  margin-top: 10px;
+}
+}
+
+.ms_ap_title_pl {
+  padding-left: 8px;
+  @media screen and (max-width: 999px) {
+  padding-left: 0px;
+}
+}
+
+.carousel-indicators li {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    margin: 3px;
+    text-indent: 0;
+    cursor: pointer;
+    border: none;
+    border-radius: 50%;
+    background-color: rgba(100, 84, 150, .6) !important;
+}
+.carousel-indicators .active {
+    width: 15px;
+    height: 15px;
+    margin: 3px;
+    background-color: #645496 !important;
+}

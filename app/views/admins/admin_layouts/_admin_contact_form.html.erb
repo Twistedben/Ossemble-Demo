@@ -1,0 +1,87 @@
+<!--  Partial for Contact informatino for admins, being rendered in from admins' edit  (views/admins/edit.html.erb) 
+      Partial covers both update and create contact forms. -->
+
+
+
+<h3 title="Public contact information beyond your phone number that other Workplace users can use to contact you.">
+  Public Profile - Contact Information
+</h3>
+<div id="public_profile_tier">
+  <div class="tier margin-y-15"> 
+    <!-- Begin - Extra info for user show page -->
+    <div id="extra_info_div" class="col-d-10 col-t-11 col-p-12 center"> 
+      <div class="alert alert-panel panel border light-box-shadow" style="border-color: #645496 !important">
+        <h4 class="bold padding-all-8 roboto pub_info_ms">
+          Contact information entered here will be publicly available for fellow Workplace Users to see on your Profile Page.
+        </h4>
+      </div>
+      <!-- Begin - CONTACT UPDATE: Renders the form to update existing contact information. -->
+      <% unless @admin.contacts.empty? %>
+        <% @admin.contacts.each do |contact| %>
+          <%= simple_form_for(contact, url: institute_admin_contact_path(@admin.institute, @admin, contact),
+              :html => {:multipart => true, id: "public_profile_form", class: "col-all-12 padding-all-10", style: "border: 1px solid rgba(128, 128, 128, 0.5);", role: "form"}) do |f| %>
+            <div class="tier padding-l-12">
+              <div class="col-tier ">
+                <div class="col-d-8 col-t-10 col-p-12 ui-widget" title="What type of contact information is this; an email, physical address (location), a website, a phone number?">
+                  <div class="control-label padding-b-0">
+                    <%= f.label :name, "Contact Type" %>
+                  </div>
+                  <%= f.text_field :name, class: "form-control", maxlength: 50, placeholder: "EG: 'Email, Website, Address, Phone Number, etc.'" %> 
+                </div>
+              </div>
+              <div class="col-tier padding-t-8">
+                <div class="col-d-8 col-t-10 col-p-12" title="If it's an email, add the address here, or a website, add the URL here.">
+                  <div class="control-label padding-b-0">
+                    <%= f.label :information, "Contact Info" %>
+                  </div>
+                  <%= f.text_field :information, id: "admin_contact_information", class: "form-control", maxlength: 50, placeholder: "EG: 'public@#{@domain}', 'facebook/#{current_admin.institute.name}, etc.'" %> 
+                </div>
+              </div>
+              <!-- Below - Creat & Update Contact Button Row -->  
+              <div class="col-tier padding-l-10 padding-t-15">    
+                <div class="col-all-6">
+                  <%= f.submit "Update Contact", id: "update_contact_info_btn", class: "btn button-up" %>
+                </div> 
+              <% end %> <!-- End -  Contact Form Fields -->
+              <div class="col-all-6">
+                 <%= button_to "Delete #{contact.name}", institute_admin_contact_path(@admin.institute, @admin, contact), data: { confirm: "Are you sure you want to permanently delete your #{contact.name} information?" }, method: :delete, id: "delete_profile_btn", class: "btn button-cs push-right" %>
+              </div>
+            </div> 
+          </div>
+        <% end %> <!-- End -  Loop of existing contacts -->
+      <% end %>
+      <!-- End -  UPDATE CONTACTS: -->
+      <!--  Begin - CREATE CONTACT FORM: Form for updating public contact information for admin's city user profile.  -->
+      <%= simple_form_for(@admin.contacts.new, url: create_contact_path(@contact),
+          :html => {id: "public_profile_form", class: "col-all-12 padding-all-10", style: "border: 1px solid rgba(128, 128, 128, 0.5);", role: "form"}) do |f| %>
+        <div class="tier padding-l-12 margin-y-15 admin_cont_nopad"> 
+          <!-- Begin - Extra info for user show page -->
+            <div class="col-tier">
+              <div class="col-d-8 col-t-10 col-p-12 ui-widget admin_cont_nopad" title="What type of contact information is this; an email, physical address (location), a website, a phone number?">
+                <div class="control-label paddin-b-0">
+                  <%= f.label :name, "Contact Type" %>
+                </div>
+                <%= f.text_field :name, id: "admin_contact_name", class: "required form-control", maxlength: 50, placeholder: "EG: 'Email, Website, Address, Phone Number, etc.'", required: true  %> 
+                <p class="margin-t-5 mb-0 text-13">A short identifying title for this contact information. (Limit: 50 Characters)</p>
+              </div>
+            </div>
+            <div class="col-tier margin-t-10">
+              <div class="col-d-8 col-t-10 col-p-12 admin_cont_nopad" title="If it's an email, add the address here, or a website, add the URL here.">
+                <div class="control-label padding-b-0">
+                  <%= f.label :information, "Contact Info" %>
+                </div>
+                <%= f.input_field :information, id: "admin_contact_information", class: "form-control", maxlength: 50, placeholder: "EG: 'public@#{@domain}', 'facebook/#{current_admin.institute.name}, etc.'", required: true  %> 
+                <p class="margin-t-5 mb-0 text-13">Using this information, someone can reach you. (Limit: 50 Characters)</p>
+              </div>
+            </div>
+          <!-- Below - Creat & Update Contact Button Row -->  
+          <div class="col-tier">    
+            <div class="col-all-6 admin_cont_nopad">
+              <%= f.submit "Add Contact Info", id: "add_contact_info_btn", class: "btn button-up" %>
+            </div> 
+          </div> 
+        </div>
+      <% end %> 
+    </div>
+  </div>
+</div>

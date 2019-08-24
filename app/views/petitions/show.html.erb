@@ -1,0 +1,415 @@
+<!--  Main show page for Petitions. (views/petitions/shaow.html.erb) -->
+
+<div class="content">
+  <div class="tier"> <!-- Begin - Main tier for page. -->
+    <!-- Below -  Renders in the accordian from views/layouts/phones/... for mobile and tablet. -->
+    <%= render "layouts/phones/mobile_accordion" %>
+    <!-- Begin - City Petition Information . -->
+      <!-- Begin - Top Row Section of Container -->
+    <div class="col-d-7 col-t-11 col-p-12 padding-t-20 center">
+      <div class="col-all-12 card margin-b-15 p-0">
+        <div id="header_show_card" class="col-all-12">
+          <div class="tier">
+            <div class="text-xlarge no-margin col-all-12">
+              <div class="col-all-12 p-0 card-body text-medium pull-left">
+                <div class="col-tier margin-b-20">
+                  <div class="col-all-2 well mb-0 p-2" style="height: 100px;">
+                  <!-- Below -  Displays the Heart or Exclaim icon depending on score category Review > 60 || < 60 -->
+                    <div class="center-all">
+                      <%= "<i class='fas fa-file-signature theme_color_dark' style='font-size: 45px; position: relative; top: 17px'></i>".html_safe if @petition.pending %>
+                      <%= "<i class='fas fa-clipboard-list theme_color_dark' style='font-size: 45px; position: relative; top: 17px'></i>".html_safe if @petition.filed %> 
+                      <%= "<i class='fas fa-clipboard-check theme_color_dark' style='font-size: 45px; position: relative; top: 17px'></i>".html_safe if @petition.finished? %> 
+                    </div>
+                  </div>
+                  <div class="col-all-10 padding-l-15">
+                    <div class="tier mb-0">    
+                      <span class="text-xlarge bold show_text_scale" style="color: #645496 !important;">      
+                        <%= @petition.title %>
+                      </span>
+                      <br>
+                      <span class="col-tier padding-y-3">
+                        <span style="width: 45px !important; height: 40px !important;">
+                          <%= display_show_avatar(@petition.user) %>
+                        </span>
+                        <!-- Below - Users_helper.rb -  Displays user name as a link and to determine if the user is from the city or a non-resident -->
+                        <span class="padding-t-10">
+                          <%= display_user_name(@petition.user) %>
+                        </span>
+                      </span>
+                      <br>
+                      <div class="col-tier">
+                        <span class="text-big show_text_scale"> 
+                          Posted: <%= time_ago_in_words(@petition.created_at).capitalize %> ago - 
+                        </span>
+                        <span class="padding-l-5 text-big show_text_scale">                      
+                          <%= "Scored:" if @petition.finished? %>
+                          <%= "Current Score:" unless @petition.finished? %>
+                        </span>
+                        <span class="bold text-big show_text_scale padding-l-5">
+                          <%= display_score(@petition) %>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-tier mt-2 mb-4">
+                <!-- Begin -  Filter tags Row -->
+                <div class="" style="margin-right: 22px">
+                  <%= display_endorse_button(@petition, "petitions", "Petition", upvote_city_petition_path(@city, @petition.id)) %>
+                </div>
+                <a class="btn mr-3 alt-action" href='<%= city_petitions_path(@city) %>' >
+                 Petition
+                </a>
+                <a class="btn alt-action" href="
+                      <%= pending_city_petitions_path(@city) if @petition.pending %>
+                      <%= filed_city_petitions_path(@city) if @petition.filed %>
+                      ">
+                 <%= @petition.process %>
+                </a>  
+                <!-- End -  Filter tags Row -->
+                <div class="margin-l-auto">
+                  <!-- Below - Renders in helper method for endorse in upvotes_helper.rb. Instance method, name of controller, and then name of resource to display on the button itself. -->
+                  <%= link_to 'Edit Your Petition', edit_user_petition_path(@petition.user, @petition), class: "title_link text-medium" if is_current_users?(@petition) %>
+                </div>
+              </div>
+              <!-- Below -  Renders in Goal if there is no image -->
+              <%= render 'goal', obj: @petition unless @petition.image.attached? %>
+              <!-- Below -  Renders in Complaint description if there is no image -->
+              <%= render 'layouts/resources/resource_image', obj: @petition if @petition.image.attached? %>
+              <!-- Below -  Renders the follow and other user action buttons -->
+              <%= render 'layouts/resources/user_action_tier', obj: @petition %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <%= render 'goal', obj: @petition if @petition.image.attached? %>
+      <!-- Below -  Petiion Issues intended to be solved -->
+      <% if @petition.issues? %>
+        <div class="col-tier mt-4">
+          <p class="text-22 trending_font_size pull-left">
+            Petition Issues
+          </p>
+          <div class="col-all-12 card light-box-shadow">
+            <div class="card-body ">
+              <!-- Below -  Renders the City Review description in simple html format with the class found in global. -->
+              <%= simple_format(@petition.issues, {class: "show_page_description"}, wrapper_tag: 'div') %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+      <!-- Below -  Renders in Petition description -->
+      <%= render 'layouts/resources/resource_description', obj: @petition %>
+     <!-- Begin -  Petition Process Row  -->
+      <div class="mt-4">
+        <p class="trending_font_size text-22">
+          Petition Status 
+        </p>
+      </div>             
+      <div class="well p-0 col-tier bg-white mb-0 pb-0 border-radius-0 no-border-bottom no-border-radius">
+        <div class="col-tier light-box-shadow">
+          <div class="col-d-6 col-t-6 col-p-12 card border-y-none">
+            <div class="tier card-body no-border-bottom border-radius-0">
+              <div class="col-all-12">
+                <p class="roboto bold text-20 margin-l-8 padding-b-3 mt-0 margin-b-8 border-bottom">
+                  Process 
+                </p>
+              </div> 
+              <div class="col-all-12 margin-l-8">
+                <% if @petition.filed? %>
+                  <p class="text-18">
+                    <strong>Time Left:</strong>
+                    <%= @petition.days_left %> Days
+                  </p>  
+                <% elsif @petition.filed_at? %>
+                  <p class="text-18">
+                    <strong>Goal Reached:</strong>
+                    <%= display_date(@petition.filed_at) %>
+                  </p>  
+                <% end %>
+                <p class="text-18">
+                  <% if @petition.pending? %>
+                      <strong>Awaiting Signatures:</strong>
+                       <%= time_ago_in_words(@petition.created_at).capitalize %> ago 
+                  <% elsif @petition.filed? %>
+                       <strong><%= "Filed - Sent to #{@city.name}:" %></strong>
+                       <%= time_ago_in_words(@petition.filed_at).capitalize %> ago 
+                  <% elsif @petition.completed? %>
+                       <strong>Completed:</strong>
+                       <%= time_ago_in_words(@petition.completed_at).capitalize %> ago 
+                  <% elsif @petition.failed? %>
+                       <strong>Failed:</strong>
+                       <%= time_ago_in_words(@petition.failed_at).capitalize %> ago 
+                  <% end %>   <!-- End - Complaint Process if statement. -->
+                </p>
+                <p class="text-18 mb-0">
+                  <% if !@petition.pending? && @petition.filed? %> <!-- If complaint pending is false and complaint filed is true, display: -->
+                    <strong>Filed within: </strong>
+                    <%= distance_of_time_in_words(@petition.created_at, @petition.filed_at) %> <!-- time since complaint was pending. -->
+                  <% end %>
+                  <% if !@petition.filed? && @petition.completed? %> <!-- If complaint filed is false and complaint completed is true, display: -->
+                    <strong>Completed within:</strong>
+                    <%= distance_of_time_in_words(@petition.filed_at, @petition.completed_at) %> <!-- time since complaint was filed. -->
+                  <% end %>
+                </p>
+              </div>
+            </div> 
+          </div>   
+          <!-- Right side of Status -->
+          <div class="card col-d-6 col-t-6 col-p-12 no-y-border">
+            <div class="card-body no-border-bottom no-border-radius">
+              <div class="col-all-12">
+                <p class="roboto text-20 bold margin-l-8 padding-b-3 mt-0 margin-b-8 border-bottom">
+                  Progress 
+                </p>
+              </div>
+              <div class="col-all-12">
+                <span class="text-18 margin-l-8 mb-3">                      
+                  <%= "Signature Goal:  #{@petition.count_votes_up}  / 500" if @petition.pending? %>
+                  <%= "<i class='fas fa-envelope-square margin-r-8'></i>Signature Goal Reached!".html_safe unless @petition.pending? %>
+                </span>
+                <p class="text-18 margin-l-8 padding-y-10">
+                    Signature Percentage:      
+                    <%= @petition.vote_percentage %> %
+                    acheived
+                </p>
+                <!-- Below -  Displays the progressbar with the value of vote percentage. -->
+                <div class="tier"> 
+                  <div class="col-all-12 progress margin-l-8 mb-0">
+                    <div class="progress-bar" role="progressbar" 
+                     data-toggle="tooltip" data-placement="bottom" title="<%= @petition.count_votes_up %> / 500 " style="width: <%= "#{@petition.vote_percentage}%" %>" aria-valuenow="<%= @petition.vote_percentage.round %>" aria-valuemin="0" aria-valuemax="100">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div> 
+          <!-- End - Top half of petition status. -->
+          <!-- Begin - Process and Cities Response -->
+          <div class="col-tier">
+            <!-- Begin - Cities' Response right side -->
+            <div class="col-all-12 card">
+              <% if is_admins_city? %> <!-- Determines if User is a City Admin to interact with Complaints -->
+              <!-- Begin - Admin Response Buttons below Complaints' info -->
+              <div class="card-body">
+                <div class="theme_color_black text-xlarge center-all border-bottom">
+                  Respond to this Petition
+                </div>
+                <div class="tier mt-4">
+                  <!-- Begin -  Admin's button row -->
+                  <div id="admin_complaint_btns" class="tier center-all col-all-12">
+                    <div id="" class="col-d-4 col-t-4 col-p-12 ms_my_adminbtn" data-toggle="tooltip" data-placement="top" title="Confirm that you have seen, and acknowledge this Petition."> 
+                      <% if @petition.replied %> <!--  City has already replied -->  
+                        <button class="light-btn-shadow btn btn-lg action text-white mx-2" disabled><i class="fas fa-check-circle padding-r-8 "></i>Acknowledged</button>
+                      <% else %> <!-- City had NOT yet replied and complaint has not finished -->
+                        <%= link_to "<i class='fas fa-reply-all padding-r-8'></i>Acknowledge / Reply".html_safe, '#', id: "reply_#{@petition.id} " , class: "light-btn-shadow btn btn-lg action text-white mx-2", remote: true %>
+                      <% end %>
+                    </div>
+                    <div id="" class="col-d-4 col-t-4 col-p-12" data-toggle="tooltip" data-placement="top" title="Submit a plan to work towards implementing and addressing this Petition with <%= "#{@city.name}" %> citizens."> 
+                      <% if @petition.planned %> <!--  City has already submitted a plan-->  
+                        <button class="light-btn-shadow btn btn-lg action text-white mx-2" disabled><i class="fas fa-check-circle padding-r-8"></i>Planned</button>           
+                      <% else %> <!--  City has NOT submitted a plan and complaint has not finished-->  
+                        <%= link_to "<i class='fas fa-file-signature padding-r-8'></i>Submit Plan".html_safe, "#", id: "plan_#{@petition.id}", class: "light-btn-shadow btn btn-lg action text-white mx-2", remote: true %>                    
+                      <% end %>
+                    </div>
+                  </div>
+                </div> <!-- End - Admin Response Buttons below Complaints' info -->
+              </div>
+            <% else %> <!-- User is not the admin of this city. -->
+          <!-- Begin - Shows the Citys' response to the complaint to the user.
+                Since User is NOT an admin, this row will display City's Responses based on Complaints' Responses (planned/replied). -->
+              <div class="tier my-3 center card-body margin-b-10">
+                <div class="col-all-12 border-bottom center-all" style="height: 35px !important">
+                  <p class="text-20 bold center-all mt-0">
+                    <%= @petition.city.name %>'s  Response  
+                  </p>
+                </div> 
+                <div class="col-6 center my-1 pr-0 pl-0 no-border-top" style="border: 1px groove rgba(224, 224, 224, .3)">
+                  <p>
+                  <!-- Begin - If Statement whether the city has replied or not to the Complaint. -->
+                  <% if @petition.replied? %>
+                    <!-- Below - Displays if the City has replied. -->
+                    <div class="center-all"> 
+                      <i class="fa fa-check text-success text-xxlarge" aria-hidden="true"></i>
+                    </div>
+                    <p class="center-all mb-0">
+                      We hear you!
+                    </p>
+                    <p class="center-all mb-0">
+                      Acknowledged on: <%= display_date(@petition.replied_at) %>
+                    </p>
+                  <% else %>
+                    <!-- Below - Displays if the City HAS NOT replied. -->
+                    <div class="center-all"> 
+                      <i class="fa fa-times text-danger text-xxlarge" aria-hidden="true"></i>
+                    </div> 
+                    <p class="center-all mb-0">
+                      Not Acknowledged
+                    </p>
+                  <% end %>
+                  <!-- End - If Statement whether the city has replied or not to the Complaint. -->
+                  </p>
+                </div>
+                <div class="col-6 center my-1 padding-x-0 no-border-top" style="border: 1px groove rgba(224, 224, 224, .3);">
+                  <p>
+                  <!-- Begin - If Statement whether the city has submitted a plan or not for the Complaint. -->
+                  <% if @petition.planned? %>
+                    <div class="center-all"> 
+                      <i class="fa fa-check text-success text-xxlarge" aria-hidden="true"></i>
+                    </div>
+                    <p class="center-all mb-0">
+                      We have a plan. See below!
+                    </p>
+                    <p class="center-all mb-0">
+                      Plan Submitted on: <%= display_date(@petition.planned_at) %>
+                    </p>
+                  <% else %>
+                    <div class="center-all"> 
+                      <i class="fa fa-times text-danger text-xxlarge" aria-hidden="true"></i>
+                    </div>
+                    <p class="center-all mb-0">
+                      Not Planned
+                    </p>
+                  <% end %> <!-- End - If Statement whether the city has submitted a plan or not for the Complaint. -->
+                  </p>
+                </div>
+              </div> <!-- End - Row for Responses from cities -->
+            <% end %> <!-- End - Shows the Citys' response to the user. -->
+          </div>   <!-- End - Cities' Response right side -->
+        </div> <!-- End - Process and Cities Response -->
+      </div>
+    </div>
+<!-- End -  Petition Process Row -->
+  <!-- Begin -  Area for city admins' response of ackowledge -->
+  <% if @petition.replied? %>
+    <div class="content margin-t-25">
+      <div class="tier transparent">
+        <div class="col-all-12">
+          <p class="theme_color_black text-xlarge b pull-left margin-all-10 margin-l-0 text-18" style="margin-left: 0px !important;">
+            <%= @petition.city.name %>'s Reply:
+          </p>
+        </div>
+        <div class="col-all-12 light-box-shadow card" style="border: 1px solid rgba(128, 128, 128, .5)">
+          <div class="col-all-12 pull-left">
+            <div class="card-body theme_color_black bg-white">
+              Reply goes here
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+  <!-- End -  Area for city admins' response of acknowledge -->
+  <!-- Begin -  Area for city admins' response of submitted plan -->
+  <% if @petition.planned? %>
+    <div class="content margin-t-25">
+      <div class="tier transparent">
+        <div class="col-all-12">
+          <p class="theme_color_black text-xlarge b pull-left margin-all-10 margin-l-0 text-18" style="margin-left: 0px !important;">
+            <%= @petition.city.name %>'s Plan
+          </p>
+        </div>
+        <div class="col-all-12 light-box-shadow card" style="border: 1px solid rgba(128, 128, 128, .5)">
+          <div class="col-all-12 pull-left">
+            <div class="card-body theme_color_black bg-white">
+              Plan goes here
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+  <!-- End -  Area for city admins' response of submitted planned -->
+
+  <!-- Begin - Citizen Action Complaint rendering if the complaint has been filed and the email was sent to the city. -->
+  <% if @petition.filed? %>   <!-- If statement that will display the email sent to the City if it's been filed. -->
+    <div class="content margin-t-10">
+      <div class="tier transparent">
+        <div class="col-all-12">
+          <p class="trending_font_size b margin-all-10 margin-l-0 text-22">
+            Citizen Action Petition
+          </p>
+        </div>
+        <div class="col-all-12 light-box-shadow card" style="border: 1px solid rgba(128, 128, 128, .5)">
+          <div class="col-all-12 pull-left">
+            <div class="card-body theme_color_black bg-white">
+              <p class="text-medium">
+                      <%= @petition.user.name %>, a citizen of 
+                    <b>
+                      <%= @city.name.capitalize %>,
+                    </b> 
+                        has gathered enough signatures to officially send a petition for your consideration. 
+                    <br>
+                    The petition,
+                    <b>  
+                        "<%= @petition.title %>",
+                    </b>
+                        is being sent to you because <%= @petition.count_votes_up %> <%= @city.name %> citizens have signed it in support of its goal, as follows:
+                    <b>
+                        <%= @petition.goal %>
+                    </b>
+                    <%= " in order to address these issues: #{@petition.issues}" if @petition.issues %>
+                    <p class="text-medium">
+                      <% if @petition.file.attached? %>
+                        If you would like to see more information, the petition's author attached the following document for clarification: <%= link_to "Download File".html_safe, rails_blob_path(@petition.file, disposition: :attachment) %>
+                      <% end %>
+                    </p>
+                    <p class="text-medium">
+                      Ossemble acts as a liaison between local citizens and their government. We hope that you can see the demand and passion behind this petition, and will respond to your citizens. This can be accomplished by visiting and interacting with the petition here: <%= link_to "#{@petition.title} Petition for #{@city.name}", city_petition_url(@city, @petition) %>.   
+                    </p>
+                  </p>
+              
+                  <h3>
+                    Sincerely,
+                    <br>
+                    X 
+                    <span style="text-decoration: underline; font-weight: bold; ">
+                      Ossemble Inc.
+                    </span> 
+                     <span style="font-size: 18px !important">
+                      and <%= @petition.count_votes_up %> of <%= @city.name %>, <%= @city.state_name %> Ossemble Users. 
+                    </span>
+                  </h1>
+                 
+                  <p class="text-medium">
+                    Thank you!
+                  </p>
+                  <p class="text-medium">
+                    Date: <%= display_date(@petition.filed_at) %> <!-- Renders the current time in EST long ordinal -->
+                  </p>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %> <!-- End - Citizen Action Complaint rendering if the complaint has been filed and the email was sent to the city. -->
+      <div id="new_comment_tier" class="margin-t-35 no-top-border tier">
+        <div class="col-all-12">
+          <%= render 'comments/comment_form', obj: @petition %>
+        </div>
+      </div>
+      <!-- Below - Rendering for existing Comments. -->
+      <div id="comments_list" class="tier margin-t-30 padding-x-10">
+        <div class="col-all-12">
+          <ul id="comments_ul" class="pl-0">
+            <div id="comment_flash" class="vanish panel panel-success light-box-shadow col-all-12" style="height: 3.5rem"><div class="col-tier margin-t-5"><p class="text-success bold center-all text-xxmedium no-margin col-all-12">Your comment has posted!</p></div></div>
+            <li class="comment_placeholder vanish"></li>
+            <%= render(partial: 'comments/comment', collection: @petition.comments)%>
+          </ul>
+        </div>
+      </div>     
+    </div>
+    <div id="non_ms_ap_content" class="col-d-3 col-t-10" >
+      <%= render 'layouts/action_panel', obj: @petition %>
+    </div>
+    <!-- End - Far right - Action panel with col-3 -->
+  </div>
+</div> <!-- End - Main page tier -->
+
+<script>
+  $('.progress-bar[data-toggle="tooltip"]').tooltip({
+    animated: 'fade',
+    placement: 'bottom'
+});
+</script>

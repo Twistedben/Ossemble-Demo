@@ -1,0 +1,424 @@
+// Main Stylesheets for buttons across the site.
+
+// Begin - Main BUttons CSS
+
+// Class on a lot of Submit buttons in pages with forms
+.form_btn {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-size: 18px;
+  height: 55px !important;
+  padding: 5px 8px;
+    @media screen and (max-width: 768px) {
+    font-size: 19px;
+    margin-left: 15px;
+    margin-right: 15px;
+                                   }
+  &.button-cs {
+    padding: 5px 14px !important;
+  }
+}
+
+.conv_btn {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-size: 18px !important;
+  height: 45px !important;
+  padding: 5px 8px !important;
+    @media screen and (max-width: 768px) {
+    font-size: 19px !important;
+    margin-top: 10px !important;
+                               }
+  &.button-cs {
+    padding: 5px 14px !important;
+  }
+}
+// Below - Delete profile button on edit pages for users and admin
+#delete_profile_btn {
+  border: 1px solid rgba(100, 84, 150, 0.2);
+  float: right !important;
+  margin-top: 15px;
+  box-shadow: 1px 2px 12px 1px rgba(0, 0, 0, 0.2) !important;
+  font-size: 15px;
+  padding: 6px 8px 10px 8px;
+  }
+
+  #upvote_btn_container {
+    width: 90px;
+    margin-right: 40px;
+  }
+// Endorse button across site
+  #endorsed_btn {
+    font-size: 15px;
+    position: relative;
+    border-radius: 4px;
+    border: 2px solid #645496;
+    height: 34px !important;
+    border-radius: 4px;
+    background-color: #645496 !important;
+    color: white !important;
+    padding: 4px 10px;
+    width: 113px !important;
+    text-shadow: none !important;
+    box-shadow: 1.5px 1.5px 14px rgba(0, 0, 0, 0.2) !important;
+    -webkit-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;    
+    i {
+      margin-right: 8px !important;
+    }      
+  }
+  #endorse_btn {
+    cursor: pointer;
+    font-size: 15px;
+    position: relative;
+    border-radius: 4px;
+    border: 2px solid #645496;
+    background-color: white;
+    background: none;
+    color: #645496;
+    padding: 6px 10px;
+    width: 113px !important;
+    text-shadow: none !important;
+    box-shadow: 1.5px 1.5px 14px rgba(0, 0, 0, 0.2) !important;
+    -webkit-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;    
+    i {
+     margin-right: 8px !important; 
+    }
+    &:hover, &:focus, &:active {
+      border-radius: 4px;
+      background-color: #645496 !important;
+      color: white !important;
+    }
+  }
+
+  .action {
+    background: -moz-linear-gradient(269deg, #645496 12%, #554780 75%);/* FF3.6+ */
+    background: -webkit-gradient(linear, 269deg, color-stop(12%, 645496), color-stop(75%, 554780));/* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(269deg, #645496 12%, #554780 75%);/* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(269deg, #645496 12%, #554780 75%);/* Opera 11.10+ */
+    background: -ms-linear-gradient(269deg, #645496 12%, #554780 75%);/* IE10+ */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#1301FE', endColorstr='#F4F60C', GradientType='1'); /* for IE */
+    background: linear-gradient(269deg, #645496 12%, #554780 75%);/* W3C */
+    //background-color: #645496 !important;
+    color: white !important;
+    box-shadow: 1px 2px 12px 1px rgba(0, 0, 0, 0.2);
+  }
+  .action:focus, .action:active {
+    background: -moz-linear-gradient(269deg, #645496 12%, #554780 70%) !important;/* FF3.6+ */
+    background: -webkit-gradient(linear, 269deg, color-stop(12%, 645496), color-stop(85%, 554780)) !important;/* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(269deg, #645496 12%, #554780 70%) !important;/* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(269deg, #645496 12%, #554780 80%) !important;/* Opera 11.10+ */
+    background: -ms-linear-gradient(269deg, #645496 12%, #554780 85%) !important;/* IE10+ */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#1301FE', endColorstr='#F4F60C', GradientType='1') !important; /* for IE */
+    background: linear-gradient(269deg, #645496 12%, #554780 88%) !important;/* W3C */
+    box-shadow: 1px 1px 16px rgba(0, 0, 0, 0.7) !important;
+  }
+  
+  .alt-action {
+    border: 2px solid #645496 !important;
+    background-color: white;
+    color: #645496;
+    height: 34px !important;
+    box-shadow: 1px 2px 12px 1px rgba(0, 0, 0, 0.2);
+  }
+  
+  #archive_btn {
+    padding: 5px 13px !important;
+    font-size: 16px;
+    i {
+      padding-right: 10px;
+    }
+  }
+  .alt-action2, .upload {
+    border: 2px solid #645496 !important;
+    background-color: white;
+    color: #645496;
+    box-shadow: 1px 2px 12px 1px rgba(0, 0, 0, 0.2);
+  }
+  
+  input.upload.btn {
+    width: 220px;
+  }
+  
+  .button-cs {
+    border-radius: 4px;
+    border: 2px solid #645496;
+    background-color: white;
+    color: #645496;
+    padding: 8px;
+    text-align: center;
+    cursor: pointer;
+    font-size: 18px;
+    position: relative;
+    height: 35px;
+    -webkit-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+    box-shadow: 1px 1px 10px rgba(0,0,0,0.23);
+    // Css for show page filter tags. Add an ID to a button-cs class
+    &#filter-tag {
+      font-size: 16px;
+      padding: 5px 12px;
+      margin-right: 8px;
+    }
+    &:hover, &:focus, &:active {
+      border-radius: 4px;
+      background-color: #645496 !important;
+      color: white !important;
+    }
+     &:hover span:after {
+      opacity: 1;
+      right: 0;
+    }
+  }
+  
+   
+// Removes the box around button clicks on View Panel
+.btn:active, .btn:focus, .btn.active, .btn:active:focus {
+   background-image: none;
+   outline: 0;
+   -webkit-box-shadow: none;
+   box-shadow: none;
+}
+
+.btn:active {
+  background-color: rgba(161, 101, 170, .1);
+  -webkit-transition: background-color .2s linear;
+  -ms-transition: background-color .2s linear;
+  transition: background-color .2s ease-in-out;
+}
+    
+  
+ 
+  
+  .passive-action {
+    color: white;
+    text-shadow: 1px 1px 8px rgba(0,0,0, 0.8);
+    border-width: 1px;
+    border-top-style: inset;
+    border-right-style: outset;
+    border-bottom-style: outset;
+    border-left-style: inset;
+    border-color: #645496;
+    background: -moz-linear-gradient(269deg, #808080 12%, #696969 57%);/* FF3.6+ */
+    background: -webkit-gradient(linear, 269deg, color-stop(12%, 808080), color-stop(57%, 696969));/* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(269deg, #808080 12%, #696969 57%);/* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(269deg, #808080 12%, #696969 57%);/* Opera 11.10+ */
+    background: -ms-linear-gradient(269deg, #808080 12%, #696969 57%);/* IE10+ */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#1301FE', endColorstr='#F4F60C', GradientType='1'); /* for IE */
+    background: linear-gradient(269deg, #808080 12%, #696969 57%);/* W3C */
+    box-shadow: 1px 2px 12px 1px rgba(0, 0, 0, 0.2);
+  }
+  // Button CSS
+  // Adds an interactive shadow feel to action buttons
+  .btn.action:hover, #endorse_btn:hover {
+    text-shadow: 1px 1px 8px rgba(255, 255, 255, 0.15), -1px -1px 8px rgba(255, 255, 255, 0.15) !important;
+    box-shadow: 1px 1px 15px rgba(0, 0, 0, .2), -1px -1px 15px rgba(0, 0, 0, .2) !important;
+  }
+  // Adds an interactive shadow feel to action buttons, and darkens background when click.
+  .btn.action:active, #endorse_btn:active {
+    box-shadow: 1px 1px 15px rgba(100, 84, 150, 0.4), -1px -1px 15px rgba(100, 84, 150, 0.4), inset 0px 0px 400px 110px rgba(0, 0, 0, .15) !important; 
+  }
+  // Adds an interactive shadow feel to action buttons
+  .btn.alt-action:hover, .btn.alt-action2:hover {
+    color: #3e345e !important;
+    border-color: #8977c4 !important;
+    box-shadow: 1px 1px 12px rgba(0, 0, 0, .16), -1px -1px 12px rgba(0, 0, 0, .16) !important;
+  }
+  // Adds an interactive shadow feel to action buttons, and darkens background when click.
+  .btn.alt-action:active, .btn.alt-action2:active  {
+    box-shadow: 1px 1px 15px rgba(100, 84, 150, 0.4), -1px -1px 15px rgba(100, 84, 150, 0.4) !important; //, inset 0px 0px 400px 110px rgba(100, 84, 150, 0.08) !important; 
+    border-color: #8977c4 !important;
+    background-color: whitesmoke;
+    color: #3e345e !important;
+  }
+  .btn.upload:hover {
+    color: #3e345e !important;
+    border-color: #8977c4 !important;
+    background-color: whitesmoke !important;
+    box-shadow: 1px 1px 12px rgba(0, 0, 0, .16), -1px -1px 12px rgba(0, 0, 0, .16) !important;
+  }
+ .btn.upload:active, .btn.upload:focus {
+    box-shadow: 1px 1px 15px rgba(100, 84, 150, 0.4), -1px -1px 15px rgba(100, 84, 150, 0.4) !important; //, inset 0px 0px 400px 110px rgba(100, 84, 150, 0.08) !important; 
+    border-color: #8977c4 !important;
+    background-color: whitesmoke !important;
+    color: #3e345e !important;
+ }
+ 
+ .button-up {
+      text-align: center;
+      cursor: pointer;
+      font-size: 16px;
+      position: relative;
+  }
+  
+  .button-up {
+      border-radius: 4px;
+      border: 2px solid #645496;
+      background-color: white;
+      color: #645496;
+      padding: 5px;
+      width: 110px;
+      height: 35px;
+      -webkit-transition: all 0.3s ease;
+      -o-transition: all 0.3s ease;
+      transition: all 0.3s ease;
+  }
+  
+    .button-up:hover {
+      border-radius: 4px;
+      background-color: #645496 !important;
+      color: white !important;
+      padding: 5px;
+  }
+  
+      .button-up:focus {
+      border-radius: 4px;
+      background-color: #645496 !important;
+      color: white !important;
+      padding: 5px;
+  }
+  
+  .button-up:hover span:after {
+    opacity: 1;
+    right: 0;
+  }
+  
+   .button-su, #contact_us_btn {
+      text-align: center;
+      cursor: pointer;
+      font-size: 14px;
+      position: relative;
+  }
+   #contact_us_btn {
+     height: 40px !important;
+     width: 228px !important;
+     font-size: 17px;
+     box-shadow: 1px 1px 15px rgba(0, 0, 0, 0.2) !important;
+     @media screen and (max-width: 1150px) and (min-width: 768px) {
+        width: 180px !important; 
+     }
+   }
+  .button-su, #contact_us_btn {
+      border-radius: 4px;
+      border: 2px solid #645496;
+      background-color: white;
+      color: #645496;
+      padding: 6px 12px;
+      height: 35px;
+      -webkit-transition: all 0.3s ease;
+      -o-transition: all 0.3s ease;
+      transition: all 0.3s ease;
+  }
+  
+    .button-su:hover, .button-su:focus, #contact_us_btn:hover, #contact_us_btn:focus {
+      border-radius: 4px;
+      background-color: #645496 !important;
+      color: white !important;
+  }
+  
+  .button-su:hover span:after {
+    opacity: 1;
+    right: 0;
+  }
+  
+  
+   .button-report {
+      text-align: center;
+      cursor: pointer;
+      font-size: 14px;
+      position: relative;
+      top: 3px !important;
+  }
+  
+  .button-report {
+      border-radius: 4px;
+      border: 2px solid #645496;
+      background-color: white;
+      color: #645496;
+      padding: 2px;
+      width: 90px;
+      height: 25px;
+      -webkit-transition: all 0.3s ease;
+      -o-transition: all 0.3s ease;
+      transition: all 0.3s ease;
+  }
+  
+    .button-report:hover {
+      border-radius: 4px;
+      background-color: #645496 !important;
+      color: white !important;
+  }
+  
+      .button-report:focus {
+      border-radius: 4px;
+      background-color: #645496 !important;
+      color: white !important;
+  }
+  
+  .button-report:hover span:after {
+    opacity: 1;
+    right: 0;
+  }
+  
+  .button-land {
+      text-align: center;
+      cursor: pointer;
+      font-size: 18px;
+      position: relative;
+      top: 3px !important;
+  }
+  
+  .button-land {
+      border-radius: 4px;
+      border: 2px solid #645496;
+      background-color: white;
+      color: #645496;
+      padding: 8px;
+
+      -webkit-transition: all 0.3s ease;
+      -o-transition: all 0.3s ease;
+      transition: all 0.3s ease;
+  }
+  
+    .button-land:hover {
+      border-radius: 4px;
+      background-color: #645496 !important;
+      color: white !important;
+  }
+  
+      .button-land:focus {
+      border-radius: 4px;
+      background-color: #645496 !important;
+      color: white !important;
+  }
+  
+  .button-land:hover span:after {
+    opacity: 1;
+    right: 0;
+  }
+// End - Main Buttons CSS
+
+.post_ap_text {
+  @media screen and (max-width: 650px) {
+  font-size: 15px !important;
+  padding-bottom: 6px !important;
+                               }
+}
+
+.text_btn_hover {
+  color: #645496;
+}
+
+.text_btn_hover:hover {
+  color: #645496;
+  color: white !important;
+}
+
+.text_btn_hover:focus {
+  color: #645496;
+  color: white !important;
+}

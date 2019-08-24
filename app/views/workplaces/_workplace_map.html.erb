@@ -1,0 +1,48 @@
+<!-- Map partial for rendering the workplace map and the posts of suggestions and reports inside it-->
+<script>
+ var map = L.map('oss_map');
+ // Below - Renders in the map tile layer, fullscreen and repositition. Won't 
+ <%= render 'layouts/maps/map_instantiation.js' unless @unauthorized == "true" %>
+// Below - Scaling Zoom and Disabling Drag/Zoom
+L.control.scale().addTo(map);
+map.options.minZoom = 10;
+map.options.maxZoom = 19;
+// Below - Adds Workplace Shape's GeoJSON DB 
+var geojsonLayer, layer_group, workplace_geojson;
+  
+  workplace_geojson = [{
+    "type": "FeatureCollection",
+      "features" : [
+        <%= raw(@workplace.shape.geo) %>
+      ]
+  }];
+  
+  var feature_group = new L.FeatureGroup(); 
+  geojsonLayer = L.geoJson(workplace_geojson, {
+    onEachFeature: function(feature, layer) {
+      console.log(layer);
+      feature_group.addLayer(layer);
+    }
+  });
+  feature_group.setStyle({"color": "rgba(100, 84, 150, 0.65)"});
+  feature_group.setStyle({"weight": "4"});
+  map.addLayer(feature_group);
+  map.fitBounds(feature_group.getBounds());
+
+    
+    // Below - Allows awesome markers
+    L.AwesomeMarkers.Icon.prototype.options.prefix = 'fa';
+         
+<% if obj == @workplace_map_resources %> // Map is being rendered from Workplace Map page (workplaces/workplace_map.html.erb)
+      // Below - Renders the shape to the map based on first category of the shape, "L.recatangle", stored in DB as category, then the Lat and Long. Color is based on category of Map Post, red for report, blue for suggestion, and purpler for other
+     // Set_shape_color method is in maps_helper.rb file in Helpers methods.
+  <% obj.each do |map_post| %>
+  // Below - Renders only markers
+    <% unless map_post.markers.empty? %>
+       var shape = L.<%= map_post.shapes.first.category %>(<%= map_post.shapes.first.lat_lng %>, <%= "#{map_post.shapes.first.radius}," if map_post.shapes.first.category == "circle" %>
+         {color: "<%= set_shape_color(map_post) %>" }
+         ).addTo(map).bindPopup("<h5 class=''><div class='border-bottom margin-y-10' style='line-height: 4px;'><p class='margin-y-10 text-16' style='text-align: center; font-weight: bold; font-family: Roboto, Times New Roman;'> <a class='title_link' href='<%= workplace_map_post_path(map_post.institute, map_post.workplace, map_post) %>'><%= map_post.title %></a> </p> </div> <p class='margin-y-10 text-14'> <b> Address: </b> <%= map_post.address %> </p>  <p class='margin-y-10 text-14'> <b> Category: </b> <%= map_post.category %> </p></h5>");
+    <% end %> // End - Map post loop
+  <% end %> // End - Map post loop
+<% end %> // End - If statement determining what rendering object is being passed in.
+</script>

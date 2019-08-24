@@ -1,0 +1,229 @@
+// Style sheet for anything related to conversations, Messaging, chatrooms and so on. (views/admin_chatrooms   views/admin_messages)
+
+
+#chatroom_header_container { 
+  background-color: rgba(200, 200, 200, .1); 
+  border-bottom: 1px solid rgba(119, 119, 119, .5);
+  box-shadow: 1px 1px 14px rgba(0, 0, 0, .15);
+  #chatroom_header {
+    padding: 12px 5px 8px 5px;
+    text-align: left;
+    float: left;
+    h3 {
+      margin: 0px !important;
+      font-family: "Roboto", "Helvetica Neue", Helvetica, Arial;
+      font-weight: bold;
+      color: black;
+    }
+    p {
+      font-size: 16px;
+      margin: 10px 0px;
+    }
+  }
+  #chatroom_header_settings_container {
+    padding: 10px 20px;
+    #chatroom_header_users, #chatroom_header_edit {
+      width: 50%;
+      height: 30px;
+      .chatroom_header_icon_container {
+        width: 18%;
+        float: left;
+        i {
+          padding: 5px;
+          font-size: 20px;
+        }
+      }
+      .chatroom_header_text_container {
+        width: 82%;
+        float: left;
+        padding-top: 3px;
+        span {
+          padding-left: 5px;
+          font-size: 18px;
+        }
+      }
+    }
+  }
+  
+}
+
+
+#conversation_console {
+  overflow-y: scroll; 
+  overflow-x: hidden; 
+  min-height: 500px !important; 
+  max-height: 575px !important;
+  margin-bottom: 15px;
+  padding-left: 13px;
+  
+  #message_container {
+    padding: 2px;
+    &:hover {
+      background: rgba(100, 100, 100, 0.03) !important;
+      box-shadow: 1px 1px 14px rgba(0, 0, 0, 0.15);
+    }
+    .message_header {
+      font-size: 15px;
+      span {
+        color: #585858 !important;
+      }
+      #new_message {
+        width: 100%;
+        border-bottom: 1px solid rgba(255, 0, 0, 0.30);
+      }
+    }
+    #message_avatar {
+      margin-top: 10px;
+      height: 40px !important; 
+      width: 40px !important; 
+      border-radius: 50%
+    }
+    #message_body {
+      position: relative;
+      top: -14px;
+      padding-left: 2px;
+      font-size: 16px;
+    }
+  }
+}
+
+#conversations_list {
+  border: 2px ridge rgba(0, 0, 0, 0.25);
+  border-bottom: none !important;
+  padding: 0px 5px;
+  // Begin - Background Gradient
+    background: -moz-linear-gradient(180deg, #79807E 0, #A8A8A8 59%, #919191 92%);/* FF3.6+ */
+    background: -webkit-gradient(linear, 180deg, color-stop(0, 79807E), color-stop(59%, A8A8A8), color-stop(92%, 919191));/* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(180deg, #79807E 0, #A8A8A8 59%, #919191 92%);/* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(180deg, #79807E 0, #A8A8A8 59%, #919191 92%);/* Opera 11.10+ */
+    background: -ms-linear-gradient(180deg, #79807E 0, #A8A8A8 59%, #919191 92%);/* IE10+ */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#1301FE', endColorstr='#F4F60C', GradientType='1'); /* for IE */
+    background: linear-gradient(180deg, #79807E 0, #A8A8A8 59%, #919191 92%);/* W3C */
+  // End - Background Gradient
+  h3 {
+    margin: 5px 5px;
+    padding: 10px 5px;
+    color: white;
+    border-bottom: 1.5px;
+    border-color: rgba(255, 255, 255, 0.8);
+    border-bottom-style: groove;
+    text-align: center;
+    font-size: 2.2rem;
+    letter-spacing: 1.6px;
+    text-transform: uppercase;
+    font-family: "Roboto", "Helvetica Neue",Helvetica,Arial,sans-serif;
+  }
+  h3#available_chatrooms_header {
+    margin: 20px 5px 15px 5px;
+    padding: 10px 5px;
+    color: white;
+    border-bottom: 1.5px;
+    border-color: rgba(255, 255, 255, 0.8);    
+    border-top: 1.5px;
+    border-style: groove;
+    text-align: center;
+    border-left: none;
+    border-right: none;
+  }
+  
+  li {
+    font-size: 18px;
+    margin-bottom: 10px;
+    a {
+      color: white;
+      &:hover {
+        text-decoration: underline !important;
+        font-weight: bold !important;
+      }
+    }
+  }
+  div.chatroom_icon_container {
+    width: 15%;
+    float: left;
+    padding-right: 8px;
+    i.fa-plus {
+      color: #04ff00;
+      opacity: 0.35;
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+    i.fa-sign-out-alt {
+      color: #ff0000;
+      opacity: 0.35;
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+  }
+  div.chatroom_link_container {
+    width: 85%;
+    float: right;
+    &.current_chatroom {
+      
+      .chatroom_link {
+        border-bottom: 2px solid white;
+      
+        &:hover {
+          text-decoration: none !important;
+        }
+      }
+    }
+    a {
+      float: left;
+    }
+  }
+}
+
+#conversation_field {
+  padding: 0px 10px;
+
+  #message_body {
+    padding: 5px;
+    min-height: 85px !important;
+    max-height: 85px;
+    width:  100% !important; 
+    border: 2px groove #A8A8A8;
+    font-size: 16px;
+    resize: none !important;
+  }
+  
+  #send_message {
+    display: none !important;
+  }
+  
+  #upload_file_message {
+    margin: 5px 0px;
+    padding-top: 8px;
+    width: 220px; height: 45px;
+    
+  }
+}
+
+
+#side_bar_new_chatroom_container {
+  border-top-color: rgba(0, 0, 0, 0.3);
+  border: 2px ridge rgba(0, 0, 0, 0.25);
+  box-shadow: 1px 1px 14px rgba(0, 0, 0, 0.15);
+  padding: 15px;
+  // Begin - Gradient Background
+    background: -moz-linear-gradient(270deg, #858C8A 0, #ADADAD 59%, #ABABAB 92%);/* FF3.6+ */
+    background: -webkit-gradient(linear, 270deg, color-stop(0, 858C8A), color-stop(59%, ADADAD), color-stop(92%, ABABAB));/* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(270deg, #858C8A 0, #ADADAD 59%, #ABABAB 92%);/* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(270deg, #858C8A 0, #ADADAD 59%, #ABABAB 92%);/* Opera 11.10+ */
+    background: -ms-linear-gradient(270deg, #858C8A 0, #ADADAD 59%, #ABABAB 92%);/* IE10+ */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#1301FE', endColorstr='#F4F60C', GradientType='1'); /* for IE */
+    background: linear-gradient(270deg, #858C8A 0, #ADADAD 59%, #ABABAB 92%);/* W3C */
+  // End - Gradient Background
+  a {
+    font-size: 19px !important;
+    color: white;
+    text-shadow: 1px 1px rgba(0, 0, 0, 0.3), 1px 1px rgba(255, 255, 255, 0.2);
+    i {
+      padding-right: 12px;
+    }
+    &:hover {
+      font-weight: bold;
+    }
+  }
+}

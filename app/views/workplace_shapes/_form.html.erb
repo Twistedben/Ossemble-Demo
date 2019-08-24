@@ -1,0 +1,21 @@
+
+<!--  POST Form for adding a new county, city or district shape to a workplace channel. This is rendered from workplace_shapes -> new.html.erb and rendered in one area for county and district and rendered at bottom for cities. -->
+
+<%= simple_form_for @shape, url: new_workplace_shape_path do |f| %>
+<!-- Below - Hidden field tags for storing the geojson name, state_id, and geo, of the boundary on submit. -->
+  <input type="hidden" name="workplace_shape[name]"     id="shape_name">
+  <input type="hidden" name="workplace_shape[geo]"      id="shape_geo">
+  <input type="hidden" name="workplace_shape[state_id]" id="shape_state">
+  <input type="hidden" name="workplace_shape[geo_id]"   id="shape_geo_id">
+  <input type="hidden" name="workplace_shape[category]" id="shape_category" value="<%= params[:map] %>">
+  <div class="col-tier">
+    <div id="submit_tier" class="col-all-12">
+      <div id="arrow_tier" class="">
+        <div id="submit_arrow_btn" class="arrow"></div>
+      </div>
+      <div id="submit_btn_tier" class="">
+        <%= f.submit 'Assign Map', id: 'submit_map_btn', class: "form_btn action btn disabled", onclick: "amplitude.getInstance().logEvent('Channel Map Created');"  %>
+      </div>
+    </div>
+  </div>
+<% end %>

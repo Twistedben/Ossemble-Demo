@@ -1,0 +1,149 @@
+<!-- Map partial for rendering the map for new workplace map posts -->
+<div class="leaflet-top leaflet-right">
+  <div id="change_map_btn_container">  <!-- here the legend -->
+    <input type="button" id="change_map" value="Change Map" onclick="changeMap();" class="btn button-cs" />
+  </div>
+</div>  
+
+<script>
+ var map = L.map('new_workplace_post_map');
+ // Below - Renders in the map tile layer, fullscreen and repositition.
+ <%= render 'layouts/maps/map_instantiation.js' %>
+ // Below - Scaling Zoom and Disabling Drag/Zoom
+  L.control.scale().addTo(map);
+  map.options.minZoom = 4;
+  map.options.maxZoom = 19;
+  L.AwesomeMarkers.Icon.prototype.options.prefix = 'fa';
+
+// Begin - WORKPLACE SHAPE: Adds Workplace Shape's GeoJSON DB 
+  var geojsonLayer, layer_group, workplace_geojson;
+  
+  workplace_geojson = [{
+    "type": "FeatureCollection",
+      "features" : [
+        <%= raw(@workplace.shape.geo) %>
+      ]
+  }];
+  
+  layer_group = new L.layerGroup();
+  geojsonLayer = L.geoJson(workplace_geojson, {
+    onEachFeature: function(feature, layer) {
+      map.fitBounds(layer.getBounds());
+    }
+  });
+
+  geojsonLayer.setStyle({"color": "rgba(100, 84, 150, 0.55)"});
+  geojsonLayer.setStyle({"weight": "5"});
+  layer_group.addLayer(geojsonLayer);
+  map.addLayer(layer_group);
+
+  // Below - Layer Group to add to when a shape is drawn
+  var drawnItems = new L.FeatureGroup();
+  map.addLayer(drawnItems);
+ // Below - Provides
+ var drawControl = new L.Control.Draw ({
+   // Circle and rectangle disabled due to mobile unsupported.
+   draw: {
+      circle: false,
+      rectangle: false,
+      marker: {
+        icon: L.AwesomeMarkers.icon({
+          icon: 'fas fa-dot-circle',
+          markerColor: 'blue',
+        })
+      },
+      polygon: {
+        allowIntersection: true,
+        showArea: true,
+        metric: false,
+        feet: true,
+        showLength: true,
+        drawError: {
+                color: '#e1e100', // Color the shape will turn when intersects
+                message: '<strong>Oh snap!<strong> you can\'t draw that!' // Message that will show when intersect
+        },
+      },
+      polyline: {
+        showLength: true,
+        metric: false
+      },
+   },
+   edit: {
+       featureGroup: drawnItems
+   }
+ });
+ map.addControl(drawControl);
+
+  // Below - Creates a feature group to hold multiple layers when the user clicks on a county, whether on add or remove
+  var markerCount = 0;
+  drawnItems.on('layeradd', function(event) {
+    var layer = event.layer.toGeoJSON();
+    markerCount += 1;
+    layer.geometry.properties = markerCount;
+    ( shape_geo.val(shape_geo.val() + JSON.stringify(layer.geometry) + ",")); // Appends the layer's json to the form field
+    // Below - If the drawn item is not a marker, center on its bounds, else if it's a marker, center on its lat lngs with a 15 set zoom.
+    if (event.layer._latlng == undefined) { // Shape, not marker added
+      map.fitBounds(event.layer.getBounds());
+    } else { // Marker added
+      map.setView(event.layer._latlng, 14);
+    };
+    event.layer.bindPopup("<h4 class='text-center'>" + markerCount.toString() + "</h4>").openPopup();
+    if (shape_geo.val() != "") {
+      submit_map_btn.removeClass("disabled");
+      submit_map_btn.removeClass("action");
+      submit_map_btn.addClass("button-cs");
+      submit_map_btn.prop("disabled", false);
+    }
+  });
+  drawnItems.on('layerremove', function(event) {
+    var layer = event.layer.toGeoJSON();
+    // Below - Removes the form field's layer's json that was already added.
+    var removed_layer = JSON.stringify(layer.geometry) + ",";
+    ( shape_geo.val(shape_geo.val().split(removed_layer).join("")));
+    if (shape_geo.val() == "") {
+      submit_map_btn.addClass("disabled");
+      submit_map_btn.addClass("action");
+      submit_map_btn.removeClass("button-cs");
+      submit_map_btn.prop("disabled", true);
+    }
+  });
+  // Below - Shape or marker drawn on map
+  map.on('draw:created', function (e) {
+    var type = e.layerType,
+        layer = e.layer;
+    drawnItems.addLayer(layer); // Adds created shape to map
+  });
+
+  map.on('draw:editvertex', function (e) {
+    ( shape_geo.val(''));
+  });
+  map.on('draw:editstop', function (e) {
+    drawnItems.eachLayer(function(layer){
+      var layer = layer.toGeoJSON();
+      ( shape_geo.val(shape_geo.val() + JSON.stringify(layer.geometry) + ",")); // Appends the layer's json to the form field
+    });
+
+  });
+    
+  drawControl.setDrawingOptions({
+    rectangle: {
+    	shapeOptions: {
+        	color: '#a165aa'
+        }
+    },
+    
+    polygon: {
+    	shapeOptions: {
+        	color: '#5050C8',
+        	fill: '#6450B4'
+        }
+    },
+    polyline: {
+    	shapeOptions: {
+          color: '#6450C8',
+          weight: 4
+        }
+    },
+  });
+  
+</script>

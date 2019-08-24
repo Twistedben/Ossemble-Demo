@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @map_project.title %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @map_project.status %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @map_project.description %>
+</p>
+
+<p>
+  <strong>Address:</strong>
+  <%= @map_project.address %>
+</p>
+
+<p>
+  <strong>Slug:</strong>
+  <%= @map_project.slug %>
+</p>
+
+<p>
+  <strong>Tags:</strong>
+  <%= @map_project.tags %>
+</p>
+
+<p>
+  <strong>Admin:</strong>
+  <%= @map_project.admin_id %>
+</p>
+
+<p>
+  <strong>Workplace:</strong>
+  <%= @map_project.workplace_id %>
+</p>
+
+<%= link_to 'Edit', edit_map_project_path(@map_project) %> |
+<%= link_to 'Back', map_projects_path %>

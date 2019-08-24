@@ -1,0 +1,67 @@
+<!-- Community Score Homepage for each City to display Departments and Complaints as a feed. (views/community_scores/community_score.html.erb)
+  Renders off into Departments/Departments_list.html.erb Partial for listing departments. -->
+
+<!-- Begin - Title for Complaints Show Page. -->
+<header>
+  <h2 class="theme_font center">
+    <p>
+      <%= link_to "#{@city.name} Feed", city_feed_path, class:"title_link" %>
+    </p>
+  </h2>
+</header>
+  <hr>
+<!-- End - Title for Complaints Show Page. -->
+
+    <!-- Begin - Sort panel rendering. Passes in @complaints to sort panel. -->
+  <%= render 'layouts/view_panel', obj: @complaints_departments %>
+<!-- End - Sort Panel rendering. Passes in @complaints to sort panel. -->
+
+<!-- Begin - Rendering Filter Panel. -->
+<div style="position: relative; z-index: 2 !important">
+  <%= render 'layouts/departments_filter_panel' %>
+</div>
+<div class="col-2 pull-right" style="position: relative; z-index: 1 !important">
+  <%= render 'layouts/action_panel' %>
+</div>
+
+<!-- End - Rendering Filter Panel. -->
+<div class="container">
+<div class="col-md-8 col-md-offset-1 col-sm-offset-3 px-0">
+<div id="z-index-fix" class="col-md-12  mb-0 row-flex">
+ <div id="action_panel_msfile" class="col-md-5 px-0 col-md-offset-1"></div>
+ <div id="action_panel_msreview" class="col-md-5 mb-3 px-0"></div>
+</div>
+
+<div id="z-index-fix" class="col-md-12  row-flex">
+ <div id="action_panel_mstop" class="col-md-5 px-0 col-md-offset-1"></div>
+ <div id="action_panel_msmiddle" class="col-md-5 px-0"></div>
+</div>
+</div>
+
+<!-- Below - Renders Complaints list from views Complaints folder -->
+
+  <%= render 'complaints/complaints_list', obj: Complaint.cs_complaint_feed(@city) %>
+
+
+
+<!-- Below - Renders Department List from Views Departments folder -->
+
+  <%= render 'departments/departments_list', obj: Department.cs_department_feed(@city) %>
+</div>
+
+
+
+
+
+<script> // Below - Fixes 
+  $( document ).load(function() {
+    var heights = $(".col-12").map(function() {
+        return $(this).height();
+    }).get(),
+
+    maxHeight = Math.max.apply(null, heights);
+
+    $(".col-12").height(maxHeight);
+});
+  
+</script>

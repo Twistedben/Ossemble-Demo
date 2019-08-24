@@ -1,0 +1,32 @@
+<!--  Main index page for an admin's library to navigate to saved posts/reports/suggestions or their own file uploads. -->
+
+<div class="content">
+  <div class="tier">
+    <div class="center col-d-7 col-t-11 col-p-12">
+      <div class="tier">  
+        <div class="col-tier padding-b-5">
+          <p class="trending_list_title col-p-12">
+            Your Archive
+            <%= "- Forum Posts"    if current_page?(admin_library_posts_path(@institute, @admin, @library)) %>
+            <%= "- Uploads"        if current_page?(admin_library_uploads_path(@institute, @admin, @library)) %>
+            <%= "- Shared Uploads" if current_page?(admin_library_upload_shares_path(@institute, @admin, @library)) %>
+            <%= "- Shared Posts"   if current_page?(admin_library_post_shares_path(@institute, @admin, @library)) %> 
+            <%= "- Map Posts"      if current_page?(admin_library_maps_path(@institute, @admin, @library)) %>
+          </p>
+        </div>
+        <%=  
+         if current_page?(admin_library_uploads_path(@institute, @admin, @library)) 
+           render 'admins/admin_layouts/libraries/library_uploads_list', obj: @entries 
+         elsif current_page?(admin_library_upload_shares_path(@institute, @admin, @library))
+           render 'admins/admin_layouts/libraries/library_upload_shares_list', obj: @entries 
+         else 
+           render 'admins/admin_layouts/libraries/library_entries_list', obj: @entries   
+         end 
+        %>
+      </div>
+    </div>
+    <!-- 
+      %= render 'admins/admin_layouts/workplace_action_panel' %>
+    -->
+  </div>
+</div>

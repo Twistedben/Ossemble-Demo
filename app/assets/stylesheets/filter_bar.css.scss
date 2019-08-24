@@ -1,0 +1,114 @@
+// Stylesheet for filter bar above list views in feeds. Refers to views/filters/.... files.
+#filter_container {
+  padding-top: 10px;
+  button {
+    min-width: 130px;
+    box-shadow: 1px 3px 16px rgba(0, 0, 0, 0.2);
+    font-size: 15px;
+    height: 38px !important;
+  }
+  #complaint_categories_filter {
+    hr {
+      margin: 0px;
+      padding: 3px 0px;
+    }
+  }
+  #main_filter_btn {
+    box-shadow: 1px 3px 16px rgba(0, 0, 0, 0.2);
+    font-size: 17px !important;
+    height: 38px !important;
+    font-family: 'Roboto', Times New Roman, Serif;
+    i {
+      width: 25px !important;
+      height: 20px !important;
+      font-size: 16px !important;
+      float: left !important;
+      padding-top: 3px !important;
+      padding-right: 4px !important;
+    }
+  }
+  #main_filter_dropdown {
+    a .dropdown-item {
+      font-size: 18px !important;
+    }
+  }
+  .dropdown-menu {
+    border: 2px solid #645496;
+    padding: 1rem;
+    margin-top: 2px;
+    min-width: 225px !important;
+    i {
+      width: 30px;
+      font-size: 15px !important;
+    }
+    a:active, a:focus {
+      background-color: whitesmoke !important;
+      color: #3e345e !important;
+      font-weight: bold;
+      i {
+        color: #645496 !important;
+      }
+    }
+  }
+  .dropdown-header {
+    text-align: center; 
+    margin: 0 auto !important;
+    padding: .25rem !important;
+    font-size: 18px !important;
+    color: #645496 !important;
+    font-weight: bold;
+    a {
+      font-weight: bold;
+      font-size: 18px !important;
+      color: #645496 !important;
+    }
+  }
+  .dropdown:not(#main_filter_dropdown) {
+    padding-left: 10px;
+    padding-top: 2px;
+    i {
+      width: 30px !important;
+      height: 20px !important;
+      font-size: 16px !important;
+      float: left !important;
+      padding-top: 3px !important;
+      padding-right: 4px !important;
+    }
+  }
+  .dropdown-divider {
+    border-top: 1px solid;
+    border-color: rgba(100, 84, 150, 0.7);
+  }
+  .dropdown-item {
+    padding: 5px 8px !important;
+    font-size: 18px;
+  }
+  hr {
+    margin: 2px 0px;
+    width: 100%;
+    padding: 5px 0px;
+  }
+  
+}
+
+// Begin - CSS for Sort Panel (views/layouts/_sort_panel.html.erb)
+button#sort_by_menu {
+  height: 38px !important;
+}
+#sort_by_menu {
+    
+  .dropdown-item:not(.sort_menu_header) {
+    font-size: 16px; color: #645496;
+                                         }
+  .dropdown-item:hover:not(.sort_menu_header) {
+   
+    text-shadow: .04em .03em black;
+    letter-spacing: 1px;
+                                                }
+  .dropdown-item:active {
+    background-color: transparent !important;
+    text-decoration: underline;
+                        }
+}
+
+// End - CSS for Sort Panel (views/layouts/_sort_panel.html.erb)

@@ -1,0 +1,62 @@
+<div class="content">
+  <div class="tier">
+    <%= render "layouts/phones/mobile_accordion" %>
+    <div class="center col-d-7 col-t-11 col-p-12">
+      <div class="tier">  
+        <div class="col-tier padding-b-5">
+          <p class="trending_list_title col-p-12">
+            <%= current_city %> Workplaces
+          </p>
+        </div>
+        <% @workplaces.each do |workplace| %> 
+          <div class="card col-tier">
+            <p>
+              <%= workplace.name %>
+            </p>
+            <p>
+              <%= workplace.description %>
+            </p>
+            <p>
+              <%= workplace.members.count %> Members
+            </p>
+            <p class="col-tier">
+              <%= link_to "Join #{workplace.name}", join_workplace_path(workplace.institute, workplace), id: " " , class: " ", method: :create %>
+            </p>
+            
+            <div id="marker_cords"><span class="b"> Marker: </span></div>
+            
+            <div id="circle_cords"><span class="b"> Circle Center: </span></div>
+            <div id="radius_cords"><span class="b"> Circle Radius: </span></div>
+            
+            <div id="rectangle_cords"><span class="b"> Rectangle: </span></div>
+            
+            <div id="polygon_cords"><span class="b"> Polygon: </span></div>
+            
+            <div id="polyline_cords"><span class="b"> Polyline: </span></div>
+          </div>
+        <% end %>
+        <!--
+          <div class="col-tier">
+            %= link_to "Add a Workplace", new_institute_workplace_path(@institute), id: " " , class: " " %>
+          </div>
+        -->
+        
+      <div class="col-d-12 margin-b-30">
+        <div class="tier">
+          <div class="col-md-12 well mb-0 p-2 light-box-shadow" style="border-radius: 0px !important; background-color: white; border: 1px solid rgba(128, 128, 128, .5);">
+            <!-- Begin - Map Row  -->
+            <div class="map_area">
+              <!-- Below - Renders Community Score map partial inside views/department/department_map -->
+              <div class="col-12 ms_map" id="oss_map" style="border-radius: 0px !important">
+                <%= render 'new_map_pin_map' %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+        
+      </div>
+    </div>
+    <%= render 'admins/admin_layouts/workplace_action_panel' %>
+  </div>
+</div>

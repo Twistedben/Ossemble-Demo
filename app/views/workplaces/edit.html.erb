@@ -1,0 +1,104 @@
+<!--  Main index page for an admin's library to navigate to saved posts/reports/suggestions or their own file uploads. -->
+
+<div class="content">
+  <div class="tier">
+    <%= render "layouts/phones/mobile_accordion" %>
+    <div id="workplace_edit_container" class="col-d-7 col-t-11 col-p-12 center">
+      <div id="edit_header_container" class="col-tier">
+        <p>
+          <%= current_workplace %> Settings
+        </p>
+      </div>
+      <div class="col-tier padding-r-20 no_padr_ms">
+        <%= form_for @workplace, :url => institute_workplace_path(@institute, @workplace), html: {class: "col-all-12 light-box-shadow horizontal-form padding-all-20 card margin-b-20"} do |f| %>
+          <div class="col-all-12 center">
+            <%= render 'layouts/errors', obj: @workplace %>
+          </div>
+          <div class="col-tier my-3">
+            <div class="col-all-8" title="Enter or modify the Workplace's name. (60 character limit)">
+              <%= f.label :name, "Name" %>
+              <%= f.text_field :name, class: "form-control", maxlength: 60, placeholder: "Workplace's Name (60 character limit)", autocomplete: false %>
+            </div>
+          </div>
+          <div class="col-tier my-3">
+            <div class="col-all-12" title="Enter or modify the Workplace's description and purpose. (255 character limit)">
+              <%= f.label :description, "Description" %> 
+              <%= f.text_area :description, class: "form-control", maxlength: 255, placeholder: "Workplaces's Description (255 character limit)", autocomplete: false %>        
+            </div>
+          </div>
+          <div class="col-tier my-3">
+            <div class="col-all-12" title="Allows members to join your workplace with any email and not just the <%= @institute.return_email_domain %>">
+              <%= f.label :public, "<i class='fas fa-user-lock padding-r-5'></i>Allow Public Members?".html_safe %> 
+              <div class="col-tier">             
+                <div id="public_members_radio_container" class="btn-group btn-group-toggle" data-toggle="buttons">
+                  <label class="btn
+                  <%= "active" if @workplace.public? %>
+                  ">
+                    <input type="radio" name="workplace[public]" value="true" id="enable_public" autocomplete="off" > On
+                  </label>
+                  <label class="btn
+                  <%= "active" if @workplace.public == false %>
+                  ">
+                    <input type="radio" name="workplace[public]" value="false" id="disable_public" autocomplete="off"> Off
+                  </label>
+                </div>
+              </div>
+              <p class="margin-b-0 margin-t-10">Allow members to join this workplace without the email domain: <%= @institute.return_email_domain %></p>
+            </div>
+          </div>
+          <div class="col-tier mt-5">
+            <%= f.submit 'Update Workplace', class: "form_btn button-cs btn"  %>
+          </div>
+        <% end %>   
+      </div> 
+<!--
+      <div id="workplace_department_container" class="">
+        <div id="department_header_container" class="col-tier">
+          <p>
+            %= current_workplace %> Departments
+          </p>
+        </div>
+        <!-- Below -  Renders departments that have already been created. -->
+<!--        <div id="departments_list_container" class="col-tier">
+          <div class="col-all-12 light-box-shadow padding-all-15 card">
+            <!-- Below -  Checks if the workplace has departments or not, lists them if so, otherwise tells to create them below -->
+<!--            % if @workplace.workplace_departments.empty? && is_current_super_admin? %>
+              <p>
+                No Departments have yet been created for %= current_workplace %>. Below, you can create departments for workplace members.
+              </p>
+            % elsif @workplace.workplace_departments.empty? && !is_current_super_admin? %> 
+              <p>
+                No Departments have yet been created for %= current_workplace %>. Ask the owner of this workplace to create departments that you can join.
+              </p>
+            % else %>
+              % @workplace.workplace_departments.each do |department| %>
+                <div id="department_container" class="col-tier">
+                  <p class="b">
+                    %= department.name %>:
+                  </p>
+                  <p class="padding-l-10">
+                    %= department.description unless department.description.nil? %>
+                    <div class="remove_dep">
+                      %= link_to "<i class='fas fa-times'></i>".html_safe, destroy_workplace_department_path(@city, @workplace, department), title: "Remove #{department.name}", data: {confirm: "Are you sure you want to remove #{department.name}?"}, method: :delete, id: " " , class: "" %>
+                    </div>
+
+                  </p>
+                </div>
+              % end %> 
+            % end %> 
+          </div> 
+        </div> 
+        <!-- Below - Create new departments -->
+<!--       <div id="department_header_container" class="col-tier">
+          <p>
+            Add Departments
+          </p>
+        </div>
+        <!-- Below -  Renders the form to create new departments if the admin is a super admin -->
+<!--        %= render "department_form" if is_current_super_admin? %>
+      </div>
+-->
+    </div>
+    <%= render 'admins/admin_layouts/workplace_action_panel' %>
+  </div>
+</div>

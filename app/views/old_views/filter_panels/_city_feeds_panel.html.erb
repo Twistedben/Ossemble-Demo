@@ -1,0 +1,33 @@
+<!-- Main partial for feed panel for switching between Ossembly and CS feed. Rendered from most pages. -->
+<div class="col-all-12 filtertoggle center pr-3 cf_nopad">
+  <div class="card mb-3 width-100 border-radius-10 no-border transparent">
+    <div class="card-body p-0 pb-2">
+      <div class="mt-3">
+        <div class="mb-0 text-xbig b roboto city_feeds_pos" style="color: rgba(88, 88, 88, .9)">
+          <% if @user %>
+            <%= @user.city.name %>
+          <% elsif @city %>
+            <%= @city.name %>
+          <% elsif @admin %>
+            <%= @admin.city.name %>
+          <% else %>
+            <%= current_user.city.name %> 
+          <% end %>
+            Feeds
+        </div>
+      </div>
+      
+      <div class="mt-1">
+        <div class="city_feeds_pos text-20">
+          <%= link_to "Community Score", city_feed_path(@city), id: "cs_ms", class: "mx-2 theme_color_black feeds_link", title: "Your city, your score", style: "opacity: 0.95" if @city %>
+          <%= link_to "Community Score",  city_feed_path(current_user_or_admin.city), id: "cs_ms", class: "mx-2 theme_color_black feeds_link", title: "Your city, your score", style: "opacity: 0.95" unless @city %>
+        </div>
+        <div class="city_feeds_pos text-20">
+          <%= link_to "Ossembly Forum", city_ossembly_path(@city), id: "ossembly_link", class: "mx-2 theme_color_black feeds_link", title: "Your forum for local engagement", style: "opacity: 0.95" if @city %>
+          <%= link_to "Ossembly Forum", city_ossembly_path(current_user_or_admin.city), id: "ossembly_link", class: "mx-2 theme_color_black feeds_link", title: "Your forum for local engagement", style: "opacity: 0.95" unless @city %>
+        </div>
+        <!-- The Beacon Link Code <div>%= link_to "The Beacon", '#', id: "beacon_link", class: "nav-link theme_color_dark navbar_item_link px-3 margin-l-0", data: { confirm: "The Beacon feature is coming soon!"} unless is_guest_page? && is_guest? %></div> -->
+      </div>
+    </div>
+  </div>
+</div>

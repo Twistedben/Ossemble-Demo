@@ -1,0 +1,106 @@
+<!-- Index page to view all complaints in a given city (views/complaints/index.html.erb).-->
+
+<div class="content">
+  <div class="tier"> <!-- Begin - Main tier for page. -->
+    <!-- Below -  Renders in the accordian from views/layouts/phones/... for mobile and tablet. -->
+    <%= render "layouts/phones/mobile_accordion" %>
+    <div class="center col-d-7 col-t-11 col-p-12">
+      <div id="page_info_card_org" class="col-tier">
+        <div id="page_info_card" class="col-all-12 margin-b-15">
+          <div class="tier">
+            <div class="col-all-12">
+              <p class="page_info_title pull-left margin-all-10 margin-l-0">
+                <%= "Voiced Complaints Feed" if current_page?(city_complaints_path(@city)) %>
+                <%= "The Verify / Confirm Process" if current_page?(verifying_city_complaints_path(@city)) %>
+                <%= "The Endorse Process" if current_page?(pending_city_complaints_path(@city)) %>
+                <%= "Filed & Sent" if current_page?(filed_city_complaints_path(@city)) %>
+                <%= "The Scored Process" if current_page?(controller: 'complaints', action: 'finished') %>
+              </p>
+            </div>
+            <div class="col-all-12 light-box-shadow card" style="border: 1px solid rgba(128, 128, 128, .5)">
+              <div class="card-body theme_color_black">
+                <div class="col-d-9 col-t-12 col-p-12 pull-left">
+                  <% if current_page?(controller: 'complaints', action: 'index') %>
+                   <p class="text-big" style="font-family: Roboto;"><i>The Ossemble complaint process is designed to give a community the control to influence the effectiveness and efficiently of their local government.</i></p> 
+                   <section class="b">The Score is broken down into four categories</section>
+                   <ul> 
+                    <li><b>Confirm</b> - (Another citizen or mod confirms the complaint is valid.)</li>  
+                    <li><b>Endorse</b> - (Other citizen’s up-vote the complaint for priority.)</li>  
+                    <li><b>Filed</b> - (The voter threshold is matched, and a formal Citizen Action Complaint is sent to city officials.)</li>
+                    <li><b>Scored</b> - (The local government completes and closes the complaint within the given deadline.)</li>
+                   </ul>
+                 <% elsif current_page?(controller: 'complaints', action: 'verifying') %>  
+                  <p class="text-big" style="font-family: Roboto;"><i>Verifying a complaint is check on the process made by fellow citizens or moderators.</i></p> 
+                  <section class="b">The complaint is verified for a number of reasons.</section>
+                  <ul> 
+                    <li><b>The complaint location is located within city limits.</b></li>  
+                    <li><b>The deadline is realistic for the complaint.</b></li>  
+                    <li><b>There is, in fact, a complaint located in that area.</b></li>
+                    <li><b>Avoiding duplicated complaints.</b></li>
+                  </ul>
+                  <% elsif current_page?(controller: 'complaints', action: 'pending') %> 
+                   <p class="text-big" style="font-family: Roboto;"><i>The Endorse Process (up-voting) is where citizens work together by backing the complaint raised by a fellow citizen.</i></p> 
+                   <p class="text-medium mb-2">Once the number of Endorsements hits the established threshold, <br> then Ossemble sends a form representing your voice to the city.</p>
+                   <p class="text-medium mb-0">The endorse process truly encompasses the Ossemble moto <br> <b>‘Your City, Your Score.’</b></p>
+                  <% elsif current_page?(controller: 'complaints', action: 'filed') %>
+                   <p class="text-big" style="font-family: Roboto;"><i>The Filed Process takes place immediately after the city receives the Citizen Action Complaint.</i></p> 
+                   <p class="text-medium mb-2">The local jurisdiction is given the predetermined deadline for the complaint.</p>
+                   <p class="text-medium mb-2">Deadlines are made to promote efficiency while also being realistic.</p>
+                   <ul> 
+                    <li><b>Communicate with Local Citizens.</b></li>  
+                    <li><b>The deadline for having the complaint completed.</b></li>  
+                    <li><b>Show that a plan is in place to deal with the Compliant.</b></li>
+                   </ul>
+                  <% elsif current_page?(controller: 'complaints', action: 'finished') %> 
+                   <p class="text-big" style="font-family: Roboto;"><i>The Scored Process is finalized once a complaint is completed.</i></p> 
+                   <section class="b">Scoring Breakdown</section>
+                   <ul> 
+                    <li><b>80% for 1st Deadline</b> (Ex: 60 Days)</li>  
+                    <li><b>60% for 2nd Deadline</b> (Ex: 60 Days)</li>  
+                    <li><b>40% for 3rd Deadline</b> (Ex: 60 Days)</li>
+                    <li><b>Score is capped after 3rd deadline.</b></li>
+                   </ul>
+                   <section class="b">Scoring Bonus</section>
+                   <ul> 
+                    <li><b>15% for having a plan.</b> (Ex: 60 Days)</li>  
+                    <li><b>5% for communication.</b> (Ex: 60 Days)</li>  
+                   </ul>  
+                <% end %>
+                <!-- End- Complaints Page Info -->     
+                </div>
+                <div class="page_info_icon col-all-3 pull-right center-all theme_color_dark">
+                 <%= "<i class='fas fa-map-marker'></i>".html_safe if current_page?(city_complaints_path(@city)) %>
+                 <%= "<i class='fas fa-exclamation-triangle'></i>".html_safe if current_page?(verifying_city_complaints_path(@city)) %>
+                 <%= "<i class='far fa-arrow-alt-circle-up'></i>".html_safe if current_page?(pending_city_complaints_path(@city)) %>
+                 <%= "<i class='far fa-envelope'></i>".html_safe if current_page?(filed_city_complaints_path(@city)) %>
+                 <%= "<i class='fas fa-percent'></i>".html_safe if current_page?(controller: 'complaints', action: 'finished') %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tier">
+        <div class="col-tier padding-b-20">
+          <p class="trending_list_title col-p-12">
+            Trending - Week
+          </p>
+          <%= render 'filters/feed_filter', obj: @complaints %>
+          <div>
+            <!-- Below - Renders in sort panel partial for ordering of complaints with the object complaints -->
+            <%= render 'layouts/sort_panel', obj: @complaints %>
+          </div>
+        </div>
+        <!-- Below - Renders in all complaints -->
+        <div class="col-tier">
+          <div class="col-all-12">
+           <%= render 'layouts/resources/resources_list', obj: @complaints %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="non_ms_ap_content" class="col-d-3 col-t-10" >
+      <%= render 'layouts/action_panel', obj: @complaints %>
+    </div>
+  </div> <!-- Main page tier -->
+</div>

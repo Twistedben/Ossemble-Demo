@@ -1,0 +1,61 @@
+<!--  The main partial rendered for activities being upvoted concerning comments (views/public_activity/comment/_create)-->
+<% if activity.recipient && activity.trackable %>
+  <% @comment_parent = activity.trackable.subject
+     @parent_id = activity.trackable.parent_id
+     @parent = @comment_parent.constantize.find(@parent_id) %>
+  <span id="activities_span" class="">
+    endorsed a comment -
+    <!-- Below -  A comment on a post. -->
+    <% if activity.trackable.subject == "Post" %>
+         <%= link_to "#{@parent.title}", subtopic_post_path(@user.city, @parent.topic, @parent.subtopic, @parent), id: "activity_post_link", class: "" %>
+         <span>
+            in the forum:
+            <span class="i bold"> <%= @parent.topic.name %> </span>
+            <span class="text-14"> 
+              /
+            </span>
+            <span class="i bold"> <%= @parent.subtopic.name %> </span> 
+         </span>
+    <!-- Below -  A comment on a complaint. -->
+    <% elsif activity.trackable.subject == "Complaint" %>
+      <%= link_to "#{@parent.title}", city_complaint_path(@parent.city, @parent), id: "activity_complaint_link", class: "" %>
+      <span>
+        in Complaints
+      </span>
+    <!-- Below -  A comment on a City Review. -->
+    <% elsif activity.trackable.subject == "CityReview" %>
+      <%= link_to "#{@parent.title}", city_review_path(@parent.city, @parent), id: "activity_complaint_link", class: "" %>
+      <span>
+        in City Reviews
+      </span>
+    <!-- Below -  A comment on a Department Review. -->
+    <% elsif activity.trackable.subject == "DepartmentReview" %>
+      <%= link_to "#{@parent.title}", city_department_review_path(@parent.city, @parent), id: "activity_complaint_link", class: "" %>
+      <span>
+        in Department Reviews
+      </span>
+    <!-- Below -  A comment on a Petition. -->
+    <% elsif activity.trackable.subject == "Petition" %>
+      <%= link_to "#{@parent.title}", city_petition_path(@parent.city, @parent), id: "activity_complaint_link", class: "" %>
+      <span>
+        in Petitions
+      </span>
+    <% end %>
+    <span id="upvote_comment_activity">
+      - posted by: 
+      <span class="i">
+        <%= link_to activity.recipient.name, user_path(activity.recipient.city, activity.recipient) %>
+      </span>
+    </span>
+    <span id="comments_city_activity">
+      <span class="text-14">
+        - 
+      </span>
+      <small class="faded i">
+        <%= link_to "#{@parent.city.name}", city_feed_path(@parent.city), id: 'activity_city_link', class: "" %>
+      </small>
+    </span>
+  </span>
+<% else %>
+  unendorsed a Comment.
+<% end %>

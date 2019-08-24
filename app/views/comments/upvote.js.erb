@@ -1,0 +1,16 @@
+// Called by the upvote action in CommentsController.
+// Below - Adds JS effects for the endosement of a new comment, Flash alerts, and animation. 
+
+  var upvote_count_section =  $('.upvote_count_<%= @comment.id %>');
+  var upvote_arrow = $('.upvote_arrow_<%= @comment.id %>');
+  var upvote_count = $('.upvotes_for_<%= @comment.id %>');
+  var thumbs_up = $('.thumbs_up_<%= @comment.id %>');
+  var actions_section = $('.comment_actions_<%= @comment.id %>');
+  var endorse_link = $('.endorse_button_<%= @comment.id %>');
+  <% comment = @comment %>
+  $(upvote_count_section).effect('highlight',{}, 1000);
+  $(upvote_count).text("<%= comment.votes_for.count %>").effect('highlight',{}, 1000);
+  $(endorse_link).hide();
+  // Slide in from left for the +1
+  $(actions_section).append('<div id="thumbs_up_div" title="You already endorsed this." class="magin-y-8 vanish thumbs_up_<%= @comment.id %>"><i class="material-icons margin-x-5 magin-y-8"style="color: green; margin-top: 7px !important" >thumb_up</i></div>');
+  $('.thumbs_up_<%= @comment.id %>').fadeIn(800);

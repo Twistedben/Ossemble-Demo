@@ -1,0 +1,73 @@
+// Main CSS for any Styling associated with Reviews Views.
+
+#score_label {
+ margin-bottom: 0px;
+ 
+}
+
+#star-rating, #department-star-rating {
+   margin-bottom: 15px;
+   
+  i {
+    font-size: 2.8rem;
+    color: #645496;
+    text-shadow: 1px 1px black;
+    float: left;
+    line-height: 30px;
+    position: relative;
+    top: -25px;
+    margin-right: 8px;
+     @media screen and (max-width: 768px) {
+       font-size: 3.2rem !important;
+       line-height: 20px !important;
+
+                                       }
+    }
+    
+  }
+#review_description {
+  height: 22rem;
+}
+
+.review_info {
+  
+}
+#department_review_scores {
+  
+  span  {
+    font-size: 1.6rem;
+    padding: .8rem 1rem;
+    font-weight: bold;
+        }
+}
+
+#temp_review_div {
+  height: 450px;
+  @media screen and (max-width: 768px) {
+       height: 355px !important;
+
+                                       }
+}
+
+.form_btn {
+    @media screen and (max-width: 768px) {
+       font-size: 18px !important;
+
+                                       }
+}
+
+.form_ms_text {
+    @media screen and (max-width: 768px) {
+       font-size: 18px !important;
+
+                                       }
+}
+
+.wul_font {
+ 
+  font-family: Roboto, Times New Roman; 
+  letter-spacing: 1.5px;
+  color: white;
+  font-weight: bold;
+  font-size: 1.4rem !important;
+}

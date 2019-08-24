@@ -1,0 +1,439 @@
+<!-- Main partial for sorting the list views for Departments, Complaints, Community Score. (views/layouts/_sort_panel.html.erb) . Helper metehods for links in sort_panel_helper.rb-->
+
+<!-- Begin - Sort Pannel Wrapper -->
+<div class="dropdown pull-right ml-3 padding-t-10" style="position: relative; top: 2px">
+  <button class="btn button-cs text-xmedium dropdown-toggle pull-right" type="button" id="sort_by_menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+     <span class="" style="position: relative; top: 0px">Sort</span>
+  </button>
+  <!-- Begin - If statement determining whether rendered sort panel is departments, city review, or complaints, changing the dropdown items for each instance. -->
+  <div id="sort_by_menu" class="dropdown-menu p-3 add-width-10" aria-labelledby="sort_by_menu" style="border: 2px solid #645496;"> 
+    <% if obj == @complaints %>   <!-- Sort menu items for Complaints are being shown. -->
+      <h6 class="dropdown-header center p-1"> 
+        <%= link_to "Complaints", city_complaints_path(@city), class: 'dropdown-header p-1 center-all bold'  %> 
+      </h6>
+      <div class="dropdown-divider"></div>
+      <!-- Begin - If statement checking current scoped page of complaints. Using sort_panel helper method in sort_panel_helper.rb.-->
+      <% if current_page?(controller: 'complaints', action: 'index') %>
+          <%= sort_panel("Trending", "trending", "com_index") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("A to Z", "title", "com_index") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Date Posted", "date", "com_index") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Endorsements", "endorsements", "com_index") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Score", "score", "com_index") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Comments", "comments", "com_index") %>
+      <% elsif current_page?(controller: 'complaints', action: 'verifying') %> <!-- Page is on verifying complaints so shows different sort options -->
+          <%= sort_panel("Trending", "trending", "verifying") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("A to Z", "title", "verifying") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Date Posted", "date", "verifying") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Comments", "comments", "verifying") %>
+      <% elsif current_page?(controller: 'complaints', action: 'pending') %> <!-- Page is on pending complaints so shows different sort options -->
+          <%= sort_panel("Trending", "trending", "pending") %>
+        <div class="dropdown-divider"></div>
+         <%= sort_panel("A to Z", "title", "pending") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Date Confirmed", "date", "pending") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Endorsements", "endorsements", "pending") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Comments", "comments", "pending") %>
+      <% elsif current_page?(controller: 'complaints', action: 'filed') %> <!-- Page is on filed complaints so shows different sort options -->
+          <%= sort_panel("Trending", "trending", "filed") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("A to Z", "title", "filed") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Date Filed", "date", "filed") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Endorsements", "endorsements", "filed") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Score", "score", "filed") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Comments", "comments", "filed") %>
+      <% elsif current_page?(controller: 'complaints', action: 'finished') %> <!-- Page is on finished complaints so shows different sort options -->
+          <%= sort_panel("Trending", "trending", "finished") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("A to Z", "title", "finished") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Date Completed", "date-c", "finished") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Date Failed", "date-f", "finished") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Endorsements", "endorsements", "finished") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Score", "score", "finished") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Comments", "comments", "finished") %>
+      <% elsif current_page?(controller: 'complaints', action: 'other') %> <!-- Page is on other complaints so shows different sort options -->
+          <%= sort_panel("Trending", "trending", "other") %>
+        <div class="dropdown-divider"></div>
+         <%= sort_panel("A to Z", "title", "other") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Date Posted", "date", "other") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Endorsements", "endorsements", "other") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Comments", "comments", "other") %>
+      <% elsif current_page?(controller: 'complaints', action: 'roadkill') %> <!-- Page is on roadkill complaints so shows different sort options -->
+          <%= sort_panel("Trending", "trending", "roadkill") %>
+        <div class="dropdown-divider"></div>
+         <%= sort_panel("A to Z", "title", "roadkill") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Date Posted", "date", "roadkill") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Endorsements", "endorsements", "roadkill") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Comments", "comments", "roadkill") %>
+      <% elsif current_page?(controller: 'complaints', action: 'obstruction') %> <!-- Page is on obstruction complaints so shows different sort options -->
+          <%= sort_panel("Trending", "trending", "obstruction") %>
+        <div class="dropdown-divider"></div>
+         <%= sort_panel("A to Z", "title", "obstruction") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Date Posted", "date", "obstruction") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Endorsements", "endorsements", "obstruction") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Comments", "comments", "obstruction") %>
+      <% elsif current_page?(controller: 'complaints', action: 'lights') %> <!-- Page is on lights complaints so shows different sort options -->
+          <%= sort_panel("Trending", "trending", "lights") %>
+        <div class="dropdown-divider"></div>
+         <%= sort_panel("A to Z", "title", "lights") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Date Posted", "date", "lights") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Endorsements", "endorsements", "lights") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Comments", "comments", "lights") %>
+      <% elsif current_page?(controller: 'complaints', action: 'snow') %> <!-- Page is on snow complaints so shows different sort options -->
+          <%= sort_panel("Trending", "trending", "snow") %>
+        <div class="dropdown-divider"></div>
+         <%= sort_panel("A to Z", "title", "snow") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Date Posted", "date", "snow") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Endorsements", "endorsements", "snow") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Comments", "comments", "snow") %>
+      <% elsif current_page?(controller: 'complaints', action: 'weeds') %> <!-- Page is on weeds complaints so shows different sort options -->
+          <%= sort_panel("Trending", "trending", "weeds") %>
+        <div class="dropdown-divider"></div>
+         <%= sort_panel("A to Z", "title", "weeds") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Date Posted", "date", "weeds") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Endorsements", "endorsements", "weeds") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Comments", "comments", "weeds") %>
+      <% elsif current_page?(controller: 'complaints', action: 'trash') %> <!-- Page is on trash complaints so shows different sort options -->
+          <%= sort_panel("Trending", "trending", "trash") %>
+        <div class="dropdown-divider"></div>
+         <%= sort_panel("A to Z", "title", "trash") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Date Posted", "date", "trash") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Endorsements", "endorsements", "trash") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Comments", "comments", "trash") %>
+      <% elsif current_page?(controller: 'complaints', action: 'graffiti') %> <!-- Page is on graffiti complaints so shows different sort options -->
+          <%= sort_panel("Trending", "trending", "graffiti") %>
+        <div class="dropdown-divider"></div>
+         <%= sort_panel("A to Z", "title", "graffiti") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Date Posted", "date", "graffiti") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Endorsements", "endorsements", "graffiti") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Comments", "comments", "graffiti") %>
+      <% elsif current_page?(controller: 'complaints', action: 'property') %> <!-- Page is on property complaints so shows different sort options -->
+          <%= sort_panel("Trending", "trending", "property") %>
+        <div class="dropdown-divider"></div>
+         <%= sort_panel("A to Z", "title", "property") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Date Posted", "date", "property") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Endorsements", "endorsements", "property") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Comments", "comments", "property") %>
+      <% elsif current_page?(controller: 'complaints', action: 'sidewalk') %> <!-- Page is on sidewalk complaints so shows different sort options -->
+          <%= sort_panel("Trending", "trending", "sidewalk") %>
+        <div class="dropdown-divider"></div>
+         <%= sort_panel("A to Z", "title", "sidewalk") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Date Posted", "date", "sidewalk") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Endorsements", "endorsements", "sidewalk") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Comments", "comments", "sidewalk") %>
+      <% elsif current_page?(controller: 'complaints', action: 'forestry') %> <!-- Page is on forestry complaints so shows different sort options -->
+          <%= sort_panel("Trending", "trending", "forestry") %>
+        <div class="dropdown-divider"></div>
+         <%= sort_panel("A to Z", "title", "forestry") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Date Posted", "date", "forestry") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Endorsements", "endorsements", "forestry") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Comments", "comments", "forestry") %>
+      <% elsif current_page?(controller: 'complaints', action: 'potholes') %> <!-- Page is on potholes complaints so shows different sort options -->
+          <%= sort_panel("Trending", "trending", "potholes") %>
+        <div class="dropdown-divider"></div>
+         <%= sort_panel("A to Z", "title", "potholes") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Date Posted", "date", "potholes") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Endorsements", "endorsements", "potholes") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Comments", "comments", "potholes") %>
+      <% elsif current_page?(controller: 'complaints', action: 'water') %> <!-- Page is on water complaints so shows different sort options -->
+          <%= sort_panel("Trending", "trending", "water") %>
+        <div class="dropdown-divider"></div>
+         <%= sort_panel("A to Z", "title", "water") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Date Posted", "date", "water") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Endorsements", "endorsements", "water") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Comments", "comments", "water") %>
+
+      <% end %>
+    <% elsif obj == @reviews %>    <!-- Sort menu items for departments are being shown. -->
+      <h6 class="dropdown-header center p-1"> 
+        <%= link_to "Departments", city_department_reviews_path(@city), class: 'dropdown-header p-1 center-all bold'  %> 
+      </h6>
+      <div class="dropdown-divider"></div>
+      <!-- Begin - If statement determining sorting for departments -->
+      <% if current_page?(controller: 'department_reviews', action: 'index') %>
+          <%= sort_panel("Trending", "trending", "dep_index") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Date Posted", "date", "dep_index") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Endorsements", "endorsements", "dep_index") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Score", "score", "dep_index") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Comments", "comments", "dep_index") %>
+      <!-- End - If statement displaying sorting for all departments -->
+      <!-- Begin - If statement displaying sorting for government departments -->
+      <% elsif current_page?(controller: 'department_reviews', action: 'government') %>
+          <%= sort_panel("Trending", "trending", "government") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Date Posted", "date", "government") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Endorsements", "endorsements", "government") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Score", "score", "government") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Comments", "comments", "government") %>
+      <!-- End - If statement displaying sorting for government departments -->     
+      <!-- Begin - If statement displaying sorting for Schools departments -->
+      <% elsif current_page?(controller: 'department_reviews', action: 'schools') %>
+          <%= sort_panel("Trending", "trending", "schools") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Date Posted", "date", "schools") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Endorsements", "endorsements", "schools") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Score", "score", "schools") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Comments", "comments", "schools") %>
+      <!-- End - If statement displaying sorting for schools departments -->     
+      <!-- Begin - If statement displaying sorting for parks departments -->
+      <% elsif current_page?(controller: 'department_reviews', action: 'parks') %>
+          <%= sort_panel("Trending", "trending", "parks") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Date Posted", "date", "parks") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Endorsements", "endorsements", "parks") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Score", "score", "parks") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Comments", "comments", "parks") %>
+      <!-- End - If statement displaying sorting for parks departments -->     
+      <!-- Begin - If statement displaying sorting for Police departments -->
+      <% elsif current_page?(controller: 'department_reviews', action: 'police') %>
+          <%= sort_panel("Trending", "trending", "police") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Date Posted", "date", "police") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Endorsements", "endorsements", "police") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Score", "score", "police") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Comments", "comments", "police") %>
+      <!-- End - If statement displaying sorting for Police departments -->     
+      <!-- Begin - If statement displaying sorting for Public Works departments -->
+      <% elsif current_page?(controller: 'department_reviews', action: 'public_works') %>
+          <%= sort_panel("Trending", "trending", "public_works") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Date Posted", "date", "public_works") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Endorsements", "endorsements", "public_works") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Score", "score", "public_works") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Comments", "comments", "public_works") %>
+      <!-- End - If statement displaying sorting for Public Works departments -->     
+      <% end %> <!-- End - if statement determining sorting for departments. -->
+    <% elsif obj == @city_reviews %>    <!-- Sort menu items for city review (WUL) are being shown. -->
+      <h6 class="dropdown-header center p-1"> 
+        <%= link_to "City Reviews", city_review_index_path(@city), class: 'dropdown-header p-1 center-all bold'  %> 
+      </h6>
+    <!-- Begin - If statement determining sorting for WUL City Reviews -->
+      <!-- Begin -  Sorting links for City_Reviews index. -->
+      <% if current_page?(controller: 'city_reviews', action: 'index') %> 
+        <div class="dropdown-divider"></div>
+         <%= sort_panel("Trending", "trending", "cr_index") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Date Posted", "date", "cr_index") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Endorsements", "endorsements", "cr_index") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Score", "score", "cr_index") %>
+        <div class="dropdown-divider"></div>
+        <%= sort_panel("Comments", "comments", "cr_index") %>    
+      <!-- End -  Sorting links for City_Reviews index. -->
+      <!-- Begin -  Sorting links for City_Reviews Loves page. -->
+      <% elsif current_page?(controller: 'city_reviews', action: 'loves') %> 
+        <div class="dropdown-divider"></div>
+         <%= sort_panel("Trending", "trending", "cr_loves") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Date Posted", "date", "cr_loves") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Endorsements", "endorsements", "cr_loves") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Score", "score", "cr_loves") %>
+        <div class="dropdown-divider"></div>
+        <%= sort_panel("Comments", "comments", "cr_loves") %>    
+      <!-- End -  Sorting links for City_Reviews Loves page. -->
+      <!-- Begin -  Sorting links for City_Reviews Improves page. -->
+      <% elsif current_page?(controller: 'city_reviews', action: 'improves') %> 
+        <div class="dropdown-divider"></div>
+         <%= sort_panel("Trending", "trending", "cr_improves") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Date Posted", "date", "cr_improves") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Endorsements", "endorsements", "cr_improves") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Score", "score", "cr_improves") %>
+        <div class="dropdown-divider"></div>
+        <%= sort_panel("Comments", "comments", "cr_improves") %>    
+      <!-- End -  Sorting links for City_Reviews Improves page. -->
+      <% end %>
+    <!-- End - If statement determining sorting for WUL City Reviews -->
+    
+
+    <% elsif obj == @concerns %>    <!-- Sort menu items for city review (WUL) are being shown. -->
+      <h6 class="dropdown-header center p-1"> 
+        <%= link_to "Concerns", city_concerns_path(@city), class: 'dropdown-header p-1 center-all bold'  %> 
+      </h6>
+    <!-- Begin - If statement determining sorting for WUL City Reviews -->
+      <!-- Begin -  Sorting links for City_Reviews index. -->
+      <% if current_page?(controller: 'concerns', action: 'index') %> 
+        <div class="dropdown-divider"></div>
+         <%= sort_panel("Trending", "trending", "con_index") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Date Posted", "date", "con_index") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Endorsements", "endorsements", "con_index") %>
+        <div class="dropdown-divider"></div>
+        <%= sort_panel("Comments", "comments", "con_index") %>    
+      <!-- End -  Sorting links for City_Reviews index. -->
+      <!-- Begin -  Sorting links for City_Reviews Loves page. -->
+      <% elsif current_page?(controller: 'concerns', action: 'reports') %> 
+        <div class="dropdown-divider"></div>
+         <%= sort_panel("Trending", "trending", "con_reports") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Date Posted", "date", "con_reports") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Endorsements", "endorsements", "con_reports") %>
+        <div class="dropdown-divider"></div>
+        <%= sort_panel("Comments", "comments", "reports") %>    
+      <!-- End -  Sorting links for City_Reviews Loves page. -->
+      <!-- Begin -  Sorting links for City_Reviews Improves page. -->
+      <% elsif current_page?(controller: 'concerns', action: 'suggestions') %> 
+        <div class="dropdown-divider"></div>
+         <%= sort_panel("Trending", "trending", "con_suggestions") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Date Posted", "date", "con_suggestions") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Endorsements", "endorsements", "con_suggestions") %>
+        <div class="dropdown-divider"></div>
+        <%= sort_panel("Comments", "comments", "con_suggestions") %>    
+      <!-- End -  Sorting links for City_Reviews Improves page. -->
+      <% end %>
+    <!-- End - If statement determining sorting for WUL City Reviews -->
+    
+    
+  
+    <% elsif obj == @topic %> <!-- Sort menu items for given topic and subtopic within Ossembly are being shown -->
+      <h6 class="dropdown-header center p-1"> 
+        <%= link_to "Topic Posts", city_topic_path(@city, @topic), class: 'dropdown-header p-1 center-all bold'  %> 
+      </h6>
+      <div class="dropdown-divider"></div>
+       <%= sort_panel("Trending", "trending", "topics") %>
+      <div class="dropdown-divider"></div>
+        <%= sort_panel("Date Posted", "date", "topics") %>
+      <div class="dropdown-divider"></div>
+        <%= sort_panel("Endorsements", "endorsements", "topics") %>
+      <div class="dropdown-divider"></div>
+        <%= sort_panel("Comments", "comments", "topics") %>       
+    <% elsif obj == @subtopic %> <!-- Sort menu items for given subtopic within Ossembly are being shown -->
+      <h6 class="dropdown-header center p-1"> 
+        <%= link_to "Subtopic Posts", subtopic_path(@city, @topic, @subtopic), class: 'dropdown-header p-1 center-all bold'  %> 
+      </h6>
+      <div class="dropdown-divider"></div>
+       <%= sort_panel("Trending", "trending", "subtopics") %>
+      <div class="dropdown-divider"></div>
+        <%= sort_panel("Date Posted", "date", "subtopics") %>
+      <div class="dropdown-divider"></div>
+        <%= sort_panel("Endorsements", "endorsements", "subtopics") %>
+      <div class="dropdown-divider"></div>
+        <%= sort_panel("Comments", "comments", "subtopics") %>       
+    <% elsif obj == @petitions %> <!-- Sort menu items for petitions within Ossembly. -->
+      <h6 class="dropdown-header center p-1"> 
+        <%= link_to "Petitions", city_petitions_path(@city), class: 'dropdown-header p-1 center-all bold'  %> 
+      </h6>
+      <% if current_page?(controller: 'petitions', action: 'index') %>
+        <div class="dropdown-divider"></div>
+         <%= sort_panel("Trending", "trending", "pet_index") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("A to Z", "title", "pet_index") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Date Posted", "date", "pet_index") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Signatures", "endorsements", "pet_index") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Comments", "comments", "pet_index") %>       
+      <% elsif current_page?(controller: 'petitions', action: 'pending') %>
+        <div class="dropdown-divider"></div>
+         <%= sort_panel("Trending", "trending", "pet_pending") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("A to Z", "title", "pet_pending") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Date Posted", "date", "pet_pending") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Signatures", "endorsements", "pet_pending") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Comments", "comments", "pet_pending") %>       
+      <% elsif current_page?(controller: 'petitions', action: 'filed') %>
+        <div class="dropdown-divider"></div>
+         <%= sort_panel("Trending", "trending", "pet_filed") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("A to Z", "title", "pet_filed") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Date Posted", "date", "pet_filed") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Date Filed", "date-f", "pet_filed") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Signatures", "endorsements", "pet_filed") %>
+        <div class="dropdown-divider"></div>
+          <%= sort_panel("Comments", "comments", "pet_filed") %>       
+      <% end %>
+    <% end %>   <!--  End - If statment determining whether rendered sort panel is departments, city review, or complaints, changing the dropdown items for each instance. -->
+  </div>
+</div>

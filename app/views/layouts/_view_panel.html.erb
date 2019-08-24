@@ -1,0 +1,182 @@
+<!-- Main partial for top panel of pages that toggles between List view and Map view of individual filter class items (views/layouts/_view_panel.html.erb). 
+   Being rendered from: Community Score, Community Score Map, Departments Index, Departments Map, Complaints Index, Complaints Map. -->
+
+<!-- Begin - View Panel wrapper -->
+<div class="" style="border: none !important">
+  <!-- Begin - Main row -->
+  <div class="tier pull-right mt-0 dropdown" style="padding-right: 0px !important;">
+  <button class="btn btn-outline-light btn-lg dropdown-toggle px-2 pull-right" style="background-color: transparent !important; color: #645496" type="button" id="view_by_menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+     <span class="text-xlarge theme_color_dark">View</span>
+  </button> 
+    <!-- Begin - Left side View-By selection for map/list. -->
+    <!-- Begin - Ruby Case Statement checking whether the rendered object passed is @complaints or @departments or @complaints_departments -->
+    <div id="view_by_menu" class="dropdown-menu dropdown-menu-right p-3 add-width-10" aria-labelledby="view_by_menu" style="border: 2px solid #645496;"> 
+    <% if obj === @complaints %> <!-- Sort panel is being rendered from Complaints index. -->
+      <div class="mt-1 mb-1 mx-0 p-0 center-all"> <!-- List button container -->
+        <!-- Begin - Provides List View links for all complaints. -->
+        <% if current_page?(controller: 'complaints', action: 'index') %> <!-- The user is in All Complaint list view, so map view link is available -->
+          <%= link_to "List View", city_complaints_path(@city), class: 'disabled underline btn btn-lg btn-outline-info center theme_color_dark'  %>
+        <% elsif current_page?(controller: 'complaints', action: 'complaint_map') %> <!-- The user is in All Complaint map view, so list view is available. -->
+          <%= link_to "List View", city_complaints_path(@city), class: 'btn btn-lg center theme_color_dark' %>
+        <% else %>    <!-- The user is outside of all complaints. -->
+          <% if current_page?(controller: 'complaints', action: 'verifying_map') %>
+            <%= link_to "List View", verifying_city_complaints_path(@city), class: 'btn btn-lg center theme_color_dark' %>
+          <% elsif current_page?(controller: 'complaints', action: 'verifying') %>
+            <%= link_to "List View", verifying_city_complaints_path(@city), class: 'disabled underline btn btn-lg btn-outline-info center theme_color_dark'  %>
+          <% elsif current_page?(controller: 'complaints', action: 'pending_map') %>
+            <%= link_to "List View", pending_city_complaints_path(@city), class: 'btn btn-lg center theme_color_dark' %>
+          <% elsif current_page?(controller: 'complaints', action: 'pending') %>
+            <%= link_to "List View", pending_city_complaints_path(@city), class: 'disabled underline btn btn-lg btn-outline-info center theme_color_dark'  %>
+          <% elsif current_page?(controller: 'complaints', action: 'filed_map') %>
+            <%= link_to "List View", filed_city_complaints_path(@city), class: 'btn btn-lg center theme_color_dark'  %>
+          <% elsif current_page?(controller: 'complaints', action: 'filed') %>
+            <%= link_to "List View", filed_city_complaints_path(@city), class: 'disabled underline btn btn-lg btn-outline-info center theme_color_dark'  %>                
+          <% elsif current_page?(controller: 'complaints', action: 'finished_map') %>
+            <%= link_to "List View", finished_city_complaints_path(@city), class: 'btn btn-lg center theme_color_dark'  %>                
+          <% elsif current_page?(controller: 'complaints', action: 'finished') %>
+            <%= link_to "List View", finished_city_complaints_path(@city), class: 'disabled underline btn btn-lg btn-outline-info center theme_color_dark'  %>                
+        <% end %> <!-- Ends links to filtered complaints List View -->
+      <% end %>     <!-- Ends main if check for all complaints map -->
+      <!-- End - Provides List View links for all complaints. -->
+      </div>
+      <div class="mt-1 mb-1 px-0 center-all"> <!-- Map button container -->
+        <!-- Begin - Provides Map View links for all complaints. -->
+        <% if current_page?(controller: 'complaints', action: 'complaint_map') %> <!-- The user is in All Complaint map view, so list view link is available -->
+          <%= link_to "Map View", complaint_map_path(@city), class: 'disabled underline btn btn-lg btn-outline-info center theme_color_dark'  %>
+        <% elsif current_page?(controller: 'complaints', action: 'index') %> <!-- The user is in All Complaint list view, so map view is available. -->
+          <%= link_to "Map View", complaint_map_path(@city), class: 'btn btn-lg center theme_color_dark' %>
+        <% else %>    <!-- The user is outside of all complaints map. -->
+          <% if current_page?(controller: 'complaints', action: 'verifying') %>
+            <%= link_to "Map View", verifying_map_path(@city), class: 'btn btn-lg center theme_color_dark' %>
+          <% elsif current_page?(controller: 'complaints', action: 'verifying_map') %>
+            <%= link_to "Map View", verifying_map_path(@city), class: 'disabled underline btn btn-lg btn-outline-info center theme_color_dark'  %>
+          <% elsif current_page?(controller: 'complaints', action: 'pending') %>
+            <%= link_to "Map View", pending_map_path(@city), class: 'btn btn-lg center theme_color_dark' %>
+          <% elsif current_page?(controller: 'complaints', action: 'pending_map') %>
+            <%= link_to "Map View", pending_map_path(@city), class: 'disabled underline btn btn-lg btn-outline-info center theme_color_dark'  %>
+          <% elsif current_page?(controller: 'complaints', action: 'filed') %>
+            <%= link_to "Map View", filed_map_path(@city), class: 'btn btn-lg center theme_color_dark'  %>
+          <% elsif current_page?(controller: 'complaints', action: 'filed_map') %>
+            <%= link_to "Map View", filed_map_path(@city), class: 'disabled underline btn btn-lg btn-outline-info center theme_color_dark'  %>                
+          <% elsif current_page?(controller: 'complaints', action: 'finished') %>
+            <%= link_to "Map View", finished_map_path(@city), class: 'btn btn-lg center theme_color_dark'  %>                
+          <% elsif current_page?(controller: 'complaints', action: 'finished_map') %>
+            <%= link_to "Map View", finished_map_path(@city), class: 'disabled underline btn btn-lg btn-outline-info center theme_color_dark'  %>                
+        <% end %> <!-- Ends links to filtered complaints map view -->
+      <% end %>     <!-- Ends main if check for all complaints map -->
+      <!-- End - Provides Map View links for all complaints. -->
+      </div>
+    <% elsif obj === @departments %> <!-- Sort panel is being rendered from Departments index. -->
+      <div class="mt-1 mb-1 mx-0 center-all"> <!-- Departmnets - List button container -->
+        <!-- Begin - Provides List View links for all departments. -->
+        <% if current_page?(controller: 'departments', action: 'index') %> <!-- The user is in All Department list view, so map view link is available -->
+          <%= link_to "List View", city_departments_path(@city), class: 'disabled underline btn btn-lg btn-outline-info center theme_color_dark'  %>
+        <% elsif current_page?(controller: 'departments', action: 'department_map') %> <!-- The user is in All department map view, so list view is available. -->
+          <%= link_to "List View", city_departments_path(@city), class: 'btn btn-lg center theme_color_dark' %>
+        <% else %>    <!-- The user is outside of all departments. -->
+          <% if current_page?(controller: 'departments', action: 'parks_map') %>
+            <%= link_to "List View", parks_city_departments_path(@city), class: 'btn btn-lg center theme_color_dark' %>
+          <% elsif current_page?(controller: 'departments', action: 'parks') %>
+            <%= link_to "List View", parks_city_departments_path(@city), class: 'disabled underline btn btn-lg btn-outline-info center theme_color_dark'  %>
+          <% elsif current_page?(controller: 'departments', action: 'government_map') %>
+            <%= link_to "List View", government_city_departments_path(@city), class: 'btn btn-lg center theme_color_dark' %>
+          <% elsif current_page?(controller: 'departments', action: 'government') %>
+            <%= link_to "List View", government_city_departments_path(@city), class: 'disabled underline btn btn-lg btn-outline-info center theme_color_dark'  %>
+          <% elsif current_page?(controller: 'departments', action: 'schools_map') %>
+            <%= link_to "List View", schools_city_departments_path(@city), class: 'btn btn-lg center theme_color_dark'  %>
+          <% elsif current_page?(controller: 'departments', action: 'schools') %>
+            <%= link_to "List View", schools_city_departments_path(@city), class: 'disabled underline btn btn-lg btn-outline-info center theme_color_dark'  %>                
+          <% end %> <!-- Ends links to filtered departments map view -->
+        <% end %>     <!-- Ends main if check for all departments map -->
+      <!-- End - Provides Map View links for all departments. -->
+      </div>
+      <div class="mt-1 mb-1 px-0 center-all"> <!-- Departments - Map button container -->
+      <!-- Begin - Provides Map View links for all departments. -->
+        <% if current_page?(controller: 'departments', action: 'department_map') %>   <!-- The user is in All Departments map view.  -->
+          <%= link_to "Map View", department_map_path(@city), class: 'disabled underline btn btn-lg btn-outline-info center theme_color_dark'  %>
+        <% elsif current_page?(controller: 'departments', action: 'index') %>         <!-- The user is in All Departments list view index. -->
+          <%= link_to "Map View", department_map_path(@city), class: 'btn btn-lg center theme_color_dark' %>
+        <% else %>     <!-- The user is somewhere in the map other than department index or department_map -->
+          <% if current_page?(controller: 'departments', action: 'parks') %>
+            <%= link_to "Map View", parks_map_path(@city), class: 'btn btn-lg center theme_color_dark' %>
+          <% elsif current_page?(controller: 'departments', action: 'parks_map') %>
+            <%= link_to "Map View", parks_map_path(@city), class: 'disabled underline btn btn-lg btn-outline-info center theme_color_dark'  %>
+          <% elsif current_page?(controller: 'departments', action: 'government') %>
+            <%= link_to "Map View", government_map_path(@city), class: 'btn btn-lg center theme_color_dark' %>
+          <% elsif current_page?(controller: 'departments', action: 'government_map') %>
+            <%= link_to "Map View", government_map_path(@city), class: 'disabled underline btn btn-lg btn-outline-info center theme_color_dark'  %>
+          <% elsif current_page?(controller: 'departments', action: 'schools') %>
+            <%= link_to "Map View", schools_map_path(@city), class: 'btn btn-lg center theme_color_dark'  %>
+          <% elsif current_page?(controller: 'departments', action: 'schools_map') %>
+            <%= link_to "Map View", schools_map_path(@city), class: 'disabled underline btn btn-lg btn-outline-info center theme_color_dark'  %>                
+          <% end %> <!-- Ends links to filtered departments map view -->
+        <% end %>     <!-- Ends main if check for all departments map -->
+      <!-- End - Provides Map View links for all departments. -->
+      </div>
+    <% elsif obj === @community_score %> <!-- Sort panel is being rendered from Community Score communtiy_score page. -->
+      <div class="my-1 mx-0 center-all"> <!-- List button container -->
+        <!-- Begin - If statement determining if user is on list view and disabling the link if so (/communityscore or /communityscore/map). -->
+        <% if current_page?(controller: 'community_scores', action: 'community_score') %> 
+          <%= link_to "List View", city_feed_path(@city), class: "disabled underline btn btn-lg center theme_color_dark" %>
+        <% else %>   <!-- User is on Map page so link is not disabled. -->
+           <%= link_to "List View", city_feed_path(@city), class: "btn btn-lg center theme_color_dark" %>
+        <% end %>
+        <!-- End - If statement determining if user is on list view and disabling the link if so (/communityscore or /communityscore/map). --> 
+      </div>
+      <div class="mt-1 px-0 center-all"> <!-- Map button container -->
+        <!-- Begin - End - If statement determining if user is on map view and disabling the link if so (/communityscore or /communityscore/map). --> 
+        <% if current_page?(controller: 'community_scores', action: 'community_score_map') %> 
+          <%= link_to "Map View", community_score_map_path(@city), class: "disabled underline btn btn-lg btn-outline-info center theme_color_dark" %>
+        <% else %>   <!-- User is on Map page so link is not disabled. -->
+          <%= link_to "Map View", community_score_map_path(@city), class: "btn btn-lg center theme_color_dark" %>
+        <% end %>
+        <!-- End - If statement determining if user is on map view and disabling the link if so (/communityscore or /communityscore/map). -->
+      </div>
+    <% end %> <!-- End - Case statment Statement checking if object passed is @complaints, @departments, or @complaints_departments -->
+        <!-- End -  Left side View-By selection for map/list. -->
+       <!-- Begin - Right side Sort-By dropdown for date/sorting. -->
+     <!--
+      <div class="col-md-4 pull-right">
+        <div class="row mt-2 pull-right">
+          <div class="dropdown">
+            <button class="btn btn-outline-secondary btn-lg dropdown-toggle pr-0" type="button" id="sort_by_menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+               Sort By
+            </button>
+            <!-- Begin - If statement determining whether rendered sort panel is departments or complaints, changing the dropdown items for each instance. -->
+        <!--    <div id="sort_by_menu" class="dropdown-menu" aria-labelledby="sort_by_menu" style="z-index: 10000 !important;"> <!-- z-index is high so that the menu will overlap the layer panel on maps. -->
+        <!--      % if obj == @complaints %>   <!-- Sort menu items for Complaints are being shown. -->
+        <!--        <h6 class="dropdown-header center p-1"> 
+                  %= link_to "Complaints", city_complaints_path, class: 'dropdown-item p-1 sort_menu_header center bold'  %> 
+                </h6>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item text-xmedium" href="#">Date</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Category</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Endorsements</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Score</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Comments</a>
+              % elsif obj == @departments %>    <!-- Sort menu items for departments are being shown. -->
+         <!--       <h6 class="dropdown-header center p-1"> 
+                  %= link_to "Departments", city_departments_path, class: 'dropdown-item sort_menu_header p-1 center bold'  %> 
+                </h6>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Alphabetical</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Score</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Reviews</a>
+              % end %>   <!--  End - If statment determining whether rendered sort panel is departments or complaints, changing the dropdown items for each instance. -->
+    <!--        </div>
+          </div>
+        </div>    
+      </div> <!-- End - Right side Sort-By dropdown for date/sorting. -->
+    
+      
+      
+    </div>
+    </div><!-- End - Main row -->
+  </div>
+<!-- End - Sort Panel wrapper -->

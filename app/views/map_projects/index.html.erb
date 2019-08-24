@@ -1,0 +1,41 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Map Projects</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Status</th>
+      <th>Description</th>
+      <th>Address</th>
+      <th>Slug</th>
+      <th>Tags</th>
+      <th>Admin</th>
+      <th>Workplace</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @map_projects.each do |map_project| %>
+      <tr>
+        <td><%= map_project.title %></td>
+        <td><%= map_project.status %></td>
+        <td><%= map_project.description %></td>
+        <td><%= map_project.address %></td>
+        <td><%= map_project.slug %></td>
+        <td><%= map_project.tags %></td>
+        <td><%= map_project.admin_id %></td>
+        <td><%= map_project.workplace_id %></td>
+        <td><%= link_to 'Show', map_project %></td>
+        <td><%= link_to 'Edit', edit_map_project_path(map_project) %></td>
+        <td><%= link_to 'Destroy', map_project, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Map Project', new_map_project_path %>

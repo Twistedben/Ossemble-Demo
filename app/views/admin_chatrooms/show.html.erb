@@ -1,0 +1,126 @@
+<div class="content">
+  <div class="tier">
+    <div class="col-d-11 col-t-11 tier center p-0 bg-white light-box-shadow">
+      <div id="chatroom_header_container" class="col-tier">
+        <div class="col-all-5">
+          <div id="chatroom_header_settings_container" class="col-tier">
+            <div id="chatroom_header_users" class="col-tier">
+              <div class="col-all-5" title="
+                <% @chatroom.admins.each do |user| %>
+                  <%= "#{user.name}, " %>
+                <% end %>  
+              ">
+                <div class="chatroom_header_icon_container">
+                  <i class="fas fa-users"></i> 
+                </div>
+                <div class="chatroom_header_text_container">
+                  <span>
+                    <%= count_chatroom_members(@chatroom) %> 
+                  </span>
+                </div>
+              </div>
+            </div> 
+            <div id="chatroom_header_edit" class="col-tier" title="Edit this chatroom">
+              <div class="col-all-5">
+                <div class="chatroom_header_icon_container">
+                  <i class="fas fa-cog"></i> 
+                </div>
+                <div class="chatroom_header_text_container">
+                  <span>
+                    <%= @chatroom.name %> 
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="chatroom_header" class="col-all-6">
+          <h3>
+            <%= @chatroom.workplace.name %> Chat
+          </h3>
+          <p>
+            <%= @chatroom.description %>
+          </p>
+        </div>
+      </div>
+      <div id="conversations_list" class="col-d-3 col-t-3 col-p-4">
+        <h3 title="Workplace Chatrooms you belong to">
+          Your Chatrooms
+        </h3>
+        <ul class="center-all p-0" style="list-style: none">
+          <% @current_chatrooms.each do |chatroom| %>
+            <li class="chatroom_list_container col-tier
+                <% if current_page?(chatroom_path(chatroom)) %>
+                  bold
+                <% end %>
+              ">
+              <div class="chatroom_icon_container">
+                <%= link_to "<i class='fas fa-sign-out-alt'></i>".html_safe, chatroom_chatroom_path(chatroom), method: :delete, title: "Leave #{chatroom.name} chatroom" %>
+              </div>
+              <div class="chatroom_link_container
+                <% if current_page?(chatroom_path(chatroom)) %>
+                  current_chatroom
+                <% end %>
+              ">
+                <%= link_to chatroom.name, chatroom_path(chatroom), class: "chatroom_link" %>
+              </div>
+            </li>
+          <% end %>
+        </ul>
+        <h3 id="available_chatrooms_header" title="Other Workplace Chatrooms you can join">
+          Join Chatrooms
+        </h3>
+        <ul class="center-all p-0" style="list-style: none">
+          <% @available_chatrooms.each do |chatroom| %>
+            <li class="chatroom_list_container col-tier">
+              <div class="chatroom_icon_container">
+                <%= link_to "<i class='fas fa-plus'></i>".html_safe, chatroom_chatroom_path(chatroom), method: :post, title: "Join #{chatroom.name} chatroom" %>
+              </div>
+              <div class="chatroom_link_container">
+                <%= link_to chatroom.name, chatroom_chatroom_path(chatroom), method: :post, title: "Join #{chatroom.name} chatroom"  %>
+              </div>
+            </li>
+          <% end %>
+        </ul>
+        
+      </div>
+      <div id="conversation_console" data-behavior="messages" data-chatroom-id="<%= @chatroom.id %>" class="col-d-9 col-t-9 col-p-8">
+        <div id="messages">
+          <!-- Below -  Renders in the message just sent from active job AdminMessageRelay and AdminMessagesController inside this chatroom -->
+          <% @messages.each do |admin_message| %>
+            <%= render admin_message %>
+          <% end %>
+        </div>
+      </div>
+      <div id="side_bar_new_chatroom_container" class="col-d-3 col-t-3 col-p-4">
+        <%= link_to "<i class='far fa-plus-square padding-r-8'></i>Create Chatroom".html_safe, new_chatroom_path() %>
+      </div>
+      <div id="message_form_container" class="col-d-9 col-t-9 col-p-8">
+        <!-- Below -  Renders in the send message form to create a message inside this chatroom -->
+        <%= render 'admin_messages/message_form', obj: @chatroom %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--  Scrolls to bottom of conversation log, latest message on page load. -->
+<script>
+  var objDiv;
+  objDiv = document.getElementById('conversation_console');
+  $('#conversation_console').scrollTop($('#conversation_console')[0].scrollHeight)
+  objDiv.scrollTop = objDiv.scrollHeight;
+  $(document).on("turbolinks:load", function() {
+      var objDiv;
+    objDiv = document.getElementById('conversation_console');
+    $('#conversation_console').scrollTop($('#conversation_console')[0].scrollHeight)
+    objDiv.scrollTop = objDiv.scrollHeight;
+  });
+  $( document ).ready(function() {
+       var objDiv;
+  objDiv = document.getElementById('conversation_console');
+  $('#conversation_console').scrollTop($('#conversation_console')[0].scrollHeight)
+  objDiv.scrollTop = objDiv.scrollHeight;
+     
+  });
+
+</script>

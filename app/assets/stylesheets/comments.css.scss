@@ -1,0 +1,155 @@
+// Main Stylesheet for Comments. (views/comments/...)
+
+// Begin - Styling for Comments Partial (views/comments/_comment.html.erb)
+#replies_ol, #comments_ul {
+  list-style-type: none !important;
+}
+.delete_icon {
+  color: red;
+  opacity: 0.6 !important;
+}
+.delete_icon:hover, .delete_icon:focus { 
+  text-decoration: none;
+	color: darkred;
+	opacity: 1 !important;
+  text-shadow: -1px 1px 8px rgba(255, 210, 20, 0.1), 1px -1px 8px rgba(255, 210, 20, 0.1);
+}
+.edit_icon {
+  color: orange;
+  opacity: 0.6 !important;  
+}
+.edit_icon:hover, .edit_icon:focus { 
+  text-decoration: none;
+	color: darkorange;
+	opacity: 1 !important;
+  text-shadow: -1px 1px 8px rgba(255, 210, 20, 0.1), 1px -1px 8px rgba(255, 210, 20, 0.1);
+}
+
+.upvote_comment_icon:hover, .upvote_comment_icon:focus { 
+	text-decoration: none;
+	color: green;
+	opacity: 1 !important;	
+  text-shadow: -1px 1px 8px rgba(255, 210, 20, 0.1), 1px -1px 8px rgba(255, 210, 20, 0.1);
+}
+#upvote_comment {
+  color: #5bc0de;
+  font-size: 2.4rem !important;
+  font-weight: 500;
+}
+.collapse_button, .collapse_button:hover {
+  color: purple !important;
+    i {
+    color: purple !important;
+    margin-left: 2.5px !important;
+    }
+}
+.flash_panel {
+  height: 3.5rem;
+}
+#thumbs_up_div {
+  color: green; 
+}
+#comment_info small {
+  font-size: 1.3rem;
+}
+#reply_dropdown_button {
+  opacity: 0.7 !important;
+}
+#reply_dropdown_button:hover {
+  color: black;
+  font-weight: 600;
+  opacity: 1 !important;
+  padding-right: 15px !important;
+}
+.reply_description, #comment_description {
+  min-height: 100px !important;
+  max-height: 800px !important;
+}
+
+#reply_post_btn {
+  width: 110px !important;
+}
+#reply_post_btn:hover { 
+  font-weight: bold;
+}
+.ql-toolbar {
+  background: white !important;
+}
+.ql-snow {
+  background: white !important;
+}
+.ql-editor {
+  border-bottom: 1px solid #aaaaaa;
+  border-left: 1px solid #aaaaaa;
+  border-right: 1px solid #aaaaaa;
+  border-top: 0px !important;
+}
+.ql-toolbar {
+  border-radius: 0px !important;
+}
+
+.modal-open{overflow:auto;padding-right:0 !important;}
+
+.modal-content {
+    @media screen and (max-width: 601px) {
+    height: 350px !important;
+                                       }
+}
+
+
+#report-btns {
+    float:left;
+}
+
+#report-btns label {
+    float:left;
+    width:170px;
+    margin:4px;
+    background-color:#EFEFEF;
+    border-radius:4px;
+    border:1px solid #D0D0D0;
+    overflow:auto;
+       
+}
+
+#report-btns label span {
+    text-align:center;
+    font-size: 14px;
+    padding:8px 0px;
+    display:block;
+}
+
+#report-btns label input {
+    position:fixed;
+    opacity:0
+    
+}
+
+#report-btns input:checked + span {
+    background-color: #645496 !important;
+    color: white !important;
+    box-shadow: 1px 2px 12px 1px rgba(0, 0, 0, 0.2);
+}
+
+#report-btns .unselect:hover {
+    background-color: #645496 !important;
+    color: white !important;
+    box-shadow: 1px 2px 12px 1px rgba(0, 0, 0, 0.2);
+}
+
+#report-btns .unselect {
+    border: 2px solid #645496 !important;
+    background-color: white;
+    color: #645496 !important;
+    box-shadow: 1px 2px 12px 1px rgba(0, 0, 0, 0.2);
+    width: 125px;
+    margin: 2.5px;
+}
+
+
+
+// End - Styling for Comments Partial (views/comments/_comment.html.erb)
+
+// Begin - Styling for Comment form Partial (views/comments/_comment_form.html.erb)
+
+// End - Styling for Comment form Partial (views/comments/_comment_form.html.erb)

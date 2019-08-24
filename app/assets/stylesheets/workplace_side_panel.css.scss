@@ -1,0 +1,473 @@
+// CSS and Stylesheet for workplace_side_panel.html.erb partial
+
+// Begin - Opened Sidepanel
+#workplace_sidepanel {
+  height: 94.8%; /* 100% Full-height */
+  width: 210px;
+  position: fixed; /* Stay in place */
+  z-index: 1001; /* Stay on top */
+  top: 0; /* Stay at the top */
+  left: 0;
+  @media screen and (max-width: 600px) {
+  width: 0px;
+                                         }
+  // Begin - Background Gradient
+    background: rgb(34,12,61); /* Old browsers */
+    background: -moz-linear-gradient(top, rgba(34,12,61,1) 1%, rgba(33,0,68,1) 61%, rgba(62,0,91,1) 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top, rgba(34,12,61,1) 1%,rgba(33,0,68,1) 61%,rgba(62,0,91,1) 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom, rgba(34,12,61,1) 1%,rgba(33,0,68,1) 61%,rgba(62,0,91,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#220c3d', endColorstr='#3e005b',GradientType=0 ); /* IE6-9 */
+  // End - Background Gradient
+  overflow: hidden; /* Disable horizontal scroll */
+  margin-top: 59px; /* Place content 60px from the top */
+  padding-top: 5px; /* Place content 60px from the top */
+  transition: 0.4s; /* 0.5 second transition effect to slide in the sidenav */
+  box-shadow: 3px 1px 13px rgba(0,0,0,0.4);
+  
+  #side_panel_city {
+     font-size: 16px;
+    
+     span {
+       padding-left: 5px;
+     }
+   }
+
+  a {
+    padding: 0px 5px 6px 0px;
+    text-decoration: none;
+    margin-bottom: 1px;
+    margin-left: 9px;
+    font-size: 21px;
+    color: #b4b3b3;
+    display: block;
+    transition: 0.3s;
+    width: 100%;
+  
+    @media screen and (max-width: 999px) {
+      text-align: center;
+      font-size: 21px; 
+      color: #e8e8e8;
+    }
+    &:hover {
+      color: #f1f1f1;
+      font-weight: bold;        
+    }
+  }
+  
+  .close_container {
+    height: 6%;
+    padding-top: 10px;
+    opacity: 0.65;
+    &:hover {
+      opacity: 1;
+    }
+    .closebtn { 
+      padding: 0px !important;
+      i {
+        position: relative;
+        top: 0;
+        font-size: 32px;
+        padding-right: 20px;
+        float: right;
+        padding-top: 0px;
+        transition: 0.4s;
+     
+      }
+      &:hover {
+        i {
+          transform: translate(-12px,0);
+          font-size: 36px;
+        }
+      }
+    }
+  }
+
+  #sidepanel_top_container {
+    height: 55%;
+    opacity: .9;
+    @media screen and (max-width: 999px) {
+      opacity: 1;
+    }
+    &:hover {
+      opacity: 1;
+    }
+    .side_panel_header_divider {
+      margin-bottom: 10px;
+      overflow: hidden;
+      border-top: 0.3rem groove rgba(120, 62, 195, 0.6);
+    }
+    #side_panel_header_container {
+      border-top: 0.3rem groove rgba(120, 62, 195, 0.6);
+    // Begin - WORKPLACES BTN/DROPDOWN: CSS For Workplace Dropdown Button area
+      #workplaces_btn_container {
+        height: 100%;
+        width:  100%;
+        padding-right: 3px;
+        &.show {
+          font-weight: bold;
+        }
+        #workplaces_btn {
+          background: none;
+          border: none;
+          padding: 10px 3px;
+          width: 100%;
+          i {
+            padding-left: 10px;
+            font-size: 29px;
+            opacity: 0.70;
+            transition: 0.4s; 
+            &.fa-caret-right {
+              opacity: 1;
+              padding-right: 0px;
+              padding-left: 20%;
+              transition: 0.5s; 
+            }
+          }
+          #workplaces_btn_text {
+            text-align: left; 
+            padding-left: 10px;
+            span {
+              font-family: "Roboto", "Helvetica Neue",Helvetica,Arial,sans-serif;
+              color: #e8e8e8;
+              font-size: 22px;
+              letter-spacing: 1.1px;
+           
+            }
+            @media screen and (max-height: 768px) {
+              margin-left: 5% !important;
+  }
+          }
+        }
+      // Begin - WORKPLACE DROPDOWN MENU  - CSS for workplace menu dropdown and list of workplaces
+        #workplace_dropdown_menu {
+          margin-right: 5px;
+          position: fixed !important;
+          top: 40px !important;
+          left: 205px !important;
+          min-width: 290px;
+          opacity: 1 !important;
+          @media screen and (max-width: 600px) {
+            position: absolute !important;
+            left: -3px !important;
+            top: 5px !important;
+          }
+          #workplace_dropdown_menu_header {
+            cursor: default;
+            font-size: 19px;
+            padding: 7px;
+            margin-top: 0px;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 1.12px;
+            color: #645496;
+            font-weight: bold;
+            
+          }
+          div.dropdown-divider {
+            width: 100%;
+            opacity: 1;
+            margin: 3px auto;
+       
+          }
+          a#workplace_link {
+            max-width: 300px;
+            padding-top: 4px;
+            padding-left: 3px;
+            text-transform: capitalize;
+            color: black;
+            font-size: 18px;
+            text-decoration: none !important;
+            letter-spacing: 1px;
+            font-weight: normal !important;
+         
+            &:hover {
+              font-weight: bold !important;
+            }
+          }
+          a.new_workplace_link {
+            text-transform: none !important;
+            i {
+              padding-right: 10px;
+            }
+          }
+        }
+      // End - WORKPLACE DROPDOWN MENU:
+      }
+    // End - WORKPLACES BTN/DROPDOWN: 
+    }
+    #side_panel_top_link_container {
+      float: left;
+      padding: 6px 2px 6px 5px;
+    
+      .top_icon_container {
+        width: 40%;
+        height: 30px;
+        padding-right: 10px;
+        padding-top: 3px;
+      
+        @media screen and (max-width: 999px) {
+          width: 40%;
+        }
+        .icon-inner {
+          margin-left: 12px;
+          margin-top: 4px;
+          width: 20px;
+          color: rgba(255, 255, 255, 0.45);
+         
+        }
+        i {
+          float: right;
+          font-size: 18px;
+          color: #b4b3b3;
+          padding: 6px 5px 5px 5px;
+          
+        }
+        &#feed_icon_container, &#directory_icon_container {
+          width: 25%;
+        }
+      }
+      a.btn {
+        font-size: 19px;
+        margin-left: 0px;      
+        width: 50%;
+        color: #e8e8e8;
+        text-align: left;
+        padding-left: 0px;
+        padding-top: 2px;
+        @media screen and (max-width: 999px) {
+          text-align: left;
+          font-size: 19px !important; 
+          width: 50%;
+        }   
+        &#feed_link, &#workplace_directory_link {
+          width: 75%;
+          font-size: 20px;
+          
+        }
+      }
+    }
+    div.dropdown-divider{
+      width: 70%;
+      margin: 3px 20px 3px auto;
+      opacity: 0.50;
+      @media screen and (max-width: 999px) {
+        width: 50%;
+        margin: 0px auto;
+      }
+      &#feed_divider, &#workplace_directory_divider {
+        width: 80%;
+        margin: 3px auto;
+        opacity: 0.35;
+      }
+    }
+  }
+  // Bottom of Admin Side Panel that contains actions people and Workplaces
+  #sidepanel_bottom_container {
+    height: 41%;
+    opacity: 0.89;
+    background: rgb(62,0,91); /* Old browsers */
+    background: -moz-linear-gradient(top, rgba(62,0,91,1) 0%, rgba(33,0,68,1) 39%, rgba(34,12,61,1) 99%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top, rgba(62,0,91,1) 0%,rgba(33,0,68,1) 39%,rgba(34,12,61,1) 99%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom, rgba(62,0,91,1) 0%,rgba(33,0,68,1) 39%,rgba(34,12,61,1) 99%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3e005b', endColorstr='#220c3d',GradientType=0 ); /* IE6-9 */
+    border-top: 2px groove rgba(120, 62, 195, 0.99);
+    @media screen and (max-width: 999px) {
+      opacity: 1;
+    }
+    &:hover {
+      opacity: 1;
+    }
+    div.dropdown-divider {
+      width: 80%;
+      margin: 3px auto;
+      opacity: 0.50;
+      @media screen and (max-width: 999px) {
+        width: 50%;
+    
+      }
+    }
+    .bottom_link_container {
+      float: left;
+      padding: 6px 3px 6px 15px;
+     
+      &:first-child {
+        padding-top: 15px;
+      }
+    }
+    .bottom_icon_container {
+      width: 15%;
+      height: 30px;
+      margin: 0px !important;
+      @media screen and (max-width: 999px) {
+        width: 20%;
+      }
+      i {
+        font-size: 18px;
+        color: #b4b3b3;
+        padding: 3px 10px 0px 5px;
+   
+        @media screen and (max-width: 999px) {
+          padding-left: 10px !important;
+        }
+      }
+    }
+    a.btn {
+      font-size: 18px;
+      margin-left: 0px;      
+      width: 85%;
+      text-align: left;
+      padding-left: 8px;
+     
+      @media screen and (max-width: 999px) {
+        text-align: left;
+        font-size: 18px; 
+        color: #e8e8e8;
+        width: 50%;
+      }      
+
+    }
+
+  }
+  
+}
+// End - Opened Sidepanel
+
+// Begin - Closed Sidepanel - side div
+  #open_sidepanel {
+    height: 95%; /* 100% Full-height */
+    width: 45px; /* 0 width - change this with JavaScript */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Stay on top */
+    top: 0; /* Stay at the top */
+    left: 0;
+    background-color: #2F1541;
+    overflow-x: hidden; /* Disable horizontal scroll */
+    margin-top: 59px; /* Place content 60px from the top */
+    padding-top: 30px; /* Place content 60px from the top */
+    transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+    box-shadow: 3px 1px 13px rgba(0,0,0,0.4);
+    opacity: .9;
+    cursor: pointer !important;
+    &:hover {
+      width: 60px;
+      opacity: 1;
+      padding-top: 125px;
+    }
+    .openBtn {
+      cursor: pointer !important;
+      text-decoration: none;
+      font-size: 34px;
+      color: #818181;
+      display: block;
+      transition: 0.3s;
+      transition-timing-function: ease;
+      i {
+        padding: 8px 8px 8px 5px;
+        &:hover {
+          color: #f1f1f1;
+          font-size: 38px;
+          transition: 0.3s;
+          transition-timing-function: ease;
+        }
+      }
+      &:hover {
+        font-size: 40px;
+        transition: 0.3s;
+        transition-timing-function: ease;
+      }
+    }
+    &:hover {
+      width: 52px;
+      transition: 0.3s;
+      transition-timing-function: ease-in-out;
+      opacity: 1;
+        i {
+          color: #f1f1f1;
+          font-size: 40px;
+          transition: 0.3s;
+          transition-timing-function: ease-in-out;
+        }
+    
+    }
+  }
+
+.test21 {
+  width: 100px;
+}
+ 
+// End - Closed Sidepanel
+
+  /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+  @media screen and (max-height: 450px) {
+      .workplace_sidepanel {padding-top: 15px;}
+      .workplace_sidepanel a {font-size: 18px;}
+  }
+  
+.arrow_ms {
+    @media screen and (max-width: 768px) {
+    padding-top: 7px !important;  
+    font-size: 18px !important;
+  }
+}
+
+.spb_pb_ms {
+    @media screen and (max-width: 600px) {
+    bottom: 10px !important;
+    position: relative;
+  }
+}
+
+#directory_icon_container {
+    @media screen and (max-width: 600px) {
+    padding-right: 37px !important;
+    padding-left: 3px;
+  }
+}
+
+#feed_icon_container {
+    @media screen and (max-width: 600px) {
+    padding-right: 37px !important;
+    padding-left: 3px;
+  }
+}
+
+.blc_ms {
+    @media screen and (max-width: 600px) {
+    position: relative;
+    left: 25px;
+  }
+}
+
+
+.blc_ms2 {
+    @media screen and (max-width: 600px) {
+    position: relative;
+    left: 20px;
+  }
+}
+
+.side_arrow_ms {
+     @media screen and (max-width: 600px) {
+    position: relative;
+    left: 22px;
+  }
+}
+
+.icon_map_ms {
+     @media screen and (max-width: 600px) {
+    position: relative;
+    left: -5px;
+  }
+}
+
+#workplaces_btn_text {
+    @media screen and (max-width: 600px) {
+    padding-left: 0px !important;
+  }
+}
+
+.workplace_text_ms {
+    @media screen and (max-width: 600px) {
+    font-size: 26px !important;
+  }
+}

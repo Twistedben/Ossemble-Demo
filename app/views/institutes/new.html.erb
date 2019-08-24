@@ -1,0 +1,59 @@
+<!--  Main page for creating a new institute (workplaces) so it can be populated by workplaces (channels). 
+      Admins are brought to it after doing a fresh signup. 
+      Stylesheet is in institutes.scss-->
+
+<div class="content">
+  <div class="col-d-9 col-t-11 col-p-12 center">
+    <div id="" class="col-tier pt-0">
+      <h2 class="mb-0 b theme_color_black roboto">
+        Create Workplace 
+      </h2>
+    </div>
+  </div>
+  <div id="signup_accordion_container" class="center col-d-9 col-t-11 col-p-12">
+    <div id="after_signup_container" class="padding-b-25 border" >
+      <div id="after_signup_form_container" class="col-tier">
+        <%= simple_form_for @institute, html: { novalidate: false, class: 'form-horizontal col-all-12 p-0' } do |f| %>
+          <%= render 'layouts/errors', obj: @institute %>
+          <div class="col-tier form_tier pt-0" title="What best describes the reason or area you're using this workplace for?">
+            <div clas="col-tier">
+              <%= f.label :category, "Choose Region", class: 'margin-b-5'  %>
+            </div>
+            <div id="institute-btns" class="col-tier">
+              <div class="col-all-12">
+                <label class="unselect pointer"><input type="radio" name="institute[category]" value="campaign"><span>Campaign</span></label>
+                <label class="unselect pointer"><input type="radio" name="institute[category]" value="county"><span>County</span></label>
+                <label class="unselect pointer"><input type="radio" name="institute[category]" value="city"><span>Municipality / City</span></label>
+                <label class="unselect pointer"><input type="radio" name="institute[category]" value="regional"><span>Regional Orginzation</span></label>
+                <label class="unselect pointer"><input type="radio" name="institute[category]" value="other"><span>Other</span></label>
+              </div>
+            </div> 
+          </div>
+          <div class="col-tier form_tier pb-0 pt-5">
+            <div id="" class="col-all-6 padding-r-8"> 
+              <%= f.label :name, "Name", required: true %>
+              <%= f.text_field :name, maxlength: 60, autofocus: true, title: "Enter a name for the workplace. (60 Characters)", placeholder: "City of Lakewood, Ohio (60 Characters)", class: "form-control", required: true %>
+            </div>
+            <div id="" class="col-all-6"> 
+              <%= f.label :email, "Email Domain <small>(work email)</small>".html_safe, required: true %>
+              <%= f.email_field :email, maxlength: 254, title: "Enter your work email or domain to ensure only members with that identical domain (I.E: @example.com) can join your channels. This feature can be toggled in Channel settings or when adding a new one for the workplace. (255 Characters)", placeholder: "myworkemail@example.com", class: "form-control", required: true %>
+              <p class="mt-1 mb-0">For securing your workplace, ensuring only co-workers can join. Channels, when created, can be public.</p>
+            </div>
+          </div>
+        </div> 
+      </div>
+      <div class="col-tier">
+        <div class="col-all-12 push-right">
+        <%= f.submit 'Create Workplace', id: "finish_workplace_btn", class: "form_btn button-cs push-right btn", onclick: "amplitude.getInstance().logEvent('Workplace (Institute) Created');"  %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+<!-- Below - JS Code to automatically fill institute name and email  -->
+<script> 
+$( document ).ready(function() {
+  $("#institute_name").val("<%= current_admin.organization %>");
+  $("#institute_email").val("<%= current_admin.email %>");
+});
+</script>

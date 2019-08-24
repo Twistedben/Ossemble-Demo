@@ -1,0 +1,23 @@
+<!-- Devise page for resending Unlock instructions email for Ossemble login lockout (devise/unlocks/new) -->
+
+<header>
+  <h2 class="center" style="font-family: Adamina">
+    Resend Unlock Instructions
+  </h2>
+</header>
+  <hr>
+
+<%= form_for(resource, as: resource_name, url: unlock_path(resource_name), html: { method: :post }) do |f| %>
+  <%= devise_error_messages! %>
+
+  <div class="field">
+    <%= f.label :email %><br />
+    <%= f.email_field :email, autofocus: true %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "Resend unlock instructions" %>
+  </div>
+<% end %>
+
+<%= render "devise/shared/links" %>

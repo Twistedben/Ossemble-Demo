@@ -1,0 +1,164 @@
+// Begin CSS code for the City Sign up Landing Page
+
+#jumbo_container2  {
+  background: asset-url('visitors_index/city_cover_image.jpg') no-repeat center center; 
+   -webkit-background-size: cover;
+   -moz-background-size: cover;
+   -o-background-size: cover;
+   background-size: cover;
+   background-position: 0px -250px;
+   position: relative !important;
+   margin-top: -1.8rem !important;
+
+ // Begin - scaling options for different screen resoultions. 
+    
+    @media screen and (max-width: 860px) {
+        h1 {
+    font-size: 30px;
+          }
+     
+                                          }
+
+  @media screen and (max-width: 860px) {
+        h2 {
+    font-size: 20px;
+            }  
+       
+                                        }
+    
+    #join_us_btn {
+      font-size: 20px;
+      margin-left: 10px;
+      height: 55px;
+      padding-right: 10px;
+      padding-top: 12px;
+      margin-bottom: 8px;
+      width: 155px;
+        
+        @media screen and (max-width: 667px) {
+          padding: 2px 4px;
+          font-size: 80%;
+          line-height: 1;
+          border-radius: 3px;
+          height: 35px;
+          width: 120px;
+          padding-top: 11px;
+          font-size: 12px;
+          letter-spacing: 1px;
+                                              }
+     
+    }
+    
+    p               {
+      font-size: 23px;
+      text-shadow:.5px .5px black;
+        @media screen and (max-width: 667px) {
+          font-size: 15px;
+                                            }
+     
+                    } 
+  } // Closing Jumbo containter media screens.
+  
+  #jumbo_main_text2{
+    font-size: 35px;
+    font-family: Adamina, serif;
+    color: #645496;
+    @media screen and (max-width: 859px) {
+    //text-shadow: 1.5px 1px black;
+    font-size: 33px;
+                                         }
+    //text-shadow: 2px 2px #a165aa;
+  }
+  
+  #jumbo_slogan_text2{
+    font-size: 25px;
+    font-family: Adamina, serif;
+    color: #645496;
+    //text-shadow: 1.5px 1.5px #a165aa;
+    @media screen and (max-width: 859px) {
+    //text-shadow: 1.5px 1px black;
+    font-size: 33px;
+                                         }
+  }
+  
+    #tint2 {
+    padding: 1.5em;
+    background-color: rgba(237, 237, 237, 0.7) !important;
+    margin-top: 30px !important;
+    max-width: 60em;
+    border-radius: 10px;
+    @media screen and (width: 768px) {
+      width: 620px !important;
+      margin-top: 50px !important;
+                                         }
+                                         
+    @media screen and (max-width: 667px) {
+      margin-top: 8px !important;
+      
+                                         }
+        }
+   #main_jumbo2 {
+    background-color: transparent;
+    text-align: center;
+    padding: 70px;
+    margin: 25px;
+    height: 500px;
+    position: relative;
+    @media screen and (max-width: 578px) {
+          padding: 35px;
+          height: 410px;
+                                           }
+  }
+  
+.cl_price_nopad {
+  @media screen and (max-width: 768px) {
+   padding: 0px !important;
+                                           }
+}  
+  
+#clpic1 {
+  background: asset-url('visitors_index/cltest1.PNG') no-repeat center;
+    -webkit-background-size: cover;
+   -moz-background-size: cover;
+   -o-background-size: cover;
+   background-size: cover;
+}
+
+#clpic2 {
+  background: asset-url('visitors_index/cltest2.PNG') no-repeat center;
+    -webkit-background-size: cover;
+   -moz-background-size: cover;
+   -o-background-size: cover;
+   background-size: cover;
+}  
+  
+#clpic3 {
+  background: asset-url('visitors_index/cltest3.PNG') no-repeat center;
+    -webkit-background-size: cover;
+   -moz-background-size: cover;
+   -o-background-size: cover;
+   background-size: cover;
+}  
+    
+.cl_pic_swap {
+  display: none;
+  @media screen and (max-width: 767px) {
+  display: block !important;
+                                           }
+}
+
+.cl_pic_swap2 {
+  display: block;
+  @media screen and (max-width: 767px) {
+  display: none !important;
+                                           }
+} 
+// Below - CSS For the City Landing Page Carosuel pictures.  
+  
+.cl_carousel {
+  background: asset-url('visitors_index/cover_image.png') no-repeat center;
+    -webkit-background-size: cover;
+   -moz-background-size: cover;
+   -o-background-size: cover;
+   background-size: cover;
+}

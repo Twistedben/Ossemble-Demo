@@ -1,0 +1,74 @@
+<!-- Main partial for rendering the action panel for admin dashboard pages with any path that has /:admin_id in it, from admins controller
+    (views/admins/_admin_layouts.html.erb) -->
+
+<div id="non_ms_ap_content" class="col-d-3 col-t-10">
+  <div id="profile_cs_org">
+    <div id="profile_cs" class="border-radius-10">  <!-- Begin - First Profile Side Panel -->
+      <div class="user_profile_side_data_body panel-body pb-2 border-radius-10 padding-t-8">
+        <div class="col-all-12">
+         
+        <!-- End -  CITY ADMIN:  -->
+        <!-- Begin - ACCOMPLISHMENTS: User Accomplishments Showcase  -->
+          <div id="user_panel_accomplishments" class="pull-right pl-0 col-all-12">
+            <div id="profile_acc_org">
+              <div id="profile_acc" class="col-tier">
+                <div class="col-tier">
+                  <p class="page_info_title margin-b-8 bold">
+                    <%= "#{@admin.first_name}'s Accomplishments" unless is_current_admin?(@admin) %>
+                    <%= "Your Accomplishments" if is_current_admin?(@admin) %>
+                  </p>
+                </div>
+                <div class="card col-tier light-box-shadow mt-0 magin-b-10" style="border: 1px solid rgba(128, 128, 128, .5);">
+                  <div class="padding-all-8 text-16">
+                    <div class="tier margin-y-3 ">
+                      <p class=" col-all-9 pr-0 margin-b-0 mt-2 margin-l-3" >
+                        Comments:
+                      </p>
+                      <div class="push-right col-all-2 px-2">
+                        <p class="push-right theme_color_dark">
+                          <%= "#{@admin.comments.count}" %>
+                        </p>
+                      </div>
+                    </div>
+                    <div class="tier margin-y-3 ">
+                      <p class=" col-all-9 pr-0 margin-b-0 margin-l-3" >
+                        Forum Posts:
+                      </p>
+                      <div class="push-right col-all-2 px-2">
+                        <p class="push-right theme_color_dark">
+                          <%= "#{@admin.posts.count}" %>
+                        </p>
+                      </div>
+                    </div>
+                    <div class="tier margin-y-3 ">
+                      <p class=" col-all-9 pr-0 margin-b-0 margin-l-3" >
+                        Map Posts:
+                      </p>
+                      <div class="push-right col-all-2 px-2">
+                        <p class="push-right theme_color_dark">
+                          <%= "#{@admin.map_posts.count}" %>
+                        </p>
+                      </div>
+                    </div>
+                    
+                    <div class="tier margin-t-3 mb-0">
+                      <p class=" col-all-9 pr-0 border-none margin-b-0 margin-l-3" >
+                        Upvotes:
+                      </p>
+                      <div class="push-right col-all-2 px-2 border-none">
+                        <p class="push-right theme_color_dark">
+                          <%= "#{@admin.endorsements.count}" %> 
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End - ACCOMPLISHMENTS: User Accomplishments Showcase-->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

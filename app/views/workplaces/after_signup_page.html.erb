@@ -1,0 +1,107 @@
+<!--  Page rendered only once after the super_admin, or first admin of a city, signs up for Ossemble.
+  This is a bridge page, part of signup flow, that allows the super admin to edit the workplace before logging for the first time and also
+    create departments. This page will then lead into the Invite members page. -->
+
+<div class="content">
+  <div class="tier">
+    <div class="col-d-10 col-t-11 col-p-12 center">
+      <p class="alert panel panel-info alert-info text-black message_alert_panel text-center">
+        <a href="#" class="close" data-dismiss="alert">
+          &#215;
+        </a>
+        <span class="text-16">
+          Below, enter the name and description for your first Channel. Click "Create Departments" to add Departments for others to join.
+        </span>
+      </p>
+    </div>
+    <div id="signup_accordion_container" class="center col-d-10 col-t-11 col-p-12">
+      <div id="after_signup_container" >
+        <div id="workplace_accordion">
+          <div id="signup_header_container" class="col-tier pt-0">
+            <p class="mb-2 theme_color_black">
+              Set up Workplace 
+            </p>
+          </div>
+          <div id="after_signup_form_container" class="col-tier">
+            <%= simple_form_for @workplace, :url => finish_workplace_creation_path(@institute, @workplace),  html: { class: 'form-horizontal col-all-12 p-0' } do |f| %>
+              <div class="col-tier form_tier">
+                <div id="" class="col-all-6"> 
+                  <%= f.label :name, "Workplace Name" %>
+                  <%= f.text_field :name, maxlength: 60, title: "Enter or modify a name for your workplace. (60 Characters)", placeholder: "'#{@workplace.name}' (60 Characters)", class: "form-control" %>
+                </div>
+              </div>
+              <div class="col-tier form_tier">
+                <div id="" class="col-all-12"> 
+                  <%= f.label :description, "Workplace Description" %>
+                  <%= f.text_area :description, maxlength: 255, title: "Enter or modify a description for your workplace. (255 Characters)", placeholder: "'#{@institute.name}'s workplace is for...' (255 Characters)", class: "form-control" %>
+                </div>
+              </div>
+              <div class="col-tier my-3">
+                <div class="col-all-12" title="Allows members to join your workplace with any email and not just the <%= @institute.return_email_domain %>">
+                  <%= f.label :public, "<i class='fas fa-user-lock padding-r-5'></i>Allow Public Members?".html_safe %> 
+                  <div class="col-tier">             
+                    <div id="public_members_radio_container" class="btn-group btn-group-toggle" data-toggle="buttons">
+                      <label class="btn
+                      <%= "active" if @workplace.public? %>
+                      ">
+                        <input type="radio" name="workplace[public]" value="true" id="enable_public" autocomplete="off" > On
+                      </label>
+                      <label class="btn
+                      <%= "active" if @workplace.public == false %>
+                      ">
+                        <input type="radio" name="workplace[public]" value="false" id="disable_public" autocomplete="off"> Off
+                      </label>
+                    </div>
+                  </div>
+                  <p class="margin-b-0 margin-t-10">Allow members to join this workplace without the email domain: <%= @institute.return_email_domain %></p>
+                </div>
+              </div>
+            </div> 
+          </div>
+          <a id="collapse_btn" data-toggle="collapse" data-parent="#signup_accordion_container" href="#department_accordion" class="btn ml-0" onclick="amplitude.getInstance().logEvent('Create Departments');">
+            <i id="department_icon" class='fas fa-chevron-right'></i> Create Departments
+          </a>
+          <div id="department_accordion" aria-expanded="false" class='collapse form-horizontal col-all-12 ml-0'>
+            <div id="signup_header_container" class="col-tier">
+              <p class="col-tier mb-2 theme_color_black">
+                Set up Departments 
+              </p>
+              <p class="text-16 col-tier mb-3">
+                  Leave Departments empty if you'd like to create less than three for now. Departments can always be added later in 'Settings'.
+              </p>
+            </div>
+            <div id="department_forms" class="col-tier ml-0">
+              <%= f.simple_fields_for :workplace_departments do |dep| %>
+                <%= render 'workplace_department_fields', f: dep %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+        <div class="col-tier">
+          <div class="col">
+            <%= f.submit 'Finish Workplace', id: "finish_workplace_btn", class: "form_btn push-right button-cs btn", onclick: "amplitude.getInstance().logEvent('Finish Workplace');"  %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<script>
+  $( function() {
+    $( "#accordion_container" ).accordion({
+      collapsible: true,
+      heightStyle: "content",
+      active: 0
+      
+    });
+  } );
+</script>
+<!-- Below - JS Code to swap the right arrow to down arrow on create departments button after clicked. -->
+<script> 
+$("#collapse_btn").click(function(){
+  $("#department_icon").removeClass('fa-chevron-right');
+  $("#department_icon").addClass('fa-chevron-down');
+})
+
+</script>

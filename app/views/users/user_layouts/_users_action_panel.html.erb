@@ -1,0 +1,331 @@
+<!--  Partial for rendering in the action panel on user's show page, (users/show.html.erb) inside (users/user_layouts/_users_action_panel.html.erb) -->
+
+<div id="non_ms_ap_content" class="col-d-3 col-t-10">
+  <div id="profile_cs_org">
+    <div id="profile_cs" class="border-radius-10">  <!-- Begin - First Profile Side Panel -->
+      <div class="user_profile_side_data_body panel-body pb-2 border-radius-10 padding-t-8">
+        <div class="col-all-12">
+          <p class="b trending_font_size margin-b-8">
+            <%= @user.city.name %> Score
+          </p>
+          <div class="col-all-12 px-0 py-3 card light-box-shadow center" style="border: 1px solid rgba(128, 128, 128, .5)">
+            <div class="center padding-t-0 margin-l-auto text-28 height-100">
+              <div class="col-tier"> 
+                <%= image_tag 'logos/Owl_FavIcon.png', class: "mr-1 mb-0 pl-0 border-none padding-t-0 margin-t-5 no-border", id: "brand_ossemble", style: "height: 65px; width: 65px;"  %>
+                  <p class="ApScoreStyle ml-1 mb-0">
+                    <%= "#{display_city_score(@user.city)}<span class='text-28'>%</span>".html_safe %>
+                  </p>
+                  <!--<div class="padding-all-8 center-vertical text-danger">
+                    %= display_city_score_change(@user.city) %>
+                  </div> -->
+              </div>
+              <div id="cacc-modal" class="center-all" style="height: 23px;">
+                <!--  Below - disabled is added to the button unless the user belongs to the city. -->
+                <button id="cs-modal-button" @click="showCsModal = true" type="button" data-toggle="tooltip" data-placement="top" title="View a breakdown of the total accomplishments that affect the community score of your city." class="center text-xmedium p-0" style="border: none; background-color: transparent; color: #645496; position: relative; top: -8px;"
+                    > <%= @user.city.score_factor_count %> Score Factors
+                </button>
+                <csmodal v-if="showCsModal" @close="showCsModal = false"></csmodal>
+              </div>
+            </div>
+          </div>
+    			<script type="text/x-template" id="cs-modal-template">
+    				<transition name="cs-modal">
+    						<div class="modal-mask">
+    							<div class="modal-wrapper">
+    								<div class="modal-container ms_modal_resize" style="height: 410px; width: 450px; background-color: #fffff0; border: 3px groove #645496;">
+    									<div class="modal-header col-all-12 p-0" style="border-bottom: none !important">
+    										<slot name="header">
+    										<div class="col-tier">
+    										  <p class="pull-left push-left mb-0 mt-0 theme_color_black trending_font_size b accomp_font_size text-18" style="position: relative; top: 3px">
+                            Scored Factors
+                          </p>
+                          <button class="btn text-medium push-right p-2" style="margin-left: auto; background-color: transparent; border: none !important;" @click="$emit('close')">
+                            <span class="text-xxmedium"><i class="fas fa-times theme_color_dark"></i></span>
+                          </button>
+                          </div>
+    										</slot>
+    									</div>
+    									<div class="modal-body p-0" style="margin-top: 0px">
+    										<slot name="body">
+    
+    										  <div class="text-xmedium magin-b-5" style="border: 1px solid rgba(128, 128, 128, .5); background-color: white !important">
+                          <div class="col-tier py-3 border-bottom"> 
+                            <div class="center-all tier">
+                              <%= image_tag 'logos/Owl_FavIcon.png', class: "mr-1 mb-0 pl-0 border-none padding-t-0 margin-t-5 no-border relative", id: "brand_ossemble", style: "top: -5px; height: 65px; width: 65px;"  %>
+                            <p class="ApScoreStyle ml-1 mb-0">
+                              <%= "#{display_city_score(@user.city)}<span class='text-28'>%</span>".html_safe %>
+                            </p>
+                            </div>
+                            <!--<div class="padding-all-8 center-vertical text-danger">
+                              %= display_city_score_change(@user.city) %>
+                            </div> -->
+                          </div>
+                            <div class="tier mt-3 ml-2">
+                              <p class=" col-8 card pr-0 border-none margin-b-0" style="text-align: left; margin-left: -4px !important">
+                                Finished Complaints:
+                              </p>
+                              <div class="push-right text-right col-3 card px-2 border-none">
+                                <div class="theme_color_dark">
+                                  <%= "#{@user.city.complaints.finished.count}" %>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="tier mt-3 ml-2">
+                                <div class=" col-8 card pr-0 border-none" style="text-align: left; margin-left: -4px !important">
+                                    Department Reviews:
+                                </div>
+                  
+                                <div class="push-right text-right col-3 card px-2 border-none">
+                                    <div class="theme_color_dark">
+                                      <!-- Department Review Total -->
+                                      <%= "#{@user.city.department_reviews.count}" %>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tier mt-3 mb-3 ml-2">
+                                <div class=" col-8 card pr-0 border-none" style="text-align: left; margin-left: -4px !important">
+                                    City Reviews:
+                                </div>
+                                  
+                                <div class="push-right text-right col-3 card px-2 border-none">
+                                    <div class="theme_color_dark">
+                                      <%= "#{@user.city.city_reviews.count}" %>
+                                        <!-- WUL Review Total -->
+                                    </div>
+                                </div>
+                            </div>
+    
+                          </div>
+                          <div class="tier card margin-y-15" style="border: 1px solid rgba(128, 128, 128, .5); background-color: white !important">
+                            <p class="text-14 p-3  card-body mb-0" style="text-align: left">
+                              <span class="text-16 padding-y-10 bold">Your City, Your Score</span> <br>
+    The Ossemble Score is a direct representation of the people that live within the city. It showcases citizen experience and government efficiency.
+                            </p>
+                          </div>
+    										</slot>
+    									</div>
+    								</div>
+    							</div>
+    						</div>
+    				</transition>
+    			</script>
+    			<!-- Begin -  CITY ADMIN: Section to show that there is a city user signed up for the city -->
+        <% if @city.has_admins? %>
+          <div class="col-all-12">
+            <p class="b trending_font_size margin-t-10">
+              Connect with City Officials
+            </p>
+            <div class="col-all-12 px-0 py-3 card light-box-shadow center" style="border: 1px solid rgba(128, 128, 128, .5)">
+              <div class="center padding-t-0 margin-l-auto text-28 height-100">
+                <div class="col-tier"> 
+                  <%= image_tag "logos/OssembleCityAdminLoginPage.png", alt: "City Profile Pic", class: "mr-1 mb-0 pl-0 border-none padding-t-0 margin-t-5 no-border", id: "brand_ossemble", style: "height: 65px; width: 65px;" %>
+                  <p class="ApScoreStyle ml-1 mb-0">
+                    <span class="text-30 relative" style="left: -2px;">
+                      <%= @city.admins.count %>
+                    </span>
+                  </p>
+                </div>
+                <div class="center-all text-xmedium mt-2">
+                  <!-- Button trigger modal -->
+                  <button type="button" class="center text-xmedium p-0 title_link" style="border: none; background-color: transparent; color: #645496;" data-toggle="modal" data-target="#ap-city-modal">
+                    <%= @city.name %> Officials
+                  </button>
+                  
+                  <!-- Modal -->
+                  <div class="modal fade" id="ap-city-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                      <div class="modal-content" style="border: 3px groove rgb(100, 84, 150);">
+                        <div class="modal-header pt-0 pb-0 pr-3 pl-0" >
+          							  <p class="pull-left padding-l-15 push-left mb-0 margin-b-5 mt-0 theme_color_black trending_font_size b accomp_font_size text-18" style="position: relative; top: 3px">
+                            City Officials
+                          </p>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body pt-2 mt-0">
+                          <div class="col-tier py-2">
+                            <div class="">
+                              %= display_ap_city_avatar(@city.admin.city_user) %>
+                            </div>
+                            <div class="relative ml-2" style="top: 12px">
+                              %= display_city_user_link(@city.admin.city_user) %>
+                            </div>
+                            <button class="pull-right button-su relative" style="margin-left: auto !important; top: 5px;">Follow</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+         
+        <% end %>
+        <!-- End -  CITY ADMIN:  -->
+        <!-- Begin - CITY MAP CARD: Map of the users city -->
+        <div class="col-all-12">
+          <p class="b trending_font_size margin-y-10">
+            <%= @user.city.name %> Map
+          </p>
+          <div class="col-all-12 well mb-0 p-2 card light-box-shadow center no-border-radius" style="background-color: #FAFAFA; border: 1px solid rgba(128, 128, 128, .5);">
+           <a href="<%= complaint_map_path(@user.city)  %>">
+            <!-- Begin - Map Row  -->
+            <div class="map_area">
+              <!-- Below - Renders Community Score map partial inside views/department/department_map -->
+              <div id="oss_action_map" class="col-all-12 no-border-radius ms_map" style="height: 200px !important;">
+                <%= render 'layouts/action_panel_map' %>
+              </div>
+            </div>
+           </a>
+          </div>
+        </div>
+        <!-- End -  CITY MAP CARD: : -->
+        <!-- Begin - CITY REVIEW CARD: If the user gave a WUL review, displays the score they gave it. -->
+        <div id="user_panel_accomplishments" class="pull-right pl-0 col-all-12">
+          <div class="col-tier">
+            <p class="page_info_title margin-b-8 bold">
+              <%= "#{@user.first_name}'s City Review" unless is_current_user?(@user) %>
+              <%= "Your City Review" if is_current_user?(@user) %>
+            </p>
+          </div>
+          <div class="card light-box-shadow col-all-12" style="border: 1px solid rgba(128, 128, 128, .5);">
+            <% if @user.city_review %>
+              <div class="center-content card-body"> 
+                <p class="text-20 center-text border-bottom mb-0">
+                  <%= "#{@user.first_name}" unless is_current_user?(@user) %> 
+                  <%= "You" if is_current_user?(@user) %>
+                  gave
+                  <%= link_to "#{@user.city.name} a <span class='bold theme_color_dark'> #{@user.city_review.score}% </span>".html_safe, city_review_path(@user.city_review.city, @user.city_review), class: 'profile_title' %>
+                </p>
+              </div>
+            <% end %>
+            <div class="col-tier margin-b-0">
+              <!-- Below -  Check is user has done a WUL review or not-->
+              <p class="mb-0 center-all padding-all-10 text-15 theme_color_black b">
+              <% if @user.city_review == nil %>  <!--  User has not done a WUL review-->
+                <%= "#{@user.name} has not yet written a City Review for #{@user.city.name}." unless is_current_user?(@user) %>
+                <%= "You have yet to post a City Review for #{@user.city.name}. <br> <a class='bold text-18 theme_color_dark' href='#{new_city_review_path(@user.city)}' >Click here to review it!</a>  ".html_safe if is_current_user?(@user) %>
+              <% else %> <!--  User has reviewed their city with a WUL-->
+                <a class="theme_color_black" href="<%= city_review_path(@user.city, @user.city_review) %>">
+                  What 
+                  <%= "#{@user.first_name} Loves" unless is_current_user?(@user) %>
+                  <%= "You Love" if is_current_user?(@user) %>
+                </a>
+                about <%= "#{@user.city.name}:" %>
+                <div class="col-tier m-0">
+                  <p class="center-all mb-2 p-2">
+                   <span class="m-1 text-medium btn alt-action"><%= @user.city_review.love_list[0] %></span>
+                   <span class="m-1 text-medium btn alt-action"><%= @user.city_review.love_list[1] %></span>
+                   <span class="m-1 text-medium btn alt-action"><%= @user.city_review.love_list[2] %></span>
+                  </p>
+                </div>
+              <% end %>
+              </p>
+            </div>
+            <% if @user.city_review %>
+              <div class="col-tier border-top padding-y-10">
+                <p class="text-14 center-content theme_color_black">
+                  Last Revised: <%= display_date(@user.city_review.updated_at) %>
+                </p>
+              </div>
+            <% end %>
+          </div>
+        </div>
+        <!-- End -  CITY REVIEW CARD: -->
+        <!-- Begin - ACCOMPLISHMENTS: User Accomplishments Showcase  -->
+          <div id="user_panel_accomplishments" class="pull-right pl-0 col-all-12">
+            <div id="profile_acc_org">
+              <div id="profile_acc" class="col-tier">
+                <div class="col-tier">
+                  <p class="page_info_title margin-b-8 bold">
+                    <%= "#{@user.first_name}'s Accomplishments" unless is_current_user?(@user) %>
+                    <%= "Your Accomplishments" if is_current_user?(@user) %>
+                  </p>
+                </div>
+                <div class="card col-tier light-box-shadow mt-0 magin-b-10" style="border: 1px solid rgba(128, 128, 128, .5);">
+                  <div class="padding-all-8">
+                    <div class="tier margin-y-3 ">
+                      <p class=" col-all-9 card pr-0 border-none margin-b-0 margin-l-3" >
+                        Comments:
+                      </p>
+                      <div class="push-right col-all-2 card center-content px-2 border-none">
+                        <p class="push-right theme_color_dark">
+                          <%= "#{@user.comments.count}" %>
+                        </p>
+                      </div>
+                    </div>
+                    <div class="tier margin-y-3 ">
+                      <p class=" col-all-9 card pr-0 border-none margin-b-0 margin-l-3" >
+                        Forum Posts:
+                      </p>
+                      <div class="push-right col-all-2 card center-content px-2 border-none">
+                        <p class="push-right theme_color_dark">
+                          <%= "#{@user.posts.count}" %>
+                        </p>
+                      </div>
+                    </div>
+                    <div class="tier margin-y-3 ">
+                      <p class=" col-all-9 card pr-0 border-none margin-b-0 margin-l-3" >
+                        Endorsements:
+                      </p>
+                      <div class="push-right col-all-2 card center-content px-2 border-none">
+                        <p class="push-right theme_color_dark">
+                          <%= "#{@user.endorsements.count}" %>
+                        </p>
+                      </div>
+                    </div>
+                    <div class="tier margin-y-3 ">
+                      <p class=" col-all-9 card pr-0 border-none margin-b-0 margin-l-3" >
+                        Signed Petitions:
+                      </p>
+                      <div class="push-right col-all-2 card center-content px-2 border-none">
+                        <p class="push-right theme_color_dark">
+                          <%= "#{@user.signatures.count}" %>
+                        </p>
+                      </div>
+                    </div>
+        
+                    <div class="tier margin-y-3 ">
+                      <p class=" col-all-9 card pr-0 border-none margin-b-0 margin-l-3" >
+                        Voiced Complaints:
+                      </p>
+                      <div class="push-right col-all-2 card center-content px-2 border-none">
+                        <p class="push-right theme_color_dark">
+                          <%= "#{@user.complaints.count}" %>
+                        </p>
+                      </div>
+                    </div>
+                    <div class="tier margin-y-3 ">
+                      <p class=" col-all-9 card pr-0 border-none margin-b-0 margin-l-3" >
+                        Submitted Petitions:
+                      </p>
+                      <div class="push-right col-all-2 card center-content px-2 border-none">
+                        <p class="push-right theme_color_dark">
+                          <%= "#{@user.petitions.count}" %>
+                        </p>
+                      </div>
+                    </div>
+        
+                    <div class="tier margin-y-3 ">
+                      <p class=" col-all-9 card pr-0 border-none margin-b-0 margin-l-3" >
+                        Department Reviews:
+                      </p>
+                      <div class="push-right col-all-2 card center-content px-2 border-none">
+                        <p class="push-right theme_color_dark">
+                          <%= "#{@user.department_reviews.count}" %>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End - ACCOMPLISHMENTS: User Accomplishments Showcase-->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

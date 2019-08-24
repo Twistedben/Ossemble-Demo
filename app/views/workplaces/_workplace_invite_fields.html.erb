@@ -1,0 +1,17 @@
+
+<div class="col-tier padding-t-12 padding-b-20 border-bottom">
+  <div class="col-d-3 col-t-4 col-p-12 inv_no_pad">
+    <%= f.label :first_name, required: false %>
+    <%= f.text_field :first_name, class: "form-control", placeholder: "Member's First Name", autocomplete: false, required: false %>
+  </div>
+  <div class="col-d-3 col-t-4 col-p-12 inv_no_pad" style="padding-left: 1%">
+    <%= f.label :last_name, required: false %>
+    <%= f.text_field :last_name, class: "form-control", placeholder: "Member's Last Name", autocomplete: false, required: false %>        
+  </div>
+  <!-- Below -  If there are departments, makes room for the field by shrinking email field -->
+  <div class="col-d-6 col-t-4 col-p-12 inv_no_pad" style="padding-left: 1%">
+    <%= f.label :email, required: false %>
+    <%= f.email_field :email, class: "form-control", placeholder: "'example@#{@institute.split_email_domain}'", data: {behavior: "autocomplete"}, required: false  %>
+  </div>
+
+</div>

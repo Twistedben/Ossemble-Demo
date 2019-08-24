@@ -1,0 +1,63 @@
+<!-- Map for the Workplace's Show page. Object will get passed in and rendered. (views/layouts/workplaces/_workplace_show_map.html.erb)
+      Rendered in (workplace_reports/show.html.erb) and (workplace_suggestions/show.html.erb) -->
+<script>
+ // Below - Sets initial view to the lat and long centering of the Concern.
+ var map = L.map('oss_map').setView([<%= obj.latitude %>, <%= obj.longitude %>], 16);
+  L.tileLayer('https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="&copy;"> <a href="https://wikimediafoundation.org/wiki/Maps_Terms_of_Use">Wikimedia</a></a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+}).addTo(map);
+ /* L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>', //Watermakr/copyright
+    id: 'mapbox.streets',
+    accessToken: 'pk.eyJ1IjoibWRlZXR6MTk5MCIsImEiOiJjajcwd3NrZDgwaTIwMzNtcThhZ2g4OGUyIn0.jgG2TKc_t--ZaXzz-AtGDw' // Secret
+  }).addTo(map);
+   */ 
+   
+   // Below - Adds Fullscreen button. 
+   map.addControl(new L.Control.Fullscreen());
+   // Below - Adds recenter location button. 
+    var lc = L.control.locate({
+    position: 'topleft',
+    drawCircle: false,
+    flyTo: true,
+    showPopup: false,
+    drawMarker: false,
+    icon: 'fas fa-bullseye',
+    strings: {
+        title: "Recenter My Location"
+      }
+}).addTo(map);
+    
+    // Below - Scaling Zoom and Disabling Drag/Zoom
+    
+    L.control.scale().addTo(map);
+    map.options.minZoom = 14;
+    map.options.maxZoom = 17;
+    
+    // Below - Disables panning and normal map functions.
+    
+    map.dragging.disable();
+    map.touchZoom.disable();
+    map.doubleClickZoom.disable();
+    map.scrollWheelZoom.disable();
+      
+    // Below - Adds FontAwesome prefix for icon class rendering.
+     
+    // This is where the markers start. 
+    L.AwesomeMarkers.Icon.prototype.options.prefix = 'fa';
+        
+    // Below - Renders the icon and adds the marker to map based on suggestion' Lat and Long.
+    var currentMarker;
+     currentMarker = L.marker([<%= obj.latitude %>, <%= obj.longitude %>], {
+        icon: L.AwesomeMarkers.icon({
+         <% if obj == @suggestion %>
+            icon: 'fas fa-lightbulb text-21',
+            markerColor: 'blue',
+         <% else %>
+            icon: 'fas fa-flag',
+            markerColor: 'red',
+         <% end %>
+        iconColor: '#F8FAEE',      })
+     }).addTo(map).bindPopup("<h5 class=''><div class='border-bottom margin-y-10' style='line-height: 4px;'><p class='margin-y-10 text-16' style='text-align: center; font-weight: bold; font-family: Roboto, Times New Roman;'> <%= obj.title %> </p> </div> <p class='margin-y-10 text-14'> <b> Address: </b> <%= obj.address %> </p> <p class='margin-y-10 text-14'> <b> Location: </b> <%= obj.city.name %>, <%= obj.city.state_name %> </p> <p class='margin-y-10 text-14'> </h5>").openPopup();
+        
+</script>

@@ -1,0 +1,28 @@
+<!--  Main partial for holding activities for admins and cities. -->
+<!-- Below -  If activities is empty, no recent activity is displayed -->
+<% if collection.empty? %>
+  <p class='text-20'> No recent activity </p>
+
+<% else %> <!-- The city has recent activity. Display 10 of the activities. -->
+  <div id="activity_container" class="tier margin-t-10"> 
+    <% collection.take(15).each do |activity|  %>
+      <div id="" class="margin-y-3 border-bottom width-100" > 
+        <p class="text-14 theme_color_black ms_ra_text text-left">
+          <!-- Below -  Instead of displaying the user's name, it displays "You" instead if current_user is viewing their own profile.-->
+          <%= "<span> You </span>".html_safe if activity.owner && activity.owner.id == current_admin.city_user.id %>
+          <!-- Below - Displays a link to the user's profile page as user's first name unless the user is on their own page, then says "You" instead. -->
+          <%= "<a href='#{user_path(activity.owner, activity.owner.city)}' class='small_link'> #{activity.owner.first_name} </a>".html_safe if activity.owner unless activity.owner.id == current_admin.city_user.id %>
+          <!-- Below -  Renders the corresponding activity (upvote/comment/post/city_review/complaint) from the views/public_activity folder, in relation to the activity (IE: Comment Create -> views/public_activity/comment/_create.html.erb.-->
+          <%= render_activity activity %>
+          <small class="i">
+            <span class="text-14">
+              -
+            </span> 
+            <%= time_ago_in_words(activity.created_at) %> ago
+          </small>
+          <span id="comments_city_activity">
+        </p>
+      </div>
+    <% end %>
+  </div>  
+<% end %>

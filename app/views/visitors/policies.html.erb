@@ -1,0 +1,57 @@
+<!-- Main page for legal documents, such as Privacy Policy, Cookies, Terms and Conditions. (Views/visitors/policies.html.erb), visitors#policies, and about/policies. -->
+<div class="content">
+  <!-- These divs might be used for using the right side to the top  
+    <div id="" class="col-d-6 col-t-10 center" style="display: none;">
+      <div>  
+        <div id="">
+        </div>
+        <div id="">
+        </div>
+      </div>
+      <div>
+        <div id="">
+        </div>
+        <div id="" class="mb-5">
+        </div>
+      </div>
+    </div>
+  -->
+    <div class="center col-d-8 col-t-10 col-p-12">
+      
+    <div class="theme_color_black b center-all mt-3 text-xlarge">Information about Ossemble's Privacy and Cookie Policies.</div>   
+    <div class="thme_color_black center-all mb-3">(You may click on the left or right side of the infograph to navigate through the various functions.)</div> 
+      
+    <div id="carouselExampleIndicators" class="about_caro carousel slide" data-ride="carousel" data-interval="false" style="margin-bottom: 40px !important">
+    <div class="carousel-inner">
+      <div class="carousel-item active light-box-shadow bg-white col-all-12 center p-4" >
+        <div class="mb-3  mt-0 pt-0 ms_titles_ml mb-3 col-tier"><span class="center-all text-32 mb-4">Privacy Policy</span></div>
+        <%= render 'visitors/policies/privacy' %>
+      </div>
+      <div class="carousel-item light-box-shadow bg-white col-all-12 center p-4">
+        <div class="trending_font_size my-3 ms_titles_ml mb-3 col-tier"><span class="center-all">Terms and Conditions</span></div>
+         <%= render 'visitors/policies/terms' %>
+      </div>
+      <div class="carousel-item light-box-shadow bg-white col-all-12 center p-4 mb-3">
+        <div class="trending_font_size my-3 ms_titles_ml col-tier"><span class="center-all">Cookie Policy</span></div>
+        <%= render 'visitors/policies/cookie' %> 
+      </div>
+    </div>
+    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <i class="center-all fas fa-caret-left theme_color_dark" style="font-size: 80px; position: relative; left: -30px !important; top: -480px"></i>
+
+ 
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <i class="center-all fas fa-caret-right theme_color_dark ms_hide" style="font-size: 80px; position: relative; right: -10px !important; top: -480px"></i>
+
+
+    </a>
+  </div>
+
+    </div>
+ 
+    <div id="" class="col-d-2 col-t-10" ></div>
+  </div>
+</div>

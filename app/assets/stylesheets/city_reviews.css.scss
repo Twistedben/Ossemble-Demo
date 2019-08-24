@@ -1,0 +1,312 @@
+// Main Stylesheet for City Review related CSS (views/city_reviews/.....)
+
+.ms_badge_t {
+  font-size: 1rem;
+  @media screen and (max-width: 1439px) {
+   font-size: .8rem !important;
+   //padding: 5px !important;
+                                        }
+  @media screen and (max-width: 901px) {
+   font-size: 1.2rem !important;
+   padding: 5px !important;
+                                       }
+  @media screen and (max-width: 767px) {
+   font-size: 1.4rem !important;
+   padding: 5px !important;
+                                       }
+}
+
+
+#wrapper {
+ body
+{
+  background: white;
+  font-family:sans-serif;
+  color:#eaeaea;
+}
+
+#wrapper
+{
+    position:absolute;
+    left:50%;
+    top:50%;
+    width:600px;
+    height:150px;
+    margin:-150px 0 0 -300px;
+}
+
+p 
+{
+  margin:0 0 5px 0;
+}
+
+.tags-input 
+{
+  	list-style : none;   
+  	border:1px solid #ccc;
+  	display:inline-block;
+  	padding:5px;
+  	height: 26px;
+    font-size:14px;
+    background:#f3f3f3;
+    width: 600px;
+    border-radius:2px;
+    overflow:hidden;
+}
+
+.tags-input li
+{
+  	float:left;
+}
+
+.tags
+{
+  	padding: 5px 20px 5px 8px;
+  	border-radius: 7px;
+  	margin-right: 5px;
+  	margin-bottom: 5px;
+  	border: 1px solid rgba(128, 128, 128, .5);
+  	position: relative;
+  	font-family: Roboto, Times New Roman; 
+   letter-spacing: 1.3px;
+   color: white;
+   opacity: 0.7;
+   font-weight: bold;
+   background-color: rgba(100, 84, 150, 1) !important;
+   font-size: 14px;
+}
+
+.tags i
+{
+	position: absolute; 
+	right:6px;
+	top:3px;
+	width: 8px;
+	height: 8px;
+	content:'';
+	cursor:pointer;
+	opacity: .7;
+  font-size:12px;
+}
+
+.tags i:hover
+{
+	opacity: 1;
+}
+
+.tags-new input[type="text"]
+{
+  border:0;
+	margin: 0;
+	padding: 6px 12px;
+	font-size: 14px;
+	margin-top: 5px;
+  background:transparent;
+  opacity: 1 !important;
+}
+
+.tags-new input[type="text"]:focus
+{
+  	outline:none; 
+}
+}
+
+
+#wrapper2 {
+ body
+{
+  background: white;
+  font-family:sans-serif;
+  color:#eaeaea;
+}
+
+#wrapper2
+{
+    position:absolute;
+    left:50%;
+    top:50%;
+    width:600px;
+    height:150px;
+    margin:-150px 0 0 -300px;
+}
+
+p 
+{
+  margin:0 0 5px 0;
+}
+
+.tags-input2 
+{
+  	list-style : none;   
+  	border:1px solid #ccc;
+  	display:inline-block;
+  	padding:5px;
+  	height: 26px;
+    font-size:14px;
+    background:#f3f3f3;
+    width: 600px;
+    border-radius:2px;
+    overflow:hidden;
+}
+
+.tags-input2 li
+{
+  	float:left;
+}
+
+.tags
+{
+  	padding: 5px 20px 5px 8px;
+  	border-radius: 7px;
+  	margin-right: 5px;
+  	margin-bottom: 5px;
+  	border: 1px solid rgba(128, 128, 128, .5);
+  	position: relative;
+   font-family: Roboto, Times New Roman; 
+   letter-spacing: 1.3px;
+   color: white;
+   opacity: 0.7;
+   font-weight: bold;
+   background-color: rgba(128, 128, 128, 1) !important;
+   font-size: 14px;
+}
+
+.tags i
+{
+	position: absolute; 
+	right:6px;
+	top:3px;
+	width: 8px;
+	height: 8px;
+	content:'';
+	cursor:pointer;
+	opacity: .7;
+  font-size:12px;
+}
+
+.tags i:hover
+{
+	opacity: 1;
+}
+
+.tags-new2 input[type="text"]
+{
+  border:0;
+	margin: 0;
+	padding: 6px 12px;
+	font-size: 14px;
+	margin-top: 5px;
+  background:transparent;
+}
+
+.tags-new2 input[type="text"]:focus
+{
+  	outline:none; 
+}
+}
+
+// Start City Review Modal Code //
+#wul-modal { 
+.modal-mask {
+  position: fixed;
+  z-index: 9998;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, .5);
+  display: table;
+  transition: opacity .3s ease;
+  table-layout: fixed;
+}
+
+.modal-wrapper {
+  display: table-cell;
+  vertical-align: middle;
+  @media screen and (max-width: 600px) {
+   padding-top: 45px !important;
+   vertical-align: top !important;
+                                       }
+}
+
+.modal-container {
+  width: auto;
+  margin: 0px auto;
+  padding: 20px 30px;
+  background-color: #fff;
+  border-radius: 2px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
+  transition: all .3s ease;
+}
+
+.modal-header h3 {
+  margin-top: 0;
+  color: #42b983;
+}
+
+.modal-body {
+  margin: 20px 0;
+}
+
+.modal-default-button {
+  float: right;
+}
+
+/*
+ * The following styles are auto-applied to elements with
+ * transition="modal" when their visibility is toggled
+ * by Vue.js.
+ *
+ * You can easily play with the modal transition by editing
+ * these styles.
+ */
+
+.modal-enter {
+  opacity: 0;
+}
+
+.modal-leave-active {
+  opacity: 0;
+}
+
+.modal-enter .modal-container,
+.modal-leave-active .modal-container {
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
+}
+
+}
+// End City Review Modal Code //
+
+.tags-test {
+  /** demo styling */
+body {
+    padding: 10px;
+    font: 16px/1.21 'Helvetica Neue',helvetica,arial,sans-serif;
+}
+fieldset {
+    padding: 10px;
+    border: none;
+}
+label {
+    display: inline-block;
+    width: 3.5em;
+    text-align: right;
+    padding: 0 5px;
+}
+input {
+    display: inline-block;
+    padding: 2px;
+    margin: 2px 0;
+    background: #FFF;
+    border: 1px solid #CCC;
+    width: 16em;
+    font: inherit;
+    border-radius: 2px;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+}
+input:focus, .tags-input.focus {
+    border-color: #59F;
+    outline: none;
+}
+}

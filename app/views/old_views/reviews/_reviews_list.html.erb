@@ -1,0 +1,127 @@
+<!-- This partial renders all reviews for the current Department on the Department Show Page (views/departments/show.html.erb) and requires
+  an "obj:" to be passed in (views/reviews/_reviews_list.html.erb) -->
+  
+<div class="content ms_review_padding">
+  <div class="tier"> 
+    <div class="col-d-2">
+      <!-- Empty to center reviews -->
+    </div>
+    <div class="col-d-7 col-t-12 col-p-12 mt-5 mb-0">
+      <h2 class="theme_font center-all">
+        <p class="theme_color_dark" style="color: #585858; text-shadow: 2px 2px 4px rgba(150, 150, 150, .3);">
+          <%= "#{@department.name} Reviews" %>
+        </p>
+      </h2>
+      <hr style="width: 100% !important">
+    <!-- Begin - Loop for Department Reviews -->
+    <% obj.each do |review| %>
+      <!-- Begin - Main row for Reviews to be contained in with Card outline. -->
+      <div class="col-d-12 col-t-10 col-p-12 my-4 center card" style="margin-bottom: 15px !important">
+        <!-- Begin - Top row section of Review entries. -->
+        <div class="card review_top mb-0">
+          <!-- Below - Row for User Avatar and name -->
+          <div class="tier ml-0 mb-0 pb-0 px-2 ms_reviewtop bg-light" style="margin-right: 0px !important; height: 85px !important">
+            <div class="col-3 mt-2 pl-0 ms_col">
+              <p class="bold mb-0">
+                <a href='<%= user_path(review.user.friendly_id) %>' title='<%= review.user.name %>'>
+                  <% if review.user.avatar.attached? %> <!-- If user who posted review has an avatar, show it -->
+                    <%= image_tag review.user.avatar.variant(resize: "45x45!"), id: "navbar_profile_avatar", class: "mt-0" %>
+                  <% else %> <!-- Poster does not have an avatar so defualt is loaded -->
+                    <%= image_tag "logos/Owl_FavIcon.png", alt: "Profile Pic", id: "navbar_profile_avatar", style: "height: 45px; width: 45px;" %>
+                  <% end %>
+                  <small>
+                    <%= link_to review.user.name, user_path(review.user.friendly_id), class:"ms_hidetxt" %> 
+                  </small>
+                </a>
+              </p>
+              <!-- PROGRAMMERS NOTE: Section for RPG System Associated with "complaint.user" to display Badges, etc.. -->
+              <div class="ms_badges">
+                <i class="far fa-gem"></i>
+              </div>
+            </div>
+            <!-- Begin - Middle section for Score of Top Section -->
+            <div class="col-6 center-all ms_col">
+              <!-- Begin - Displaying score of review. --> 
+              <div id="department_review_scores" class="mt-5">
+                <span class="px-0">
+                  <span class="review_score_text center pr-1">Review Score:</span>
+                 <!-- Begin - If statements to determine the badge color for the score of the review. -->
+                <% if review.score == 100 || review.score == 90  %>
+                <span class="badge-pill review_badge ms_badge" style="background-color: #C361F1; color: white;">
+                  <%= review.score %>% 
+                </span>
+                <% elsif review.score == 80 || review.score == 70  %>
+                <span class="badge-pill badge-success review_badge ms_badge">
+                  <%= review.score %>%
+                </span>
+                <% elsif review.score == 60 || review.score == 50  %>
+                <span class="badge-pill badge-info review_badge ms_badge">
+                  <%= review.score %>%
+                </span>
+                <% elsif review.score == 40 || review.score == 30  %>
+                <span class="badge-pill badge-warning review_badge ms_badge">
+                  <%= review.score %>%
+                </span>
+                <% elsif review.score == 20 || review.score == 10  %>
+                <span class="badge-pill badge-danger review_badge ms_badge">
+                  <%= review.score %>%
+                </span>
+                <% end %> <!-- End - If statements to determine the badge color for the score of the review. -->
+                </span>
+              </div>
+            </div>  <!-- End - Middle section for Score of Top Section -->
+            <!-- Below - Date the Review was submitted -->
+            <div class="col-3 pull-right text-right mt-3 pr-0 pl-0" style="margin-top: 0px !important; ">
+              <p class="ms_posttime_lh">
+                <small class="ms_posttime">
+                  Posted <%= time_ago_in_words(review.created_at) %> ago
+                </small>
+              </p>
+              <!-- Begin - Edit & Share Section for Review if the Review belongs to the visitor -->
+              <p class="ml-3 mb-0 ms_sharereview" style="margin-top: 25px">
+            <!-- PROGRAMMERS NOTE: Authentication for guests/Logged in user. Maybe check if user is logged in first or implement a separate.
+               authentacation call. Share your Review is temporary until Ruby Sharing is implemented. --> 
+                <p class="mb-0">
+                  <a href="#">
+                    <%= 'Share <span class="ms_hidetxt">Review</span>'.html_safe %> <!-- TEMPORARY - EVENTUALLY ERB CODE FOR SHARRING -->
+                  </a>
+                </p>
+                <p class="mb-0 pb-0">
+                  <%= link_to 'Edit <span class="ms_hidetxt">Your Review</span>'.html_safe, edit_user_review_path(review.user.friendly_id, review) if is_current_users?(review) %>
+                </p>
+              </p>
+            </div>
+          </div> <!-- End - Row for User Avatar and name -->
+        </div>  <!-- End - Top section of Review entries. -->
+        <!-- Begin - Review Middle for Review Description -->
+        <div class="tier py-3 review_middle" style="border-top: 1px solid rgba(201, 201, 201, .7);">
+          <div class="col-all-12 center">
+            <div class="tier col-all-12 card px-3 py-2" style="padding: 5px 10px !important; border: none !important">
+              <p class="helvetica text-justify ms_textbox mb-0">
+                <%= review.description %>
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- End - Review Middle for Review Description -->
+        <div class="card review_bottom bg-light" style="border-radius: 0px !important; border: none; border-top: 1px solid rgba(128, 128, 128, .3) !important">
+          <div class="row col-12 ml-2 pl-2 pr-3" style="height: 55px;">
+            <p class="col col-xs-2 mb-0 pt-3 pl-0" style="margin-left: auto;">
+              <button type="button" class="btn btn-info">Endorse <i class="fas fa-arrow-circle-up ml-1" aria-hidden="true"></i></button>
+            </p>
+            <p class="text-right col-7 mb-0 pr-1 pt-3 ms_report mt-3" style="height: 55px;">
+              <a href="#">
+                Report this Review
+              </a>
+            </p>
+            <!-- End - Displaying score of review --> 
+         </div>
+        </div>
+      </div>    <!-- End - Main row for Reviews to be contained in with Card outline. -->
+    <% end %>   <!--End - Loop for Department Reviews -->
+    </div>      <!-- End - Container for list of row reviews for department. --> 
+  </div> <!-- Second - Review page tier -->
+</div> <!-- Second - Review Content Containrer-->
+ 
+
+  

@@ -1,0 +1,122 @@
+<script>
+ 
+ var map = L.map('oss_map').setView([<%= obj.latitude %>, <%= obj.longitude %>], 
+ <% if obj == @city %>
+ 13);
+ <% else %>
+ 17);
+ <% end %>
+ 
+  L.tileLayer('https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="&copy;"> <a href="https://wikimediafoundation.org/wiki/Maps_Terms_of_Use">Wikimedia</a></a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+}).addTo(map);
+ /* L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>', //Watermakr/copyright
+    id: 'mapbox.streets',
+    accessToken: 'pk.eyJ1IjoibWRlZXR6MTk5MCIsImEiOiJjajcwd3NrZDgwaTIwMzNtcThhZ2g4OGUyIn0.jgG2TKc_t--ZaXzz-AtGDw' // Secret
+  }).addTo(map);
+   */ 
+   
+  
+   // Fullscreen 
+   
+   map.addControl(new L.Control.Fullscreen());
+        
+    var lc = L.control.locate({
+    position: 'topleft',
+    drawCircle: false,
+    flyTo: true,
+    showPopup: false,
+    drawMarker: false,
+    icon: 'fas fa-bullseye',
+    strings: {
+        title: "Recenter My Location"
+      }
+    
+}).addTo(map);
+    
+    // Below Scaling Zoom
+    
+    L.control.scale().addTo(map);
+    map.options.minZoom = 11;
+    map.options.maxZoom = 18;
+
+    // This is where the markers start. 
+    
+    L.AwesomeMarkers.Icon.prototype.options.prefix = 'fa';
+         
+    // For some reason this marker is needed for now to make the custom markers appear.
+  
+    // User Marker
+        
+    var currentMarker;
+
+map.on("click", function (event) {
+	if (currentMarker) {
+        currentMarker._icon.style.transition = "transform 0.3s ease-out";
+        currentMarker._shadow.style.transition = "transform 0.3s ease-out";        
+    	currentMarker.setLatLng(event.latlng);
+        
+        setTimeout(function () {
+            currentMarker._icon.style.transition = null;
+            currentMarker._shadow.style.transition = null;
+        }, 300);
+        return;
+    }
+    
+    currentMarker = L.marker(event.latlng, {
+    	draggable: true,
+    	  icon: L.AwesomeMarkers.icon({
+    	 <% if current_page?(new_city_concern_path(@city)) %>
+        icon: 'fas fa-lightbulb text-xxbig',
+        markerColor: 'blue',
+        iconColor: '#F8FAEE',
+      <% else %>
+        icon: 'fas fa-flag fas',
+        markerColor: 'red',
+      <% end %>
+        iconColor: '#F8FAEE',
+    })    
+        
+    // Below - Grabs the latitude longitude on mouse out.
+    }).addTo(map).on("mouseout", function (e) {
+        //map.setView(e.latlng, 17);
+        $("#latitude").attr("value", e.latlng.lat);
+        $("#longitude").attr("value", e.latlng.lng);
+    	  event.originalEvent.stopPropagation();
+    }) 
+    
+});
+// Below - Grabs the latitude longitude on doubleclicking the map, which moves the marker and zooms.
+map.on("dblclick", function(e){
+    $("#latitude").attr("value", e.latlng.lat);
+    $("#longitude").attr("value", e.latlng.lng);
+    event.originalEvent.stopPropagation();
+});
+// Below - Grabs the latitude longitude on click of the map which moves the marker.
+map.on("click", function(e){
+    $("#latitude").attr("value", e.latlng.lat);
+    $("#longitude").attr("value", e.latlng.lng);
+    event.originalEvent.stopPropagation();
+});
+        
+ // Below - Displays current marker location if the map being rendered is from the Edit page to show existing location of Complaint.
+ <% if obj == @complaint %>
+  // Below - Renders the icon and adds the marker to map based on Complaints' Lat and Long.
+    var currentMarker;
+     currentMarker = L.marker([<%= obj.latitude %>, <%= obj.longitude %>], {
+        icon: L.AwesomeMarkers.icon({
+        icon: 'exclamation-circle',
+        markerColor: 'orange',
+        iconColor: '#F8FAEE',           
+    })
+     }).addTo(map);
+                 
+ <% end %>
+    
+document.getElementById("done").addEventListener("click", function () {
+      currentMarker = null;
+        
+}); 
+
+</script>

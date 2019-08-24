@@ -1,0 +1,13 @@
+<!--  Script partial for @mentioning. It's called inside Edit and New pages for resources that use @mentioning. 
+  obj holds the path to grab the json from of admins, provided by controller. -->
+<script>
+(function() {
+  jQuery(function() {
+    return $('[data-behavior="autocomplete"]').atwho({
+      at: "@",
+      'data': " <%= obj %> "
+    });
+  });
+
+}).call(this);
+</script>

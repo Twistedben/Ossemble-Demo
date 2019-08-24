@@ -1,0 +1,2 @@
+class ParkScoresController < ApplicationController
+end

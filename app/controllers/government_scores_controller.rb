@@ -1,0 +1,2 @@
+class GovernmentScoresController < ApplicationController
+end

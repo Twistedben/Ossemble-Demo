@@ -1,0 +1,21 @@
+<!--  The main partial rendered for activities being upvoted concerning city reviews (views/public_activity/city_review/_upvote.html.erb). -->
+<% if activity.recipient %>
+  <span id="activities_span" class="">
+    <span>
+      endorsed a City Review 
+      titled:
+    </span>
+    <span class="bold">
+      <%= link_to activity.trackable.title, city_review_path(activity.trackable.city, activity.trackable), id: "activity_wul_link", class: "" %>
+    </span>
+    <span id="upvote_wul_activity text-14">
+      - posted by: 
+      <span class="i">
+        <%= link_to activity.recipient.name, user_path(activity.recipient.city, activity.recipient) %>
+      </span>
+    </span>
+  </span>
+<% else %>
+  unendorsed a City review.
+
+<% end %>

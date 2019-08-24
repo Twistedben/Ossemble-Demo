@@ -1,0 +1,1 @@
+# Used for user conversations. Chatrooms.coffee used for admins

@@ -1,0 +1,30 @@
+<!-- Main email sent to cities when a petition progresses to Filed. (views/city_mailer/petition_filed_email.text.erb) -->
+
+  <% time = Time.find_zone! "EST" %>
+  <% time_now = time.now.to_formatted_s(:long_ordinal) %>
+     <%= "#{@city.name} - Citizen Action Petition (CAP)" %>
+=====================================
+    
+    <%= @petition.user.name %>, a citizen of <%= @city.name.capitalize %>, has gathered enough signatures to officially send a petition for your consideration. 
+    
+    The petition, "<%= @petition.title %>", is being sent to you because <%= @petition.count_votes_up %> <%= @city.name %> citizens have signed it in support of its goal, as follows: <%= @petition.goal %>
+    
+    <% if @petition.file.attached? %>
+    If you would like to see more information, the petition's author attached the following document for clarification: <%= link_to "Download File".html_safe, rails_blob_path(@petition.file, disposition: :attachment) %>
+    <% end %>
+    
+    Ossemble acts as a liaison between local citizens and their government. We hope that you can see the demand and passion behind this petition, and will respond to your citizens. This can be accomplished by visiting and interacting with the petition here: <%= link_to "#{@petition.title} Petition for #{@city.name}", city_petition_url(@city, @petition) %>.
+    
+    There, you can submit a plan to address the petition, acknowledge it, and respond to the signers.
+    
+    Sincerely,
+    Ossemble Inc. & <%= @petition.count_votes_up %> of <%= @city.name %>, <%= @city.state_name %> Ossemble Users. 
+   
+    Thank you!
+    
+    <%= time_now %> 
+    
+    * You can create a free City Profile to interact with petitions and the citizens in your city by utilizing the City Profile feature here: https://www.ossemble.com/admins/sign_up 
+    Our goal is the same as yours: Greater cooperation between citizens and their government. *
+    
+    Find out more here: https://www.ossemble.com/about/city

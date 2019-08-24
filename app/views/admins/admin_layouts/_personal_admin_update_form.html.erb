@@ -1,0 +1,49 @@
+<!--  Partial for holding form for a user who has verified their profile and loads in the entire private info tier. -->
+<h3 class="margin-t-10 roboto" title="Private information that Ossemble uses to enhance your experience and others do not see.">
+    Private Profile - Personal Details
+</h3>
+<%= form_for(current_admin, url: admin_registration_path,
+  :html => {:multipart => true, id: "verified_profile_form", class: "col-all-12 form light-box-shadow", style: "border: 1px solid rgba(128, 128, 128, 0.5);", role: "form"}) do |f| %>
+  <div id="private_info_tier" class="tier pt-0 px-3">    
+    <!-- Begin - Email & Location Form Row -->
+    <div class="col-tier margin-y-10">
+      <div class="col-d-4 col-t-4 col-p-12 px-2">
+        <div class="control-label">
+          <%= f.label :first_name, "First Name" %>
+        </div>
+        <%= f.text_field :first_name, class: "form-control", placeholder: "Your First Name: #{current_admin.first_name}"  %>
+      </div>  
+      <div class=" col-d-4 col-t-4 col-p-12 px-2">
+        <div class="control-label">
+          <%= f.label :last_name, "Last Name" %>
+        </div>
+        <%= f.text_field :last_name, class: "form-control", placeholder: "Your First Name: #{current_admin.first_name}"  %>
+      </div>  
+      <div class=" col-d-4 col-t-4 col-p-12 px-2">
+        <div class="control-label">
+          <%= f.label :email, "Email Address" %>
+        </div>
+        <%= f.email_field :email, type:"text", class: "form-control light-input-shadow", placeholder: "Enter Email Address: youremail@example.com"  %>
+      </div>  
+    </div>   
+    <div id="finish_profile_tier" class="col-tier padding-b-15">
+      <div class="col-d-4 col-t-4 col-p-12 px-2">
+        <div class="control-label">
+          <%= f.label :street, "Primary Address"  %> 
+        </div>
+        <%= f.text_field :street, autocomplete: "on", class: "form-control light-input-shadow", placeholder: "Enter Address: 1234 Main Street" %>
+      </div>
+      <div class="col-d-4 col-t-4 col-p-12 px-2">
+        <div class="control-label">
+          <%= f.label :street2, "Secondary Address" %> 
+        </div>
+          <%= f.text_field :street2, autocomplete: "on", class: "form-control light-input-shadow", placeholder: "Apartment, Suite #" %>
+      </div>
+    </div>
+  </div>  <!-- End -  Private Profile Info -->
+  <div class="col-tier px-3">    
+    <div class="col-all-6">
+      <%= f.submit "Update Private Profile", id: "update_profile_btn", class: "form_btn btn button-cs btn-lg ml-2" %>
+    </div> 
+  </div> 
+<% end %> <!--  End - First form if user is just updating their main profile and has already verified.-->

@@ -1,0 +1,201 @@
+<!--  Partial rendering for Follow button, Share button, comment count and endorsement count on show pages. Object being passed in is the Show pages
+  instance variable which will determine what is being shared and what can be followed. -->
+<div id="user_action_tier" class="tier col-all-12">
+  <% if obj == @complaint || obj == @post || obj == @petition || obj == @concern  %>
+  <div class="
+    <%= "vanish" if is_current_users?(obj) %> 
+    "> <!-- Makes the follow button disappear if the user is looking at their own resource.   -->
+    <!-- Below -  Follow button for Complaint -->
+    <%= display_follow_button(complaint_follow_path(obj.id), complaint_unfollow_path(obj.id), obj) if obj == @complaint %>
+    <!-- Below -  Follow button for Post -->
+    <%= display_follow_button(post_follow_path(obj.id), post_unfollow_path(obj.id), obj) if obj == @post %>
+    <!-- Below -  Follow button for Petition -->
+    <%= display_follow_button(petition_follow_path(obj.id), petition_unfollow_path(obj.id), obj) if obj == @petition %>
+    <!-- Below -  Follow button for Concern -->
+    <%= display_follow_button(concern_follow_path(obj.id), concern_unfollow_path(obj.id), obj) if obj == @concern %>
+  </div>
+  <div class="dropdown">
+    <button id="share_dropdown_btn" class="btn dropdown-toggle" type="button"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <i class="fas fa-share-alt margin-r-8"></i>Share
+    </button>
+    <div class="dropdown-menu" aria-labelledby="share_dropdown_btn">
+      <div class="tier dropdown-item"> 
+      <!-- Begin -  Twitter share for Complaint, Post, and Petitions with images -->
+        <% if obj.image.attached? %> <!-- Object has an image attached  -->
+          <!-- Below -  Complaint Twitter share button -->
+          <%= social_share_button_tag(obj.title, :allow_sites => %w(twitter), 
+              'data-twitter-caption' => obj.title, 'data-twitter-title' => "#{@city.name} Complaint: #{obj.title} - #{obj.address}:",
+              :image => url_for(obj.image)) if obj == @complaint %> 
+          <!-- Below -  Post Twitter share button -->
+          <%= social_share_button_tag(obj.title, :allow_sites => %w(twitter), 
+              'data-twitter-caption' => obj.title, 'data-twitter-title' => "#{@city.name} Post: #{obj.title}:",
+              :image => url_for(obj.image)) if obj == @post %> 
+          <!-- Below -  Post Twitter share button -->
+          <%= social_share_button_tag(obj.title, :allow_sites => %w(twitter), 
+              'data-twitter-caption' => obj.goal, 'data-twitter-title' => "#{@city.name} Petition: #{obj.title}:",
+              :image => url_for(obj.image)) if obj == @petition %>
+          <!-- Below -  Post Twitter share button -->
+          <%= social_share_button_tag(obj.title, :allow_sites => %w(twitter), 
+              'data-twitter-caption' => obj.goal, 'data-twitter-title' => "#{@city.name} Concern: #{obj.title}:",
+              :image => url_for(obj.image)) if obj == @concern %>
+      <!-- End -  Twitter share with images -->
+        <% else %> <!--  Object DOESN'T have an image -->
+        <!-- Begin -  Twitter share button WITHOUT images -->
+          <!-- Below -  Complaint Twitter share button WITHOUT image -->
+          <%= social_share_button_tag(obj.title, :allow_sites => %w(twitter), 
+              'data-twitter-caption' => obj.title, 'data-twitter-title' => "#{@city.name} Complaint: #{obj.title} - #{obj.address}:") if obj == @complaint %> 
+          <!-- Below -  Post Twitter share button WITHOUT image -->
+          <%= social_share_button_tag(obj.title, :allow_sites => %w(twitter), 
+              'data-twitter-caption' => obj.title, 'data-twitter-title' => "#{@city.name} Post: #{obj.title}:") if obj == @post %> 
+          <!-- Below -  Post Twitter share button WITHOUT image -->
+          <%= social_share_button_tag(obj.title, :allow_sites => %w(twitter), 
+              'data-twitter-caption' => obj.goal, 'data-twitter-title' => "#{@city.name} Petition: #{obj.title}:") if obj == @petition %>
+            <!-- Below -  Post Twitter share button WITHOUT image -->
+          <%= social_share_button_tag(obj.title, :allow_sites => %w(twitter), 
+              'data-twitter-caption' => obj.title, 'data-twitter-title' => "#{@city.name} Concern: #{obj.title}:") if obj == @concern %>     
+        <!-- End -  Twitter share button WITHOUT images -->
+        <% end %> <!-- End -  Twitter share resource image check -->
+      </div> 
+      <div class="dropdown-divider"></div>
+      <div class="tier dropdown-item">
+        <!-- Begin -  Facebook share for Complaint, Post, and Petitions with images -->
+        <% if obj.image.attached? %> <!-- Object has an image attached  -->
+          <!-- Below -  Facebook share button for Complaints -->
+          <%= social_share_button_tag("#{obj.title} - #{obj.address}", :allow_sites => %w(facebook), 
+            'data-url' => city_complaint_path(@city, obj), 'data-type' => 'link',
+            desc: "#{obj.title} - #{obj.address}: #{obj.description}", 'data-title' => "#{@city.name} Complaint: #{obj.title} - #{obj.address}:",
+            :image => url_for(obj.image)) if obj == @complaint  %>
+          <!-- Below -  Facebook share button for Posts -->
+          <%= social_share_button_tag(obj.title, :allow_sites => %w(facebook), 
+            'data-url' => subtopic_post_path(@city, obj.topic, obj.subtopic, obj), 'data-type' => 'link',
+            desc: obj.description, 'data-title' => "#{@city.name} Post: #{obj.title}:",
+            :image => url_for(obj.image)) if obj == @post %> 
+          <!-- Below -  Facebook share button for Petitions -->
+          <%= social_share_button_tag(obj.title, :allow_sites => %w(facebook), 
+            'data-url' => city_petition_path(@city, obj), 'data-type' => 'link',
+            desc: obj.goal, 'data-title' => "#{@city.name} Petition: #{obj.title}:",
+            :image => url_for(obj.image)) if obj == @petition %>
+          <!-- Below -  Facebook share button for Petitions -->
+          <%= social_share_button_tag(obj.title, :allow_sites => %w(facebook), 
+            'data-url' => city_concern_path(@city, obj), 'data-type' => 'link',
+            desc: obj.goal, 'data-title' => "#{@city.name} Concern: #{obj.title}:",
+            :image => url_for(obj.image)) if obj == @concern %> 
+        <!-- End -  Facebook share with images -->
+        <% else %> <!-- Resources WITHOUT an image  -->
+        <!-- Begin -  Facebook share buttons WITHOUT images -->
+          <!-- Below -  Facebook share button for Complaints -->
+          <%= social_share_button_tag(obj.title, :allow_sites => %w(facebook), 
+            'data-url' => city_complaint_path(@city, obj), 'data-type' => 'link', desc: "#{obj.title} - #{obj.address}: #{obj.description}", 'data-title' => "#{@city.name} Complaint: #{obj.title}:") if obj == @complaint  %>
+          <!-- Below -  Facebook share button for Posts -->
+          <%= social_share_button_tag(obj.title, :allow_sites => %w(facebook), 
+            'data-url' => subtopic_post_path(@city, obj.topic, obj.subtopic, obj), 'data-type' => 'link', desc: obj.description, 'data-title' => "#{@city.name} Post: #{obj.title}:") if obj == @post %> 
+          <!-- Below -  Facebook share button for Petitions -->
+          <%= social_share_button_tag(obj.title, :allow_sites => %w(facebook), 
+            'data-url' => city_petition_path(@city, obj), 'data-type' => 'link',  desc: obj.goal, 'data-title' => "#{@city.name} Petition: #{obj.title}:") if obj == @petition %> 
+          <!-- Below -  Facebook share button for Concerns -->
+          <%= social_share_button_tag(obj.title, :allow_sites => %w(facebook), 
+            'data-url' => city_concern_path(@city, obj), 'data-type' => 'link',  desc: "#{obj.title} - #{obj.address}: #{obj.description}", 'data-title' => "#{@city.name} Concern: #{obj.title}:") if obj == @concern %>
+        <!-- End -  Facebook share buttons WITHOUT images -->
+        <% end %> <!--  End - Facebook share for resource Image check -->
+      </div>
+  <% elsif obj == @city_review || obj == @review %> 
+  <div class="dropdown">
+    <button id="share_dropdown_btn" class="btn dropdown-toggle" type="button"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <i class="fas fa-share-alt margin-r-8"></i>Share
+    </button>
+    <div class="dropdown-menu"  aria-labelledby="share_dropdown_btn">
+      <div class="tier dropdown-item"> 
+        <% if obj.image.attached? %> <!-- Object has an image attached  -->
+        <!-- Begin -  Twitter share for CityReviews and Department Reviews with images. -->
+          <!-- Below -  City Review Twitter share button -->
+          <%= social_share_button_tag(obj.title, :allow_sites => %w(twitter), 
+              :image => url_for(obj.image), 
+              'data-twitter-caption' => obj.title, 'data-twitter-title' => "#{@city.name} City Review: #{obj.title}:") if obj == @city_review %> 
+          <!-- Below -  City Review Twitter share button -->
+          <%= social_share_button_tag(obj.title, :allow_sites => %w(twitter), 
+              :image => url_for(obj.image), 
+              'data-twitter-caption' => obj.title, 'data-twitter-title' => "#{@city.name} Department Review: #{obj.title}:") if obj == @review %> 
+        <!-- End -  Twitter share for CityReviews and Department Reviews with images. -->
+        <% else %> <!-- Object DOESN'T have an image  -->
+        <!-- Begin -  Twitter share for CityReviews and Department Reviews WITHOUT images. -->
+          <%= social_share_button_tag(obj.title, :allow_sites => %w(twitter), 
+              'data-twitter-caption' => obj.title, 'data-twitter-title' => "#{@city.name} City Review: #{obj.title}:") if obj == @city_review %> 
+          <!-- Below -  City Review Twitter share button -->
+          <%= social_share_button_tag(obj.title, :allow_sites => %w(twitter), 
+              'data-twitter-caption' => obj.title, 'data-twitter-title' => "#{@city.name} Department Review: #{obj.title}:") if obj == @review %> 
+        <!-- Begin -  Twitter share for CityReviews and Department Reviews WITHOUT images. -->
+        <% end %> <!--  End - Twitter share Image check for Reviews -->
+      </div> 
+      <div class="dropdown-divider"></div>
+      <div class="tier dropdown-item">
+        <% if obj.image.attached? %> <!-- Object has an image attached  -->
+        <!-- Begin -  Facebook share for CityReviews and Department Reviews with images. -->
+          <!-- Below -  Facebook share button for City Review -->
+          <%= social_share_button_tag(obj.title, :allow_sites => %w(facebook), 
+             'data-url' => city_review_path(@city, obj), 'data-type' => 'link',
+             desc: obj.description, 'data-facebook-title' => "#{@city.name} City Review: #{obj.title}:",
+             :image => url_for(obj.image)) if obj == @city_review %> 
+          <!-- Below -  Facebook share button for Department Review -->
+          <%= social_share_button_tag(obj.title, :allow_sites => %w(facebook), 
+             'data-url' => city_department_review_path(@city, obj), 'data-type' => 'link',
+             desc: obj.description, 'data-facebook-title' => "#{@city.name} Department Review: #{obj.title}:",
+             :image => url_for(obj.image)) if obj == @review %> 
+        <!-- End -  Facebook share for CityReviews and Department Reviews with images. -->
+        <% else %> <!-- Review DOESN'T have an image  -->
+        <!-- Begin -  Facebook share for CityReviews and Department Reviews WITHOUT images. -->
+          <!-- Below -  Facebook share button for City Review -->
+          <%= social_share_button_tag(obj.title, :allow_sites => %w(facebook), 
+             'data-url' => city_review_path(@city, obj), 'data-type' => 'link', 
+             desc: obj.description, 'data-facebook-title' => "#{@city.name} City Review: #{obj.title}:") if obj == @city_review %> 
+          <!-- Below -  Facebook share button for Department Review -->
+          <%= social_share_button_tag(obj.title, :allow_sites => %w(facebook), 
+             'data-url' => city_department_review_path(@city, obj), 'data-type' => 'link', 
+             desc: obj.description, 'data-facebook-title' => "#{@city.name} Department Review: #{obj.title}:") if obj == @review %> 
+        <!-- End -  Facebook share for CityReviews and Department Reviews WITHOUT images. -->
+        <% end %> <!-- End- Facebook shareImage check for Reviews  -->
+      </div>
+  <% else %>
+     <!-- Failsafe for resources that have yet to be added  -->
+  <% end %>
+      <div class="dropdown-divider"></div>
+      <div class="dropdown-item padding-x-3">
+        <input type="text" class="form-control" id="url_input" aria-describedby="basic-addon2">
+        <button id="copy_link_btn" class="btn" onclick="copyLink()" type="button"><i class="far fa-copy mr-3"></i>Copy URL</button>  
+      </div>
+    </div> 
+  </div> <!-- End -  Share button area -->
+  <div class="btn user_action_btn ms_x_padding_at ms-com-end-1">
+    <%= display_comment_count(obj) %> <!-- Displays number of Comments. -->
+  </div>
+  <div class="btn user_action_btn ms-com-end-1" >
+    <%= display_vote_count(obj) %> <!-- Displays number of endorsements. -->
+  </div>
+  
+</div> <!-- End -  User actions row-->
+<!-- Below -  For copying URL in share button -->
+<script>
+// Below - Appends text to the share button so the whole line is a link. 
+   $(".social-share-button").children('.ssb-facebook').append("Facebook");
+   $(".social-share-button").children('.ssb-twitter').append("Twitter");
+// Below -- Allows copying URL
+ document.getElementById('url_input').value=window.location.href;
+
+ function copyLink() {
+  var copyText = document.getElementById('url_input');
+  copyText.select();
+  document.execCommand("copy");
+  alert("Copied URL: " + copyText.value);
+}
+  
+</script>
+
+<script>
+  $('.ssb-facebook').click(function() {
+      amplitude.getInstance().logEvent('<%= obj.class.to_s %> shared via Facebook');
+  });
+  
+  $('.ssb-twitter').click(function() {
+      amplitude.getInstance().logEvent('<%= obj.class.to_s %> shared via Twitter');
+  });
+
+</script>

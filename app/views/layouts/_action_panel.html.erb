@@ -1,0 +1,304 @@
+<div id="action_panel_desktop">
+  <div id="action_panel_org" class="pull-right pl-0 col-all-12 pl-3">
+    <div id="action_panel_top" class="pt-0 pl-4 pr-4 pb-3 relative no-border">
+      <!-- Begin -  CITY SCORE BOX: Has city score, owl and if admin present in city. -->
+      <div class="col-all-12">
+        <p class="b trending_font_size margin-t-8">
+          <%= @city.name %> Score
+        </p>
+        <div class="col-all-12 px-0 py-3 card light-box-shadow center" style="border: 1px solid rgba(128, 128, 128, .5)">
+          <div class="center padding-t-0 margin-l-auto text-28 height-100">
+            <div class="col-tier"> 
+              <%= image_tag 'logos/Owl_FavIcon.png', class: "mr-1 mb-0 pl-0 border-none padding-t-0 margin-t-5 no-border", id: "brand_ossemble", style: "height: 65px; width: 65px;"  %>
+                <p class="ApScoreStyle ml-1 mb-0">
+                  <%= "#{display_city_score(@city)}<span class='text-28'>%</span>".html_safe %>
+                </p>
+                <!--<div class="padding-all-8 center-vertical text-danger">
+                  %= display_city_score_change(@city) %>
+                </div> -->
+            </div>
+            <div id="cacc-modal" class="center-all" style="height: 23px;">
+              <!--  Below - disabled is added to the button unless the user belongs to the city. -->
+              <button id="cs-modal-button" @click="showCsModal = true" type="button" data-toggle="tooltip" data-placement="top" title="View a breakdown of the total accomplishments that affect the community score of your city." class="center text-xmedium p-0 title_link" style="border: none; background-color: transparent; color: #645496; position: relative; top: -8px;"
+                  > <%= @city.department_reviews.count + @city.complaints.finished.count + @city.city_reviews.count  %> Score Factors
+              </button>
+              <csmodal v-if="showCsModal" @close="showCsModal = false"></csmodal>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End -  CITY SCORE BOX -->
+      <!-- Begin -  CITY ADMIN: Section to show that there is a city user signed up for the city -->
+      <% if @city.has_admins? %>
+        <div class="col-all-12">
+          <p class="b trending_font_size margin-t-10">
+            Connect with City Officials
+          </p>
+          <div class="col-all-12 px-0 py-3 card light-box-shadow center" style="border: 1px solid rgba(128, 128, 128, .5)">
+            <div class="center padding-t-0 margin-l-auto text-28 height-100">
+              <div class="col-tier"> 
+                <%= image_tag "logos/OssembleCityAdminLoginPage.png", alt: "City Profile Pic", class: "mr-1 mb-0 pl-0 border-none padding-t-0 margin-t-5 no-border", id: "brand_ossemble", style: "height: 65px; width: 65px;" %>
+                <p class="ApScoreStyle ml-1 mb-0">
+                  <span class="text-30 relative" style="left: -2px;">
+                    <%= @city.admins.count %>
+                  </span>
+                </p>
+              </div>
+              <div class="center-all text-xmedium mt-2">
+                <!-- Button trigger modal -->
+                <button type="button" class="center text-xmedium p-0 title_link" style="border: none; background-color: transparent; color: #645496;" data-toggle="modal" data-target="#ap-city-modal">
+                  <%= @city.name %> Officials
+                </button>
+                
+                <!-- Modal -->
+                <div class="modal fade" id="ap-city-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content" style="border: 3px groove rgb(100, 84, 150);">
+                      <div class="modal-header pt-0 pb-0 pr-3 pl-0" >
+        							  <p class="pull-left padding-l-15 push-left mb-0 margin-b-5 mt-0 theme_color_black trending_font_size b accomp_font_size text-18" style="position: relative; top: 3px">
+                          City Officials
+                        </p>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body pt-2 mt-0">
+                        <div class="col-tier py-2">
+                          <div class="">
+                            %= display_ap_city_avatar(@city.admin.city_user) %>
+                          </div>
+                          <div class="relative ml-2" style="top: 12px">
+                            %= display_city_user_link(@city.admin.city_user) %>
+                          </div>
+                          <button class="pull-right button-su relative" style="margin-left: auto !important; top: 5px;">Follow</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+      <!-- End -  CITY ADMIN:  -->
+      <!-- Begin - MAP: Complaints Map section -->
+      <div class="col-all-12">
+        <p class="theme_color_black b trending_font_size margin-y-10">
+          <%= @city.name %> Map
+        </p>
+        <div class="col-all-12 well mb-0 p-2 card light-box-shadow center no-border-radius" style="background-color: #FAFAFA; border: 1px solid rgba(128, 128, 128, .5);">
+         <a href="<%= community_score_map_path(@city)  %>">
+          <!-- Begin - Map Row  -->
+          <div class="map_area">
+            <!-- Below - Renders Community Score map partial inside views/department/department_map -->
+            <div id="oss_action_map" class="col-all-12 no-border-radius ms_map" style="height: 200px !important;">
+              <%= render 'layouts/action_panel_map' %>
+            </div>
+          </div>
+         </a>
+        </div>
+      </div>
+      <!-- End - MAP: Complaints Map section -->
+      <!-- Begin - COUNTY TRENDING: Trending: Petition link for trending petiiton in county Map section -->
+      <% unless @city.petitions.empty? %>
+        <div class="col-all-12">
+          <p class="b trending_font_size margin-y-10">
+            <% @county_petitions = @city.county.petitions %>
+            <% @trending_petition = @county_petitions.most_hit.first %>
+            <a class="theme_color_black" href="<%= city_petition_path(@trending_petition.city, @trending_petition)  %>">
+              Trending in <%= @city.county.name %>
+            </a>
+          </p>
+          
+          <div id="list_card_container" class="col-all-12 mb-0 p-3 card light-box-shadow center no-border-radius" style="border: 1px solid rgba(128, 128, 128, .5);">
+            <div id="trending_ap_box" class="col-all-12 no-border-radius">
+              <div class="tier margin-y-5">
+                <div class="col-d-5 col-t-4 col-p-12 trending_image">
+                  <div class="mb-2"><%= display_list_image(@trending_petition) %></div>
+                </div>
+                <div class="col-d-7 col-t-10 col-p-12 ms_ap_title_pl">
+                  <div class="col-all-12">
+                    <a class="text-16" href="<%= city_petition_path(@trending_petition.city, @trending_petition) %>">
+                      <p class="title_link padding-b-5 margin-b-0 ms_ap_title_mt">
+                        <%= display_list_title(@trending_petition) %>
+                      </p>
+                      <p class=" margin-b-0">
+                        Petition in <%= @trending_petition.city.name %>
+                      </p>
+                      <p class="col-d-vanish col-t-12 col-p-12 margin-t-15">
+                        <%= display_time_and_score(@trending_petition) %>
+                      </p>
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div class="col-all-12">
+                <div class="tier mb-2">
+                  <div class="col-d-2 col-t-1 col-p-1">
+                    <%= display_list_avatar(@trending_petition.user) %>
+                  </div>
+                  <div class="col-d-10 col-t-11 col-p-11">
+                    <div class="push-left pt-2">
+                      <%= display_user_name(@trending_petition.user) %>
+                    </div>
+                  </div>
+                </div>
+                <a href="<%= city_petition_path(@trending_petition.city, @trending_petition) %>"
+                <div class="col-tier">
+                  <%= strip_tags(@trending_petition.goal).truncate(140) %>
+                </div>
+                <div class="col-d-10 col-t-9 col-p-12"></div>
+                <div class="col-tier padding-t-8 margin-b-5">
+                  <div class="col-all-6 center-all">
+                    <%= display_vote_count(@trending_petition) %>
+                  </div>
+                  <div class="col-all-6 center-all">
+                    <%= display_comment_count(@trending_petition) %>
+                  </div>
+                </div>
+                </a>
+              </div>
+            </div>
+          </div>
+        <!-- End - COUNTY TRENDING:: -->
+        <% end %>
+      </div>
+    </div>
+    <!-- Below -  Beta feedback won't show if the user is a guest as they need to be signed in to do so. -->
+    <div id="action_panel_bottom">
+      <div id="action_panel_file" class="pl-4 pr-4 pb-3 well-border relative no-border">
+        <div class="col-all-12">
+          <% unless is_guest? %>
+            <p class="b trending_font_size margin-b-10">
+              Help Us Improve
+            </p>
+            <div class="col-all-12 center-all">
+              <div class="col-tier card py-4 px-2 light-box-shadow" style="border: 1px solid rgba(128, 128, 128, .5);">
+                <%= link_to "<i class='far fa-edit push-left'></i> Feedback".html_safe, contact_us_path, id: "contact_us_btn", class: "btn center", title: "Don't judge us, we're in beta! Let us know if something is wrong, needs improvement, 
+                              or even if you have an idea. We'll get back to you, we promise!" %>
+              </div>
+            </div>
+          <% end %> <!-- End -  Ruby check to not display beta feeback  button for guests. -->
+         </div>
+       </div>
+    </div> <!--  End - Action Panel bottom for action buttons -->
+<!--    % end %> <!-- End - Admin/User check -->
+  </div>
+</div>
+<script type="text/x-template" id="cs-modal-template">
+	<transition name="cs-modal">
+			<div class="modal-mask">
+				<div class="modal-wrapper">
+					<div class="modal-container ms_modal_resize" style="height: 475px; width: 475px; background-color: #fffff0; border: 3px groove #645496;">
+						<div class="modal-header col-all-12 p-0" style="border-bottom: none !important">
+							<slot name="header">
+							<div class="col-tier">
+							  <p class="pull-left push-left mb-0 padding-b-5 mt-0 theme_color_black trending_font_size b accomp_font_size text-18" style="position: relative; top: 3px">
+                  Scored Factors
+                </p>
+                <button class="btn text-medium push-right p-2" style="margin-left: auto; background-color: transparent; border: none !important;" @click="$emit('close')">
+                  <span class="text-xxmedium"><i class="fas fa-times theme_color_dark"></i></span>
+                </button>
+                </div>
+							</slot>
+						</div>
+						<div class="modal-body p-0" style="margin-top: 0px">
+							<slot name="body">
+							  <div class="text-xxmedium magin-b-5" style="border: 1px solid rgba(128, 128, 128, .5); background-color: white !important">
+                <div class="col-tier py-3 border-bottom"> 
+                  <div class="center-all tier">
+                    <%= image_tag 'logos/Owl_FavIcon.png', class: "mr-1 mb-0 pl-0 border-none padding-t-0 margin-t-5 no-border relative", id: "brand_ossemble", style: "top: -5px; height: 65px; width: 65px;"  %>
+                  <p class="ApScoreStyle ml-1 mb-0">
+                    <%= "#{display_city_score(@city)}<span class='text-28'>%</span>".html_safe %>
+                  </p>
+                  </div>
+                </div>
+                  <div class="tier mt-3 ml-2">
+                    <p class="text-muted col-8 card pr-0 border-none margin-b-0" style="text-align: left; margin-left: -4px !important">
+                      Reports & Suggestions
+                    </p>
+                    <div class="push-right text-right col-3 card px-2 border-none">
+                      <div class="theme_color_dark">
+                        <%= "#{@city.complaints.finished.count + @city.concerns.count}" %>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="tier mt-3 ml-2">
+                      <div class="text-muted col-8 card pr-0 border-none" style="text-align: left; margin-left: -4px !important">
+                          Department Reviews
+                      </div>
+        
+                      <div class="push-right text-right col-3 card px-2 border-none">
+                          <div class="theme_color_dark">
+                            <!-- Department Review Total -->
+                            <%= "#{@city.department_reviews.count}" %>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="tier mt-3 mb-3 ml-2">
+                      <div class="text-muted col-8 card pr-0 border-none" style="text-align: left; margin-left: -4px !important">
+                          City Reviews
+                      </div>
+                        
+                      <div class="push-right text-right col-3 card px-2 border-none">
+                          <div class="theme_color_dark">
+                            <%= "#{@city.city_reviews.count}" %>
+                              <!-- City Review Total -->
+                          </div>
+                      </div>
+                  </div>
+                  <div class="tier mt-3 mb-3 ml-2">
+                      <div class="text-muted col-8 card pr-0 border-none" style="text-align: left; margin-left: -4px !important">
+                          Finished Petitions
+                      </div>
+                        
+                      <div class="push-right text-right col-3 card px-2 border-none">
+                          <div class="theme_color_dark">
+                            <%= "#{@city.petitions.finished.count}" %>
+                              <!-- Finished Petitions Total -->
+                          </div>
+                      </div>
+                  </div>
+
+                </div>
+                <div class="tier card margin-y-15" style="border: 1px solid rgba(128, 128, 128, .5); background-color: white !important">
+                  
+                    <span class="text-18 padding-t-10 border-bottom bold">Your City, Your Score</span> 
+                    <p class="text-16 padding-all-10 text-muted card-body mb-0" style="text-align: left">
+The Ossemble Score is a direct representation of the people that live within the city. It showcases citizen experience and government efficiency.
+                    </p>
+                  </p>
+                </div>
+							</slot>
+						</div>
+					</div>
+				</div>
+			</div>
+	</transition>
+</script>
+
+<script>
+// register modal component
+Vue.component('csmodal', {
+  template: '#cs-modal-template'
+})
+
+// start app
+
+new Vue({
+  el: '#cacc-modal',
+  data: {
+    showCsModal: false,
+  }
+})
+</script>
+
+<script>
+  $('#ap-city').on('shown.bs.modal', function () {
+  $('#myInput').trigger('focus')
+})
+$(document.body).on('hide.bs.modal,hidden.bs.modal', function () {
+    $('body').css('padding-right','0');
+});
+</script>

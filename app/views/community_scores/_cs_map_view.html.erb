@@ -1,0 +1,84 @@
+<!-- Map partial for all department and complaint pages under Community Score that is used via filtering. 
+  obj being passed in is @departments, @complaints, and @complaints_departments, which can be further filtered via filter panel. -->
+<script>
+ var map = L.map('oss_map').setView([<%= @city.latitude %>, <%= @city.longitude %>], <% if @city.size == "l" %> 11 <% elsif @city.size == "m" %> 12 <% elsif @city.size = "s" %> 13 <% else %> 10 <% end %>);
+ L.tileLayer('https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="&copy;"> <a href="https://wikimediafoundation.org/wiki/Maps_Terms_of_Use">Wikimedia</a></a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+}).addTo(map);
+   admin_level=4     
+        
+    map.addControl(new L.Control.Fullscreen()); // Button for fullscreen
+        
+    var lc = L.control.locate({ // Recent button/Position
+    position: 'topleft',
+    drawCircle: false,
+    flyTo: true,
+    showPopup: false,
+    drawMarker: false,
+    icon: 'fas fa-bullseye',
+    strings:  {
+        title: "Recenter My Location" 
+              }
+}).addTo(map);
+    
+    // Below - Scaling Zoom and Disabling Drag/Zoom
+    
+    L.control.scale().addTo(map);
+    map.options.minZoom = 9;
+    map.options.maxZoom = 16;
+    
+ 
+    // This is where the markers start. 
+    L.AwesomeMarkers.Icon.prototype.options.prefix = 'fa';
+         
+// Begin - If statement determining what rendering object is being passed in. If it's @departments, displays the department markers below. 
+  
+<% if obj == @complaints_concerns %> // Map is being rendered from community score / map pages. Corresponding community score will show.
+  // Begin - Check of Failed and Completed object being not empty.
+  <% if !@complaints.empty? %> 
+    var finishedMarkers;
+     finishedMarkers = 
+      <% @complaints.each do |fin_com| %> // Begin - Failed and Completed Complaints loop to add markers.
+        L.marker([<%= fin_com.latitude %>, <%= fin_com.longitude %>], {
+          icon: L.AwesomeMarkers.icon({
+          icon: 'fas fa-flag',
+          markerColor: 'red',
+          iconColor: '#F8FAEE'    })       
+       }).addTo(map).bindPopup("<h5 class=''><div class='border-bottom margin-y-10' style='line-height: 4px;'><p class='margin-y-10 text-16' style='text-align: center; letter-spacing: 1.8px; font-weight: bold; font-family: Roboto, Times New Roman;'> <a href='<%= city_complaint_path(fin_com.city, fin_com) %>' class='no-border title_link'> <%= fin_com.title %> </a> </p> </div> <p class='margin-y-10 text-14'> <b> Address: </b> <%= fin_com.address %> </p> <p class='margin-y-10 text-14'> <b> Location: </b> <%= fin_com.city.name %>, <%= fin_com.city.state_name %> </p> </h5>");
+      <% end %>  // End - Filed Complaints loop to add markers
+    <% end %>
+  // Begin - Check of verifying complaints object being not empty.
+  <% if !@reports.empty? %> 
+    var reportMarkers;
+      reportMarkers = 
+      <% @reports.each do |rep_con| %>    // Begin - Verifying Complaints loop to add markers.
+        L.marker([<%= rep_con.latitude %>, <%= rep_con.longitude %>], {
+          icon: L.AwesomeMarkers.icon({
+          icon: 'fas fa-flag',
+          markerColor: 'red',
+          iconColor: '#F8FAEE',      })    
+          }).addTo(map).bindPopup("<h5 class=''><div class='border-bottom margin-y-10' style='line-height: 4px;'><p class='margin-y-10 text-16' style='text-align: center; letter-spacing: 1.8px; font-weight: bold; font-family: Roboto, Times New Roman;'> <a href='<%= city_concern_path(rep_con.city, rep_con) %>' class='no-border title_link'> <%= rep_con.title %> </a> </p> </div> <p class='margin-y-10 text-14'> <b> Address: </b> <%= rep_con.address %> </p> <p class='margin-y-10 text-14'> <b> Location: </b> <%= rep_con.city.name %>, <%= rep_con.city.state_name %> </p> </h5>");
+      <% end %>  // End - Verifying Complaints loop to add markers.
+    <% end %>
+  // Begin - Check of verifying complaints object being not empty.
+  <% if !@suggestions.empty? %> 
+    var suggestionMarkers;
+      suggestionMarkers = 
+      <% @suggestions.each do |sug_con| %>    // Begin - Pending complaints loop to add markers.
+        L.marker([<%= sug_con.latitude %>, <%= sug_con.longitude %>], {
+          icon: L.AwesomeMarkers.icon({
+          icon: 'fas fa-lightbulb text-xxbig',
+          markerColor: 'blue',
+          iconColor: '#F8FAEE',      })         
+     }).addTo(map).bindPopup("<h5 class=''><div class='border-bottom margin-y-10' style='line-height: 4px;'><p class='margin-y-10 text-16' style='text-align: center; letter-spacing: 1.8px; font-weight: bold; font-family: Roboto, Times New Roman;'> <a href='<%= city_concern_path(sug_con.city, sug_con) %>' class='no-border title_link'> <%= sug_con.title %> </a></p> </div> <p class='margin-y-10 text-14'> <b> Address: </b> <%= sug_con.address %> </p> <p class='margin-y-10 text-14'> <b> Location: </b> <%= sug_con.city.name %>, <%= sug_con.city.state_name %> </p> <p class='margin-y-10 text-14'> </h5>");
+      <% end %>  // End - Pending Complaints loop to add markers.
+  <% end %>
+// End - Complaints & Departments community score map rendering.
+
+
+<% end %> // End - If statement determining what rendering object is being passed in.
+
+   
+
+ 
+</script>

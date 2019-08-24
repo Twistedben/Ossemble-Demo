@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en-US" prefix="g: http://ogp.me/ns#">
+  <head> 
+    <!-- Below -  Tag for ActionCable -->
+    <%= action_cable_meta_tag %>
+  <!-- Below - Render google analytics tag manager partial containing Google Manager for tracking actions if the Rails environment is production. -->
+    <%= render 'google/google_analytics_tag_manager' if Rails.env.production? %>
+  <!-- Below - Meta tag gem usage -->  
+    <%= display_meta_tags %>
+  <!-- Below - links for favicons to display on different browser tabs -->  
+    <link rel="apple-touch-icon" sizes="152x152" href="<%= asset_url 'logos/apple-touch-icon.png' %>">
+    <link rel="icon" type="image/png" sizes="32x32" href="<%= asset_url 'logos/favicon-32x32.png' %>">
+    <link rel="icon" type="image/png" sizes="16x16" href="<%= asset_url 'logos/favicon-16x16.png' %>">
+    
+<!-- Below - Chrome, Firefox OS and Opera Color Style -->
+    <meta name="theme-color" content="#645496">
+    
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, shrink-to-fit=no">
+    <meta property="og:description" content="The regional collaboration platform built for economic development, municipalities, and grassroots organizations.">
+    <meta name="description" content="<%= content_for?(:description) ? yield(:description) : "Ossemble" %>">
+<!-- Displaying Title of Page in Browser Tab -->
+    <title>
+      <%= content_for?(:title) ? yield(:title) : "Ossemble" %>
+    </title>
+    
+  <!-- Below - CDN Link for Vue.js -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+  <!-- Begin - CDN Links, Font Awesome, Ionic, BS, Google Icons (Material Design), & Google Fonts -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Marcellus" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/a8c2bcc3ed.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--  Below - Bootstrap CDN & Jquery Links -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/tooltip.js/dist/umd/tooltip.min.js"></script>
+    <script src="https://unpkg.com/popper.js@1.14.4/dist/umd/popper.min.js"></script>
+  <!-- End - CDN Links & Google Fonts-->
+  
+  <!-- Intro js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/2.9.3/intro.js"></script>
+
+  <!-- Below - Animate CSS CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.5.2/animate.min.css">
+     
+  <!-- Begin - Javascript, Stylesheet, & Rails Include Tags: Turbolinks, Autocomplete-Gem -->
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => 'reload' %>
+    <%= stylesheet_link_tag 'jquery.raty' %>
+    
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => 'reload' %>
+    
+    <!-- Below - EasyAutoComplete CSS for autocomplete suggestions in the search bar  and other form inputs -->
+    <%= javascript_include_tag "autocomplete-rails" %>
+    <%= csrf_meta_tags %>
+    <!--
+    %= javascript_include_tag 'leaflet.ajax.min.js' %>
+    %= javascript_include_tag 'jquery.easy-autocomplete.js' %>
+    %= javascript_include_tag 'jquery-ui.min.js' %>
+    %= javascript_include_tag 'jquery.atwho.min.js' %>
+    -->
+  <!-- End - Javascript, Stylesheet, & Rails Include Tags: Turbolinks and Autcomplete-Gem -->    
+  
+  <!-- Begin - All CDN links and scripts for Leaflet and its plugins. -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.2/leaflet.draw.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.2/leaflet.draw.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/leaflet.fullscreen/1.4.5/Control.FullScreen.js'></script>
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/leaflet.fullscreen/1.4.5/Control.FullScreen.css' rel='stylesheet'/>
+  <!-- End - All CDN links and scripts for Leaflet and its plugins. -->
+  <!-- Below - Render google analytics partial containing Main Google Analytics Setup for tracking of all pages if the Rails environment is production. -->
+    <%= render 'google/google_analytics' if Rails.env.production? %>
+    
+  <!-- Below - CDN links for Quill -->
+    <!-- Main Quill library -->
+    <script src="//cdn.quilljs.com/1.3.6/quill.js"></script>
+    <script src="//cdn.quilljs.com/1.3.6/quill.min.js"></script>
+    
+    <!-- Theme included stylesheets -->
+    <link href="//cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+
+<!-- Below Dev or Prod check for Amplitude SDK -->
+<% if Rails.env.development? || Rails.env.test? %> 
+  
+  <!-- Start - Amplitude Code Development -->
+   <script type="text/javascript">
+  (function(e,t){var n=e.amplitude||{_q:[],_iq:{}};var r=t.createElement("script")
+  ;r.type="text/javascript";r.async=true
+  ;r.src="https://cdn.amplitude.com/libs/amplitude-4.4.0-min.gz.js"
+  ;r.onload=function(){if(e.amplitude.runQueuedFunctions){
+  e.amplitude.runQueuedFunctions()}else{
+  console.log("[Amplitude] Error: could not load SDK")}}
+  ;var i=t.getElementsByTagName("script")[0];i.parentNode.insertBefore(r,i)
+  ;function s(e,t){e.prototype[t]=function(){
+  this._q.push([t].concat(Array.prototype.slice.call(arguments,0)));return this}}
+  var o=function(){this._q=[];return this}
+  ;var a=["add","append","clearAll","prepend","set","setOnce","unset"]
+  ;for(var u=0;u<a.length;u++){s(o,a[u])}n.Identify=o;var c=function(){this._q=[]
+  ;return this}
+  ;var l=["setProductId","setQuantity","setPrice","setRevenueType","setEventProperties"]
+  ;for(var p=0;p<l.length;p++){s(c,l[p])}n.Revenue=c
+  ;var d=["init","logEvent","logRevenue","setUserId","setUserProperties","setOptOut","setVersionName","setDomain","setDeviceId","setGlobalUserProperties","identify","clearUserProperties","setGroup","logRevenueV2","regenerateDeviceId","logEventWithTimestamp","logEventWithGroups","setSessionId","resetSessionId"]
+  ;function v(e){function t(t){e[t]=function(){
+  e._q.push([t].concat(Array.prototype.slice.call(arguments,0)))}}
+  for(var n=0;n<d.length;n++){t(d[n])}}v(n);n.getInstance=function(e){
+  e=(!e||e.length===0?"$default_instance":e).toLowerCase()
+  ;if(!n._iq.hasOwnProperty(e)){n._iq[e]={_q:[]};v(n._iq[e])}return n._iq[e]}
+  ;e.amplitude=n})(window,document);
+  
+   amplitude.getInstance().init("<%= Rails.application.credentials.amplitude[:development_api] %>");
+  </script>
+  <!-- End - Amplitude code for Development --> 
+
+<% elsif Rails.env.production? %>
+
+  <!-- Start - Amplitude code for Production -->
+  <script type="text/javascript">
+    (function(e,t){var n=e.amplitude||{_q:[],_iq:{}};var r=t.createElement("script")
+    ;r.type="text/javascript";r.async=true
+    ;r.src="https://cdn.amplitude.com/libs/amplitude-4.4.0-min.gz.js"
+    ;r.onload=function(){if(e.amplitude.runQueuedFunctions){
+    e.amplitude.runQueuedFunctions()}else{
+    console.log("[Amplitude] Error: could not load SDK")}}
+    ;var i=t.getElementsByTagName("script")[0];i.parentNode.insertBefore(r,i)
+    ;function s(e,t){e.prototype[t]=function(){
+    this._q.push([t].concat(Array.prototype.slice.call(arguments,0)));return this}}
+    var o=function(){this._q=[];return this}
+    ;var a=["add","append","clearAll","prepend","set","setOnce","unset"]
+    ;for(var u=0;u<a.length;u++){s(o,a[u])}n.Identify=o;var c=function(){this._q=[]
+    ;return this}
+    ;var l=["setProductId","setQuantity","setPrice","setRevenueType","setEventProperties"]
+    ;for(var p=0;p<l.length;p++){s(c,l[p])}n.Revenue=c
+    ;var d=["init","logEvent","logRevenue","setUserId","setUserProperties","setOptOut","setVersionName","setDomain","setDeviceId","setGlobalUserProperties","identify","clearUserProperties","setGroup","logRevenueV2","regenerateDeviceId","logEventWithTimestamp","logEventWithGroups","setSessionId","resetSessionId"]
+    ;function v(e){function t(t){e[t]=function(){
+    e._q.push([t].concat(Array.prototype.slice.call(arguments,0)))}}
+    for(var n=0;n<d.length;n++){t(d[n])}}v(n);n.getInstance=function(e){
+    e=(!e||e.length===0?"$default_instance":e).toLowerCase()
+    ;if(!n._iq.hasOwnProperty(e)){n._iq[e]={_q:[]};v(n._iq[e])}return n._iq[e]}
+    ;e.amplitude=n})(window,document);
+  
+    amplitude.getInstance().init("<%= Rails.application.credentials.amplitude[:production_api] %>");
+  </script>
+<!-- End - Amplitude code for Production -->
+<% end %> 
+  </head>
+  
+  <body>
+    <!-- Below - Render google analytics partial containing Main Google Analytics Setup for tracking of all pages if the Rails environment is production. -->
+    <%= render 'google/google_analytics_noscript_tags' if Rails.env.production? %>
+    
+    <!-- Begin - Loading FaceBook SDK for Javascript -->
+      <!--
+      <script>
+        window.fbAsyncInit = function() {
+          FB.init({
+            appId      : '1425309727505996',
+            xfbml      : true,
+            version    : 'v2.10'
+          });
+          FB.AppEvents.logPageView();
+        };
+      
+        (function(d, s, id){
+           var js, fjs = d.getElementsByTagName(s)[0];
+           if (d.getElementById(id)) {return;}
+           js = d.createElement(s); js.id = id;
+           js.src = "//connect.facebook.net/en_US/sdk.js";
+           fjs.parentNode.insertBefore(js, fjs);
+         }(document, 'script', 'facebook-jssdk'));
+          
+      </script>
+    -->
+    
+  <!-- MailerLite Universal -->
+      <script>
+        (function(m,a,i,l,e,r){ m['MailerLiteObject']=e;function f(){
+        var c={ a:arguments,q:[]};var r=this.push(c);return "number"!=typeof r?r:f.bind(c.q);}
+        f.q=f.q||[];m[e]=m[e]||f.bind(f.q);m[e].q=m[e].q||f.q;r=a.createElement(i);
+        var _=a.getElementsByTagName(i)[0];r.async=1;r.src=l+'?v'+(~~(new Date().getTime()/1000000));
+        _.parentNode.insertBefore(r,_);})(window, document, 'script', 'https://static.mailerlite.com/js/universal.js', 'ml');
+        
+        var ml_account = ml('accounts', '939875', 'x2r2m8r4u1', 'load');
+      </script>
+  <!-- End MailerLite Universal -->
+
+ 
+  <!-- Rendering Navbar Across all Pages from "layouts/_navigation.html.erb -->
+    <%= render 'layouts/navigation' %>
+  <!-- Rendering Error and Success Messages from "layouts/_messages.html.erb -->
+    <div id="DeviseErrorMessageContainer">
+      <%= render 'layouts/messages', flash: flash %>
+      <!-- Below  - renders in page unauthorized message if the controller passes an @unauthorized instance variable. -->
+      <%= render 'layouts/unauthorized_message' if @unauthorized == "true" %>
+    </div>
+    <!-- Begin - Main body of Page --> 
+    <!-- Below - If the logged in person is an admin and belongs to a workplace, will display sidepanel for workplace navigation and admin navigation 
+      Side panel will not show on home landing page and margin will be removed if on landing page. -->
+    <% if current_admin && current_admin.belongs_to_a_workplace? %>
+      <%= render 'admins/admin_layouts/workplace_side_panel' unless current_page?(root_path) || current_page?(features_path) %>
+      <main role="main" id="main_admin" style="
+        <% if current_page?(root_path) || current_page?(features_path) %>
+         margin-left: 0px  !important;
+         margin-right: 0px !important;
+        <% else %> 
+           margin-right: 0px;
+          padding: 0px 15px;
+        <% end %>
+        ">
+        <%= yield %>  
+      </main> 
+    <% else %> <!-- NOt an admin or admin is on visitor pages, so no additional CSS for Main element  -->
+      <!-- Below - Yields (renders) the main page for a user who isn't an admin --> 
+      <main role="main">
+        <%= yield %>  
+      </main> 
+    <% end %>
+    <!--  End - Main body of Page -->
+    
+     <!-- BElow - IonIcons CDN -->
+    <script src="https://unpkg.com/ionicons@4.1.1/dist/ionicons.js"></script>
+    
+      
+  </body>
+</html>

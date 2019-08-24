@@ -1,0 +1,243 @@
+<!-- Main Page for creating a new report for a city (views/reports/new.html.erb). -->
+<div class="content">
+  <div class="col-all-12 push-right">
+    <%= simple_format(@report.description, {}, wrapper_tag: "div id='new_text_wrap' class='vanish'") %>
+      <div class="theme_color_black text-medium mb-3 col-tier">      
+        <div class="col-all-12">
+          <p class="mb-0 page_info_title">
+            Voice a Report - <%= @workplace.name %>
+          </p>
+        </div>
+        <div id="report-modal" class="col-all-12">
+          <p id="show-modal" class="mb-0 mt-0 underline ms_titles_ml"><span class="pointer" @click="showModal = true">Report Guidelines</span></p>
+          <!-- use the modal component, pass in the prop -->
+          <modal v-if="showModal" @close="showModal = false">
+          </modal>
+        </div>
+      </div>
+      <div id="new_report_form" class="content">
+        <div class="col-tier">
+         <%= link_to "<i class='fas fa-lightbulb mr-3'></i>Suggestion".html_safe, new_city_workplace_workplace_suggestion_path(@city, @workplace), id: " " , class: "btn tab-btn col-all-6", title: "Post a new Suggestion for the city" %>
+          <button id="select-report" type="button" class="btn tab-btn2 col-all-6"><i class='fas fa-flag mr-3'></i>Report</button>
+        </div>
+        <div class="tier light-box-shadow bg-white p-4 mb-3" style="border: 1px solid rgba(128, 128, 128, .5);">
+          <div class="col-all-12" style="display: block !important">
+            <!-- Below - Renders errors from the new report page due to validation errors. Error messages inside views/layouts/_errors.html.erb -->
+            <div class="col-all-10 center">
+              <%= render 'layouts/errors', obj: @report %>
+            </div>
+            <div class="ms_map_size form-row float-right col-d-6 col-t-12 col-p-12 mb-4 card  center bg-white border-radius-none border-none padding-b-0 padding-all-0">
+              <div class="center-all bold text-xxmedium mb-2">
+                Pin the Report's Location Below
+              </div>
+              <div class="form-group">
+                <div id="oss_map" class="oss_map ms_map relative light-box-shadow" style="border: 1px solid rgba(88, 88, 88, .4); z-index: 500 !important;">
+                  <%= render 'workplaces/new_map_pin_map', obj: @city %>
+                </div>
+              </div>
+            </div>  <!-- End -  Rendering for the Map.  -->
+          <!-- Begin -  Form for new report -->
+          <%= simple_form_for @report, url: create_city_workplace_report_path, as: 'report', html: { class: 'form-horizontal float-left col-d-6 col-t-12 col-p-12' } do |f| %>
+            <!-- Below - Hidden field tags for storing the latitude, longitude of the pin on submit. -->
+            <%= hidden_field_tag 'workplace_report[latitude]', '', id: 'latitude' %>
+            <%= hidden_field_tag 'workplace_report[longitude]', '', id: 'longitude' %>
+            <!-- Below - Creating a new report address -->
+            <div class="col-tier center mt-5">
+              <div class="col-d-11 col-t-11 col-p-12"> 
+                <%= f.label :address, "Location or Address", class: 'pull-left' %>
+                <%= f.text_field :address, name: "workplace_report[address]", maxlength: 50, title: "Where in #{ current_city } is the report located? Exact address, nearby landmarks, location, road, or where it can be found. Minimum: 5 Characters, Limit: 50 Characters.", placeholder: 'Enter exact address, road, or nearby landmarks', class: "form-control input-box-shadow" %>
+              </div>
+            </div>
+            <!-- Below - Creating a new report category -->
+            <div class="col-tier center">
+              <div class="col-d-11 col-t-11 col-p-12 margin-t-20"> 
+                <%= f.label :category, "Report Category".html_safe, class: 'pull-left'  %>
+                <%= f.text_field :category, name: "workplace_report[category]",  maxlength: 70, title: "Enter a short category for this report. In a few words, what type of report is it? (Limit: 70 Characters)", placeholder: "Category of the report (E.G: 'Abandoned Property', 'Overgrown Grass') (Limit: 70 Characters)", class: "form-control input-box-shadow" %>
+              </div>
+            </div>
+            <!-- End - Shows deadline and title row field if "Other" is selected above as Category ID.-->
+            <!-- Begin - Shows Title if Other is selected. Determined from jQuery on reports/new.  -->
+            <div class="col-tier center">
+              <div id="title_input" class="col-d-11 col-t-11 col-p-12 margin-t-20 vanish"> 
+                <%= f.label :title, "Title of report", class: 'pull-left'  %>
+                <%= f.text_field :title, name: "workplace_report[title]",  maxlength: 70, title: "Enter a succinct title for this report. In a few words, what is the issue? (Limit: 70 Characters)", placeholder: "Title of the report (E.G: Busted stop sign) (Limit: 70 Characters)", class: "form-control input-box-shadow" %>
+                <p class="margin-t-5 mb-0 text-13">A short title to succinctly identify your report and what it is. Will be generated for you automatically if not provided. Minimum: 5 Characters, Limit: 70 Characters.</p> 
+              </div>
+            </div>
+            <!-- End - Shows TItle if Other is selected. Determined from jQuery on reports/new -->
+            <div class="loading" style="display:none; z-index: 15000">
+               <div class="center-all" style="border-radius: 10px !important">
+                 <%= image_tag "icons/misc/loading.gif", alt: "Uploading", class: "", style: "width: 300px" %>
+                 <div class="theme_color_dark mb-5 px-4">Please wait while your image uploads...</div>
+               </div>
+            </div>
+            
+            <!-- Begin - New report description row -->
+            <div class="col-tier center">
+              <div class="col-d-11 col-t-11 col-p-12 margin-y-10"> 
+               <%= f.label :description, class: 'theme_color_black text-xxmedium mt-3' %>
+               <%= f.hidden_field :description, name: "workplace_report[description]", id: "post_description", required: true %>
+                <div id="editor-container" class="light-box-shadow" hidden="true"></div>
+                <div id="quill_container"  style="height: 250px !important;"></div>
+              </div>
+            </div>
+            <!-- End - New report description row -->
+            <!-- Below -  Area for post to be shared with other admins -->
+            <div class="col-tier center margin-t-12">
+              <div class="col-d-9 col-t-11 col-p-12"> 
+                <%= f.label :tags, "Share With ", class: 'pull-left theme_color_black text-xxmedium' %>
+                <span class="text-xsmall padding-l-5">(optional)</span>
+                <%= f.text_field :tags, data: {behavior: "autocomplete"}, name: "workplace_report[tags]",  title: "Tag other users to share upload with (EG: '@john')", placeholder: "Tag anyone you'd like to share this with (EG: '@john')", class: "form-control input-box-shadow" %>
+              </div>
+            </div>
+            <!-- Begin - New report image upload row -->
+              <div id="report_pic" class="col-tier padding-all-8 center" >
+                <div class="col-all-12 margin-y-10" title="Upload an image or picture to help illustrate your report."> 
+                  <div class="tier">
+                    <%= f.label :image, "<i class='fas fa-file-image margin-r-8'></i>Upload Image <small> (optional - but encouraged) </small>".html_safe, class: "pull-left control-label" %>
+                  </div>
+                  <div class="tier">
+                    <%= f.file_field :image, accept: 'image/*', name: "workplace_report[image]", class: "upload btn btn-info margin-y-5 light-btn-shadow", style: "width: 220px", onchange: "readURL(this);" %>
+                  </div>
+                  <div class="tier">
+                    <%= f.label :image, "Preview of Uploaded Image".html_safe, class: " vanish img_prev_title pull-left control-label mb-2" %>
+                  </div>
+                  <div class="tier">
+                    <img id="img_prev" class="vanish" style="" src="#" alt="Image">
+                  </div>
+                  <p class="margin-t-5 mb-2 text-13">Please upload an image that clearly illustrates the report you are voicing.</p>
+                  <p class="margin-t-5 small">If the image you're uploading is high resolution, it may take a few moments.</p>
+                </div>
+              </div>
+              <!-- Begin - New file upload row -->
+              <div class="col-tier center margin-b-12">
+                <div class="col-all-12 padding-all-8" title="Upload a document/file that helps illustrate, explain, propose, and back up your report. You can upload a PDF, Doc, PowerPoint, etc.."> 
+                  <div class="tier">
+                     <%= f.label :file, "<i class='fas fa-paperclip margin-r-8'></i>Upload Document <small> (optional) </small>".html_safe, class: "pull-left control-label" %>
+                  </div>
+                  <div class="tier">
+                    <%= f.file_field :file, accept: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.openxmlformats-officedocument.presentationml.slideshow, application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint, application/pdf, text/*', name: "workplace_report[file]", class: "upload btn btn-info margin-y-5 light-btn-shadow", style: "width: 220px" %>
+                  </div>
+                  <p class="margin-t-5 mb-0 text-13">If you're uploading a large file, it may take a few moments.</p>
+                </div>
+              </div>
+              <!-- End - New file upload row -->
+
+            </div> <!-- End - Main tier for report New -->
+          </div> 
+            <!-- End - New report image upload row -->
+          <!-- Begin - Submit new report row -->
+          <div class="form-row field mt-4" style="margin-left: 0.5px">
+            <div class="form-group"> 
+              <%= f.submit "Voice Report", id: "loadgif", class: "form_btn btn padding-x-15 button-cs", id: "loadgif", onclick: "amplitude.getInstance().logEvent('Workplace Report Created');" %>
+            </div>
+          </div>
+          <!-- End - Submit new report row -->
+        <% end %> <!-- End - Simple-Form Form field on physical page, not on map. -->
+    </div>
+  </div>
+</div>
+
+
+<script>
+function readURL(input) {
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+    $("#img_prev").show();
+    $(".img_prev_title").show();
+    $("#report_image");
+    reader.onload = function (e) {
+      $('#img_prev')
+        .attr('src', e.target.result)
+    };
+
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+</script>
+<script>
+// register modal component
+Vue.component('modal', {
+  template: '#modal-template'
+})
+
+// start app
+new Vue({
+  el: '#report-modal',
+  data: {
+    showModal: false
+  }
+})
+</script>
+<!-- Below -  VUE JS Code for report Guidelines -->
+<script type="text/x-template" id="modal-template">
+  <transition name="modal">
+    <div class="modal-mask">
+      <div class="modal-wrapper">
+        <div class="modal-body">
+          <slot name="body">
+            <div class="content">
+              <div class="col-all-10 center">
+                <div id="page_info_card_org" class="col-tier">
+                  <div id="page_info_card" class="col-all-12">
+                    <div class="col-all-12 light-box-shadow card" style="border: 1px solid rgba(128, 128, 128, .5); border-radius: 10px;">
+                      <div class="card-body theme_color_black p-4" style="">
+                        <div class="col-all-12 pull-left">
+                          <h3 class="mt-0 mb-2 ms_page_title">Report Guidelines</h3> 
+                          <p class="text-medium i">Please follow these posting guidelines to ensure your report is valid and able to be posted.</p> 
+                          <section class="b">Please fill out all required fields below</section>
+                          <ul> 
+                            <li><b>Location or Address</b> - You may use the exact address of a reportt if it is known, or an approximate location near the report.</li>  
+                            <li><b>Description</b> - Please write a short description describing the report, enough so others can clearly understand what your report is about.</li>
+                            <li><b>Map</b> - Clicking on the map will generate a pin that will be shown when your report is listed. You may click on the precise location of the report or an approximate location near the comaplaint, if the exact location is unknown.</li>
+                          </ul>   
+                          <p class="text-medium pb-3 border-bottom">Following these steps will ensure your report is filed properly and increases the odds of others endorsing it.</p>
+                          <h3 class="mt-3 mb-2 ms_page_title bold">When editing a report:</h3> 
+                          <section class="b">Please edit the location, description, and map marker if you'd like to update your report with more accurate information.</section>  
+                          <p class="text-medium mb-2">Since Ossemble's Report Process is extremely in depth, if you need to change the report category, please delete this report and create a new one. We apologize for the inconvience.</p>
+                          <button class="btn btn-info modal-default-button text-xxmedium" @click="$emit('close')">
+                            Close
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div> 
+            </slot>
+          </div>
+        </div>
+      </div>
+    </div>
+  </transition>
+</script>
+
+<script>
+
+    var form = document.querySelector('.form-horizontal');
+    var quill = new Quill('#quill_container', {
+    modules: {
+      toolbar: [
+        ['bold', 'italic', 'link'],
+        [{ list: 'ordered' }, { list: 'bullet' }]
+      ]
+    },
+    placeholder: "The description of your report, explaining what the report is, where it's at, what should be done, and your experience with it. Minimum: 50 Characters, Limit: 6,000 Characters (about 900 words).",
+    theme: 'snow'  // or 'bubble'
+  });
+  
+  
+  form.onsubmit = function() {
+    var postContentInput = document.querySelector('#post_description');
+    postContentInput.value = quill.root.innerHTML;
+  };
+  
+  // Below - Sets up a variable from the simple format rendering about on edit post
+  var editDescription = $('#edit_text_wrap').text();
+$('.ql-editor p').text(editDescription);
+  // Below - Shuffles in text from a failed resource submission's description
+  var newDescription = $('#new_text_wrap').text();
+  $('.ql-editor p').text(newDescription);
+
+</script>
+ 

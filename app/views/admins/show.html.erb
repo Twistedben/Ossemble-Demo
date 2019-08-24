@@ -1,0 +1,269 @@
+<!-- Main page for admins dashboard, the show page. Goes to admins_controller.rb, #show, route: cities/lakewood/admins/:admin_id, and file folder: (views/admins/show.html.erb).   -->
+
+<!-- Below -  Renders in City Admin Navbar for navigation -->
+
+
+<!-- Begin - Main content for page. -->
+<div class="content">
+  <div class="tier"> <!-- Begin - Main tier for page. -->
+    <!-- Begin - Filter panel rendering -->
+    <div class="col-d-2 col-t-10 col-p-12 center">
+
+    </div>
+    
+    <div class="center col-d-7 col-t-10 col-p-12">
+      <!-- Begin - Rendering of trending top complaints, WUL, and Departments -->
+      <div class="tier p-0 no-border-radius light-box-shadow">
+        <div class="col-all-12 card p-0 no-border-radius no-border-bottom">
+          <div class="col-tier padding-all-10 padding-b-0">
+            <div class="col-d-4 col-t-4 col-p-12">
+              <%= display_admin_profile_avatar(@admin) %> <!-- Shows user's avatar or an upload avatar button if the current user is looking at thier own page without an avatar.  -->
+              <!-- Begin -  SETTINGS: Shows dropdown menu of settings if the user is visiting their own profile. -->
+              <% if is_current_admin?(@admin) %>  
+                <div id="settings_dropdown" class="dropright col-all-12">
+                  <a class="dropdown-toggle btn alt-action light-btn-shadow padding-y-5 padding-x-8"  data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-cogs margin-r-5 text-16"></i><span class="text-15">Settings</span>
+                  </a>
+                  <div id="" class="dropdown-menu">
+                    <a class="dropdown-item rep_text" href="<%= edit_admin_path(current_admin.institute, current_admin) %>">
+                      <div class="icon_container">
+                        <i class='far fa-edit'></i>
+                      </div>
+                      Update Profile
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item rep_text" href="#" data-confirm="If you'd like to change your password, log out and click 'Forgot password?' on the login page.">
+                      <div class="icon_container">
+                      <i class='fa fa-unlock-alt'></i>
+                      </div>
+                      Reset Password
+                    </a>
+                  </div>
+                </div>
+              <% end %>
+              <!-- End -  SETTINGS: -->
+            </div>
+            <!-- Begin -  NAME, BIO, NEIGHBORHOOD, JOIN: Bio section, with join date, name and neighborhood -->
+            <div class="col-d-8 col-t-8 col-p-12 middle_pad">
+              <div id="user_bio_section" class="col-tier mb-4">
+                <div class="col-all-12 tier border-bottom">
+                  <p id="user_name" class="p-0 theme_color_black tier">
+                    <%= @admin.name %> - <%= @admin.title %>
+                  </p>
+                  <span class="" style="position: relative; top: 8px; left: 10px">
+                    <% if is_current_admin?(@admin) %>
+                      <%= link_to "<i class='fas fa-pencil-alt profile_edit_icon theme_color_dark text-xxmedium'></i>".html_safe, edit_admin_path(current_admin.institute, current_admin), title: "Change your Title/Position", id: " " , class: " " %>
+                    <% end %>
+                  </span>
+                </div>                
+                <div class="col-all-12 py-1" title="When <%= @admin.first_name %> signed up with Ossemble.">
+                  <p class="mb-0 p-0">
+                    <b class="theme_color_black">Joined: </b>
+                    <span class="padding-l-5"> 
+                      <%= display_date(@admin.created_at) %>
+                    </span>
+                  </p>
+                </div>
+                <div class="col-all-12 py-1" title="The department that <%= @admin.first_name %> belongs to.">
+                  <div class="col-all-12 py-1">
+                    <p class="mb-0 p-0">
+                      <b class="theme_color_black">Department </b>
+                      <br>
+                      <span class="padding-l-5">
+                        <%= @admin.department.name unless @admin.department.nil? %>
+                        <%= "Not provided" if @admin.department.nil? && !is_current_admin?(@admin) %>
+                        <%= "You have not yet provided your department. <a class='underline' href='#{edit_admin_path(current_admin.institute, current_admin)}'>Click here</a> in order to provide it.".html_safe if @admin.department.nil? && is_current_admin?(@admin) %> 
+                      </span>
+                    </p>
+                  </div>
+                </div>
+                <div class="col-all-12 py-1">
+                <!-- Below -  Displays User BIo -->
+                  <p class="mt-3 p-0">
+                    <b class="theme_color_black">About </b>
+                    <br>
+                    <span class="padding-l-5">
+                    <!-- Begin -  User bio check. -->
+                      <% if @admin.bio.nil? || @admin.bio.empty? %> <!--  Bio is nil, so they either are prompted to fill it out or shows a visitor it's nil. -->
+                      <!-- Below -  If the user is looking at thier own profile, and it's empty, encourage them to fill it out. -->
+                        <% if is_current_admin?(@admin) %>
+                          <!-- Below -  If user is on their own profile, shows pencil to edit it and link to Profile Update page -->
+                            You have yet to provide your bio for others to see. 
+                            <a class="underline" href="<%= edit_admin_path(current_admin.institute, current_admin) %>">Click here</a> in order to fill it out.
+                        <% else %> <!-- A visiting user sees that the user has yet to fill out the bio section  -->
+                          <%= @admin.first_name %> has yet to provide their Bio.
+                        <% end %> <!--  End of User checking their own profile or not. -->
+                      <% else %> <!-- Bio isn't nil and is provided.  -->
+                        <%= @admin.bio %>
+                      <% end %>
+                    <!-- End - Bio complete check  -->
+                    </span>
+                  </p>
+                </div>
+              </div>
+            </div>
+             <!-- Begin -  CONTACT INFO: Tier and card for contact information -->
+              <div class="col-all-12 p-0 card no-border-radius no-x-border">
+                <div class="col-tier padding-all-15" style="min-height: 16rem;">
+                  <div class="col-tier border-bottom padding-b-10 margin-b-12">
+                    <h3 class="roboto no-margin">
+                      Contact Information
+                    </h3>
+                  </div>
+                  <div class="col-tier">
+                    <p class="col-tier">
+                      <span class="bold text-18">
+                        Phone Number:
+                      </span>
+                      <span class="padding-l-8 text-18">
+                          <%= @admin.phone_number %> 
+                      </span>
+                    </p>
+                    <!-- Begin -  ADDITIONAL CONTACT: Loop of additional contact info admins have provided. -->
+                    <% unless @admin.contacts.empty? %> <!--  If the contacts are'not empty, then show them in a loop -->
+                      <% @admin.contacts.each do |contact| %>
+                        <div class="col-tier padding-b-10">
+                          <div title="They type of contact information to contact <%= @admin.first_name %>.">
+                            <span class="bold text-18">
+                              <%= " #{contact.name}: " %>
+                            </span>
+                          </div>
+                          <div class="" title="You can use this to contact this <%= @admin.first_name %>.">
+                            <span class="padding-l-5 text-18">
+                              <!-- Below -  Checks if the contact info is and email address and if it is, wraps it in a link mail to -->
+                              <% if contact.is_email? %>
+                                 &nbsp;<%= "<a class='small_link' href='mailto:#{contact.information}'>#{contact.information}</a>".html_safe %> 
+                              <% else %>
+                                &nbsp;<%= "#{contact.information}" %> 
+                              <% end %>
+                            </span>
+                          </div>
+                        </div>
+                      <% end %> <!-- End -  Loop of existing contacts -->
+                    <% else %>  <!--  Contacts is empty for admin -->
+                      <div class="col-tier">
+                        <h3 class="center text-18">
+                          <%= "<span class='text-16'>You have yet to provide additional contact information. <a class='small_link' href='#{edit_admin_path(current_admin.institute, current_admin)}'>Click Here </a>and go to Public Profile - Contact Details to add contact information.</span>".html_safe if is_current_admin?(@admin) %>
+                          <%= "#{@admin.first_name} has yet to provide additional contact information.".html_safe unless is_current_admin?(@admin) %>
+                        </h3>
+                      </div>
+                    <% end %> <!-- End -  Loop of existing contacts -->
+                  <!-- End -  ADDITIONAL CONTACT: Loop of additional contact info admins have provided. -->
+                  </div>
+                </div>
+              </div>
+              
+            <!-- End -  NAME, BIO, NEIGHBORHOOD, JOIN: -->
+            <!-- Below -  Holds actions a user can do to another user -->
+            <div class="col-d-3 col-t-3 col-p-12">
+              <div class="ms_follow_tier margin-y-5">
+               <!-- Space for follow admin button -->
+               <!-- %= display_follow_button(admin_follow_path(@admin), admin_unfollow_path(@admin), @admin) %> -->
+              </div>
+              <div class="ms_follow_tier margin-y-5">
+              <!--  
+                button id="follow_btn" class="btn light-btn-shadow margin-r-10 mes_color" style="">
+                  %= link_to "<i class='far fa-envelope margin-r-5'></i> Message".html_safe, new_chatroom_path, title:"Message this user.", class:"mes_color" unless is_current_admin?(@admin) %>
+                  %= link_to "<i class='far fa-envelope-open margin-r-5'></i> Inbox".html_safe, new_chatroom_path(), title:"View your inbox.", class:"mes_color" if is_current_admin?(@admin) %>
+                /button>
+              -->            
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>  
+    <!-- Begin -  ADMIN WORKPLACES: -->  
+     <div class="tier margin-y-10">
+        <div class="push-left">
+          <span class="padding-l-0 page_info_title bold my-2">
+            <%= is_current_admin?(@admin) ? "Your" : "#{@admin.first_name.to_s}'s" %> Workplaces
+          </span>
+        </div>
+        <div class="col-all-12 card p-0 no-border-radius light-box-shadow">
+          <div class="card-body" style="min-height: 13rem;">
+            <div id="">
+              <!-- Below -  If admin doesn't belong to any workplaces, says so, if so starts a loop of workplaces they belong to -->
+              <% if @admin.workplaces.empty? %>
+                <h2 class="center-text">
+                  <%= is_current_admin?(@admin) ? "You don't" : "#{@admin.first_name} doesn't" %>
+                  belong to any workplaces.
+                  <br>
+                  <!-- Below - First makes sure admin is looking at thier own profile. Then gives the option for admins who don't belong to workplace to email the admin's city's super admin to then request access to a workplace -->
+                  <% if is_current_admin?(@admin) %>
+                  <small>
+                    Contact 
+                    <%= "<a class='small_link' href='mailto:#{current_admin.institute.subscription.admin.email}'>#{current_admin.institute.subscription.admin.name}</a>".html_safe %>
+                    and request a link to join a workplace.
+                  </small>
+                  <% end %>
+                </h2>
+              <% else %>
+                <% @admin.workplaces.each do |workplace| %>
+                  <ul class="pl-0">
+                    <li class="col-tier col-all-12 padding-y-5">
+                      <div class="col-d-6 col-t-6 col-p-12">
+                        <span class="bold">
+                          Name:
+                        </span>
+                        <%= workplace.name %>
+                      </div>
+                      <div class="col-d-6 col-t-6 col-p-12">
+                        <span class="bold">
+                          Joined:
+                        </span>
+                        <%= display_date_in_numbers(@admin.return_workplace_membership(workplace).created_at) %>
+                      </div>
+                    </li>
+                  </ul>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div> 
+      <!-- End -  ADMIN  WORKPLACES: -->
+    <!-- Begin -  ADMIN ACTIVITY CARD: -->  
+     <div class="tier margin-t-10" style="margin-bottom: 55px">
+        <div class="push-left">
+          <span class="padding-l-0 page_info_title bold my-2">
+            <%= is_current_admin?(@admin) ? "Your" : "#{@admin.first_name.to_s}'s" %> Recent Activity
+          </span>
+        </div>
+        <div class="col-all-12 card p-0 no-border-radius light-box-shadow">
+          <div class="card-body" style="min-height: 13rem;">
+            <div id="user_activity_container">
+              <h2 class="center-text">
+                No recent activity
+                <br>
+                <small>
+                  Coming Soon!
+                </small>
+                
+
+              </h2>
+            </div>
+          </div>
+        </div>
+      </div> 
+      <!-- End -  ADMIN ACTIVITY CARD: -->
+    </div>
+      <!-- Below -  Render in action panel -->
+    <%= render 'admins/admin_layouts/admin_profile_action_panel' %>
+  </div> <!-- Main page tier -->
+</div>
+
+<script>
+// register modal component
+Vue.component('modal', {
+  template: '#modal-template'
+})
+
+// start app
+new Vue({
+  el: '#app',
+  data: {
+    showModal: false
+  }
+})
+</script>
+

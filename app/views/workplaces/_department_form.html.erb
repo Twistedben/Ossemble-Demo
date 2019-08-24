@@ -1,0 +1,23 @@
+<!--  Form partial for creating workplace departments, rendered from workplace_Departments page. -->
+<div class="col-tier padding-r-20 no_padr_ms">
+  <%= form_for WorkplaceDepartment.new, :url => create_workplace_departments_path(@city, @workplace), html: {class: "col-all-12 light-box-shadow horizontal-form padding-all-20 card", style: "margin-bottom: 100px"} do |f| %>
+    <div class="col-all-12 center">
+      <%= render 'layouts/errors', obj: @department %>
+    </div>
+    <div class="col-tier my-3">
+      <div class="col-all-8" title="Enter the department's name. (60 character limit)">
+        <%= f.label :name, "Name" %>
+        <%= f.text_field :name, class: "form-control", maxlength: 60, placeholder: "'Planning', 'Service', or 'Community Development' (60 characters)", autocomplete: false %>
+      </div>
+    </div>
+    <div class="col-tier my-3">
+      <div class="col-all-12" title="Enter a concise description for the department. (255 character limit)">
+        <%= f.label :description, "Description <small>(Optional)</small>".html_safe %> 
+        <%= f.text_area :description, class: "form-control", maxlength: 255, placeholder: "'The planning department ensures...' (255 characters)", autocomplete: false %>        
+      </div>
+    </div>
+    <div class="col-tier mt-5">
+      <%= f.submit 'Create Department', class: "ml-0 form_btn button-cs btn"  %>
+    </div>
+  <% end %>   
+</div>

@@ -1,0 +1,57 @@
+<div class="push-left ml-3 sidetoggle">
+  <a id="simple-menu" onclick="$('#sidr').removeClass('vanish')" href="#sidr"><i class="fas fa-bars theme_color_dark text-xxlarge"></i></a>
+</div>
+<div id="sidr" class="vanish">
+  <!-- Your content -->
+  <div class="my-3 px-3 text-xbig b roboto" style="color: rgba(88, 88, 88, .9)">
+      <%= @user.city.name if @user %>
+      <%= @city.name unless @user %> 
+      Feeds
+  </div>
+  <ul>
+    <li class="text-18">
+      <%= link_to "Community Score", city_feed_path(@city), id: "cs_ms", class: " ml-0theme_color_dark", title: "Your city, your score", style: "opacity: 0.95" if @city %>
+      <%= link_to "Community Score",  city_feed_path(current_user_or_admin.city), id: "cs_ms", class: "ml-0 theme_color_dark", title: "Your city, your score", style: "opacity: 0.95" unless @city %>
+    </li>
+    <li class="text-18">
+      <%= link_to "Ossembly Forum", city_ossembly_path(@city), id: "ossembly_link", class: "theme_color_dark", title: "Your forum for local engagement", style: "opacity: 0.95" if @city %>
+      <%= link_to "Ossembly Forum", city_feed_path(current_user_or_admin.city), id: "ossembly_link", class: "theme_color_dark", title: "Your forum for local engagement", style: "opacity: 0.95" unless @city %>
+    </li>
+    <!-- The Beacon Link Code <div>%= link_to "The Beacon", '#', id: "beacon_link", class: "nav-link theme_color_dark navbar_item_link px-3 margin-l-0", data: { confirm: "The Beacon feature is coming soon!"} unless is_guest_page? && is_guest? %></div> -->
+  </ul>
+  <div class="my-3 px-3 text-xbig b roboto" style="color: rgba(88, 88, 88, .9)">
+    Scores
+  </div>
+  <ul>
+    <li class="">
+      <a class="" href="<%= city_department_reviews_path(@city) %>"><i class="fas fa-building margin-l-8" style="margin-right: 13px"></i>Departments</a>
+    </li>
+    <li class="">
+      <a class="" href="<%= government_city_department_reviews_path(@city) %>"><i class="fas fa-university margin-l-8" style="margin-right: 11px"></i>Government</a>
+    </li>
+    <li class="">
+      <a class="" href="<%= parks_city_department_reviews_path(@city) %>"><i class="fas fa-tree margin-l-8" style="margin-right: 15px"></i>Parks</a>
+    </li>
+    <li class="">
+      <a class="" href="<%= schools_city_department_reviews_path(@city) %>"><i class="fas fa-graduation-cap margin-l-8" style="margin-right: 7px"></i>Schools</a>
+    </li>
+    <li class="">
+      <a class="" href="<%= police_city_department_reviews_path(@city) %>"><i class="fas fa-taxi margin-l-8" style="margin-right: 11px"></i>Police</a>
+    </li>
+    <li class="">
+      <a class="" href="<%= public_works_city_department_reviews_path(@city) %>"><i class="fas fa-bus-alt margin-l-8" style="margin-right: 11px"></i>Public Works</a>
+    </li>
+  </ul>
+</div>
+
+
+
+
+
+<script>
+  <% if obj == @reviews %>
+    <%= render "layouts/click_phone_filter" %>
+  <% elsif obj == @review %>
+    $('#simple-menu').sidr();
+  <% end %>
+</script>

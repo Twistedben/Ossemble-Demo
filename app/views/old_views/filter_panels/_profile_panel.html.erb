@@ -1,0 +1,42 @@
+<!-- HTML.ERB For Filter Navigation Panel to Switch Page Views (views/layouts/_filter_panel.html.erb) -->
+<!-- Begin - Filter Navigation Panel -->
+<div id="filter_panel_wrapper" class="filtertoggle col-d-12 center pl-0 pt-0">
+  <aside style="width: 100% !important">
+    <div id="filter_panel_content" class="p-0 mb-3 border-radius-10">
+      <div id="filter_panel_body" class="center panel-default panel-profile no-border border-radius-10">
+        <div id="filter_panel_list_wrapper" class="panel-body no-border">
+          <ul id="filter_panel_list" class="list-group">
+            <div>
+              <div class="mb-0 text-xbig city_feeds_pos b roboto" style="color: rgba(88, 88, 88, .9)">
+                Profile
+              </div>
+            </div>
+            <li class= "mb-0 city_feeds_pos">
+              <%= link_to "<i class='fa fa-users margin-l-8 ms_t_panel_head' aria-hidden='true' style='margin-right: 9px'></i>Allies".html_safe, '#', data: { confirm: "Allies Feature Coming Soon!"}, class: "list-item" %> 
+            </li>
+            <li class= "mb-0 city_feeds_pos">
+               <%= link_to "<i class='fa fa-trophy margin-l-8 ms_t_panel_head' aria-hidden='true' style='margin-right: 11px'></i>Reputation".html_safe, '#', data: { confirm: "Reputation Feature Coming Soon!"}, class: "list-item" %> 
+            </li>
+            <li class= "mb-0 city_feeds_pos">
+              <%= link_to "<i class='fas fa-comments margin-l-8 ms_t_panel_head' aria-hidden='true' style='margin-right: 4px'></i> All Reviews".html_safe, '#', data: { confirm: "Review Feed Feature Coming Soon!"}, class: "list-item" %>
+            </li>
+             <li class= "mb-0 city_feeds_pos">
+              <%= link_to "<i class='fa fa-times margin-l-8 margin-r-10 ms_t_panel_head' aria-hidden='true'></i> All Complaints".html_safe, '#', data: { confirm: "Complaint Feed Feature Coming Soon!"}, class: "list-item" %>
+            </li>
+            <li class= "mb-0 city_feeds_pos">
+              <%= link_to "<i class='far fa-edit margin-l-8 ms_t_panel_head' aria-hidden='true' style='margin-right: 4px'></i> Update Profile".html_safe, edit_user_registration_path(@user), class: "list-item" %>
+            </li>
+            <li class= "mb-0 city_feeds_pos">
+              <%= link_to "<i class='fa fa-unlock-alt margin-l-8 ms_t_panel_head' aria-hidden='true' style='margin-right: 13px'></i> Password Reset".html_safe, "#", data: {confirm: "If you'd like to change your password, log out and click 'Forgot your password?' on the login page."}, class: "list-item" %>
+            </li>
+            <li class= "mb-0 city_feeds_pos">
+              <%= link_to "<i class='fas fa-exclamation-circle margin-l-8 ms_t_panel_head' aria-hidden='true' style='margin-right: 7px'></i> Notifications".html_safe, "#", data: { confirm: "Notifications Feature Coming Soon!"}, class: "list-item" if current_user %>
+            </li>
+            <!--<li>< # button_to "Delete my account", registration_path(@user), data: { confirm: "Are you sure?" }, method: :delete ></li>-->
+          </ul> 
+        </div>
+      </div>
+    </div>
+  </aside>
+</div>
+ <!-- End - Filter Navigation Panel -->

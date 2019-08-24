@@ -1,0 +1,14 @@
+;(function($){
+$('#simple-menu').sidr();
+
+
+  $(document).ready(function(event) {
+    if ($(window).width() < 999) {
+    	setTimeout(function()
+    	  { $('#simple-menu').click(); }, 1000);
+    }
+    else {
+      event.stopPropigation();
+    };
+  });
+})(jQuery);

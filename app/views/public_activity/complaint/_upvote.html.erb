@@ -1,0 +1,19 @@
+<!--  The main partial rendered for activities being upvoted concerning complaints (views/public_activity/complaint/_upvote.html.erb). -->
+<% if activity.recipient %>
+  <span id="activities_span" class="">
+    <span>
+      endorsed a Complaint titled:
+    </span>
+    <span class="bold">
+      <%= link_to activity.trackable.title, city_complaint_path(activity.trackable.city, activity.trackable), id: "activity_complaint_link", class: "" %>
+    </span>
+    <span id="upvote_complaint_activity">
+      - posted by: 
+      <span class="i">
+        <%= link_to activity.recipient.name, user_path(activity.recipient.city, activity.recipient) %>
+      </span>
+    </span>
+  </span>
+<% else %>
+  unendorsed a Complaint.
+<% end %>

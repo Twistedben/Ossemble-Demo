@@ -1,0 +1,16 @@
+<%= simple_form_for(@department) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :name %>
+    <%= f.input :score %>
+    <%= f.input :city_score_id %>
+    <%= f.input :latitude %>
+    <%= f.input :longitude %>
+    <%= f.input :timestamps %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

@@ -1,0 +1,180 @@
+// Stylesheet File for CSS being applied to the Map rendered across all pages.
+ 
+#oss_map { 
+    height: 475px; 
+    width: 100%;
+    border: 1px solid rgba(88, 88, 88, .4);
+    z-index: 500 !important;
+}
+
+// Begin - MAP POST NEW: Map on WorkplaceMapPost new page 
+#map_container {  
+    float: right;
+    padding-left: 18px;
+    @media screen and (max-width: 999px) {
+        margin-bottom: 20px !important;
+    }
+    h4 {
+        margin-bottom: 8px;
+        margin-top: 0px;
+        font-weight: bold;
+        text-align: center;
+    }
+    #new_workplace_post_map {
+        width: 100%;
+        height: 440px;
+        position: relative;
+        border: 1px solid rgba(88, 88, 88, .4);
+        z-index: 500 !important;
+        box-shadow: 1px 3px 16px rgba(0, 0, 0, 0.23);
+        
+        @media screen and (max-width: 999px) {
+            height: 500px;
+        }
+    }
+}
+// End - MAP POST NEW:
+// Below - Change map Appearance button for certain map pages
+#change_map_btn_container {
+    input#change_map {
+        border: 1px solid #645496;
+        background-color: white;
+        color: #645496;
+        pointer-events: auto !important;
+        font-size: 14px !important;
+        padding: 4px;
+        height: 30px;
+        box-shadow: 1px 1px 13px rgba(0,0,0, 0.25);
+        opacity: 0.85;
+        &:active, &:focus {
+            border: 1px solid #645496 !important;
+            background-color: white !important;
+            color: #645496 !important;
+            opacity: 1;
+        }
+        &:hover {
+            opacity: 1;
+        }
+    }
+}
+// Begin - MAP POST SHOW: Workplace Map Post Show Page
+#workplace_show_post_map_container {
+    border-right: 1px solid rgba(88, 88, 88, .2);
+    border-left: 1px solid rgba(88, 88, 88, .2);
+    box-shadow: 1px 3px 16px rgba(0, 0, 0, 0.2);
+    .col-all-12 {
+        padding: 8px;
+        background-color: white;
+        #workplace_show_post_map {
+            border: 1px solid rgba(88, 88, 88, .2); 
+            height: 550px; 
+            width: 100%;
+            z-index: 500 !important;
+        }
+    }
+    
+}
+// End - MAP POST SHOW: Workplace Map Post Show Page
+
+.awesome-marker i {
+    font-size: 16px;
+    margin-left: 0px !important;
+}
+
+.fa-map-marker {
+    font-size: 18px;
+    //margin-top: 6px;
+}
+
+#submit {
+    margin-top: 13px;
+}
+
+.form-group2 {
+    margin-top: 10px;
+}
+
+.fa.fa-university {
+    margin-left: 2px !important;
+}
+
+.fa.fa-exclamation-circle {
+    font-size: 19px !important;
+}
+
+.leaflet-draw-draw-polyline{
+    height: 40px !important;
+    width: 40px !important;
+    background-size: 450px !important;
+    background-position: -5px !important;
+}
+
+.leaflet-draw-draw-polygon{
+    height: 40px !important;
+    width: 40px !important;
+    background-size: 450px !important;
+    background-position: -53px !important;
+}
+
+.leaflet-draw-draw-rectangle{
+    height: 40px !important;
+    width: 40px !important;
+    background-size: 450px !important;
+    background-position: -104px !important;
+}
+
+.leaflet-draw-draw-circle{
+    height: 40px !important;
+    width: 40px !important;
+    background-size: 450px !important;
+    background-position: -154px !important;
+}
+
+.leaflet-draw-draw-marker{
+    height: 40px !important;
+    width: 40px !important;
+    background-size: 450px !important;
+    background-position: -204px !important;
+}
+
+.leaflet-draw-edit-edit.leaflet-disabled{
+    height: 40px !important;
+    width: 40px !important;
+    background-size: 450px !important;
+    background-position: -254px !important;
+}
+
+.leaflet-draw-edit-edit {
+    height: 40px !important;
+    width: 40px !important;
+    background-size: 450px !important;
+    background-position: -254px !important;
+}
+
+.leaflet-draw-edit-remove.leaflet-disabled{
+    height: 40px !important;
+    width: 40px !important;
+    background-size: 450px !important;
+    background-position: -305px !important;
+}
+
+.leaflet-draw-edit-remove {
+    height: 40px !important;
+    width: 40px !important;
+    background-size: 450px !important;
+    background-position: -305px !important;
+}
+
+.leaflet-bar {
+    opacity: 1 !important;
+}
+
+.leaflet-draw-toolbar.leaflet-bar.leaflet-draw-toolbar-top {
+    position: relative !important;
+    left: -5px !important;
+}
+
+.leaflet-draw-toolbar.leaflet-bar {
+    position: relative !important;
+    left: -5px !important;
+}

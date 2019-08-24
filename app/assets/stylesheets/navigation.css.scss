@@ -1,0 +1,638 @@
+
+// Styling for Navbar for Ossemble (views/layouts/_navigation.html.erb)
+
+// SASS Variables & Global CSS
+$primary-color: #C361F1 !important;
+$font-stack: Adamina, serif, Times New Roman !important;
+
+#navbar_main {
+  background-color: #fff;
+  padding: 0px 10px 0px 0px !important;
+  margin-bottom: 0px;
+  opacity: 0.95; 
+  
+  #profile_dropdown_menu {
+    margin-right: 10px;
+    opacity: 1 !important;
+    min-width: 255px;
+    padding-bottom: 0px !important;
+    #nav_link_dropdown_container {
+      padding: 0px 0px 0px 15px;
+      background-color: white !important;
+      .dropdown_icon_container {
+        width: 25%;
+        i {
+          font-size: 22px;
+          padding-top: 10px;
+          padding-left: 10px;
+          &.fa-file-archive {
+            font-size: 20px;
+            padding-left: 12px;
+            
+          }
+        }
+      }
+      a {
+        font-size: 20px;
+        padding: 8px 0px;
+        width: 75%;
+      }
+    }
+
+    .dropdown-divider {
+      border-top-width: 2px !important;
+    }
+    hr {
+      margin-top: 4px !important; 
+      margin-bottom: 4px !important;
+      width: 80%;
+    }
+    #user_profile_name {
+      font-size: 19px;
+      color: black;
+      &:hover, &:focus {
+        background-color: transparent !important;
+      }
+    }
+    #user_profile_name:active {
+      background-color: transparent;
+      color: black;
+                              }
+    .dropdown-item:not(#user_profile_name) {
+      font-size: 18px; 
+                                           }
+    .dropdown-item:hover:not(#user_profile_name) {
+      background-color: transparent !important;
+      text-shadow: .04em .03em black;
+      letter-spacing: 1px;
+                                                  }
+    .dropdown-item:active, .dropdown-item:focus {
+      background-color: transparent !important;
+      text-decoration: underline;
+      color: #645496 !important;
+                          }
+   
+    div.col-tier {
+      padding: 10px 0px;
+      background-color: #f2f1f1 !important ;
+    }
+    span {
+      border-left: 1px solid rgba(0, 0, 0, 0.4);
+    }
+    a#settings_link {
+      width: 10% !important;
+      font-size: 15px !important;
+    }
+    a.footer_link {
+      font-size: 13px !important;
+      padding: 0px 4px !important;
+      width: 23% !important;
+      &#home_link {
+        width: 19% !important;
+        padding-left: 5px !important;
+      }
+      &:hover {
+        font-weight: bold;
+        background: transparent;
+        color: black;
+      }
+    }
+   
+  }
+}
+
+.right_border_link {
+  border-right: 1px groove rgba(100, 84, 150, .4);
+} 
+
+// Beginning - Navbar CSS 
+#nav_wrap {
+  min-height: 57px;
+}
+
+#brand_ossemble {
+  font-weight: bold;
+  font-family: Adamina, serif, Times New Roman;
+  font-size: 28px;
+  text-shadow: .05em .06em black;
+  color: $primary-color;
+  margin-top: 4px;
+  border-right: 1px groove rgba(100, 84, 150, .6);
+   @media screen and (max-width: 768px) {
+   font-size: 15px;
+   padding-left: 5px;
+   margin-right: 2px;
+   
+                                       }
+}
+
+.ba_height {
+  margin-top: 6px;
+  @media screen and (max-width: 768px) {
+  margin-top: 10px !important;
+                                        }
+}
+
+.navbar_item_link {
+  font-size: 19px;
+  margin-top: 9px;
+  padding-bottom: 6px !important;
+  margin-right: 0px !important;
+  @media screen and (max-width: 768px) {
+    font-size: 20px;
+    margin-top: 2px;
+    padding-bottom: 6px !important;
+    margin-left: 15px !important;
+    border: none;
+                                        }
+}
+
+.navbar_item_link:hover {
+  border-bottom: 1.5px solid #645496 !important;
+  text-shadow: 1px 1px 1px rgba(100, 84, 150, 0.8) !important;
+  text-decoration: none !important;
+  background-color: transparent !important;
+}
+
+.navbar_item_link:active{
+  color: #a165aa !important;
+  border-bottom: 2px solid #cea2cb !important;
+  text-shadow: 1px 1px 2px #645496 !important;
+  text-decoration: none !important;
+  background-color: rgba(161, 101, 170, .1) !important;
+}
+
+#your_city_navbar_link:hover {
+  color: #645496 !important;
+  text-shadow: 1px 1px 2px #645496 !important;
+  text-decoration: underline !important;
+  background-color: transparent !important;
+}
+
+
+#cs_ms {
+  @media screen and (max-width: 576px) {
+   
+                                       }
+}
+
+#search_bar {
+  @media screen and (max-width: 768px) {
+        display: none;
+                                       }
+}
+
+#city_btn::before {
+  @media screen and (max-width: 768px) {
+       content: "Visit a ";
+       font-size: 16px;
+                                       }
+}
+
+.ms_sbb {
+  @media screen and (max-width: 768px) {
+       height: 15px !important;
+       width: 110px !important;
+                                       }
+}
+
+.tog_btn {
+  @media screen and (max-width: 768px) {
+       height: 37px !important;
+       width: 50px !important;
+       margin-top: 15px;
+                                       }
+}
+
+#city_btn {
+  
+  @media screen and (max-width: 768px) {
+       font-size: 16px;
+       margin-bottom: 2px !important;
+                                       }
+}
+
+.blog {
+  @media screen and (max-width: 1230px) {
+        display: none;
+                                       }
+}
+.about {
+  @media screen and (max-width: 1230px) {
+        display: none;
+                                       }
+}
+
+
+  // Below - Items shown when user is NOT logged in.
+.user_log_btn {
+  margin-right: 5px;
+  height: 33px;
+  width: 85px;
+  text-align: center;
+  font-size: 15px;
+  letter-spacing: .05em;
+  text-shadow: 1px 1px #C361F1;
+  :hover{
+    color: none !important;
+    text-decoration: none !important;
+  }
+}
+#login-su-btn {
+  margin-right: 3px;
+  @media screen and (max-width: 650px) {
+  width: 50px;
+  font-size: 18px;
+  margin-right: 0px !important;
+  height: 36px;
+  padding-top: 6px;
+  padding-right: auto;
+  padding-left: auto;
+                                        }                                        
+                                        
+}
+
+#login-su-btn2 {
+  margin-right: 5px;
+  @media screen and (max-width: 650px) {
+  font-size: 18px;
+  margin-right: 6px !important;
+  height: 36px;
+  padding-top: 6px;
+  padding-right: auto;
+  padding-left: auto;
+                                        }                                        
+                                        
+}
+  // Below - Items shown when user is logged in.
+#navbar_profile_avatar {
+  border-radius: 50%;
+  margin-bottom: 0px !important;
+  margin-top: 0px;
+  @media screen and (max-width: 768px) {
+  border-radius: 50%;
+  margin-bottom: 0px !important;
+  margin-top: 0px;
+  margin-right: 0px !important;
+                                       }
+    // Begin - Media screens for avatar picture.
+    
+    
+    // End - Media screencs for avatar picture. 
+}
+#profile_link_wrapper {
+  //border: 1px groove gray;
+  font-size: 0px;
+}
+#dropdown_logged_in{
+  font-size: 0px;
+}
+
+
+
+
+// End - Navbar CSS
+
+@media (max-width: 767px){
+  #navbarNav{
+    position: absolute;
+    top: 49px;
+    width: 100%;
+    left: 0px;
+  } 
+
+  .navbar-nav.navbar-left{
+    background-color: #F8F9FA;
+  }
+}
+
+/*Preventing vertical dividers from appearing collapsed*/
+@media (max-width: 420px) {
+.navbar-collapse .nav > .divider-vertical {
+    display: none;
+  }
+}
+
+/*Defining the vertical dividers*/
+.navbar .divider-vertical {
+  height: 50px;
+  margin: 0 9px;
+  border-right: 1px solid #ffffff;
+  border-left: 1px solid #DADADA;
+}
+
+.navbar-inverse .divider-vertical {
+  border-right-color: #222222;
+  border-left-color: #111111;
+}
+
+@media only screen and (min-width: 767px) {
+    .collapse {
+        display: block;
+    }
+
+    .navbar-header {
+        float: left;
+    }
+      
+    .navbar-toggle {
+        display: none;
+    }
+  
+    .navbar-nav {
+       float: left;
+       margin: 0;
+    }
+    .navbar-nav>li {
+        float: left;
+    }
+    .navbar-nav>li>a {
+       padding-top: 16px;
+       padding-bottom: 15px;
+    }
+    .navbar-right {
+        float: right!important;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+     .collapse {
+        display: none;
+     }
+
+     .navbar-header {
+        display: block;
+     }
+}
+
+// Owl Logo Swapping on MS
+
+.ms_owlshow {
+  display: none;
+  @media screen and (max-width: 767px) {
+  display: block;
+                                        }
+}
+
+.ms_owlhide {
+  display: block;
+  @media screen and (max-width: 767px) {
+  display: none;
+                                        }
+}
+
+
+// Current link class for JS 
+
+.current_link {
+ border-bottom: 2px solid #58478e;
+ text-shadow: 1px 1px gray;
+ color: #645496 !important;
+ opacity: 1 !important;
+}
+
+.nav-link:active {
+  background-color: rgba(161, 101, 170, .1);
+  -webkit-transition: background-color .2s linear;
+  -ms-transition: background-color .2s linear;
+  transition: background-color .2s ease-in-out;
+}
+
+.ms_nav_links {
+  @media screen and (max-width: 768px) {
+    left: 0% !important;
+    
+                                        }
+  @media screen and (min-width: 768px) and (max-width: 992px) {
+    left: 14% !important;
+                                        }
+}
+
+.ms_comscore {
+  @media screen and (max-width: 768px) {
+  padding-left: 19px !important;
+                                        }
+}
+
+
+// Begin - Navbar Login Modal
+
+// End - Navbar Login Modal
+
+.navbar_width {
+  width: 60%;
+  @media screen and (max-width: 767px) {
+  width: 100% !important;
+                                        }
+}
+
+@media (min-width: 769px) {
+    .navbar .navbar-nav {
+        display: inline-block;
+        float: none;
+        vertical-align: top;
+    }
+
+    .navbar .navbar-collapse {
+        text-align: center;
+    }
+}
+
+#cs_btn, #of_btn {
+  width: 80px;
+}
+#cs_btn.action, #of_btn.action {
+    text-shadow:  3px 3px 3px rgba(0, 0, 0, 0.9);    
+  
+}
+
+.new_nav_bar {
+  position: relative;
+  padding: 2em;
+  top: 1px;
+  z-index: 1002;
+  box-shadow: 1px 4px 15px rgba(0, 0, 0, 0.18);    
+}
+
+.new_nav_bar_style {
+  background-color: #fff; 
+  border-bottom: 1px solid rgba(128, 128, 128, .3);
+  border-top: 1px solid rgba(128, 128, 128, .3);
+  border-left: none !important;
+  border-right: none !important;
+  border-radius: 0px !important;
+}
+
+
+.active-purple-4 input[type=text]:focus:not([readonly]) {
+    border: 1px solid #645496;
+    box-shadow: 0 0 0 1px #645496;
+}
+.active-purple-3 input[type=text] {
+    border: 1px solid #645496;
+    box-shadow: 0 0 0 1px #645496;
+}
+
+.ms_hometown_hide {
+  @media screen and (max-width: 767px) {
+  display: none !important;
+                                        }
+}
+
+.ms_search_margin {
+  @media screen and (max-width: 767px) {
+  margin-left: 20px;
+                                        }
+}
+
+.new_nav_center_fix {
+  position: relative; 
+  left: -130px !important;
+  @media screen and (max-width: 901px) {
+  position: relative; 
+  left: -30px !important;
+                                        }
+}
+
+.ms_t_padding {
+  @media screen and (width: 768px) {
+  padding-right: 10px !important;
+                                        }
+}
+
+.ms_lm {
+  display: none;
+  @media screen and (max-width: 767px) {
+  display: block;
+                                        }
+}
+
+.ms_lm2 {
+  display: block;
+  @media screen and (max-width: 767px) {
+  display: none;
+                                        }
+}
+
+.ms_icon_hide {
+  @media screen and (max-width: 659px) {
+  display: none;
+                                        }
+}
+
+.ms_log_mr {
+  margin-right: 10px;
+  @media screen and (max-width: 767px) {
+  margin-right: 0px !important;
+                                        }
+}
+
+.new_nav_fix {
+  position: relative; 
+  left: -60px;
+  @media screen and (max-width: 901px) {
+  left: -30px;
+                                        }
+}
+
+// Begin - Secondary Navbar 
+
+#post_dropdown_btn {
+  width: 80px;
+  text-shadow: 2px 2px 4px rgba(150, 150, 150, 0.3);
+  box-shadow: 1px 3px 16px rgba(0, 0, 0, 0.21);
+  border-radius: 5px;
+  height: 41px;
+  @media screen and (max-width: 768px) {
+    width: 120px !important;
+  }
+  @media screen and (max-width: 600px) {
+    width: 75px !important;
+  }
+}
+// Below - Post dropdown menu on city feeds for desktop
+  #post_dropdown_menu {
+    opacity: 1 !important;
+    padding: 10px;
+    border: 2px solid #645496;
+    min-width: 250px;
+    min-height: 110px;
+    margin-right: 40px !important;
+    // Below - Affects only workplace post dropdown
+    #workplace_post_dropdown {
+      a {
+        font-size: 20px;
+        padding: 8px 4px;
+       i {
+         font-size: 20px;
+         margin: 0px 18px 0px 8px;
+       } 
+      }
+    }
+    h6 {
+      font-size: 20px; 
+      cursor: context-menu !important;
+    }
+    hr {
+      margin-top: 3px !important; 
+      margin-bottom: 3px !important;
+      width: 100%;
+    }
+    .dropdown-item:hover:not(h6) {
+      background-color: transparent !important;
+      text-shadow: .02em .02em #000;
+                                                  }
+    .dropdown-item:active {
+      background-color: transparent !important;
+      text-decoration: underline;
+      color: inherit;
+                          }
+    a:not(h6) {
+      font-size: 18px;
+      padding: 6px 2px;
+    }
+    i {
+      padding-right: 5px;
+      font-size: 18px;
+    }
+  }
+// Below - Post dropdown menu on mobile
+  #post_dropdown_menu {
+    @media screen and (max-width: 768px) {
+      width: 250px;   
+      margin-right: 60px !important;
+      h6 {
+        font-size: 21px !important; 
+      }
+      hr {
+        margin: 5px 0px !important; 
+        width: 100%;
+      }
+      .dropdown-item:not(h6) {
+        font-size: 20px !important; 
+        color: #000;
+                                             }
+      a {
+        font-size: 19px !important;
+        padding: 8px 3px !important;
+      }
+      i {
+        padding-right: 5px !important;
+        font-size: 19px !important;
+      }
+      @media screen and (max-width: 600px) {
+      left: -110px !important;
+      width: 180px !important;
+  }
+    }
+  }  
+
+
+// End - Secondary Navbar 
+.navbar_fix_ms {
+  left: 25%;
+    @media screen and (max-width: 600px) {
+    position: absolute !important;
+    left: 18% !important;
+  }
+}

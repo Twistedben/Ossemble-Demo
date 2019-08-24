@@ -1,0 +1,41 @@
+<!-- 
+
+FOr now this is commented out until Dashboard and more is implemented.
+
+<div class="col-all-12 p-0 new_nav_bar relative" style="top: -19px">
+  <div class="card new_nav_bar_style">
+    <div class="card-body p-2 center-all tier new_nav_fix">
+
+        %= link_to "Score".html_safe, "#",  data: { confirm: "Score Feature Coming Soon" }, class: 'button-about light-text-shadow light-box-shadow poll-font', style: 'border-radius: 5px; width: 115px'  %>
+      
+        %= link_to "Complaints".html_safe, city_admin_complaints_path(current_admin.institute, current_admin), class: 'button-about light-text-shadow light-box-shadow poll-font mx-3', style: 'border-radius: 5px; width: 115px' %>
+      
+        %= link_to "Petitions".html_safe, "#", class: 'button-about light-text-shadow light-box-shadow poll-font', style: 'border-radius: 5px; width: 115px'  %> <!--  city_admin_petitions_path(current_admin.institute, current_admin)
+              
+        %= link_to "Polls".html_safe, "#", data: { confirm: "Polls Feature Coming Soon" }, class: 'button-about light-text-shadow light-box-shadow poll-font mx-3', style: 'border-radius: 5px; width: 115px' %>              
+
+        %= link_to "Insights".html_safe, "#", data: { confirm: "Insights Feature Coming Soon" }, class: 'button-about light-text-shadow light-box-shadow poll-font mr-3', style: 'border-radius: 5px; width: 115px' %>  
+
+      
+      <div class="dropdown">
+        <button id="city_settings_dropdown_btn" href="#" role="button"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Settings <i class="pl-1 fas fa-caret-down"></i>
+        </button>
+        <div id="city_settings_dropdown_menu" class="dropdown-menu dropdown-menu-left" aria-labelledby="city_settings_dropdown_btn">
+          %= link_to "<i class='fas fa-home' aria-hidden='true'></i> Home".html_safe, institute_admin_path(current_admin.institute, current_admin), class: 'dropdown-item' %>              
+          <hr />
+          <!-- Below -  Shows Upgrade if admin hasn't subscribed, shows subscribed if admin is subscribed -->  
+<!--
+          %= link_to_if(current_admin.subscription.subscribed == false, "<i class='far fa-credit-card' aria-hidden='true'></i> Upgrade".html_safe, city_admin_subscriptions_path(current_admin.institute, current_admin), class: 'dropdown-item') do %>              
+            %= link_to "<i class='far fa-credit-card' aria-hidden='true'></i> Subscription".html_safe, city_admin_subscriptions_path(current_admin.institute, current_admin), class: 'dropdown-item' %>              
+          % end %>
+          <hr />
+          %= link_to "<i class='fas fa-gear' aria-hidden='true'></i> Settings".html_safe, edit_admin_path(current_admin.institute, current_admin)(), class: 'dropdown-item' %>              
+          <hr />
+          %= link_to "<i class='fas fa-users' aria-hidden='true'></i> Profiles".html_safe, "#", data: { confirm: "Profiles Feature Coming Soon" }, class: 'dropdown-item' %> 
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+-->

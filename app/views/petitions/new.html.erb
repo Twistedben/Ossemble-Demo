@@ -1,0 +1,292 @@
+<!--  Main page for creation of a new petition (views/petiitions/new.html.erb) -->
+
+<!-- Below -  Captures the written description if a post fails to be created to be then shuffled into quill using JS below -->
+<%= simple_format(@petition.description, {}, wrapper_tag: "div id='new_text_wrap' class='vanish'") %>
+
+<div class="content"> 
+  <div class="col-d-10 col-t-11 col-p-12 center transparent"> 
+    <div class="trending_font_size mt-3 mb-0 ms_titles_ml">
+        Petition - <%= @city.name %> City Hall 
+    </div>
+    <div class="theme_color_black text-medium mb-3 col-tier">
+      <div id="wul-modal" class="">
+        <p id="show-modal" class="mb-0 mt-0 underline ms_titles_ml"><span class="pointer" @click="showModal = true">Petition Guidelines</span></p>
+        <!-- use the modal component, pass in the prop -->
+        <modal v-if="showModal" @close="showModal = false">
+        </modal>
+      </div>
+    </div>
+    <!-- Below -  Loading Image upload gif -->
+    <div class="loading" style="display:none; z-index: 15000">
+      <div class="center-all" style="border-radius: 10px !important">
+        <%= image_tag "icons/misc/loading.gif", alt: "Uploading", class: "", style: "width: 300px" %>
+        <div class="theme_color_dark mb-5 px-4">Please wait while your image uploads...</div>
+      </div>
+    </div>
+    <div class="col-tier">
+     <%= link_to "<i class='fas fa-comments mr-3'></i>Conversation".html_safe, new_subtopic_post_path(@city), id: " " , class: "btn tab-btn col-all-6", title: "Create a conversation post." %>
+      <button id="select-report" type="button" class="btn tab-btn2 col-all-6"><i class='fas fa-paste mr-3'></i>Petition</button>
+    </div>
+
+    <div class="light-box-shadow bg-white px-4 py-0" style="border: 1px solid rgba(128, 128, 128, .5)">
+     <!-- Begin -  Form for Creating a new Petition -->
+      <%= simple_form_for @petition, url: create_petition_path(@city, @petition), as: 'petition', html: { multipart: true, autocomplete: 'off', class: 'form-horizontal col-all-12 form_ms_text' }, defaults: { wrapper_html: { class: 'tier center' } }  do |f| %>
+        <%= render 'layouts/errors', obj: @petition %>
+        <!-- Below - Entering New Petition Title --> 
+        <div class="col-tier center">
+          <div class="col-d-8 col-t-10 col-p-12 margin-t-10"> 
+            <%= f.label :title,  "Title", class: 'pull-left' %>
+            <%= f.text_field :title, title: "A short title to identify your petition. Minimum: 5 Characters, Limit: 60 Characters.", maxlength: 60, placeholder: "EG: 'Plastic Straws Business Incentive...'", required: false, autofocus: true, class: "form-control input-box-shadow " %>
+          </div>
+        </div>
+        <!-- Below - Goal for New Petition -->
+        <div class="col-tier center margin-t-18">
+          <div class="col-d-8 col-t-12 col-p-12" title="A clear, concise synopsis that summarizes your petition's intent and end goal. Limit: 255 Characters (About 35 words)."> 
+            <%= f.label :goal, "Goal", class: 'pull-left' %>
+            <%= f.text_area :goal, maxlength: 255, placeholder: "TLDR: 'Our goal is to come up with a neutral, bi-partisan solution that addresses the harmful affects of...'",  class: "input-box-shadow form-control"  %>
+          </div>
+        </div>
+        <!-- Below - Issues for New Petition -->
+        <div class="col-tier center margin-t-18">
+          <div class="col-d-8 col-t-12 col-p-12" title="The issues that your petition adresses and attempts to resolve. Limit: 255 Characters (About 35 words)."> 
+            <%= f.label :issues, class: 'pull-left' do %>
+              Issue(s) <small>(optional)</small>
+            <% end %>
+            <%= f.text_area :issues, maxlength: 255, placeholder: "List of issues or an issue that warrants this petition: 'This is causing damage to our environment...', 'The people are not getting the representation they deserve...'",  class: "input-box-shadow form-control"  %>
+          </div>
+        </div>
+        <!-- Below - Entering New Petition Description -->
+        <div class="col-tier center">
+          <div class="col-all-12 margin-t-18"> 
+           <%= f.label :description %>
+           <%= f.hidden_field :description, id: "post_description", required: true %>
+            <div id="editor-container" class="light-box-shadow" hidden="true"></div>
+            <div id="quill_container"  style="height: 250px !important;"></div>
+          </div>
+        </div>
+        <!-- Begin -  RECIPIENT: Recipient tier -->
+        <div id="recipient_tier" class="col-tier margin-t-18">
+          <div class="col-all-12 border-bottom">
+            <label id="recipient_tier_title">
+              Who is this Petition going to?
+            </label>
+          </div> 
+          <div class="col-tier padding-t-15">
+            <!-- Below -  Default city email that the petition is being sent to -->
+            <div id="default_city_recipient" class="col-d-4 col-t-4 col-p-12 padding-b-10">
+              <label>
+                City Email
+              </label> 
+              <div disabled class="select_form form-control light-input-shadow text-left">
+                <span class="text-medium">
+                  <%= @city.email %>
+                </span>
+              </div>
+              <label class="margin-t-5">
+                Who is this?
+              </label>
+              <div disabled class="select_form form-control light-input-shadow text-left">
+                <span class="text-medium"><%= current_city %>'s City Government</span>
+              </div>
+              <p class="margin-t-5 mb-0 text-13">By default, when your petition is filed, it is sent to <%= current_city %>'s Email Address above and their respective Ossemble City Profile.</p>
+            </div>
+            <!-- Below - Entering a first recipient for Petition Email -->
+            <div id="middle_additional_email" class="col-d-4 col-t-4 col-p-12 padding-b-10"> 
+              <label>
+                Additional Email <small>(optional)</small>
+              </label>
+                  <%= f.email_field :recipient, type: :email, class: "form-control input-box-shadow", placeholder: "Recipient's Email (E.G: 'example@example.com')", title: "Who else should recieve this petition once it is filed? (optional)" %>
+                <div id="recipient_slug_tier" class="vanish">
+                  <%= f.label :recipient_slug, "Who is this?", class: 'margin-t-5' %>
+                  <%= f.text_field :recipient_slug, class: "form-control input-box-shadow", placeholder: "Whose Email is this?" %>
+                <p class="margin-t-10 mb-0 text-13">Want to send this petition to someone in addition to the city of <%= current_city %>? Add their email here and who they are so fellow citizens know.</p>
+              </div>
+            </div>
+            <!-- Below - Entering an additional recipient for Petition Email -->
+            <div id="additional_recipient_tier" class="col-d-4 col-t-4 col-p-12 vanish padding-b-10"> 
+              <label>
+                Additional Email <small>(optional)</small>
+              </label>
+              <%= f.email_field :additional_recipient, type: :email, class: "form-control input-box-shadow", placeholder: "Recipient's Email (E.G: 'example@example.com')", title: "Who else should recieve this petition once it is filed? (optional)" %>
+              <div id="additional_recipient_slug_tier" class="vanish">
+                <%= f.label :additional_recipient_slug, "Who is this?", class: 'margin-t-5' %>
+                <%= f.text_field :additional_recipient_slug, class: "form-control input-box-shadow", placeholder: "Whose Email is this?" %>
+              </div>
+              <p class="margin-t-8 mb-0 text-13">Want to send this petition to a third recipient? Add their email here and who they are so fellow citizens know.</p>
+            </div>
+          </div>
+        </div>
+        <!-- End -  RECIPIENT: Recipient tier -->
+        <!-- Begin - New image upload row -->
+        <div class="col-tier center margin-t-10">
+          <div class="col-all-12 padding-all-8"> 
+            <div class="tier">
+               <%= f.label :image, "<i class='fas fa-file-image margin-r-8'></i>Upload Image <small> (optional - but encouraged) </small>".html_safe, class: "pull-left control-label" %>
+            </div>
+            <div class="tier">
+              <%= f.file_field :image, accept: 'image/*', class: "upload btn btn-info margin-y-5 light-btn-shadow", style: "width: 220px", onchange: "readURL(this);" %>
+            </div>
+            <div class="tier">
+              <%= f.label :image, "Preview of Uploaded Image".html_safe, class: "vanish img_prev_title pull-left control-label mb-2" %>
+            </div>
+            <div class="tier">
+              <img id="img_prev" class="vanish" src="#" alt="Image">
+            </div>
+            <p class="margin-t-5 mb-0 small">If the image you're uploading is high resolution, it may take a few moments.</p>
+          </div>
+        </div>
+        <!-- End -  New Image Upload -->
+        <!-- Begin - New file upload row -->
+        <div class="col-tier center margin-b-12">
+          <div class="col-all-12 padding-all-8" title="Upload a document/file that helps illustrate, explain, propose, and back up your petition. You can upload a PDF, Doc, PowerPoint, etc.."> 
+            <div class="tier">
+               <%= f.label :file, "<i class='fas fa-paperclip margin-r-8'></i>Upload Petition Document <small> (optional - but encouraged) </small>".html_safe, class: "pull-left control-label" %>
+            </div>
+            <div class="tier">
+              <%= f.file_field :file, accept: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.openxmlformats-officedocument.presentationml.slideshow, application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint, application/pdf, text/*', class: "upload btn btn-info margin-y-5 light-btn-shadow", style: "width: 220px" %>
+            </div>
+            <p class="margin-t-5 mb-0 text-13">If you're uploading a large file, it may take a few moments.</p>
+          </div>
+        </div>
+        <!-- End - New file upload row -->
+      </div>
+      <div class="form-actions">
+        <div class="col-tier py-4"> 
+          <%= f.submit "Submit Petition", id: "loadgif", class: "form_btn btn action light-btn-shadow", onclick: "amplitude.getInstance().logEvent('Petition Post');" %>
+        </div>
+      </div>
+    <% end %> <!-- End - Simpleform New Petition form block -->
+  </div>
+</div>
+<!-- End -  Form for Creating a new Petition -->
+
+<!-- Below - JS Code to -->
+<script> 
+  $("#petition_recipient").keyup(function (e) {
+    if ( $("#petition_recipient").val().indexOf('@') > -1 && $("#petition_recipient").val().indexOf('.') > -1 ) {
+      $("#recipient_slug_tier").show()
+    }
+  });
+  $("#petition_recipient_slug").keyup(function (e) {
+    if ( $("#petition_recipient_slug").val() != "" ) {
+      $("#additional_recipient_tier").show()
+    }
+  });
+  $("#petition_additional_recipient").keyup(function (e) {
+    if ( $("#petition_additional_recipient").val().indexOf('@') > -1 && $("#petition_additional_recipient").val().indexOf('.') > -1 ) {
+      $("#additional_recipient_slug_tier").show()
+    }
+  });
+  
+</script>
+
+<!-- Below -  Image preview JS -->
+<script>
+  function readURL(input) {
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+    $("#img_prev").show();
+    $(".img_prev_title").show();
+    $("#petition_image").width(280);
+    reader.onload = function (e) {
+      $('#img_prev')
+        .attr('src', e.target.result)
+    };
+
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+</script>
+
+<script>
+// register modal component
+Vue.component('modal', {
+  template: '#modal-template'
+})
+
+// start app
+new Vue({
+  el: '#wul-modal',
+  data: {
+    showModal: false
+  }
+})
+</script>
+<!--  Below - VueJS Code for modal popup of guidelines for new Petition -->
+<script type="text/x-template" id="modal-template">
+  <transition name="modal">
+    <div class="modal-mask">
+      <div class="modal-wrapper">
+        <div class="modal-body">
+          <slot name="body">
+            <div class="content">
+              <div class="col-all-10 center">
+                <div id="page_info_card_org" class="col-tier">
+                  <div id="page_info_card" class="col-all-12">
+                    <div class="col-all-12 light-box-shadow card" style="border: 1px solid rgba(128, 128, 128, .5); border-radius: 10px;">
+                      <div class="card-body theme_color_black p-4" style="">
+                        <div class="col-all-12 pull-left">
+                           <h3 class="mt-0 mb-2 ms_page_title">Petition Guidelines</h3> 
+                           <p class="text-medium i mb-3">Please follow these posting guidelines to ensure your Petition is valid and able to be posted.</p> 
+                           <section class="b">Please fill out all required fields below</section>
+                           <ul> 
+                            <li><b>Title</b> <span class="text-xsmall">(optional)</span> - Give a title that introduces the Petition in the best way possible.</li>  
+                            <li><b>Goal</b> - The goal should outline what the petition is going to accomplish.</li>  
+                            <li><b>Description</b> - Write a detailed description for the petition. The best way for your petition to succeed is to be as extremely thorough. Outline the issue and why this petition will be a solution to the problem. 
+                            <section class="bold">Keep in mind the points below when writing a description.</section>
+                            <ul>
+                              <li>Issue/Problem</li>
+                              <li>Solution</li>
+                              <li>Facts / Research</li>
+                              <li>A Call to Action</li>
+                            </ul>
+                            </li>
+                            <li><b>Docs</b> <span class="text-xsmall">(optional)</span> - Upload a document with any additional information, research or facts you wish to share with the community.</li>
+                            <li><b>Image</b> <span class="text-xsmall">(optional)</span> - Upload a image that showcases your Petition in the best way possible. This can be a image of the issue or an image of what you hope the future will bring.</li>
+                          </ul>
+                          <p class="text-medium mb-2">Following these steps will ensure your Petition is filed properly.</p>
+                            <button class="btn btn-info modal-default-button text-xxmedium" @click="$emit('close')">
+                              Close
+                            </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div> 
+            </slot>
+          </div>
+        </div>
+      </div>
+    </div>
+  </transition>
+</script>
+
+<script>
+
+  var form = document.querySelector('.form-horizontal');
+  var quill = new Quill('#quill_container', {
+  modules: {
+    toolbar: [
+        ['bold', 'italic', 'link'],
+        [{ list: 'ordered' }, { list: 'bullet' }]
+      ]
+    },
+    placeholder: 'Please write a descriptive petition, elaborate on your expectations and issues. Provide as much detail as possible about your reasoning for creating this petition. Minimum: 150 characters, Limit: 5,000 characters (about 750 words).',
+    theme: 'snow'  // or 'bubble'
+  });
+  
+  
+  form.onsubmit = function() {
+    var postContentInput = document.querySelector('#post_description');
+    postContentInput.value = quill.root.innerHTML;
+  };
+  
+  // Below - Sets up a variable from the simple format rendering about on edit post
+  var editDescription = $('#edit_text_wrap').text();
+  $('.ql-editor p').text(editDescription);
+  // Below - Shuffles in text from a failed resource submission's description
+  var newDescription = $('#new_text_wrap').text();
+  $('.ql-editor p').text(newDescription);
+
+</script>

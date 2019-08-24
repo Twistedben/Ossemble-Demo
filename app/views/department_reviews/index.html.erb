@@ -1,0 +1,193 @@
+<!-- Main Index Page for Departments, showing every department inside of a city and links to the reviews-->
+
+<div class="content">
+  <div class="tier"> <!-- Begin - Main tier for page. -->
+    <!-- Below -  Renders in the accordian from views/layouts/phones/... for mobile and tablet. -->
+    <%= render "layouts/phones/mobile_accordion" %>
+    <!-- Main center content for department listing and panel -->
+    <div class="center col-d-7 col-t-11 col-p-12">
+     <!-- Begin - Departments Page Info -->
+      <div id="page_info_card_org" class="col-tier">
+        <div id="page_info_card" class="col-all-12">
+          <div class="tier margin-b-15">
+           <!-- Below - Page is Department Reviews index  -->
+          <% if current_page?(city_department_reviews_path(@city)) %>
+            <div class="col-all-12">
+              <p class="page_info_title">
+                Department Reviews Feed
+              </p>
+            </div>
+            <div class="col-all-12 light-box-shadow card" style="border: 1px solid rgba(128, 128, 128, .5)">
+              <div class="card-body theme_color_black">
+                <div class="col-d-9 col-t-12 col-p-12 pull-left">
+                  <p class="text-xxmedium" style="font-family: Roboto;"><i>Ossemble generalizes these departments to assure every citizen opinion can be heard.</i></p> 
+                  <p class="text-medium">Review and rate each department depending on your experience.</p>
+                  <section class="b">City Department categories</section>
+                  <ul> 
+                    <li><b>Government</b></li>  
+                    <li><b>Schools</b></li>  
+                    <li><b>Parks</b></li>
+                    <li><b>Police</b></li>
+                    <li><b>Public Works</b></li>
+                  </ul>   
+                </div>
+                <div class="page_info_icon_hide col-all-3 pull-right center-all pl-3 theme_color_dark page_info_icon" style="margin-top: 0px">
+                  <%= image_tag "icons/governmentBuilding.png", alt: "Icon", class: "mb-0", style: "width: 115px; position: relative; top: -15px" %>
+                </div>
+              </div>
+            </div>
+            <!-- Schools -->
+          <% elsif current_page?(schools_city_department_reviews_path(@city)) %>
+           <!-- Begin - Schools Page Info -->
+            <div class="col-all-12">
+              <p class="ms_titles_ml trending_font_size">
+                Schools Reviews
+              </p>
+            </div>
+            <div class="col-all-12 light-box-shadow card" style="border: 1px solid rgba(128, 128, 128, .5)">
+              <div class="card-body theme_color_black">
+                <div class="col-d-9 col-t-12 col-p-12 pull-left">
+                 <p class="text-big" style="font-family: Roboto;"><i>Schools are the single most important asset that a city can have.</i></p> 
+                 <section class="b">Our education system has the biggest impact on our society. Such as:</section>
+                 <ul> 
+                  <li><b>Our children's future</b></li>  
+                  <li><b>Where we start friendships</b></li>  
+                  <li><b>Future economic growth</b></li>
+                  <li><b>Exploration of the arts</b></li>
+                 </ul>
+              </div>
+              <div class="page_info_icon_hide col-all-3 pull-right center-all pl-3 theme_color_dark page_info_icon" style="margin-top: 0px; height: 125px;">
+                <%= image_tag "icons/schoolDistrict.png", alt: "Icon", class: "mb-0", style: "width: 115px; position: relative; top: -25px;" %>
+              </div>
+            </div>
+          </div>
+          <!-- End- Schools Page Info --> 
+          <% elsif current_page?(government_city_department_reviews_path(@city)) %>
+           <!-- Begin - Government Page Info -->
+            <div class="col-all-12">
+              <p class="ms_titles_ml trending_font_size">
+               Local Government Reviews
+              </p>
+            </div>
+            <div class="col-all-12 light-box-shadow card" style="border: 1px solid rgba(128, 128, 128, .5)">
+              <div class="card-body theme_color_black">
+                <div class="col-d-9 col-t-12 col-p-12 pull-left">
+                 <p class="text-xxmedium" style="font-family: Roboto;"><i>Government reviews are based on your experiences with all functioning parts of your city government.</i></p> 
+                 <p class="text-medium">On face value anything that is not Police, Parks, Schools or Public Works related.</p>
+                 
+                 <section class="b">Examples include</section>
+                 <ul class="mb-0"> 
+                  <li><b>City Hall</b></li>  
+                  <li><b>Libraries</b></li>
+                  <li><b>Zoning</b></li>
+                  <li><b>Taxes</b></li>
+                </ul>   
+              </div>
+              <div class="page_info_icon_hide col-all-3 pull-right center-all pl-3 theme_color_dark page_info_icon" style="margin-top: 20px">
+                <%= image_tag "icons/governmentBuilding.png", alt: "Icon", class: "mb-0", style: "width: 115px;" %>
+              </div>
+            </div>
+          </div>
+          <!-- End- Government Page Info -->
+          <% elsif current_page?(parks_city_department_reviews_path(@city)) %>
+           <!-- Begin - Parks Page Info -->
+            <div class="col-all-12">
+              <p class="ms_titles_ml trending_font_size">
+                Parks Reviews 
+              </p>
+            </div>
+            <div class="col-all-12 light-box-shadow card" style="border: 1px solid rgba(128, 128, 128, .5);">
+              <div class="card-body theme_color_black">
+                <div class="col-d-9 col-t-12 col-p-12 pull-left">
+                 <p class="text-big" style="font-family: Roboto;"><i>City Parks are one of the best features local citizens can enjoy.</i></p> 
+                 <section class="b">Parks are great because they represent significant areas of recreation.</section>
+                 <ul class="mb-0"> 
+                  <li><b>Playgrounds</b></li>  
+                  <li><b>Family Gathering</b></li>  
+                  <li><b>Cookouts</b></li>
+                  <li><b>Sports</b></li>
+                  <li><b>Greenery</b></li>
+                  <li><b>Bodies of Water</b></li>
+                  </ul>   
+                </div>
+                <div class="page_info_icon_hide col-all-3 pull-right center-all pl-3 theme_color_dark page_info_icon" style="margin-top: 0px">
+                   <%= image_tag "icons/park.png", alt: "Icon", class: "mb-0", style: "height: 104px !important; width: 104px; position: relative; top: -20px;" %>
+                </div>
+              </div>
+            </div>
+            <!-- End -  Parks info page -->
+          <% elsif current_page?(police_city_department_reviews_path(@city)) %>
+           <!-- Begin - Police Page Info -->
+            <div class="col-all-12">
+              <p class="ms_titles_ml trending_font_size">
+                Police Department Reviews
+              </p>
+            </div>
+            <div class="col-all-12 light-box-shadow card" style="border: 1px solid rgba(128, 128, 128, .5);">
+              <div class="card-body theme_color_black">
+                <div class="col-d-9 col-t-12 col-p-12 pull-left">
+                 <p class="text-big" style="font-family: Roboto;"><i>It is easy to say that our local law enforcement has one of the most difficult jobs in this country.</i></p> 
+                 <p class="text-medium">The only way to improve your community and others is <br> to discuss ways to improve your Police Department.</p>
+                 <p class="text-medium mb-2">Use these reviews to understand the positives <br> and negatives of your local law enforcements.</p>
+                </div>
+                <div class="page_info_icon_hide col-all-3 pull-right center-all pl-3 theme_color_dark page_info_icon" style="margin-top: 0px; height: 120px;">
+                  <%= image_tag "icons/policeBadge.png", alt: "Icon", class: "mb-0", style: "width: 90px; position: relative; top: -30px" %>
+                </div>
+              </div>
+            </div>
+            <!-- End -  Police Page info -->
+          <% elsif current_page?(public_works_city_department_reviews_path(@city)) %>
+           <!-- Begin - Public Works Page Info -->
+            <div class="col-all-12">
+              <p class="ms_titles_ml trending_font_size">
+                Public Works Reviews
+              </p>
+            </div>
+            <div class="col-all-12 light-box-shadow card" style="border: 1px solid rgba(128, 128, 128, .5);">
+              <div class="card-body theme_color_black">
+                <div class="col-d-9 col-t-12 col-p-12 pull-left">
+                 <p class="text-big" style="font-family: Roboto;"><i>This is the water we drink, the roads we drive on, local infrastructure and our future.</i></p>
+                 <section class="b">Consider some of the following areas when reviewing this department.</section>
+                 <ul class="mb-0"> 
+                  <li><b>Drinking Water</b></li>  
+                  <li><b>Roads / Potholes</b></li>  
+                  <li><b>Flooding</b></li>
+                  <li><b>Forestry</b></li>
+                  <li><b>Trash Pickup</b></li>
+                  </ul>   
+                </div>
+                <div class="page_info_icon_hide col-all-3 pull-right center-all pl-3 theme_color_dark page_info_icon margin-t-0" style="height: 125px;">
+                  <%= image_tag "icons/publicWorks.png", alt: "Icon", class: "mb-0", style: "width: 115px; position: relative; top: -15px" %>
+                </div>
+              </div>
+            </div>
+             <!--  End - Public Works page info. -->
+          <% end %>
+          </div>
+        </div>
+      </div>
+      <!-- End- Departments Page Info -->
+      <div class="tier">
+        <div class="col-tier padding-b-20">
+          <p class="trending_list_title col-p-12">
+            Trending - Week
+          </p>
+        <%= render 'filters/feed_filter', obj: @reviews %>
+        <!-- Below - Renders in sort panel partial for ordering of City Reviews with the object City_review -->
+        <div class="">
+         <%= render 'layouts/sort_panel', obj: @reviews %>
+        </div>
+      </div>
+        <!-- Below - Renders in all departments -->
+        <div class="col-tier">
+          <div class="col-all-12">
+            <%= render 'layouts/resources/resources_list', obj: @reviews %>
+          </div>
+        </div>
+      </div> 
+    </div> <!-- End - Center content column  -->
+    <div id="non_ms_ap_content" class="col-d-3 col-t-10" >
+      <%= render 'layouts/action_panel', obj: @reviews %>
+    </div>
+  </div> <!-- Main page tier -->
+</div>

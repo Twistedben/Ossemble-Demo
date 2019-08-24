@@ -1,0 +1,119 @@
+<!--  Main show page for City Reviews, WUL posts. (views/city_reviews/shaow.html.erb) -->
+<div class="content">
+  <div class="tier"> <!-- Begin - Main tier for page. -->
+    <!-- Below -  Renders in the accordian from views/layouts/phones/... for mobile and tablet. -->
+    <%= render "layouts/phones/mobile_accordion" %>
+    <!-- Begin - City Review Information and Score. -->
+    <div class="col-d-7 col-t-11 col-p-12 padding-t-20 center">
+      <div class="col-all-12 card p-0">
+        <div id="header_show_card" class="col-all-12">
+          <div class="tier">
+            <div class="text-xlarge no-margin col-all-12">
+              <div class="mt-0 tier">
+                <div class="col-all-12 p-0 card-body text-medium pull-left">
+                  <!-- Below -  Displays slightly larger user avatar for show pages -->
+                  <div class="col-tier margin-b-20">
+                    <div class="col-all-2 well mb-0 p-2" style="height: 100px;">
+                    <!-- Below -  Displays the Heart or Exclaim icon depending on score category Review > 60 || < 60 -->
+                      <div class="center-all">
+                        <i class="fas 
+                          <%= "fa-heart" if @city_review.category == "Loves" %>
+                          <%= "fa-exclamation" if @city_review.category == "Improves" %>
+                          "
+                          style= "font-size: 45px; position: relative; top: 19px; color:<%= '#645496;' if @city_review.category == "Loves" %>
+                          <%=  'rgba(88, 88, 88, 8);' if @city_review.category == "Improves" %>
+                          ">
+                        </i>
+                      </div>
+                    </div>
+                    <div class="col-all-10 padding-l-15">
+                      <div class="tier mb-0">
+                        <span class="text-xlarge bold show_text_scale theme_color_dark">      
+                          <%= @city_review.title %>
+                        </span>
+                        <br>
+                        <span class="col-tier padding-y-3">
+                          <span style="width: 45px !important; height: 40px !important;">
+                            <%= display_show_avatar(@city_review.user) %>
+                          </span>
+                          <!-- Below - Users_helper.rb - Displays user name as a link and to determine if the user is from the city or a non-resident -->
+                          <span class="padding-t-10">
+                            <%= display_user_name(@city_review.user) %>
+                          </span>
+                        </span>
+                        <br>
+                        <div class="col-tier">
+                          <span class="text-big show_text_scale"> 
+                            Posted: <%= time_ago_in_words(@city_review.created_at).capitalize %> ago - 
+                          </span>
+                          <span class="padding-l-5 text-big show_text_scale">                      
+                            Scored:
+                          </span>
+                          <span class="bold text-big show_text_scale padding-l-5">
+                            <%= display_score(@city_review) %>
+                            <!-- Below -  If the user is a non-resident of the city they reviewed, displays an icon showing whether or not the review has yet been factored -->
+                            <%= display_scorable_icon(@city_review) %>
+                          </span>
+                        </div>
+                        <br>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-tier mt-2">
+              <div class="" style="width: 90px; margin-right: 42px">
+                <%= display_endorse_button(@city_review, "city_reviews", "Review", upvote_city_review_path(@city, @city_review.id)) %>
+              </div>
+              <!-- Begin -  Filter tags Row -->
+              <a class="btn mr-3 alt-action" href="<%= city_review_index_path(@city, @city_review) %>" >
+               City Review
+              </a>
+              <a class="btn alt-action" href="
+                <%= loves_city_review_index_path(@city) if @city_review.category == "Loves" %>
+                <%= improves_city_review_index_path(@city) if @city_review.category == "Improves" %>
+                ">
+               <%= @city_review.category %>
+              </a>  
+              <!-- End -  Filter tags Row -->
+              <div class="margin-l-auto center-vertical">
+                <%= link_to "<i class='theme_color_dark fas fa-pencil-alt'></i> Edit".html_safe, edit_user_city_review_path(@city_review.user, @city_review), class: "title_link text-medium" if is_current_users?(@city_review) %>
+              </div>
+            </div>
+          </div>
+          <!-- Below - Renders in  WUL Tags list in Header card unless there's an image for the review -->
+          <%= render 'layouts/resources/tags_list', obj: @city_review unless @city_review.image.attached? %>
+          <!-- Below -  Renders in image if there is one, otherwise tags list is rendered -->
+          <%= render 'layouts/resources/resource_image', obj: @city_review if @city_review.image.attached? %>
+          <!-- Below -  Renders in User actions row -->
+          <%= render "layouts/resources/user_action_tier", obj: @city_review %>
+        </div>
+      </div>
+      <!-- Below - Renders in WUL Tags list with title header below image if there is one; Otherwise, it was rendered above. -->
+      <%= render 'layouts/resources/tags_list', obj: @city_review if @city_review.image.attached? %>
+      <!-- Below -  Renders in WUL description below tags. -->
+      <%= render 'layouts/resources/resource_description', obj: @city_review %>
+      <!-- Begin -  Comments Section -->
+      <div id="new_comment_tier" class="no-top-border tier margin-b-35">
+        <div class="col-all-12">
+          <%= render 'comments/comment_form', obj: @city_review %>
+        </div>
+      </div>
+      <!-- Below - Rendering for existing Comments. -->
+      <div id="comments_list" class="tier margin-t-30 padding-x-10">
+        <div class="col-all-12">
+          <ul id="comments_ul" class="pl-0">
+            <div id="comment_flash" class="vanish panel panel-success light-box-shadow col-all-12" style="height: 3.5rem"><div class="col-tier margin-t-5"><p class="text-success bold center-all text-xxmedium no-margin col-all-12">Your comment has posted!</p></div></div>
+            <li class="comment_placeholder vanish"></li>
+            <%= render(partial: 'comments/comment', collection: @city_review.comments)%>
+          </ul>
+        </div>
+      </div>     
+    </div>
+    <!-- Below -  Renders in ActionPanel far right with col-3 -->
+    <div id="non_ms_ap_content" class="col-d-3 col-t-10" >
+      <%= render 'layouts/action_panel', obj: @city_review %>
+    </div>
+  </div>
+</div> <!-- End - Main page tier -->

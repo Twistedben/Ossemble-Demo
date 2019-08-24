@@ -1,0 +1,30 @@
+<!-- Main email sent to cities when a complaint progresses to Filed. (views/city_mailer/complaint_filed_email.html.erb) -->
+  <% deadline = @complaint.days_left / 3 %>
+
+  <% time = Time.find_zone! "EST" %>
+  <% time_now = time.now.to_formatted_s(:long_ordinal) %>
+      Citizen Action Complaint (CAC)
+=====================================
+    The citizens of <%= @city.name.capitalize %> are formally requesting the <%= @city.name.capitalize %> Government to resolve a community agreed complaint. The complaint in question is defined as <%= @complaint.title %> in or nearby the location of <%= @complaint.address %>, with the latitude and longitude coordinates of: <%= @complaint.latitude %>, <%= @complaint.longitude %>.
+   
+    Ossemble acts as a liaison between local citizens and their government. Ossemble’s standard is for the issue to be resolved within the time frame of <%= deadline %> days. This can be considered the complaint's deadline.
+    
+    If the complaint is resolved within this deadline, then <%= @city.name.capitalize %> will be rewarded a score of 80% for this specific complaint. To gain additional percentage points, a higher score, the city needs to communicate with their citizens through a response and plan system. This can be accomplished by visiting and interacting with the complaint here: <%= link_to "#{@complaint.title} Complaint for #{@city.name}", city_complaint_url(@city, @complaint) %>. 
+   
+    If the original deadline is not achieved, then the score will drop 20% percentage points. Subsequently, a new deadline will be allotted to the city. 
+    
+    SEE SCORING INFOGRAPH BELOW 
+    
+    Sincerely,
+    Ossemble Inc. & <%= @city.name %>, <%= @city.state_name %> Ossemble Users. 
+   
+    Thank you!
+    
+    <%= time_now %> 
+    
+    * You can create a free City Profile to interact with complaints and the citizens in your city by utilizing the City Profile feature here: https://www.ossemble.com/admins/sign_up 
+    Our goal is the same as yours: Greater cooperation between citizens and their government. *
+    
+    Find out more here: https://www.ossemble.com/about/city
+    
+    Find out more about complaints here: https://www.ossemble.com/about/complaints

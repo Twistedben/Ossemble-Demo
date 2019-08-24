@@ -1,0 +1,43 @@
+<!-- Devise page for resending confirmation email for Ossemble User's profile creation (devise/confirmations/new) -->
+<div class="content" style="margin-top: 133px !important">
+  <div class="col-d-6 col-t-10 col-p-12 center">
+    <div class="transparent">
+      <div class="ms_titles_ml trending_font_size">
+        Resend User Profile Confirmation Email
+      </div>
+      <div class="light-box-shadow px-4 py-0 bg-white mb-3" style="border: 1px solid rgba(128, 128, 128, .5)">  
+        <div class="form-horizontal col-all-12 form_ms_text">
+          <div class="col-tier center">
+            <div class="col-all-12 margin-y-10"> 
+            <%= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f| %>
+              <%= devise_error_messages! %>
+              <div class="form-inputs mr-4 mb-5 col-d-10 col-t-10 col-p-11">
+                <%= f.label :email %><br />
+                <%= f.email_field :email, autofocus: true, value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email), class: "form-control", placeholder: "Enter Your Email"%>
+              </div>
+      
+              <div class="form-actions mb-3">
+                <%= f.submit "Resend Confirmation Link", class: "btn btn-primary btn-lg light-btn-shadow" %>
+              </div>
+            <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="margin-y-8">
+        <%= link_to "Don't have a profile?", new_user_registration_path, class: "profile_title" %>
+      </p>
+      <p class="margin-y-8">
+        <%= link_to "Return to Ossemble Homepage", root_path, class: "profile_title"  %> 
+      </p>
+      
+    </div>
+  </div>
+</div>
+<div class="transparent temp-working-area"></div>
+
+
+
+
+
+

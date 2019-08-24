@@ -1,0 +1,23 @@
+{
+  "name": "mvp1",
+  "private": true,
+  "dependencies": {
+    "@rails/webpacker": "^4.0.2",
+    "citysdk": "^2.0.26",
+    "coffee-loader": "^0.9.0",
+    "coffeescript": "^2.4.1",
+    "jquery-caret-plugin": "^1.5.3",
+    "jquery-ujs": "^1.2.2",
+    "leaflet": "^1.5.1",
+    "leaflet.locatecontrol": "^0.66.2",
+    "rails-erb-loader": "^5.5.2",
+    "webpack": "^4.31.0",
+    "webpack-merge": "^4.2.1"
+  },
+  "devDependencies": {
+    "clean-webpack-plugin": "^2.0.2",
+    "ts-pnp": "^1.1.2",
+    "typescript": "^3.4.5",
+    "webpack-dev-server": "^3.3.1"
+  }
+}

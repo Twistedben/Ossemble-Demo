@@ -1,0 +1,282 @@
+<!-- Main Page for editing a map post for a city (views/mapposts/edit.html.erb). -->
+<div class="content">
+  <div class="col-all-2"></div> 
+  <div class="col-d-8 col-t-10 col-p-12 center">
+    <div class="col-all-10 center">
+        <p class="alert panel panel-info alert-info text-black message_alert_panel text-center">
+          <a href="#" class="close" data-dismiss="alert">
+            &#215;
+          </a>
+          <span>
+            Please redraw your map shapes as we could not save your previous shapes. 
+          </span>
+        </p>
+      </div>
+    <%= simple_format(@map_post.description, {}, wrapper_tag: "div id='new_text_wrap' class='vanish'") %>
+      <div class="theme_color_black text-medium mb-3 col-tier">      
+        <div class="col-all-12">
+          <p class="mb-0 page_info_title">
+            Edit Map Post - <%= @workplace.name %>
+          </p>
+        </div>
+        <div id="map-post-modal" class="col-all-12">
+          <!-- use the modal component, pass in the prop -->
+          <modal v-if="showModal" @close="showModal = false">
+          </modal>
+        </div>
+      </div>
+      <div id="new_map post_form" class="content">
+        <div class="tier light-box-shadow bg-white p-4 mb-3" style="border: 1px solid rgba(128, 128, 128, .5);">
+          <div class="col-all-12" style="display: block !important">
+            <!-- Below - Renders errors from the edit map post page due to validation errors. Error messages inside views/layouts/_errors.html.erb -->
+            <div class="col-all-10 center">
+              <%= render 'layouts/errors', obj: @map_post %>
+            </div>
+          <!-- Begin -  Form for edit map post -->
+          <%= simple_form_for @map_post, url: admin_workplace_map_post_path, html: { class: 'form-horizontal float-left col-d-12 col-t-12 col-p-12 margin-t-0' } do |f| %>
+           <!-- Below - Hidden field tags for storing the latitude, longitude of the pin on submit. 
+             Manual hidden fields with HTML so that validation can work, otherwise using ruby way, we lose-->
+              <input type="hidden" name="workplace_map_post[shapes_attributes][<%= @map_post.shapes.first.id %>][geo]" id="shape_geo" value="">
+          
+            <!-- Begin - map post Title.  -->
+          <!-- Below - Creating a new map post address -->
+            <div class="col-tier mt-2">
+              <div class="col-all-12">
+              <div clas="col-tier">
+                <%= f.label :title, "Select Category", class: ''  %>
+              </div>
+                <div id="report-btns" class="margin-b-0">
+                  <label class="unselect pointer" style="margin-right: 10px !important; margin-bottom: 10px !important;"><input type="radio" name="workplace_map_post[map_post_category_id]" value="1"><span>Suggestion</span></label>
+                  <label class="unselect pointer" style="margin-right: 10px !important; margin-bottom: 10px !important;"><input type="radio" name="workplace_map_post[map_post_category_id]" value="2"><span>Report</span></label>
+                  <label class="unselect pointer" style="margin-right: 10px !important; margin-bottom: 10px !important;"><input type="radio" name="workplace_map_post[map_post_category_id]" value="3"><span>Other</span></label>
+                <label title="Click to be redirected to the Forum Post form." style="margin-right: 10px !important; margin-bottom: 10px !important;" href="<% new_institute_workplace_workplace_post_path(@institute, @workplace) %>" class="unselect"><input type="radio"><span class="pointer" style="height: 36px;"><i class='pr-3 fas fa-comments text-18'></i>Post</span></label>
+                </div> 
+              </div>
+            </div>
+            <div id="map_container" class=" my-5 col-d-12 col-t-12 col-p-12 bg-white border-radius-none border-none">
+              <h4 class="">
+                Draw on the map below, using the toolbar on the left.
+                <br>
+              </h4>
+              <div id="new_workplace_post_map">
+                <%= render 'workplace_map_post_map', obj: @edit_map_post %>
+              </div>
+            </div>  <!-- End -  Rendering for the Map.  -->
+            <!-- Begin - map post Title.  -->
+            <div class="col-tier margin-t-18">
+              <div class="col-d-6 col-t-6 col-p-12 pr-2"> 
+                <%= f.label :title, "Title", class: 'pull-left'  %>
+                <%= f.text_field :title, name: "workplace_map_post[title]", maxlength: 70, title: "Enter a succinct title for this map post. In a few words, what is the issue? (Limit: 70 Characters)", placeholder: "Title of the map post (E.G: 'Stop sign needed here') (Limit: 70 Characters)", class: "form-control input-box-shadow" %>
+              </div>
+              <div class="col-d-6 col-t-6 col-p-12 pl-2"> 
+                <%= f.label :address, "Location or Address", class: 'pull-left loc_mt_ms' %>
+                <%= f.text_field :address, name: "workplace_map_post[address]", maxlength: 50, title: "Where in #{ current_city } is your map post located? Exact address, nearby landmarks, location, road, or where it can be found. Limit: 50 Characters.", placeholder: 'Enter exact address, road, or nearby landmarks', class: "form-control input-box-shadow" %>
+              </div>
+            </div>
+            <div class="loading" style="display:none; z-index: 15000">
+              <div class="center-all" style="border-radius: 10px !important">
+               <%= image_tag "icons/misc/loading.gif", alt: "Uploading", class: "", style: "width: 300px" %>
+               <div class="theme_color_dark mb-5 px-4">Please wait while your image uploads...</div>
+              </div>
+            </div>
+            
+            <!-- Begin - New map post description row -->
+            <div class="col-tier margin-t-18">
+              <div class="col-all-12"> 
+               <%= f.label :description %>
+               <%= f.hidden_field :description, name: "workplace_map_post[description]", id: "post_description", required: true %>
+                <div id="editor-container" hidden="true"></div>
+                <div id="quill_container"></div>
+              </div>
+            </div>
+            <!-- End - New map post description row -->
+            <!-- Below -  Area for post to be shared with other admins -->
+            <div class="col-tier center margin-t-12 margin-b-25">
+             <button class="theme_color_dark text-18" title="Click to tag other members so they are notified of this post, this is optional." type="button" style="background: transparent !important; border: none !important; height: 38px; font-size: 2.5rem">
+               <i class="fas fa-at pl-0" style="font-size: 2.5rem"></i><i class="fas fa-user" style="font-size: 2.5rem"></i>
+             </button>
+              <div style="width: 60%">
+                <%= f.text_field :tags, data: {behavior: "autocomplete"}, title: "Tag other users to share upload with (EG: '@john')", placeholder: "Tag anyone you'd like to share this with (EG: '@john')", class: "form-control input-box-shadow"  %>
+              </div>
+              <div style="margin-left: auto !important;">
+                <div class="image-upload">
+                 <label for="image-input">
+                   <i class="fas fa-file-image margin-r-8 text-35 theme_color_dark" title="Add an image to your conversation." style="cursor: pointer;"></i>
+                 </label>
+                 <%= f.file_field :image, accept: 'image/*', onchange: "readURL(this);", id:"image-input" %>
+                </div>
+                </div>
+                <div class="image-upload">
+                 <label for="file-input">
+                   <i class="ml-3 fas fa-paperclip margin-r-8 text-35 theme_color_dark"  title="Upload a document/file that pertains to your conversation. You can upload a PDF, Doc, PowerPoint, etc.." style="cursor: pointer;"></i>
+                 </label>
+                 <%= f.file_field :file, accept: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.openxmlformats-officedocument.presentationml.slideshow, application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint, application/pdf, text/*', onchange: "readFile(this);", id:"file-input" %>
+                </div>
+                
+                <div id="new_doc" class="my-3 vanish col-tier" style="height: 35px !important;">
+                  <div class="theme_color_dark text-18 b relative" style="top: -10px;">
+                    <i class="fas fa-paperclip"><span class="ml-2">You have attached a new document</span></i>
+                  </div>
+                </div>
+                
+            <div class="col-all-12 padding-all-0">
+
+              <% if @map_post.image.attached? %> <!--  Post already has an image. -->
+                <div class="tier m-2 relative mt-3" style="left: -5px;">
+                  <%= f.label :image, "Current Uploaded Image".html_safe, class: " pt-0 img_prev_title pull-left control-label mb-2" %>
+                  <%= f.label :image, "New Uploaded Image Preview".html_safe, class: "mt-0 pt-0 vanish img_prev_title pull-left control-label mb-2 relative", style: "left: 203px;" %>
+
+                  <div class="col-tier">
+                    <%= image_tag @map_post.image.variant(resize: '400x243'), id: "uploaded_image", class: "m-0", style: "margin-bottom: 10px !important;" %>
+              <div>
+
+                <img id="img_prev" class="vanish ml-4" src="#" alt="Image">
+              </div>
+                  </div>
+                </div>
+              <% else %> <!-- Post doesn't have image -->
+
+              <% end %> <!-- End of image check -->
+            </div>
+            <div class="col-tier">
+              <img id="img_prev" class="vanish" src="#" alt="Image">
+            </div>
+          </div>
+        </div> 
+        <!-- Begin - Update edit map post row -->
+        <div class="col-all-12">
+        <div class="col-tier pt-3 mb-0">
+          <div class="col-all-6"> 
+            <%= link_to "Delete Map Post", admin_workplace_map_post_path(@institute, @map_post.workplace, current_admin, @map_post), method: :delete, class: "btn push-left button-cs mt-5 text-15 padding-t-5", data: {confirm: "Are you sure you want to delete this Map Post?"} %>
+          </div>
+          <div class="col-all-6">
+            <%= f.submit "Update Post", id: "loadgif", class: "form_btn btn button-cs my-0 push-right" %>
+          </div>
+        </div>
+      </div>
+          <!-- End - Submit edit map post row -->
+      <% end %> <!-- End - Simple-Form Form field on physical page, not on map. -->
+    </div>
+  </div>
+</div>
+<!-- Below -  Renders in the list of admins from instance variable @admins in controller, with the path provided by controller as well, where to grab the admins list from for @mentioning them -->
+<%= render 'layouts/tagging_admins_script', obj: @workplace_admins_path %>
+
+<script>
+// Below - Sets up hidden form fields to fill with data. Variables are used in _workplace_map_post_map.html.erb partial
+var submit_map_btn = $("#loadgif"), shape_geo = $("#shape_geo");
+
+function readURL(input) {
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+    $("#img_prev").show();
+    $(".img_prev_title").show();
+    $("#map_post_image");
+    reader.onload = function (e) {
+      $('#img_prev')
+        .attr('src', e.target.result)
+    };
+
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+
+function readFile(input) {
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+    $("#new_doc").show();
+    reader.onload = function (e) {
+      $('#new_doc')
+        .attr('src', e.target.result)
+    };
+
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+</script>
+<script>
+// register modal component
+Vue.component('modal', {
+  template: '#modal-template'
+})
+
+// start app
+new Vue({
+  el: '#map-post-modal',
+  data: {
+    showModal: false
+  }
+})
+</script>
+<!-- Below -  VUE JS Code for map post Guidelines -->
+<script type="text/x-template" id="map-post-modal">
+  <transition name="modal">
+    <div class="modal-mask">
+      <div class="modal-wrapper">
+        <div class="modal-body">
+          <slot name="body">
+            <div class="content">
+              <div class="col-all-10 center">
+                <div id="page_info_card_org" class="col-tier">
+                  <div id="page_info_card" class="col-all-12">
+                    <div class="col-all-12 light-box-shadow card" style="border: 1px solid rgba(128, 128, 128, .5); border-radius: 10px;">
+                      <div class="card-body theme_color_black p-4" style="">
+                        <div class="col-all-12 pull-left">
+                          <h3 class="mt-0 mb-2 ms_page_title">map post Guidelines</h3> 
+                          <p class="text-medium i">Please follow these posting guidelines to ensure your map post is valid and able to be posted.</p> 
+                          <section class="b">Please fill out all required fields below</section>
+                          <ul> 
+                            <li><b>Location or Address</b> - You may use the exact address of a map postt if it is known, or an approximate location near the map post.</li>  
+                            <li><b>Description</b> - Please write a short description describing the map post, enough so others can clearly understand what your map post is about.</li>
+                            <li><b>Map</b> - Clicking on the map will generate a pin that will be shown when your map post is listed. You may click on the precise location of the map post or an approximate location near the comaplaint, if the exact location is unknown.</li>
+                          </ul>   
+                          <p class="text-medium pb-3 border-bottom">Following these steps will ensure your map post is filed properly and increases the odds of others endorsing it.</p>
+                          <h3 class="mt-3 mb-2 ms_page_title bold">When editing a map post:</h3> 
+                          <section class="b">Please edit the location, description, and map marker if you'd like to update your map post with more accurate information.</section>  
+                          <p class="text-medium mb-2">Since Ossemble's map post Process is extremely in depth, if you need to change the map post category, please delete this map post and create a new one. We apologize for the inconvience.</p>
+                          <button class="btn btn-info modal-default-button text-xxmedium" @click="$emit('close')">
+                            Close
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div> 
+            </slot>
+          </div>
+        </div>
+      </div>
+    </div>
+  </transition>
+</script>
+
+<script>
+
+    var form = document.querySelector('.form-horizontal');
+    var quill = new Quill('#quill_container', {
+    modules: {
+      toolbar: [
+        ['bold', 'italic', 'link'],
+        [{ list: 'ordered' }, { list: 'bullet' }]
+      ]
+    },
+    placeholder: "The description of your map post, explaining what the map post is, where it's at, what should be done, and your experience with it. Minimum: 50 Characters, Limit: 6,000 Characters (about 900 words).",
+    theme: 'snow'  // or 'bubble'
+  });
+  
+  
+  form.onsubmit = function() {
+    var postContentInput = document.querySelector('#post_description');
+    postContentInput.value = quill.root.innerHTML;
+  };
+  
+  // Below - Sets up a variable from the simple format rendering about on edit post
+  var editDescription = $('#edit_text_wrap').text();
+$('.ql-editor p').text(editDescription);
+  // Below - Shuffles in text from a failed resource submission's description
+  var newDescription = $('#new_text_wrap').text();
+  $('.ql-editor p').text(newDescription);
+
+</script>
+ 

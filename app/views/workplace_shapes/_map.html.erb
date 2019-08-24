@@ -1,0 +1,251 @@
+<!-- Map partial for rendering in Congress and District json for a new Workplace (channel) Map Shape. Rendered from workplace_shapes/new.html.erb.
+      City Munucipality is done in webpacker javascript/census.coffee. -->
+<script>
+ var map = L.map('oss_map');
+ var tile_layer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    className: "mapnik",
+    attribution: '&copy; <a href="&copy;"> <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+  }).addTo(map); 
+
+// Below - Sets up hidden form fields to fill with data
+var shape_name   = $('#shape_name'), shape_geo = $('#shape_geo'), shape_state  = $('#shape_state'), shape_geo_id = $('#shape_geo_id'), submit_map_btn = $('#submit_map_btn');
+// Below - Sets the map on user's location
+  map.locate({
+      setView: true,
+      maxZoom: 10
+    });
+   // Below - Adds fullscreen   
+  L.control.fullscreen({
+    fullscreenControl: true,
+    forceSeparateButton: true,
+    fullscreenControlOptions: {
+      position: 'topleft',
+    }
+  }).addTo(map); 
+  
+  var lc = L.control.locate({ // Recent button/Position
+      position: 'topleft',
+      drawCircle: true,
+      flyTo: true,
+      showPopup: false,
+      drawMarker: false,
+      icon: 'fas fa-bullseye',
+      strings:  {
+          title: "Recenter My Location" 
+                }
+  }).addTo(map);
+
+// Begin  - LOCATION: Location controls and functions that control user location functions. 
+  var onLocationFound = function(e) {
+    var radius;
+    radius = e.accuracy / 2;
+    L.circle(e.latlng, 150).addTo(map);
+  };
+
+  var onLocationError = function(e) {
+    alert(e.message);
+    map.options.minZoom = 4;
+    map.setView([39.7837304, -100.4458825], 4);
+  };
+
+
+  (function() {
+    map.on('locationfound', onLocationFound);
+  
+    map.on('locationerror', onLocationError);
+  
+  }).call(this);
+  // End  - LOCATION: Location controls and functions that control user location functions.
+  // Below - Scaling Zoom and Disabling Drag/Zoom
+  L.control.scale().addTo(map);
+  map.options.minZoom = 4;
+  map.options.maxZoom = 15;
+
+  
+    // Below - Creates a feature group to hold multiple layers when the user clicks on a county, whether on add or remove
+  <% unless params[:map] == "custom" %>
+    var added_layers = new L.featureGroup();
+    added_layers.on('layeradd', function(event) {
+      var layer = event.layer;
+      layer.bindTooltip("<p class='text-17 padding-x-10'>" + layer.feature.properties.NAME + " added</p>").openTooltip();     
+      layer.setStyle({"color": "rgba(90, 60, 150, 0.8)"});
+      layer.setStyle({"weight": "4"});
+      ( shape_geo.val(shape_geo.val() + JSON.stringify(layer.feature.geometry) + ",")); // Appends the layer's json to the form field
+      map.fitBounds(layer.getBounds());
+      if (shape_geo.val() != "") {
+        submit_map_btn.removeClass("disabled");
+        submit_map_btn.removeClass("action");
+        submit_map_btn.addClass("button-cs");
+        setTimeout(function(){$("#submit_arrow_btn").addClass("add");}, 800)
+      }
+    });
+    added_layers.on('layerremove', function(event) {
+      var layer = event.layer
+      layer.setStyle({"color": "rgba(100, 84, 150, 0.4)"});
+      layer.setStyle({"weight": "3"});
+      layer.bindTooltip(layer.feature.properties.NAME + " removed").openTooltip();  
+      // Below - Removes the form field's layer's json that was already added.
+      var removed_layer = JSON.stringify(layer.feature.geometry) + ",";
+      ( shape_geo.val(shape_geo.val().split(removed_layer).join("")));
+      if (shape_geo.val() == "") {
+        submit_map_btn.addClass("disabled");
+        submit_map_btn.addClass("action");
+        submit_map_btn.removeClass("button-cs");
+        setTimeout(function(){$("#submit_arrow_btn").removeClass("add");}, 800)
+      }
+    });
+  <% end %>
+  // Begin - COUNTY/DISTRICT/CUSTOM: If statement to determine whether to load us_districts.json file or us_counties.json file from this folder to render the counties and districts. Also sets the layer event listeners   loads in the json files for  counties and congressional districts, depending on the page params from controller.
+    // First we make sure document loads, then sets a timeout for 1.6 seconds once the map's tile layer loads, then has a callback when layers load, adds event listeners.
+    <% if params[:map] == "county" %>
+      var layers = new L.GeoJSON.AJAX("us_counties.json");
+      $( document ).ready(function() {
+        tile_layer.on("load", function(){
+          setTimeout(function(){ layers.addTo(map)}, 1600);
+        });
+        layers.on('add', function(){
+          layers.setStyle({"color": "rgba(100, 84, 150, 0.4)"});
+          layers.eachLayer(function(layer) {
+            layer.addEventListener("click", function(){ 
+              if (added_layers.hasLayer(layer)) {
+                added_layers.removeLayer(layer);
+              } else {
+                added_layers.addLayer(layer);
+              }
+              ( shape_state.val(layer.feature.properties.STATE));
+              ( shape_name.val(layer.feature.properties.NAME));
+              ( shape_geo_id.val(layer.feature.properties.GEO_ID));
+            });
+          });
+        });
+      });
+    <% elsif params[:map] == "district" %>
+      var layers = new L.GeoJSON.AJAX("us_districts.json");
+      $( document ).ready(function() {
+        tile_layer.on("load", function(){
+          setTimeout(function(){ layers.addTo(map)}, 1600);
+        });
+        // Below - When layers for districts are added to map, after the breif timeout, then adds style and event listeners on click
+        layers.on('add', function(){
+          layers.setStyle({"color": "rgba(100, 84, 150, 0.4)"});
+          layers.eachLayer(function(layer) {
+            layer.bindPopup("<p class='text-17'> Congressional District " + layer.feature.properties.CD + "</p>");
+            layer.addEventListener("click", function(){ 
+              // Below - Unhighlights previous layer if selected
+              layers.setStyle({"color": "rgba(100, 84, 150, 0.4)"});
+              // Below - Highlights layer clicked on
+              layer.setStyle({"color": "rgba(100, 84, 150, 0.85)"});
+              map.fitBounds(layer.getBounds());
+              ( shape_state.val(layer.feature.properties.STATE));
+              ( shape_name.val(layer.feature.properties.CD));
+              ( shape_geo_id.val(layer.feature.properties.GEO_ID));
+              ( shape_geo.val(JSON.stringify(layer.feature.geometry)));
+            });
+          });
+        });
+      });
+    <% elsif params[:map] == "custom" %>
+      var drawnItems = new L.FeatureGroup();
+      map.addLayer(drawnItems);
+      // Below - Creates a feature group to hold multiple layers when the user clicks on a county, whether on add or remove
+      drawnItems.on('layeradd', function(event) {
+        var layer = event.layer.toGeoJSON();
+        ( shape_geo.val(shape_geo.val() + JSON.stringify(layer.geometry) + ",")); // Appends the layer's json to the form field
+        map.fitBounds(event.layer.getBounds());
+        if (shape_geo.val() != "") {
+          submit_map_btn.removeClass("disabled");
+          submit_map_btn.removeClass("action");
+          submit_map_btn.addClass("button-cs");
+          setTimeout(function(){$("#submit_arrow_btn").addClass("add");}, 800)
+        }
+      });
+      drawnItems.on('layerremove', function(event) {
+        var layer = event.layer.toGeoJSON();
+        // Below - Removes the form field's layer's json that was already added.
+        var removed_layer = JSON.stringify(layer.geometry) + ",";
+        ( shape_geo.val(shape_geo.val().split(removed_layer).join("")));
+        if (shape_geo.val() == "") {
+          submit_map_btn.addClass("disabled");
+          submit_map_btn.addClass("action");
+          submit_map_btn.removeClass("button-cs");
+          setTimeout(function(){$("#submit_arrow_btn").removeClass("add");}, 800)
+        }
+      });
+      // Below - Provides draw icons and options
+      var drawControl = new L.Control.Draw({
+         // Circle and rectangle disabled due to mobile unsupported.
+         draw: {
+            circle: false,
+            rectangle: false,
+            marker: false,
+            polyline: false,
+            polygon: {
+              allowIntersection: true,
+              metric: false,
+              showArea: true,
+              showLength: true,
+              drawError: {
+                color: '#e1e100', // Color the shape will turn when intersects
+                message: '<strong>Oh snap!<strong> you can\'t draw that!' // Message that will show when intersect
+              },
+            },
+         },
+         edit: {
+             featureGroup: drawnItems
+         }
+     });
+      map.addControl(drawControl);
+    
+      map.on('draw:created', function (e) {
+        var type = e.layerType,
+            layer = e.layer;
+        // Below - Assigns the category of the shape created to the form's hidden field in Workplace Shape new.
+        var geoJSON_layer = layer.toGeoJSON();
+        drawnItems.addLayer(layer); // Adds created shape to map
+        layer.bindTooltip("<p class='text-15 margin-y-8 padding-x-5'>Click 'Assign Map' button above to apply this Workplace's area. <br> Or click the shape icon to the left to add another shape.</p>").openTooltip(); 
+      });
+    
+      map.on('draw:editstart', function (e) {
+        drawnItems.eachLayer(function(layer){
+          layer.unbindTooltip();
+          layer.bindTooltip("<p class='text-15 margin-y-8 padding-x-5'>Click and drag the shape's square edges to change its area. <br> Be sure to click 'Save' to the left to update the new shape.</p>").openTooltip(); 
+        });
+      });
+      map.on('draw:editvertex', function (e) {
+        ( shape_geo.val(''));
+      });
+      map.on('draw:editstop', function (e) {
+        drawnItems.eachLayer(function(layer){
+          var layer = layer.toGeoJSON();
+          ( shape_geo.val(shape_geo.val() + JSON.stringify(layer.geometry) + ",")); // Appends the layer's json to the form field
+        });
+
+      });
+      map.on('draw:edited', function (e) {
+        drawnItems.eachLayer(function(layer){
+          layer.bindTooltip("<p class='text-15 margin-y-8 padding-x-5'>Click 'Assign Map' button above to apply this Workplace's area. <br> Or click the shape icon to the left to add another shape.</p>"); 
+        });
+      });
+      map.on('draw:deletestart', function (e) {
+        drawnItems.eachLayer(function (layer) { 
+          layer.bindTooltip("<p class='text-16 margin-y-8 padding-x-5'>After clicking to delete this shape, <br> be sure to click 'Save' on the left side Toolbar.</p>").openTooltip(); 
+        });
+      });
+  
+      map.on('draw:deleted', function (e) {
+        drawnItems.eachLayer(function (layer) { 
+          layer.bindTooltip("<p class='text-15 margin-y-8 padding-x-5'>Click 'Assign Map' button above to apply this Workplace's area. <br> Or click the shape icon to the left to add another shape.</p>"); 
+        });
+
+      });
+      drawControl.setDrawingOptions({
+        polygon: {
+        	shapeOptions: {
+            	color: '#645496',
+            	fill: '#645496'
+            }
+        },
+      });
+    <% end %>    
+</script>

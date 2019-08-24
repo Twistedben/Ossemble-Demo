@@ -1,0 +1,97 @@
+<!-- Main Login Page for Users (users/sessions/new.html.erb) -->
+
+ <!-- Below - New User Alert for account creation -->
+  <%= render 'layouts/new_user_message' %>
+
+<div class="content"> <!-- Begin - Form Container for Login -->
+  <div class="center col-d-9 col-t-11 col-p-11">
+    <div class="col-tier margin-b-30">
+      <div class="tier">
+        <p class="col-all-12 b text-18 trending_font_size my-3">
+          Login - Citizen Profile
+        </p>
+      </div>
+      <div id="login_form_box" class="col-tier card light-box-shadow">
+        <div class="tier">
+          <!-- Begin -  Mobile Owl image and text. Desktop is below at bottom of file. -->
+          <div class="col-d-4 col-t-4 col-p-12 ms-login-title border-bottom">
+            <div class="center-all" >
+              <%= image_tag "logos/Owl_FavIcon.png", alt: "Icon", class: "mb-0", style: "width: 100px; height: 100px"%>
+            </div>
+            <div class="col-all-8 center-all my-3 theme_color_black text-20 primary_font bold">
+              Use your voice to interact with fellow citizens!
+            </div>
+          </div>
+          <!-- End -  Mobile Owl image and text. -->
+          <%= form_for(@user, as: resource_name, url: session_path(resource_name),html:{class: 'form-horizontal col-d-7 col-t-8 col-p-12 push-right'}) do |f| %>
+            <div class="form-row field">
+              <div class="form-group col-d-10 col-t-10 col-p-11 center-all margin-y-20">
+                <p class="text-22 theme_color_black mb-3">
+                Create a Free Citizen Profile
+               </p>
+              <div>
+            <%= link_to "<span class='relative' style='top: 5px'>Join Us</span>".html_safe, new_user_registration_path, class: 'btn button-su light-btn-shadow text-22 btn-lg', style: "height: 55px; width: 135px;"  %>
+          </div>
+        </div>
+      </div>
+     <div class=" strike center-all col-d-10 col-t-10 col-p-11  margin-b-10">
+       <span class="theme_color_black text-18">Already have a profile?</span>
+     </div>
+      <div class="form-row field">
+        <div class="form-group col-all-10 center margin-b-20">
+          <%= f.label :email %> <br />
+          <%= f.email_field :email, autocomplete: true, type: :email, autofocus: true, class: "form-control input-box-shadow", placeholder: "Enter Your Email" %>
+        </div>
+      </div>
+      <div class="form-row field">
+        <div class="form-group col-all-10 center margin-y-8"> 
+          <%= f.label :password %> <br />
+          <%= f.password_field :password, autocomplete: true, class: "form-control light-input-shadow", placeholder: "Enter Your Password" %>
+        </div>
+      </div>
+      <div class="form-row field"> <!-- Begin - Form Row For Ruby Devise Check if Rememberable is enabled to show Checkbox -->
+        <% if devise_mapping.rememberable? -%>
+          <div class="form-group col-all-10 center margin-y-10"> 
+            <div style="display: flex;">
+              <%= f.check_box :remember_me, class: "check_box margin-t-3 margin-r-8"%>
+              <%= f.label :remember_me, class: "check_box_label margin-b-5" %>
+            </div>
+          </div>
+        <% end -%>                 <!-- End - Form Row For Ruby Devise Check if Rememberable is enabled to show Checkbox -->
+      </div>
+      <div class="tier">  <!-- Begin - Login Buttons Row -->
+        <div class="col-all-10 center pl-1 margin-y-8">
+          <%= f.submit "Login", id: 'login_btn', class: "btn button-su btn-lg mr-3 margin-t-0 light-btn-shadow text-20", style: "width: 110px; height: 46px" %>
+            <%- if devise_mapping.omniauthable? %> <!-- Begin - OmniAuth If Statement -->
+              <!-- Below - OmniAuth & FB Signup Button -->
+            <%= link_to '<i class="fab fa-facebook-square fa-fw fb_log_sign_icon my-0" aria-hidden="true"></i> Facebook Login'.html_safe, 
+               user_facebook_omniauth_authorize_path, 
+               id: 'facebook_login_link',
+               class: "btn btn-primary btn-lg btn-xlarge light-btn-shadow" unless Rails.env.production? %> <br />
+            <% end -%> <!-- End - OmniAuth If Statement -->
+        </div>   
+      </div>  <!-- End - Signup with Facebook Button -->
+      <!-- End - Login Button Row --> 
+                                       <!-- End  - Form Container for Login -->
+     <div class="form-row field">
+      <div class="form-group col-all-10 center margin-b-10"> 
+        <%= render "devise/shared/links" %> <!-- Rendering Special Devise User Account Actions -->
+      </div>  
+    </div>
+    <% end %> <!-- End - Form For Log In to Account Devise -->
+
+     <!-- Begin - Owl and login message for Desktop. Mobile is above -->
+      <div class="col-d-5 col-t-4 col-p-12 login-title">
+        <div class="center-all" >
+          <%= image_tag "logos/owl_login_logo.png", alt: "Icon", class: "mb-0", style: "height: 200px; width: 200px;" %>
+        </div>
+        <div class="col-all-11 center-all mt-3 theme_color_black text-21 bold primary_font">
+          Use your voice to interact with fellow citizens!
+        </div>
+      </div>
+      <!-- End - Owl and login message for Desktop. Mobile is above -->
+    </div>
+  </div>
+</div>
+  
+  

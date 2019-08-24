@@ -1,0 +1,144 @@
+<!--  Bridge page for after an invited user signsup to quickly update their bio and title and resident date, a simplified version of Admin settings page. -->
+
+<div class="content">
+  <div class="tier"> <!-- Begin - Main tier for page. -->
+    <div class="col-d-10 col-t-12 col-p-12 center">
+      <div class="col-tier">
+        <p class="page_info_title text-26">
+          Workplace Profile Settings
+        </p>
+      </div>
+      <div class="col-all-12 card light-box-shadow mb-5 padding-all-15">
+        <%= form_for(@admin, url: finish_after_signup_page_path, method: :update,
+            :html => {:multipart => true, id: "public_profile_form", role: "form"}) do |f| %>
+          <div id="public_profile_tier">
+            <!-- Begin - Extra info for user show page -->
+            <div id="extra_info_div" class="col-all-12 center"> 
+              <div class="alert alert-panel panel border light-box-shadow" style="border-color: #645496 !important">
+                <h4 class="bold padding-all-8 roboto">
+                  Information entered here will appear in the Workplace's Directory, as well as on your Profile page, for other peers and co-workers to see.
+                </h4>
+              </div>
+              <div class="col-tier">
+                <div class="col-d-4 col-t-4 col-p-12 ui-widget px-2" title="What position do you hold?">
+                  <div class="control-label pb-0">
+                    <%= f.label :title, "Position / Title" %>
+                  </div>
+                  <%= f.text_field :title, id: "city_user_title", class: "form-control", maxlength: 50, placeholder: "Your Title (EG: 'Mayor, Official, City Administrator, etc..') 50 Characters" %> 
+                </div>
+                <div class="col-d-4 col-t-4 col-p-12 px-2" title="What year did you get appointed or started this position?">
+                  <div class="control-label pb-0">
+                    <%= f.label :resident_date, "Term / Hired On" %>
+                  </div>
+                  <%= date_select :admin, :resident_date, options = {discard_day: true, discard_month: true, start_year: 1930, end_year: Time.now.year}, class: "select_form form-control" %> 
+                </div>
+              </div>
+              <div class="col-tier margin-t-15"> 
+                <div class="col-d-8 col-t-10 col-p-12 px-2" title="A hundred and fifty characters that best summarizes who you are and what you're about.">
+                  <div class="control-label mt-3 pb-0">
+                    <%= f.label :bio, "Bio" %>
+                  </div>
+                    <%= f.text_area :bio, class: "form-control light-input-shadow", maxlength: 150, placeholder: "Write a short bio about yourself to let peers and co-workers know who you are and what you do. (Limit: 150 Characters)" %> 
+                </div>
+              </div>
+            
+              <div class="col-tier">  
+                <div class="col-all-6 profile_avatar_wrapper mt-5"> <!-- Begin - Avatar Upload Column --> 
+                 <!-- Below - If Statement for Avatar Uploading -->
+                  <% if current_admin.avatar.attached? %> <!-- If User already has a avatar, show it and "remove" option -->
+                    <div id="profile_avatar_border">
+                      <div class="m-2">
+                        <%= image_tag current_admin.avatar.variant(resize: '250x250!'), id: "upload_avatar", class: "m-0" %>
+                      </div>
+                    </div>
+                    <div class="form-row margin-b-8">
+                      <%= f.label :avatar, "Change Profile Picture", class: "margin-b-5 margin-t-15 margin-l-3 control-label" %>
+                    </div>
+                    <div class="form-row">
+                      <%= f.file_field :avatar, accept: 'image/png,image/gif,image/jpeg', class: "upload btn btn-lg mb-0", onchange: "readURL(this);" %>
+                    </div>
+                  <% else %> <!-- User doesn't have an image attached -->
+                    <div class="form-row margin-b-8">
+                      <%= f.label :avatar, "Upload a Profile Picture", class: "my-0 control-label" %>
+                    </div>
+                    <div class="form-row">
+                      <%= f.file_field :avatar, accept: 'image/png,image/gif,image/jpeg', class: "upload btn btn-lg mb-0",onchange: "readURL(this);" %>
+                    </div>
+                    <p class="margin-t-5 mb-0 text-13">If it's a high resolution photo, it may take a few moments to upload. </p>
+                  <% end %>
+                  <div class="tier">
+                    <%= f.label :avatar, "Preview of Uploaded Image".html_safe, class: " vanish img_prev_title pull-left control-label mb-2" %>
+                  </div>
+                  <div class="tier">
+                    <img id="img_prev" class="vanish" src="#" alt="Image">
+                  </div>
+                </div>                    
+              </div> 
+  
+            </div>
+          </div> <!-- End -  Public Info Section -->
+        </div> 
+        <div class="col-tier padding-r-10">    
+          <div class="col-all-6">
+            <%= f.submit "Finish Profile", id: "loadgif", class: "btn form_btn mt-0 button-cs" %>
+          </div> 
+        </div> 
+      <% end %> <!-- End - Public Profile form -->
+    </div>
+  </div>
+</div>
+
+
+<script>
+  $( function() {
+    var titleType = [
+      "Mayor",
+      "City Administrator",
+      "Assistant",
+      "Deputy Mayor", 
+      "City Planner",
+      "Appointed Official",
+      "Elected Official",
+      "Councilman",
+      "Secretary"
+    ];
+    $( "#city_user_title" ).autocomplete({
+      source: titleType
+    });
+  } );     
+  
+  $( function() {
+    var contactType = [
+      "Email",
+      "Website",
+      "Facebook",
+      "Instagram", 
+      "Phone Number",
+      "Twitter",
+      "YouTube",
+      "LinkedIn",
+      "Snapchat",
+      "Location",
+      "Address"
+    ];
+    $( "#admin_contact_name" ).autocomplete({
+      source: contactType
+    });
+  } );
+</script>
+      
+<script>
+function readURL(input) {
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+    $("#img_prev").show();
+    $(".img_prev_title").show();
+    reader.onload = function (e) {
+      $('#img_prev')
+        .attr('src', e.target.result)
+    };
+
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+</script>

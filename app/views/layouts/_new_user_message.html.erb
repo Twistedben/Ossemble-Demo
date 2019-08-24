@@ -1,0 +1,18 @@
+<!-- HTML ERB Partial that displays and is rendered on the User loging page (users/sessions/new.html.erb). 
+  Message pops up in Login page telling user to Signup for an account if they don't have one. 
+  CSS for this partial can be found in User.scss.css style files. -->
+<div class="content">
+  <div class="tier">
+    <div class="col-d-8 col-t-11 col-p-12 center"> 
+      <p class="center-text alert panel theme_color_black message_alert_panel">
+        <a href="#" class="close" data-dismiss="alert">
+          &#215;
+        </a>
+
+        <span>
+          Want to explore Ossemble first?<a class="new_user_login_link bold" href="<%= city_feed_path(City.find(1)) %>">Click here to see how it works in Lakewood, Ohio!</a>
+        </span>
+      </p>
+    </div>
+  </div>
+</div>

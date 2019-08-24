@@ -1,0 +1,27 @@
+<!--  Rendered within _ossembly_filter.html.erb partial to determine current subtopic's topic to render the correct filter links -->
+  <% if current_page?(subtopic_path(@city, @lets_talk, @help_out)) || current_page?(subtopic_path(@city, @lets_talk, @business_buzz)) || current_page?(subtopic_path(@city, @lets_talk, @grinds_gears)) || current_page?(subtopic_path(@city, @lets_talk, @sports)) %>
+    <%= link_to "<i class='fas fa-handshake'></i>Help Me Out".html_safe, subtopic_path(@city, @lets_talk, @help_out), class: "dropdown-item" %>
+    <hr>
+    <%= link_to "<i class='fas fa-building'></i>Business Buzz".html_safe, subtopic_path(@city, @lets_talk, @business_buzz), class: "dropdown-item" %>
+    <hr>
+    <%= link_to "<i class='fab fa-whmcs'></i>Grinds My Gears".html_safe, subtopic_path(@city, @lets_talk, @grinds_gears), class: "dropdown-item" %>
+    <hr>
+    <%= link_to "<i class='fas fa-football-ball'></i>Sports".html_safe, subtopic_path(@city, @lets_talk, @sports), class: "dropdown-item" %>
+  <% elsif current_page?(subtopic_path(@city, @good_vibes, @good_news)) || current_page?(subtopic_path(@city, @good_vibes, @city_snaps)) || current_page?(subtopic_path(@city, @good_vibes, @furry_friends)) || current_page?(subtopic_path(@city, @good_vibes, @local_historian)) %>
+    <%= link_to "<i class='fas fa-smile'></i>Good News".html_safe, subtopic_path(@city, @good_vibes, @good_news), class: "dropdown-item" %>
+    <hr>
+    <%= link_to "<i class='fas fa-bone'></i>Furry Friends".html_safe, subtopic_path(@city, @good_vibes, @furry_friends), class: "dropdown-item" %>
+    <hr>
+    <%= link_to "<i class='fas fa-camera-retro'></i>City Snaps".html_safe, subtopic_path(@city, @good_vibes, @city_snaps), class: "dropdown-item" %>
+    <hr>
+    <%= link_to "<i class='fas fa-atlas'></i>Local Historian".html_safe, subtopic_path(@city, @good_vibes, @local_historian), class: "dropdown-item" %>
+  <% elsif current_page?(subtopic_path(@city, @city_affairs, @ballots)) || current_page?(subtopic_path(@city, @city_affairs, @city_improvements)) || current_page?(subtopic_path(@city, @city_affairs, @events)) || current_page?(subtopic_path(@city, @city_affairs, @schools)) %>
+    <%= link_to "<i class='fas fa-newspaper'></i>Ballots".html_safe, subtopic_path(@city, @city_affairs, @ballots), class: "dropdown-item" %>
+    <hr>
+    <%= link_to "<i class='fas fa-calendar-alt'></i>Events".html_safe, subtopic_path(@city, @city_affairs, @events), class: "dropdown-item" %>
+    <hr>
+    <%= link_to "<i class='fas fa-road'></i>City Improvements".html_safe, subtopic_path(@city, @city_affairs, @city_improvements), class: "dropdown-item" %>
+    <hr>
+    <%= link_to "<i class='fas fa-school'></i>Schools".html_safe, subtopic_path(@city, @city_affairs, @schools), class: "dropdown-item" %>
+  <% else %> <!-- Fail Safe  -->
+  <% end %>

@@ -1,0 +1,7 @@
+// AJAX file for following that gets executed from FollowsController during the destroy action when a user click the Unfollow button.
+
+  $("#unfollow_btn").text("Unfollowed!");
+  $("#unfollow_btn").addClass("unfollow_button_shake");
+  $("#unfollow_btn").attr("disabled", true);
+  $("#unfollow_btn").append("<i class='fas fa-angle-double-left margin-l-5'></i>");
+  

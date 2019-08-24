@@ -1,0 +1,81 @@
+<!--  Main one page feed for all of a cities' resources.  -->
+
+
+<!-- Begin - Main content for community score page. -->
+<div class="content">
+  <div class="tier"> <!-- Begin - Main tier for page. -->
+    <!-- Below -  Renders in the accordian from views/layouts/phones/... for mobile and tablet. -->
+    <%= render "layouts/phones/mobile_accordion" %>
+    <div class="center col-d-7 col-t-11 col-p-12">
+    <!-- Begin - Community Score Page Info -->
+      <div id="page_info_card_org" class="col-all-12">
+        <div id="page_info_card" class="margin-b-15">
+          <div class="tier">
+            <div class="col-all-12">
+              <p class="page_info_title">
+                City Feed
+              </p>
+            </div>
+            <div class="col-all-12 light-box-shadow card" style="border: 1px solid rgba(128, 128, 128, .5)">
+              <div class="card-body theme_color_black" >
+                <div class="col-d-9 col-t-12 col-p-12 pull-left">
+                 <p class="text-big" style="font-family: Roboto;"><i>Showcases all of the top trending scores that make up your City Score.</i></p> 
+                 <section class="text-xmedium">The Score is composed of Four Categories</section>
+                 <ul class="bold">
+                  <li>City Reviews - What You Love</li> 
+                  <li>Reports & Suggestions</li>
+                  <li>Department Reviews</li> 
+                  <li>Petitions</li>
+                 </ul>   
+              </div>
+              <div class="page_info_icon_hide col-all-3 pull-right center-all pl-3 theme_color_dark page_info_icon" style="height: 130px;">
+                <%= image_tag "icons/percent2.svg", alt: "Icon", class: "mb-0", style: "width: 120px; position: relative; top: -30px" %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End- Community Score Page Info -->
+      <div class="tier">
+        <div class="col-tier padding-b-20">
+          <p class="trending_list_title col-p-12">
+            Trending - Week
+          </p>
+          <!-- Below - Search Bar - Commented Out for now until we incorporate it later.
+            <div class="p-0 input_search"> %= render 'searches/community_search' %> </div> 
+          -->
+          <%= render 'filters/feed_filter', obj: @city_feed %>
+        </div>
+        <!-- Below -  Rendering of trending week resources -->
+        <div class="col-tier">
+          <div class="col-all-12">
+            <!-- Below - Rending of trending posts by week -->
+            <%= render 'layouts/resources/resources_list', obj: @trending_week_resources %>
+          </div>
+        </div>
+      </div>
+      <!-- Begin -  Rendering of trending city resources from a month -->
+      <div class="tier">
+        <div class="col-all-12 text-left">
+          <p class="trending_list_title col-p-12">
+            <%= "Trending - Month" unless @trending_month_resources.empty? %>
+          </p>
+        </div>
+        <div class="col-tier">
+          <div class="col-all-12">
+            <!-- Below - Rending of trending posts by month. -->
+            <%= render 'layouts/resources/resources_list', obj: @trending_month_resources unless @trending_month_resources.empty? %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="non_ms_ap_content" class="col-d-3 col-t-10" >
+      <%= render 'layouts/action_panel', obj: @community_score %>
+    </div>
+  </div> <!-- Main page tier -->
+</div>
+
+
+
+

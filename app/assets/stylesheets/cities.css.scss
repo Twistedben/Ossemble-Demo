@@ -1,0 +1,20 @@
+// Main CSS For City-related Views (views/cities/...)
+  // Begin - Global CSS Styles for all City Page Views (views/cities/...)
+
+  // End - Global CSS Styles for all City Page Views (views/cities/...)
+  
+// Begin - CSS for City Index Page (views/cities/index.html.erb)
+
+// End - CSS for City Index Page (views/cities/index.html.erb)
+
+// Begin - CSS for City Show Page (views/cities/show.html.erb)
+.com_score {
+ color: #585858; 
+}
+
+.ms_city_nomb {
+  @media screen and (max-width: 900px) {
+  margin-bottom: 0px !important;
+                                        }
+}
+// End - CSS for City Show Page (views/cities/show.html.erb)

@@ -1,0 +1,34 @@
+// Triggered when a comment is destroyed through AJAX. Rendered from controller.
+
+<% if @comment.commentable_type != "Comment" %> // The comment is not a reply
+// Below - Destroy comment Related AJAX.
+  var current_comment = $('li[name="<%= @comment.id %>"]');
+  $(current_comment).slideUp("fast", "swing");
+// Below - Flash related AJAX.  
+  var comment_flash = $('.delete_comment_flash_<%= @comment.id %>');
+  $(comment_flash).fadeIn(800);
+  $(comment_flash).prepend('<div class="delete_comment_flash_<%= @comment.id %> vanish panel panel-success light-box-shadow col-all-12" style="height: 3.5rem"><div class="col-tier margin-t-5"><p class="text-success bold center-all text-xxmedium no-margin col-all-12">Your comment been deleted.</p></div></div>')
+  $(comment_flash).delay(1000).slideUp(1000, "swing");
+<% else %> // The comment is a reply
+// Below - Destroy Reply related AJAX.
+  var current_reply = $('li[name="<%= @comment.id %>"]'); 
+  $(current_reply).slideUp("fast", "swing");
+  <% parent_comment = @comment.commentable %>
+  var parent_comment_reply_count = $('#reply_count_<%= @comment.commentable.id %>');
+  var parent_comment_singular = $('#singular_reply_<%= @comment.commentable.id %>');
+  var parent_comment_plural = $('#plural_reply_<%= @comment.commentable.id %>');
+// Below - Flash related AJAX.
+  var reply_flash = $('.delete_reply_flash_<%= @comment.id %>');
+  $(reply_flash).fadeIn(800);
+  $(reply_flash).prepend('<div class="delete_reply_flash_<%= @comment.id %> vanish panel panel-success light-box-shadow col-all-12" style="height: 3.5rem"><div class="col-tier margin-t-5"><p class="text-success bold center-all text-xxmedium no-margin col-all-12">Your comment been deleted.</p></div></div>')
+  $(reply_flash).delay(1000).slideUp(1000, "swing");
+// Below - Replies and Count related AJAX
+  $(parent_comment_reply_count).text("<%= parent_comment.count_replies %>").effect('highlight',{}, 1000);
+  <% if parent_comment.count_replies == 1 %>
+  $(parent_comment_singular).text("Reply").effect('highlight',{}, 1500);
+  $(parent_comment_plural).text("Reply").effect('highlight',{}, 1500);
+  <% else %>
+  $(parent_comment_singular).text("Replies").effect('highlight',{}, 1500);
+  $(parent_comment_plural).text("Replies").effect('highlight',{}, 1500);
+  <% end %>
+<% end %>

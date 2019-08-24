@@ -1,0 +1,127 @@
+<!-- Map partial for rendering in Congress and District json for a new Workplace (channel) Map Shape. Rendered from workplace_shapes/new.html.erb.
+      City Munucipality is done in webpacker javascript/census.coffee. -->
+ 
+<script>
+ var map = L.map('oss_map');
+ tile_layer = L.tileLayer('https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="&copy;"> <a href="https://wikimediafoundation.org/wiki/Maps_Terms_of_Use">Wikimedia</a></a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+}).addTo(map);
+  
+// Below - Sets up hidden form fields to fill with data
+var shape_name   = $('#geo_name'), shape_geo = $('#geo_lat_lng'), shape_state  = $('#geo_state_id'), shape_geo_id = $('#geo_id'), submit_map_btn = $('#submit_map_btn');
+// Below - Sets the map on user's location
+map.locate({
+    setView: true,
+    maxZoom: 10
+  });
+ // Below - Adds fullscreen   
+L.control.fullscreen({
+  fullscreenControl: true,
+  forceSeparateButton: true,
+  fullscreenControlOptions: {
+    position: 'topleft',
+  }
+}).addTo(map); 
+
+var lc = L.control.locate({ // Recent button/Position
+    position: 'topleft',
+    drawCircle: true,
+    flyTo: true,
+    showPopup: false,
+    drawMarker: true,
+    icon: 'fas fa-bullseye',
+    strings:  {
+        title: "Recenter My Location" 
+              }
+}).addTo(map);
+// Below - Scaling Zoom and Disabling Drag/Zoom
+L.control.scale().addTo(map);
+map.options.minZoom = 4;
+map.options.maxZoom = 15;
+  var geojsonLayer, layer_group, workplace_geojson;
+  
+  workplace_geojson = [{
+    "type": "FeatureCollection",
+    "features" : [
+       {"type":"Polygon","coordinates":[[[-81.878053,41.275044],[-81.877066,41.343557],[-81.971262,41.351268],[-81.96813,41.506422],[-81.964912,41.505446],[-81.962664,41.501341],[-81.958463,41.498642],[-81.937862,41.491443],[-81.930404,41.490457],[-81.928652,41.490226],[-81.87736,41.483445],[-81.860262,41.483841],[-81.850141,41.486255],[-81.837092,41.489367],[-81.836059,41.489614],[-81.810992,41.495592],[-81.810758,41.495648],[-81.801207,41.496223],[-81.800253,41.496281],[-81.799746,41.496311],[-81.794449,41.49663],[-81.794157,41.496648],[-81.782258,41.49605],[-81.768898,41.491663],[-81.768856,41.491649],[-81.762489,41.49046],[-81.75861,41.489736],[-81.746095,41.4874],[-81.745818,41.487348],[-81.744755,41.48715],[-81.744272,41.487263],[-81.741852,41.487827],[-81.738755,41.48855],[-81.732674,41.491437],[-81.727806,41.493749],[-81.726429,41.494402],[-81.725763,41.494718],[-81.71931,41.497782],[-81.716836,41.498957],[-81.71559,41.499549],[-81.710986,41.501734],[-81.710953,41.50175],[-81.707622,41.505108],[-81.706864,41.505872],[-81.69325,41.514161],[-81.691248,41.515379],[-81.688058,41.517321],[-81.664884,41.53143],[-81.664851,41.53145],[-81.649872,41.535775],[-81.648453,41.536185],[-81.641055,41.538321],[-81.633652,41.540458],[-81.627431,41.544163],[-81.61691,41.550428],[-81.616567,41.550633],[-81.615816,41.551079],[-81.610163,41.554446],[-81.60967,41.55474],[-81.599747,41.560649],[-81.593144,41.565462],[-81.593092,41.5655],[-81.591981,41.56631],[-81.591471,41.566682],[-81.579815,41.575178],[-81.579746,41.575228],[-81.579727,41.575243],[-81.579285,41.575565],[-81.578666,41.576016],[-81.577459,41.576896],[-81.575715,41.578167],[-81.575577,41.578267],[-81.562844,41.587549],[-81.531674,41.612972],[-81.531612,41.613023],[-81.529955,41.614374],[-81.529742,41.614548],[-81.527026,41.615373],[-81.520707,41.617292],[-81.509359,41.620739],[-81.50044,41.623448],[-81.48864,41.631348],[-81.488934,41.627948],[-81.488062,41.598556],[-81.488139,41.577328],[-81.487842,41.570051],[-81.419936,41.56995],[-81.41763,41.56967],[-81.408992,41.56985],[-81.391005,41.569716],[-81.391694,41.348272],[-81.399585,41.348573],[-81.450331,41.349148],[-81.592653,41.351119],[-81.598061,41.350913],[-81.590542,41.277554],[-81.68495,41.277146],[-81.878053,41.275044]]]},{"type":"Polygon","coordinates":[[[-81.003066,41.425928],[-81.003194,41.424482],[-81.003319,41.34786],[-81.391694,41.348272],[-81.391005,41.569716],[-81.29588,41.56995],[-81.294669,41.640889],[-81.101422,41.641457],[-81.102258,41.714307],[-81.003631,41.715137],[-81.00299,41.700009],[-81.003125,41.501685],[-81.003066,41.425928]]]},{"type":"Polygon","coordinates":[[[-80.519345,41.34074],[-80.519345,41.340145],[-80.519293,41.339654],[-80.519293,41.339054],[-80.519311,41.339052],[-80.519281,41.337174],[-80.519281,41.337145],[-80.519281,41.335958],[-80.519265,41.333495],[-80.519129,41.312408],[-80.518794,41.305509],[-80.518996,41.2683],[-80.518993,41.268155],[-80.518893,41.265155],[-80.518693,41.248855],[-80.518893,41.232556],[-80.518893,41.219357],[-80.518893,41.219356],[-80.51883,41.209213],[-80.519144,41.171203],[-80.519115,41.14552],[-80.519167,41.133388],[-80.789472,41.134159],[-81.00229,41.134189],[-81.00288,41.271842],[-81.003319,41.34786],[-81.003194,41.424482],[-81.003066,41.425928],[-81.003125,41.501685],[-80.519225,41.499924],[-80.519209,41.489013],[-80.519169,41.462581],[-80.518993,41.435454],[-80.518993,41.416437],[-80.519025,41.416438],[-80.519249,41.378918],[-80.519217,41.372006],[-80.519249,41.36103],[-80.519297,41.350833],[-80.519345,41.34074]]]},
+      ]
+  }];
+  
+  layer_group = new L.layerGroup();
+  geojsonLayer = L.geoJson(workplace_geojson, {
+    onEachFeature: function(feature, layer) {
+      map.fitBounds(layer.getBounds());
+    }
+  });
+    
+  geojsonLayer.setStyle({"color": "rgba(100, 84, 150, 0.75)"});
+  layer_group.addLayer(geojsonLayer);
+  map.addLayer(layer_group);
+
+
+    // Below - Creates a feature group to hold multiple layers when the user clicks on a county, whether on add or remove
+    var added_layers = new L.featureGroup();
+    added_layers.on('layeradd', function(event) {
+      var layer = event.layer
+      console.log(layer);
+      layer.bindTooltip("<p class='text-17 padding-x-10'>" + layer.feature.properties.NAME + " added</p>").openTooltip();     
+      layer.setStyle({"color": "rgba(90, 60, 150, 0.8)"});
+      layer.setStyle({"weight": "3.5"});
+      ( shape_geo.append(JSON.stringify(layer.feature.geometry) + ",")); // Appends the layer's json to the form field
+      map.fitBounds(layer.getBounds());
+      shape_geo.val() = shape_geo.innerHTML;
+    });
+    added_layers.on('layerremove', function(event) {
+      var layer = event.layer
+      layer.setStyle({"color": "rgba(100, 84, 150, 0.4)"});
+      layer.bindTooltip(layer.feature.properties.NAME + " removed").openTooltip();  
+      
+      // Below - Removes the form field's layer's json that was already added.
+      $(shape_geo).each(function(){
+        $(this).html($(this).html().split((JSON.stringify(layer.feature.geometry) + ",")).join(""));
+        
+      });
+      shape_geo.val() = shape_geo.innerHTML;
+      
+    });
+    // Begin - loads in the json files for  counties and congressional districts, depending on the page params from controller.
+    // First we make sure document loads, then sets a timeout for 1.6 seconds once the map's tile layer loads, then has a callback when layers load, adds event listeners.
+      var layers = new L.GeoJSON.AJAX("us_counties.json");
+      $( document ).ready(function() {
+        tile_layer.on("load", function(){
+          setTimeout(function(){ layers.addTo(map)}, 1600);
+        });
+        layers.on('add', function(){
+          layers.setStyle({"color": "rgba(100, 84, 150, 0.4)"});
+          console.log(layers);
+          layers.eachLayer(function(layer) {
+            layer.addEventListener("click", function(){ 
+              console.log(layer);
+              // Below - Unhighlights previous layer if selected
+              //layers.setStyle({"color": "rgba(100, 84, 150, 0.4)"});
+              // Below - Highlights layer clicked on
+              if (added_layers.hasLayer(layer)) {
+                added_layers.removeLayer(layer);
+                
+              } else {
+                added_layers.addLayer(layer);
+              }
+              
+              ( shape_state.val(layer.feature.properties.STATE));
+              ( shape_name.val(layer.feature.properties.NAME));
+              ( shape_geo_id.val(layer.feature.properties.GEO_ID));
+            });
+          });
+        });
+      });
+    
+// Allows submission once a layer is clicked and focuses to sumbit button, adding arrow indicator
+layers.on("click", function(){
+  if (shape_geo.val() != "") {
+    submit_map_btn.removeClass("disabled");
+    submit_map_btn.removeClass("action");
+    submit_map_btn.addClass("button-cs");
+  }
+  setTimeout(function(){$("#submit_arrow_btn").addClass("add");}, 800)
+});
+</script>

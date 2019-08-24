@@ -1,0 +1,234 @@
+<!-- Main User Profile Show Page (/views/users/show.html.erb). CSS is found in both "global.css.scss" & "user.css.scss"-->
+
+<!-- Begin - Main content for community score page. -->
+<div class="content">
+  <div class="tier"> <!-- Begin - Main tier for page. -->
+    <!-- Begin - Filter panel rendering -->
+    <div class="col-d-1 col-t-vanish col-p-vanish">
+    </div>
+    <div id="ms_ap_content" class="col-d-8 col-t-11 col-p-12 center margin-b-15 vanish">
+      <h3 class="mt-4"><%= @user.city.name %> Community Score</h3>
+      <div id="profile_cs_ms">
+      </div>
+      <h3>Accomplishments</h3>
+      <div id="profile_acc_ms">
+      </div>
+    </div>
+    
+    <div class="col-d-8 col-t-11 col-p-12 center">
+      <!-- PROGRAMMERS NOTE: Commented out for now as we avoid confirmation of accounts.
+      Below -  If user hasn't confirmed their account yet, message below will display on their profile. 
+        %= render 'users/user_layouts/unconfirmed_user_message' if is_current_user?(@user) && !current_user.confirmed?  %>
+      -->
+      <div class="tier">
+        <div class="col-all-12">
+          <p id="profile_title" class="theme_color_dark px-0">
+            <!-- Below -  Shows User's city  and date of residence -->
+            <!-- Below -  Renders title of user. If it's default and user is on their own profile, gives them an option to change it. Otherwise, renders title for visitor or already changed user -->
+            <span class="padding-l-8">
+              <% if @user.unverified_user?  %> <!-- Below -  Shows if the user isn't verified. -->
+                <!-- Below - The red unverified X shows if the user hasn't verified their profile yet.  This line is a link to the current  user's update profile page -->
+                <%= "<a href='#{edit_user_registration_path(current_user)}' title='Verify you are a #{current_user.city.name} citizen by entering your home address and zip code on the update profile page. Be awarded a Pioneer badge too!'><i class='fas fa-user-times text-25 text-danger'></i></a>".html_safe if is_current_user?(@user) %>
+                <!-- Below -  Shows to visiting users a X icon to display they haven't yet verified their profile. -->
+                <%= "<i class='fas fa-user-times text-22 text-danger' title='#{@user.first_name} has not yet verified thier profile.'></i>".html_safe unless is_current_user?(@user) %>
+              <% elsif @user.verified? %>  <!-- Below - Shows if user has been verified  -->
+                <%= "<i class='fas fa-user-check text-20 text-success' title='You have verified your profile.'></i>".html_safe if is_current_user?(@user) %>
+                <%= "<i class='fas fa-user-check text-20 text-success' title='#{@user.first_name} has verified their profile.'></i>".html_safe unless is_current_user?(@user) %>
+              <% end %> <!--  End - User verification check  -->
+            </span>
+            <% if is_current_user?(@user) %>
+              <%= "<a href='#{edit_user_registration_path(current_user)}'><i class='fas fa-pencil-alt profile_edit_icon text-17'></i></a>".html_safe if @user.title == "Resident" && @user.resident_date == "Forever" %>
+            <% end %>
+            <%= link_to @user.city.name.capitalize, city_feed_path(@user.city), class: "title_link" %>
+            Resident
+            <span class="text-19">
+              since 
+              <%= @user.resident_date.year unless @user.resident_date.nil? %>
+              <%= "Forever" if @user.resident_date.nil? %>
+            </span>
+          </p>
+        </div>
+      </div>
+      <div class="tier p-0 no-border-radius light-box-shadow">
+        <div class="col-all-12 card p-0 no-border-radius no-border-bottom">
+          <div class="col-tier padding-all-10 padding-b-0">
+            <div class="col-d-3 col-t-3 col-p-12 center-all">
+              <%= display_profile_avatar(@user) %> <!-- Shows user's avatar or an upload avatar button if the current user is looking at thier own page without an avatar.  -->
+              <!-- Begin -  SETTINGS: Shows dropdown menu of settings if the user is visiting their own profile. -->
+              <% if is_current_user?(@user) %>  
+                <div id="settings_dropdown" class="dropright col-all-12">
+                  <a class="dropdown-toggle btn alt-action light-btn-shadow padding-y-5 padding-x-8"  data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-cogs margin-r-5 text-16"></i><span class="text-15">Settings</span>
+                  </a>
+                  <div id="" class="dropdown-menu">
+                    <a class="dropdown-item rep_text" href="<%= edit_user_registration_path(current_user) %>">
+                      <div class="icon_container">
+                        <i class='far fa-edit'></i>
+                      </div>
+                      Update Profile
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item rep_text" href="#" data-confirm="If you'd like to change your password, log out and click 'Forgot password?' on the login page.">
+                      <div class="icon_container">
+                      <i class='fa fa-unlock-alt'></i>
+                      </div>
+                      Reset Password
+                    </a>
+                  </div>
+                </div>
+              <% end %>
+              <!-- End -  SETTINGS: -->
+            </div>
+            <!-- Begin -  NAME, BIO, NEIGHBORHOOD, JOIN: Bio section, with join date, name and neighborhood -->
+            <div class="col-d-6 col-t-6 col-p-12 middle_pad">
+              <div id="user_bio_section" class="col-tier mb-4">
+                <div class="col-all-12 px-3 tier border-bottom">
+                  <p id="user_name" class="p-0 theme_color_black tier">
+                    <%= @user.name %> - <%= @user.title %>
+                  </p>
+                  <span class="" style="position: relative; top: 8px; left: 10px">
+                    <% if is_current_user?(@user) %>
+                      <%= link_to "<i class='fas fa-pencil-alt profile_edit_icon theme_color_dark text-xxmedium'></i>".html_safe, edit_user_registration_path(current_user), title: "Edit your Bio", id: " " , class: " " %>
+                    <% end %>
+                  </span>
+                </div>                
+                <div class="col-all-12 py-1 px-3" title="When <%= @user.first_name %> signed up with Ossemble.">
+                  <p class="mb-0 p-0">
+                    <b class="theme_color_black">Joined: </b>
+                    <span class=""> <%= display_date(@user.created_at) %></span>
+                  </p>
+                </div>
+                <div class="col-all-12 py-1 px-3" title="The <%= @user.city.name %> neighborhood, development, or area <%= @user.first_name %> lives in">
+                  <p class="m-0 p-0">
+                    <b class="theme_color_black">Neighborhood: </b>
+                    <span class=""><%= @user.neighborhood unless (@user.neighborhood == "Not Specified" || @user.neighborhood.empty?) && is_current_user?(@user) %> </span>
+                    <%= "<a href='#{edit_user_registration_path(current_user)}'><i class='fas fa-pencil-alt profile_edit_icon'></i>#{@user.neighborhood}</a>".html_safe if (@user.neighborhood == "Not Specified" || @user.neighborhood.empty?)  && is_current_user?(@user) %>
+                  </p>
+                </div>
+                <div class="col-all-12 py-1 px-3">
+                <!-- Below -  Displays User BIo -->
+                  <p class="mt-3 p-0">
+                    <!-- Begin -  User bio check. -->
+                    <% if @user.bio.nil? || @user.bio.empty? %> <!--  Bio is nil, so they either are prompted to fill it out or shows a visitor it's nil. -->
+                    <!-- Below -  If the user is looking at thier own profile, and it's empty, encourage them to fill it out. -->
+                      <% if is_current_user?(@user) %>
+                        <!-- Below -  If user is on their own profile, shows pencil to edit it and link to Profile Update page -->
+                          You have yet to provide your bio for others to see. 
+                          <a class="underline" href="<%= edit_user_registration_path(current_user) %>">Click here</a> in order to fill it out.
+                      <% else %> <!-- A visiting user sees that the user has yet to fill out the bio section  -->
+                        <%= @user.first_name %> has yet to provide their Bio.
+                      <% end %> <!--  End of User checking their own profile or not. -->
+                    <% else %> <!-- Bio isn't nil and is provided.  -->
+                      <span>
+                        <%= @user.bio %>
+                      </span>
+                    <% end %><!-- End - Bio complete check  -->
+                  </p>
+                </div>
+              </div>
+            </div>
+            <!-- End -  NAME, BIO, NEIGHBORHOOD, JOIN: -->
+            <!-- Below -  Holds actions a user can do to another user -->
+            <div class="col-d-3 col-t-3 col-p-12">
+              <div class="ms_follow_tier margin-y-5" title="Follow this User.">
+                <%= display_follow_button(user_follow_path(@user), user_unfollow_path(@user), @user) %>
+              </div>
+              <div class="ms_follow_tier margin-y-5">
+                <button id="follow_btn" class="btn light-btn-shadow margin-r-10 mes_color" style="">
+                  <%= link_to "<i class='far fa-envelope margin-r-5'></i> Message".html_safe, new_profile_message_path(@user), title:"Message this user.", class:"mes_color" unless is_current_user?(@user) %>
+                  <%= link_to "<i class='far fa-envelope-open margin-r-5'></i> Inbox".html_safe, all_conversations_path, title:"View your inbox.", class:"mes_color" if is_current_user?(@user) %>
+                </button>
+              </div>
+            </div>
+          </div>
+          <!-- Begin - USER PANEL: Bar with filter data. In Users.css.scss stylesheet file, line 6 under "#user_panel_bar" -->
+          <div class="col-all-12"> 
+            <div id="user_panel_bar" class="nav nav-tabs">
+              <li id="user_panel_tab" class="transparent nav-item col-all-6">
+                <div >
+                 <%= image_tag "icons/medal2.svg", id: "reputation_icon", class: "mt-3 ml-4" %> 
+                </div>
+                <%= link_to "<span id='tab_title' class='rep_text theme_color_black'>Reputation</span>".html_safe, user_reputation_path(@user), id: "rep_dropdown_link" , class: "mr-0 ms_tab_pad transparent nav-link active", remote: true %>
+              </li>
+              <li id="user_panel_tab" class="follows_tab nav-item dropdown col-all-6">
+                <a id="follows_dropdown_link" class="nav-link dropdown-toggle follows_tab mr-0 ms_tab_pad" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                  <span class="margin-l-3">
+                    <i class="fas fa-eye margin-r-10 text-22 theme_color_dark"></i><span id="tab_title" class="rep_text theme_color_black">Following</span>
+                  </span>
+                  <p id="follow_count" class="theme_color_black push-right text-16 margin-t-3">
+                    <%= display_follower_count(@user) %>
+                  </p>
+                </a>
+                <div id="follows_dropdown" class="dropdown-menu">
+                  <a class="dropdown-item rep_text follows_bg_fix" id="follows_people_link" href="<%= user_people_path(@user) %>" data-remote="true">
+                    <div id="icon_container">
+                      <i class='fa fa-users theme_color_dark' aria-hidden='true'></i>
+                    </div>
+                    <span class="theme_color_black">People</span>
+                    <span class="push-right badge mt-2"><%= @user.following_users.count %></span>
+                  </a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item rep_text follows_bg_fix" id="follows_content_link" href="<%= user_content_path(@user) %>" data-remote="true">
+                    <div id="icon_container">
+                      <i class='fa fa-file theme_color_dark' aria-hidden='true'></i>
+                    </div>
+                    <span class="theme_color_black">Content</span>
+                    <span class="push-right badge mt-2"><%= @user.following_content_count %></span>
+                  </a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item rep_text follows_bg_fix" id="follows_topic_link" href="<%= user_topic_path(@user) %>" data-remote="true">
+                    <div id="icon_container">
+                      <%= image_tag "icons/messages2.svg" %>
+                    </div>
+                    <span class="theme_color_black">Subtopics</span>
+                    <span class="push-right badge mt-2"><%= @user.following_by_type_count("Subtopic") %></span>
+                  </a>
+                </div>
+              </li>
+            </div>
+          </div>
+        </div>
+        <!-- End -  USER PANEL -->
+        <div class="col-all-12 p-0 card no-top-border no-border-radius">
+          <div class="col-tier card-body" style="min-height: 18rem;">
+            <%= render 'reputation' %>
+            <%= render 'follows' %>
+          </div>
+        </div>
+      </div>
+      <!-- Below -  Recent Activity Card -->
+      <div class="tier margin-t-10 margin-b-20">
+        <div class="push-left">
+          <span class="padding-l-0 page_info_title bold my-2">
+            <%= @user.first_name.to_s %>'s Recent Activity
+          </span>
+        </div>
+        <div class="col-all-12 card p-0 no-border-radius light-box-shadow">
+          <div class="card-body" style="min-height: 15rem;">
+            <div id="user_activity_container">
+              <%= render 'activities/user_activity', collection: @user.activities.reverse %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Below -  Renders in the user's show page's action panel, accomplishments and city review, etc. from users/user_layouts/_users_action_panel.html.erb) -->
+    <%= render 'users/user_layouts/users_action_panel' %>
+  </div> <!-- Main page tier -->
+</div>
+
+<script>
+// register modal component
+Vue.component('csmodal', {
+  template: '#cs-modal-template'
+})
+
+// start app
+
+new Vue({
+  el: '#cacc-modal',
+  data: {
+    showCsModal: false,
+  }
+})
+</script>

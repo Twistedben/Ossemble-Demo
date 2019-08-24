@@ -1,0 +1,87 @@
+<!-- Admin log in page. (views/admins/sessions/new.html.erb) -->
+  <!-- Below -  Renders in new city message for city login page. -->
+ 
+<div class="content"> <!-- Begin - Form Container for Login -->
+  <div class="center col-d-9 col-t-11 col-p-11">
+    <div class="col-tier mb-5">
+      <div class="tier">
+        <p class="col-all-12 b text-18 trending_font_size my-3">
+          Login - Workplace Profile
+        </p>
+      </div>
+      <div id="login_form_box" class="card col-tier light-box-shadow">
+        <div class="tier">
+          <div class="col-d-4 col-t-4 col-p-12 ms-login-title border-bottom">
+            <div class="center-all" >
+              <%= image_tag "logos/owl_login_logo.png", alt: "Icon", class: "mb-0", style: "height: 100px; width: 100px;" %>
+            </div>
+            <div class="col-all-8 center-all my-3 theme_color_black text-20 primary_font b">
+              Collaborate within and across your organization!
+            </div>
+          </div> 
+          <%= simple_form_for(@admin, as: resource_name, url: session_path(resource_name), html: {novalidate: false, class: 'form-horizontal col-d-7 col-t-8 col-p-12 push-right'}) do |f| %>
+            <div class="form-row field">
+              <div class="form-group col-d-10 col-t-10 col-p-11 center-all margin-y-20">
+                <div class="text-22 theme_color_black mb-3">
+                  Create a Workplace Profile
+                </div>
+                <%= link_to "Signup Now", new_admin_registration_path, class: "btn button-su padding-x-15 btn-lg mr-3 margin-t-0 light-btn-shadow text-22", style: "width: 150px; height: 46px"  %>
+            </div>
+          </div>
+          <div class="theme_color_black text-18 strike center-all col-d-10 col-t-10 col-p-11  margin-b-10">
+             <span>Already have a profile?</span>
+          </div>
+          <div class="form-row field">
+            <div class="form-group col-all-10 center margin-y-20">
+              <%= f.label :email %> <br />
+              <%= f.email_field :email, autofocus: true, class: "form-control input-box-shadow", placeholder: "Enter Your Email", required: true %>
+            </div>
+          </div>
+          <div class="form-row field">
+            <div class="form-group col-all-10 center margin-y-8"> 
+              <%= f.label :password %> <br />
+              <%= f.password_field :password, class: "form-control light-input-shadow", placeholder: "Enter Your Password", required: true %>
+            </div>
+          </div>
+          
+          <div class="form-row field"> <!-- Begin - Form Row For Ruby Devise Check if Rememberable is enabled to show Checkbox -->
+            <% if devise_mapping.rememberable? -%>
+              <div class="form-group col-all-10 center margin-y-8"> 
+                <div style="display: flex;">
+                  <%= f.check_box :remember_me, class: "check_box margin-t-3 margin-r-8"%>
+                  <%= f.label :remember_me, class: "check_box_label margin-b-10" %>
+                </div>
+              </div>
+            <% end -%>                 <!-- End - Form Row For Ruby Devise Check if Rememberable is enabled to show Checkbox -->
+          </div>
+          <div class="tier">  <!-- Begin - Login Buttons Row -->
+            <div class="col-all-10 center pl-1 margin-y-10">
+              <%= f.submit "Login", id: 'login_btn', class: "btn button-su btn-lg mr-3 margin-t-0 light-btn-shadow text-20", style: "width: 120px; height: 46px"  %>
+            </div>   
+          </div>  <!-- End - Signup with Facebook Button -->
+          <div class="form-row field">
+            <div class="form-group col-all-10 center margin-b-10"> 
+              <%= render "admins/shared/links" %> <!-- Rendering Special Devise User Account Actions -->
+            </div>  
+          </div>
+          <!-- End - Login Button Row --> 
+          <% end %> <!-- End - Form For Log In to Account Devise -->
+          <div class="col-d-5 col-t-4 col-p-12 login-title">
+            <div class="center-all" >
+              <%= image_tag "logos/owl_login_logo.png", alt: "Icon", class: "mb-0", style: "height: 200px; width: 200px;" %>
+            </div>
+            <div class="col-all-10 center-all mt-3 theme_color_black text-xbig b">
+              Collaborate within and across your organization!
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Mailer lite web form
+    var ml_webform_742238 = ml_account('webforms', '742238', 'l6h8p1', 'load');
+    ml_webform_742238('animation', 'fadeIn');
+</script>

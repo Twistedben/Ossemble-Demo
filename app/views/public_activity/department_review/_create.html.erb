@@ -1,0 +1,13 @@
+<!-- Main partial for activities concerning the creation of a Department Reviews (views/public_activity/review/_create.html.erb-->
+<% if activity.trackable %>
+  <span id="activities_span" class="">
+    <span>
+      wrote a 
+      <%= activity.trackable.category %>
+      Department Review titled:
+    </span>
+    <%= link_to activity.trackable.title, city_department_review_path(activity.trackable.city, activity.trackable), id: "activity_review_link", class: "bold" %>
+<% else %>
+    deleted a Department Review.
+  </span>
+<% end %>

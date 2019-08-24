@@ -1,0 +1,43 @@
+<!-- Partial rendered in signup and login for all Links Asscoaited with Devise Users, Login, Signup, ETC (devise/shared/_links.html.erb) -->
+<div class="content">
+  <div class="col-tier">
+    <div id="devise_shared_links" class="padding-l-5">
+      <%- if controller_name != 'sessions' %>
+      <p class="margin-y-5">
+        <%= link_to "Already have a profile?", new_user_session_path, class: "profile_title"  %>
+      </p>
+      <% end -%>
+      <% unless Rails.env.production? %>
+        <p class="margin-y-5">
+          <%= link_to "Represent a City? City Login", new_admin_session_path, class: "profile_title" unless controller_name == 'registrations' %> 
+          <%= link_to "Represent a City? Create Profile", new_admin_registration_path, class: "profile_title" if controller_name == 'registrations' %> 
+        </p>
+      <% end %>
+      <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
+      <p class="margin-y-5">
+        <%= link_to "Forgot password? Reset", new_user_password_path, class: "profile_title"  %><br />
+      </p> 
+      <% end -%>
+      <%- if devise_mapping.confirmable? && controller_name != 'confirmations' %>
+      <!-- PROGRAMMERS NOTE: Commented out as confirmation isn't being used for now
+        <p class="margin-y-8">          
+          %= link_to "Didn't receive confirmation email?", new_user_confirmation_path, class: "profile_title"  %><br />
+        </p>
+      -->
+      <% end -%>
+      <%- if devise_mapping.lockable? && resource_class.unlock_strategy_enabled?(:email) && controller_name != 'unlocks' %>
+      <p class="margin-y-5">
+        <%= link_to "No unlock instructions?", new_user_unlock_path(resource_name), class: "profile_title"  %><br />
+      </p>
+      <% end -%>
+    </div>
+  </div>
+</div>
+  <!-- Removed the "Sign in With Facebook Devise Link here in favor of Putting it directly into 
+  the "Sign Up" and "Log In" Page (views/devise/registrations/new & views/users/sessions/new.html.erb -->
+  <!-- %- if devise_mapping.omniauthable? %>
+    %- resource_class.omniauth_providers.each do |provider| %>
+      %= link_to "Sign in with #{OmniAuth::Utils.camelize(provider)}", omniauth_authorize_path(resource_name, provider) %><br />
+    % end -%>
+  % end -%> -->
+

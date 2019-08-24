@@ -1,0 +1,20 @@
+<!-- Main partial for activities concerning the creation of a WUL City Review (views/public_activity/city_review/_create.html.erb-->
+<% if activity.trackable %>
+  <span id="activities_span" class="">
+    <span>
+      <span> 
+        gave 
+        <%= activity.trackable.city.name %>
+        a 
+        <span class="bold">
+          <%= activity.trackable.score %>% 
+        </span>
+      </span>
+      in a WUL Review titled:
+    </span>
+    <%= link_to activity.trackable.title, city_review_path(activity.trackable.city, activity.trackable), id: "activity_wul_link", class: "bold" %>
+    
+<% else %>
+    deleted a What You Love review.
+  </span>
+<% end %>

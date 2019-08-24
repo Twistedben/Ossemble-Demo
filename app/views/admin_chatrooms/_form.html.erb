@@ -1,0 +1,14 @@
+<%= simple_form_for(chatroom, url: chatrooms_path(chatroom), html: {class: "form-horizontal col-all-12 padding-all-15 light-box-shadow card"}) do |f| %>
+  <%= render 'layouts/errors', obj: chatroom %>
+  <div class="form-inputs col-tier margin-y-5">
+    <%= f.label :name, "Name", class: "control-label padding-y-5 col-tier" %>
+    <%= f.text_area :name, class: "form-control col-all-8", placeholder: "Enter name of chatroom...", autofocus: true %>
+  </div>
+  <div class="form-inputs col-tier margin-y-5">
+    <%= f.label :description, "Description", class: "control-label padding-y-5 col-tier" %>
+    <%= f.text_area :description, class: "form-control col-all-8", placeholder: "Enter description of chatroom..." %>
+  </div>
+  <div class="form-actions padding-y-15">
+    <%= f.submit "Create Chatroom", id: "create_chatroom_btn", class: "form_btn btn button-cs" %>
+  </div>
+<% end %>

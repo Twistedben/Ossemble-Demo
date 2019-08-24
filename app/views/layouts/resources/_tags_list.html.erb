@@ -1,0 +1,42 @@
+<!--  Partial for rendering in the City_reviews and Department_reviews Loves and Improves Tags. 
+        Will be in header_show_card unless there is an image attached to the Review. If there is an image, its title header gets dropped -->
+  <div id="tags_card" class="mt-4">
+    <p class="trending_font_size pull-left ms_titles_ml2">
+      <%= "City Review Tags" if obj.image.attached? && obj == @city_review %>
+      <%= "Department Review Tags" if obj.image.attached? && obj == @review %>
+    </p>
+    <div class="col-all-12 card light-box-shadow p-0">
+      <div class="tier">
+        <div class="col-all-12 card no-border">
+          <div class="tier">
+            <div class="card-body col-all-6 no-padding mt-0 no-border" style=" border-right: 1px solid rgba(220, 220, 220, .5) !important;">
+              <h3 class="theme_color_black mt-0 mb-4 center-all p-2" style="border-bottom: 1px solid rgba(220, 220, 220, .5)" >
+                <%= "Loves" if obj == @city_review %>
+                <%= "#{@review.category} Likes" if obj == @review %>
+              </h3>
+              <ul class="list-group list-group-flush no-margin theme_color_black" style="line-height: 1.5rem; padding-bottom: 16px;">
+                <li class="list-group-item text-left p-0 pr-1 ms_address" style="color: #696969; border: 0px solid #fff;">
+                 <div class="center-all mb-4"><span class="m-1 p-3 wul_font badge badge-pill wul-action"><%= obj.love_list[0] %></span></div>
+                 <div class="center-all mb-4"><span class="m-1 p-3 wul_font badge badge-pill wul-action"><%= obj.love_list[1] %></span></div>
+                 <div class="center-all"><span class="m-1 p-3 wul_font badge badge-pill wul-action"><%= obj.love_list[2] %></span></div>
+                </li>
+              </ul>
+            </div>
+            <div class="card-body px-0 col-all-6 py-0 mt-0 border-none" style="border-left: 1px solid rgba(220, 220, 220, .5);">
+              <h3 class="theme_color_black mt-0 mb-4 center-all p-2" style="border-bottom: 1px solid rgba(220, 220, 220, .5);">
+                <%= "Improve" if obj == @city_review %>
+                <%= "#{@review.category} Improve" if obj == @review %>
+              </h3>
+              <ul class="list-group list-group-flush no-margin theme_color_black" style="line-height: 1.5rem; padding-bottom: 16px;">
+                <li class="list-group-item text-left p-0 ms_address pl-1" style="color: #696969; border: 0px solid #fff;">
+                  <div class="center-all mb-4"><span class="m-1 p-3 wul_font badge badge-pill wul-action2" style=""><%= obj.improve_list[0] %></span></div>
+                  <div class="center-all mb-4"><span class="m-1 p-3 wul_font badge badge-pill wul-action2" style=""><%= obj.improve_list[1] %></span></div>
+                  <div class="center-all"><span class="m-1 p-3 wul_font badge badge-pill wul-action2" style=""><%= obj.improve_list[2] %></span></div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

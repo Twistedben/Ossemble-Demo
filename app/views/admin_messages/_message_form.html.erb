@@ -1,0 +1,13 @@
+<!--  Partial for creating and sending a new message. Rendered from admin_chatrooms/show.html.erb (admin_messages/_message_form.html.erb) -->
+
+<%= form_for [obj, AdminMessage.new], url: chatroom_messages_path(obj), html: {id: "conversation_field"}, remote: true do |f| %>
+  <div class="col-tier border-top pt-2">
+    <%= f.text_area :body, data: {behavior: "autocomplete"}, id: "message_body", placeholder: "Enter your message then press enter...", autofocus: true %>
+  </div>
+  <div class="col-tier mb-2">
+    <%= f.submit "Send Message", id: "send_message" %>
+    <!-- %= f.file_field :attachment, id: "upload_file_message", class: "btn upload" %> -->
+  </div>
+  <p></p>
+  
+<% end %>  

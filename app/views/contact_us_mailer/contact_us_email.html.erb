@@ -1,0 +1,83 @@
+<!-- Main email sent to cities when a complaint progresses to Filed. (views/city_mailer/complaint_filed_email.html.erb) -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  
+  <body>
+
+    <h2>
+      Citizen Action Complaint (CAC)
+    </h2>
+    <hr>
+    <p style="font-size: 17px">
+            The citizens of 
+      <b>
+        <%= @city.name.capitalize %>
+      </b> 
+            are formally requesting the 
+      <span>
+        <%= @city.name.capitalize %>
+      </span> 
+            Government to resolve the issue of a community complaint. The complaint in question is defined as 
+      <b>  
+          <%= @complaint.title %>
+      </b>
+            in or nearby the location of
+      <b>
+          <%= @complaint.address %> 
+      </b>
+            with the latitude and longitude coordinates of: 
+      <span>
+        <%= @complaint.latitude %>,
+      </span>      
+      <span>
+        <%= @complaint.longitude %>.
+      </span>
+      <p>
+       Ossemble acts as a liaison between local citizens and their government. Ossemble’s standard is for the issue to be resolved within the time frame of
+        <b>
+          <!-- Below - finds the actual deadline time -->
+          <% deadline = @complaint.days_left / 3 %>
+          <!-- Below - Shows the deadline time variable -->
+          <%= deadline %> days. 
+        </b>     
+        This can be considered the complaint's deadline.
+      </p>
+    </p>
+    <p style="font-size: 17px">
+        If the complaint is resolved within this deadline, then <%= @city.name.capitalize %> will be rewarded a score of 80% for this specific complaint. To gain additional percentage points, a higher score, the city needs to communicate with their citizens through a response and plan system. This can be accomplished by visiting and interacting with the complaint here:
+        <span>
+          <%= link_to "#{@complaint.title} Complaint for #{@city.name}", city_complaint_url(@city, @complaint) %>. 
+        </span>
+        <br>
+         If the original deadline is not achieved, then the score will drop 20% percentage points. Subsequently, a new deadline will be allotted to the city.  
+         <br>
+    </p>
+    <h1>
+      X 
+      <span style="text-decoration: underline; font-weight: bold; ">
+        Ossemble Inc.
+      </span> 
+    </h1>
+    <p style="font-size: 20px">
+        10% of <%= @city.name %>, <%= @city.state_name %> Ossemble Users. 
+    </p>
+    <% time = Time.find_zone! "EST" %>
+    <% time_now = time.now.to_formatted_s(:long_ordinal) %>
+    <p>
+      Thank you!
+    </p>
+    <p>
+      <%= time_now %> <!-- Renders the current time in EST long ordinal -->
+    </p>
+    <p style="font-size: 18px">
+      * You can create a free <%= link_to "Ossemble City Profile", new_admin_registration_url %> to interact with complaints and the citizens in your city by utilizing a City Profile feature. Our goal is the same as yours: Greater cooperation between citizens and their government. *
+      <br>
+      <b>
+        <%= link_to "Find out more by clicking here.", about_city_landing_page_url %> 
+      </b>
+   </p>
+ </body>
+</html>

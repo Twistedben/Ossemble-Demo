@@ -1,0 +1,268 @@
+<!--  Main page for an admin to update their payment information. -->
+
+
+<div class="content margin-b-30">
+  <div class="tier"> <!-- Begin - Main tier for page. -->
+    <div class="col-d-1 col-t-vanish col-p-vanish">
+      <!--  blank Space -->
+    </div>
+    <div class="col-d-11 col-t-12 col-p-12">
+      <div class="col-tier">
+        <p class="page_info_title text-25">
+          City Subscription
+        </p>
+      </div>
+      <div class="card light-box-shadow">
+        <div class="col-tier padding-all-20">
+          <div class="tier padding-y-10">
+            <p class="roboto no-margin text-25">
+              Current Subscription Plan:
+            </p>
+            <p class="padding-l-10 ">
+              <span class="badge badge-pill text-18 padding-y-8 padding-x-12">
+                <%= @admin.subscription.plan %>
+              </span>
+            </p>
+          </div>
+          
+<!-- 
+          <div class="col-tier margin-t-10">
+            <table id="subscription_plans_table" class="table table-bordered">
+              <thead class="">
+                <tr>
+                  <th class="plan_title" scope="col">Features</th>
+                  <th class="plan_title" scope="col">Basic <small>- Free</small></th>
+                  <th class="plan_title" scope="col">Plus <small>- Flat</small></th>
+                  <th class="plan_title" scope="col">Premium <small>- (Coming Soon)</small></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th class="row_title" scope="row">Reply, Planning & Comments</th>
+                  <td>
+                    <i class="fas fa-check center-self"></i>
+                  </td>
+                  <td>
+                    <i class="fas fa-check"></i>
+                  </td>
+                  <td class="not_available">
+                    <i class="fas fa-check"></i>
+                  </td>
+                </tr>
+                <tr>
+                  <th class="row_title" scope="row">Notifications & Messaging</th>
+                  <td>
+                    <i class="fas fa-check"></i>
+                  </td>
+                  <td>
+                    <i class="fas fa-check"></i>
+                  </td>
+                  <td class="not_available">
+                    <i class="fas fa-check"></i>
+                  </td>
+                </tr>
+                <tr>
+                  <th class="row_title" scope="row">Dashboard Access</th>
+                  <td>
+                    <i class="fas fa-times"></i>
+                  </td>
+                  <td>
+                    <i class="fas fa-check"></i>
+                  </td>
+                  <td class="not_available">
+                    <i class="fas fa-check"></i>
+                  </td>
+                </tr>
+                <tr>
+                  <th class="row_title" scope="row">Polls & Citizen Insights</th>
+                  <td>
+                    <i class="fas fa-times"></i>
+                  </td>
+                  <td>
+                    <i class="fas fa-check"></i>
+                  </td>
+                  <td class="not_available">
+                    <i class="fas fa-check"></i>
+                  </td>
+                </tr>
+                <tr>
+                  <th class="row_title" scope="row">Demographics & Analytics</th>
+                  <td>
+                    <i class="fas fa-times"></i>
+                  </td>
+                  <td>
+                    <i class="fas fa-check"></i>
+                  </td>
+                  <td class="not_available">
+                    <i class="fas fa-check"></i>
+                  </td>
+                </tr>
+                <tr>
+                  <th class="row_title" scope="row"># of City Profiles</th>
+                  <td>1 City Profile</td>
+                  <td>3 City Profiles</td>
+                  <td class="not_available">Unlimited Profiles</td>
+                </tr> 
+                <!-- Below -  Price table row -->
+<!--                <tr>
+                  <th class="row_title" scope="row">$ Price - Monthly</th>
+                  <td>Free & Always Free!</td>
+                  <td>
+                    $99.99 /m
+                    <i class="fas fa-info-circle text-16 padding-all-5 push-right" title="This is current startup pricing for a limited time only!"></i>
+                  </td>
+                  <td class="not_available">Population Based</td>
+                </tr>
+                <!-- Below -  Price table row -->
+<!--                <tr>
+                  <th class="row_title" scope="row"></th>
+                  <td>
+                    <label>
+                      City Basic Plan 
+                    </label>
+                    <p>
+                      <small>
+                        Free
+                      </small>
+                    </p>
+                    <!-- Begin -  Check of city being subscribed or not and showing downgrade or current plan depending -->
+<!--                    % if @admin.subscription.subscribed? %> 
+                      <p>
+                        %= link_to "Downgrade to Basic", "#", id: "downgrade_link" , class: "btn button-cs" %>
+                      </p>
+                    % else %> <!-- City is NOT subscribed   -->
+<!--                      <p>
+                        <small>
+                          Your Current Plan
+                        </small>
+                      </p>
+                    % end %> <!-- End -  Check if city is subscribed -->
+  <!--                </td>
+                  <td>
+                    <label>
+                      City Plus Plan 
+                    </label>
+                    % if @admin.subscription.subscribed? %> <!-- City is subscribed  -->
+  <!--                    <p>
+                        <small>
+                          Your Current Plan
+                        </small>
+                      </p>
+                    % else %> <!-- City is not subscribed so shows stripe pay button  -->
+<!--                      %= form_tag city_admin_charges_path do %>
+                        <article>
+                          <p>
+                            <small>Upgrade now for $99.99/month</small>
+                          </p>
+                        </article>
+                        <script src="https://checkout.stripe.com/checkout.js" class="button-cs stripe-button"
+                          data-key="%= Rails.configuration.stripe[:publishable_key] %>"
+                          data-description="Billed monthly for City Plus Plan. $99.99/month subscription."
+                          data-amount="9999"
+                          data-locale="auto"></script>
+                          <input type="hidden" name="stripeToken" />
+                        <script>
+                            Stripe.setPublishableKey(%= Rails.configuration.stripe[:publishable_key] %>);
+                            //pk_test_S2SZoxA619rrymCACpk8qaVm'); 
+                          </script>
+                      % end %>
+                    % end %>
+                  </td>
+                  <td class="not_available">
+                    <label>
+                      City Premium Plan 
+                    </label>
+                    <p>
+                      <small>
+                        Coming soon!
+                      </small>
+                    </p>
+                    <button disabled class="btn button-cs">Upgrade</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+-->
+	 <div class="col-all-12 center" style="border-radius: 0px; max-width: 1400px">
+		<div class="tier">
+			  <div class="col-tier">
+          <div class="theme_color_black center-all mt-4 mb-2 light-text-shadow" style="font-size: 32px; line-height: 45px !important">
+           Join Ossemble Workplace beta and <br> lock in unlimited features for one full year. 
+          </div>
+        </div>
+        <div class="col-d-4 col-t-10 col-p-12 mb-5 mt-4 px-3 center-all cl_price_nopad">
+          <div class="card border-radius-10" style="background-color: #f9f9f9;">
+            <div class="card-body p-0 light-box-shadow border-radius-10">
+              <div class="col-tier" style="border-bottom: 1px solid rgba(220, 220, 220, .8); background-color: #e0dedf; border-radius: 10px 10px 0px 0px">
+                <p class="center-all theme_color_black text-huge mt-3 roboto">
+                  Workplace Beta
+                </p>
+              </div>
+              <div class="col-tier">
+                <p class="center-all theme_color_black text-xhuge mt-4 roboto">
+                 $225.00 /mo
+                </p>
+              </div>
+              <div class="col-tier">
+                <p class="center-all theme_color_black text-xxbig mt-2 mb-1 border-bottom b roboto">
+                 Features With This Plan
+                </p>
+              </div>
+                <p class="center-all theme_color_black m-0">
+	                 <p class="center-all roboto theme_color_black text-xxmedium mb-2">Internal Messages</p>
+	                 <p class="center-all roboto theme_color_black text-xxmedium mb-2">Group Messages</p>
+	                 <p class="center-all roboto theme_color_black text-xxmedium mb-2">Workplace Collaborative Feed</p>
+	                 <p class="center-all roboto theme_color_black text-xxmedium mb-2">Easily Share Files</p>
+	                 <p class="center-all roboto theme_color_black text-xxmedium mb-4">GEO Map Interactions</p>
+                </p>
+               <div class="col-tier">
+                <p class="center-all roboto theme_color_black text-xxbig mt-2 mb-1 border-bottom b">
+                Coming Soon
+                </p>
+              </div>
+                <p class="center-all theme_color_black m-0">
+	                 <p class="center-all roboto theme_color_black text-xxmedium mb-2">Internal Dashboard</p>
+	                 <p class="center-all roboto theme_color_black text-xxmedium mb-2">Public Profiles</p>
+	                 <p class="center-all roboto theme_color_black text-xxmedium mb-4">Plus More!</p>
+                </p>
+              <div class="col-tier pb-2" style="border-top: 1px solid rgba(220, 220, 220, .8);  background-color: #e0dedf; border-radius: 0px 0px 10px 10px">
+                <div class="center-all my-3">
+                       <%= form_tag city_admin_charges_path do %>
+                        <article>
+                          <p>
+                            <small>Upgrade now for $225/month</small>
+                          </p>
+                        </article>
+                        <script src="https://checkout.stripe.com/checkout.js" class="button-cs stripe-button"
+                          data-key="%= Rails.configuration.stripe[:publishable_key] %>"
+                          data-description="Billed monthly for City Plus Plan. $99.99/month subscription."
+                          data-amount="222500"
+                          data-locale="auto"></script>
+                          <input type="hidden" name="stripeToken" />
+                        <script>
+                            Stripe.setPublishableKey(<%= Rails.configuration.stripe[:publishable_key] %>);
+                            //pk_test_S2SZoxA619rrymCACpk8qaVm'); 
+                          </script>
+                          <% end %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+			</div>
+		</div>
+        <div id="" class="col-tier padding-all-20" >
+         
+        </div>  
+      </div> 
+      <div class="tier">
+        <div class="col-all-12">
+
+        </div> 
+      </div>
+    </div>
+  </div> <!-- Main page tier -->
+</div>
+

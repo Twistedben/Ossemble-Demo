@@ -1,0 +1,109 @@
+<!--  Partial rendered when a user clicks FOllows in User Panel Bar. (users/_follows.html.erb) 
+      Helper methods are in Users_helper.rb -->
+<div id="follows_bar" class="col-all-12 vanish"> 
+<!-- Begin -  PEOPLE: All the people the user follows tier. Is trigger to show from UserController, people, then people.js.erb -->
+  <div id="people_follows_tier" class="vanish col-tier"> 
+    <h3 class="margin-t-0 roboto">People <%= @user.first_name %> Follows</h3>
+    <hr class="push-left margin-t-3">
+
+    <% if @user.following_users.empty? %>
+      <p class="h3">
+        <%= @user.first_name %> has yet to Follow someone.
+      </p>
+    <% else %>
+      <% @user.following_users.each do |user| %>
+        <div id="people_tier" class="col-all-12 border-bottom margin-y-3"> 
+          <div class="col-tier">
+            <div id="people_avatar" class="">
+              <%= display_follows_avatar(user) %>
+            </div>
+            <div class="col-all-9 margin-y-10">
+              <%= link_to "#{user.name}", user_path(user.city, user), id: " " , class: "padding-l-8" %>
+              <span class="">
+                - <%= "#{user.city.name}," %>
+                <%= user.state %>
+              </span>
+            </div>
+            <div class="col-all-2 padding-b-10 push-right">
+              <% if is_current_user?(@user) %>
+                <%= form_tag user_unfollow_path(user.id), method: :delete, onclick: "$(this).hide();", data: {confirm: "You've unfollowed this person."}, remote: true do 
+                    button_tag "<i class='fas fa-angle-double-left margin-r-5'></i>Unfollow".html_safe, id: "follow_unfollow", class: 'push-right btn btn-white'
+                  end %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+<!-- End -  PEOPLE: -->
+<!-- Begin -  CONTENT: All the people the user follows tier. Is trigger to show from UserController, people, then people.js.erb -->
+  <div id="content_follows_tier" class="vanish col-tier"> 
+    <h3 class="margin-t-0 roboto">Content <%= @user.first_name %> Follows</h3>
+    <hr class="push-left margin-t-3">
+    <% if @user.following_content.empty? %>
+      <p class="h3">
+        <%= @user.first_name %> has yet to Follow any content.
+      </p>
+    <% else %>
+      <% @user.following_content.each do |content| %>
+        <div id="content_tier" class="col-all-12 border-bottom margin-y-3" 
+          title="
+            <%= "Complaint" if content.class.to_s == "Complaint" %> 
+            <%= "Petition" if content.class.to_s == "Petition" %> 
+            <%= "Post" if content.class.to_s == "Post" %> 
+        "> 
+          <div class="col-tier">
+            <div class="col-all-10 margin-y-10">
+              <%= display_follow_content_link(content) %>
+              <span>
+                <%= "post in #{content.topic.name} / #{content.subtopic.name}" if content.class.to_s == "Post" %>
+                <%= "complaint" if content.class.to_s == "Complaint" %>
+                <%= "&nbsp petition".html_safe if content.class.to_s == "Petition" %>
+              </span>
+              <span class="">
+                - <%= "#{content.city.name}," %>
+                <%= content.city.state_name %>
+              </span>
+            </div>
+            <div class="col-all-1 padding-b-10 push-right">
+              <%= display_unfollow_content(content) if is_current_user?(@user) %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+<!-- End -  CONTENT: -->
+<!-- Begin -  SUBTOPIC: All the people the user follows tier. Is trigger to show from UserController, people, then people.js.erb -->
+  <div id="topic_follows_tier" class="vanish col-tier"> 
+    <h3 class="margin-t-0 roboto">Subtopics <%= @user.first_name %> Follows</h3>
+    <hr class="push-left margin-t-3">
+    <% if @user.following_by_type("Subtopic").empty? %>
+      <p class="h3">
+        <%= @user.first_name %> has yet to Follow any Subtopics.
+      </p>
+    <% else %>
+      <% @user.following_by_type("Subtopic").each do |subtopic| %>
+        <div id="subtopic_tier" class="col-all-12 border-bottom margin-y-3"> 
+          <div class="col-tier">
+            <div class="col-all-10 margin-y-10">
+              <%= display_follow_content_link(subtopic) %>
+              <span>
+                <%= "subtopic in #{subtopic.topic.name}" %>
+              </span>
+              <span class="">
+                - <%= "#{subtopic.city.name}," %>
+                <%= subtopic.city.state_name %>
+              </span>
+            </div>
+            <div class="col-all-1 padding-b-10 push-right">
+              <%= display_unfollow_content(subtopic) if is_current_user?(@user) %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+<!-- End -  SUBTOPIC: -->
+</div>

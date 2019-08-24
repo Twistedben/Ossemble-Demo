@@ -1,0 +1,95 @@
+<!--  Page sent after creating a new workplace to pick the geojson map shape of the area for the workplace -->
+<div class="content">
+  <div class="tier shapes_new_ml">
+    <div class="center col-d-9 col-t-10 col-p-12">
+      <div class="alert panel panel-info alert-info text-black message_alert_panel text-center">
+        <div class="margin-l-auto">
+          <a href="#" class="close push-right" data-dismiss="alert">
+            &#215;
+          </a>
+        </div>
+        <span class="text-16">
+          Below, select the geographical area that your first Channel will cover; if it's a single city, county, or congressional district. You can also draw your own area. Then use the map to click or create the area for your Channel's location. 
+        </span>
+      </div>
+      <div class="col-tier">
+        <h2 class="mb-0 b theme_color_black roboto">
+          Assign Channel Map Location
+        </h2>
+      </div>
+      <div class="col-tier form_tier">
+        <%= render 'layouts/errors', obj: @shape %>
+      </div>
+      <div id="signup_accordion_container">
+        <div id="after_signup_container" class="after_padding " >
+          <div id="after_signup_form_container" class="col-tier">
+            <div class="col-tier form_tier" title="The type of geographical area to select for your Channel: a City, a County, or Congressional District?">
+              <div id="location_category_select" class="col-tier">
+                <label>
+                  Channel's Geography <small> ( Does the Channel's geography cover a city, county, or congressional district; or, Draw Your Own area?)</small>
+                </label>
+              </div>
+              <div id="map-type-btns" class="center-all">
+                <div class="col-all-12 center-all">
+                  <% if params[:map] == "city" %>
+                    <%= link_to "<span style='line-height: 45px'>City / Municipality</span>".html_safe, city_map_path(@institute, @workplace), id: " " , class: "selected pointer btns_margin" %>
+                  <% else %>
+                    <%= link_to "<span style='line-height: 45px'>City / Municipality</span>".html_safe, city_map_path(@institute, @workplace), id: " " , class: "unselect pointer btns_margin" %>
+                  <% end %>
+                  <% if params[:map] == "county" %>
+                    <%= link_to "<span style='line-height: 45px'>County</span>".html_safe, county_map_path(@institute, @workplace), id: " " , class: "selected pointer btns_margin" %>
+                  <% else %>
+                    <%= link_to "<span style= 'line-height: 45px'>County</span>".html_safe, county_map_path(@institute, @workplace), id: " " , class: "unselect pointer btns_margin" %>
+                  <% end %>
+
+
+                  <% if params[:map] == "district" %>
+                    <%= link_to "<span style='line-height: 45px'>Congressional District</span>".html_safe, district_map_path(@institute, @workplace), id: " " , class: "selected pointer btns_margin" %>
+                  <% else %>
+                    <%= link_to "<span style='line-height: 45px'>Congressional District</span>".html_safe, district_map_path(@institute, @workplace), id: " " , class: "unselect pointer btns_margin" %>
+                  <% end %>
+                  <% if params[:map] == "custom" %>
+                    <%= link_to "<span style='line-height: 45px'>Draw Your Own</span>".html_safe, custom_map_path(@institute, @workplace), id: " " , class: "selected pointer btns_margin2" %>
+                  <% else %>
+                    <%= link_to "<span style='line-height: 45px'>Draw Your Own</span>".html_safe, custom_map_path(@institute, @workplace), id: " " , class: "unselect pointer btns_margin2" %>
+                  <% end %>
+                </div>
+              </div> 
+            </div>
+            <div class="col-all-12 margin-y-20">
+              <div id="map_alert">
+                <p class="alert panel">
+                  <%= "Click one of the three categories above to select the type of geographical category your Channel will cover." if params[:map] == nil %>
+                  <%= "Click on the map to pin the location of the city, then click the button below to display the geographical boundary of the city. If it's correct, then click 'Assign Map' below; otherwise, repostition the marker and try again." if params[:map] == "city" %>
+                  <%= "Select one or multiple Counties on the map below that represents the geographical area your Channel will cover. Click the County again to remove its selection. Once selected, click 'Assign Map' below." if params[:map] == "county" %>
+                  <%= "Select the Congressional District on the map below that represents the geographical area that your Channel will cover. Once selected, click 'Assign Map' below." if params[:map] == "district" %>
+                  <%= "Click on the Polygon icon on the map's left toolbar below to begin drawing your own geographical area for your Channel. Once one or multiple shapes are drawn, click 'Assign Map' button below." if params[:map] == "custom" %>
+                </p>  
+                <!-- Below -  Renders in census call button for city map -->
+                <%= render 'city_map' if params[:map] == "city" %>
+              </div>
+              <div id="county_district_shape_form">
+                <%= render 'form' unless params[:map] == "city" %>      
+              </div>
+              <div id="channel_map_container" class="center mb-0 p-1 light-box-shadow" style="height: 600px">
+                <div class="map_area">
+                  <div id="oss_map" class="col-12 ms_map border-radius-none">
+                    <!-- Below -  Renders map if it isn't a census call, district or county -->
+                    <%= render 'map' unless params[:map] == "city" %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Below -  Renders in the city form map at bottom of page is city is selected. Css is different due to div ID -->
+        <div id="city_workplace_shape_form">
+          <%= render 'form' if params[:map] == "city" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<% if params[:map] == "city" %> 
+  <%= javascript_pack_tag 'application' %>
+<% end %>

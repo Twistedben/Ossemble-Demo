@@ -1,0 +1,17 @@
+<!--  Partial for rendering in each message inside of a admin chatroom, the show page from (views/admin_chatrooms/show.html.erb) -->
+  <div id="message_container" class="col-tier">
+    <%= display_message_avatar(admin_message.admin) %>
+    <div class="relative padding-l-10 padding-t-5">
+      <!-- Below -  Helper method for displaying message owner, the time depending on when it was sent, and new message indication depending on when it was sent. -->
+      <%= display_message_owner_time_and_new(admin_message) %>     
+      <br />
+      <div id="message_body">
+        <%= linked_admins admin_message.body, admin_message.admin %>
+      </div>
+      <% if admin_message.attachment.attached? %> 
+        <strong class="mt-2 mr-1 theme_color_dark">Attachment-</strong>
+        <%= link_to "<i class='fas fa-paperclip margin-r-8 theme_color_dark'></i>Download File".html_safe, rails_blob_path(admin_message.attachment, disposition: :attachment), class: "text-18" %>
+      <% end %>
+    </div>
+  </div>
+

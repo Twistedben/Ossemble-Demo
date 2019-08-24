@@ -1,0 +1,28 @@
+<!--  Renders in the petition goal first if the petition doesn't have an image, otherwise, second. -->
+
+<!-- Begin -  Petition Goal & File Row  -->
+<div class="col-tier">
+  <p class="text-22 trending_font_size">
+    <%= "Petition Goal" if obj.image.attached? %>
+  </p>
+  <div class="col-tier mx-0 card px-0 text-justify">
+    <div class="col-all-12 card-body light-box-shadow">
+      <p class="text-20 source">
+        <%= simple_format(obj.goal, class: 'show_page_description text-22 roboto', style: "text-indent: 10px") %>
+      </p>
+    </div>
+  </div>
+</div>   
+<!-- Below -  If there's an attached file, it will display here below goal -->
+<% if obj.file.attached? %> <!--  Petition has a file attached so it shows below text -->
+  <div class="col-tier mx-0 no-top-border card px-0">
+    <div class="col-all-12 card-body center-all light-box-shadow">
+      <p class="lead bold margin-l-8 padding-b-0 mt-0 margin-b-5 center-all">
+        Attached Document:
+      </p>
+      <p class="text-20 ">
+        <%= link_to "<i class='fas fa-paperclip margin-r-8'></i><span class='title_link'>Download File</span>".html_safe, rails_blob_path(obj.file, disposition: :attachment), class: "theme_color_dark" %>
+      </p>
+    </div>
+  </div>
+<% end %> 

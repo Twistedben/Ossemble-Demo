@@ -1,0 +1,15 @@
+<!--  Main partial being rendered for Public Activity gem on Subtopic follow from Follows_controller. (views/public_activity/subtopic/_follow.html.erb). -->
+<% if activity.trackable %>
+  <span id="activities_span" class="">
+    <span>
+      followed a Subtopic titled:
+    </span>
+    <%= link_to activity.trackable.name, subtopic_path(activity.trackable.city, activity.trackable.topic, activity.trackable), id: "activity_complaint_link", class: "bold" %>
+    <span>
+       in:
+      <span class="i bold"> <%= activity.trackable.topic.name %> </span>
+    </span>
+  </span>
+<% else %>
+    unfollowed a Subtopic.
+<% end %>

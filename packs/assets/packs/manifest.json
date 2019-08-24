@@ -1,0 +1,34 @@
+{
+  "application.js": "/assets/packs/js/application-495f32d9d1f7406b2134.js",
+  "application.js.map": "/assets/packs/js/application-495f32d9d1f7406b2134.js.map",
+  "census.js": "/assets/packs/js/census-c1bdcca8c334ef10e73e.js",
+  "census.js.map": "/assets/packs/js/census-c1bdcca8c334ef10e73e.js.map",
+  "entrypoints": {
+    "application": {
+      "js": [
+        "/assets/packs/js/application-495f32d9d1f7406b2134.js"
+      ],
+      "js.map": [
+        "/assets/packs/js/application-495f32d9d1f7406b2134.js.map"
+      ]
+    },
+    "census": {
+      "js": [
+        "/assets/packs/js/census-c1bdcca8c334ef10e73e.js"
+      ],
+      "js.map": [
+        "/assets/packs/js/census-c1bdcca8c334ef10e73e.js.map"
+      ]
+    },
+    "import": {
+      "js": [
+        "/assets/packs/js/import-e292836a655c74853929.js"
+      ],
+      "js.map": [
+        "/assets/packs/js/import-e292836a655c74853929.js.map"
+      ]
+    }
+  },
+  "import.js": "/assets/packs/js/import-e292836a655c74853929.js",
+  "import.js.map": "/assets/packs/js/import-e292836a655c74853929.js.map"
+}

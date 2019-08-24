@@ -1,0 +1,494 @@
+<!--  Main Show Page for Individual Complaints in order to display additional information of the specific complaint. (views/complaints/show.html.erb) -->
+       
+  <div class="content">
+    <div class="tier"> <!-- Begin - Main tier for page. -->
+    <!-- Below -  Renders in the accordian from views/layouts/phones/... for mobile and tablet. -->
+    <%= render "layouts/phones/mobile_accordion" %>
+  <!-- Begin - Complaint Information and Score. -->
+    <!-- Begin - Top Row Section of Container -->
+      <div class="col-d-7 col-t-11 col-p-12 padding-t-20 center">
+        <div id="header_show_card" class="col-all-12">
+          <div class="tier">
+            <div class="no-margin col-all-12">
+              <div class="mt-0 col-tier">
+                <div class="col-all-12 p-0 card-body pull-left">
+                  <div class="col-tier">
+                    <!-- Below -  Displays the complaint's associated default icon. Goes to Complaints_helper.rb method dishaply_complaint_show_icon. -->
+                    <%= display_complaint_show_icon(@complaint) %>
+                    <p class="text-xmedium mb-0" style="margin-left: 17px">
+                      <span id="show_page_title">      
+                        <%= "#{@complaint.title} - <span class='no-bold'>#{@complaint.address}</span>".html_safe %>
+                      </span>
+                      <br>
+                      <span class="tier mt-0">
+                        <span style="width: 45px !important; height: 40px !important;">
+                          <%= display_show_avatar(@complaint.user) %>
+                        </span>
+                        <!-- Below - Users_helper.rb - Displays user name as a link and to determine if the user is from the city or a non-resident -->
+                        <span class="padding-t-10">
+                          <%= display_user_name(@complaint.user) %>
+                        </span>
+                      </span>
+                      <br>
+                      <span class="relative" style="top: -25px">
+                        <span class="text-big show_text_scale"> 
+                          Posted: <%= time_ago_in_words(@complaint.created_at).capitalize %> ago - 
+                        </span>
+                        <span class="text-xxbig show_text_scale relative" style="top: 1px">                      
+                          <%= "Scored:" if @complaint.finished? %>
+                          <%= "Current Score:" unless @complaint.finished? %>
+                        </span>
+                        <span class="bold text-xxbig show_text_scale relative" style="top: 2px">
+                          <%= display_score(@complaint) %>
+                        </span>
+                      </span>
+                      <br>
+                    </p>
+                  </div>
+                </div>
+                <div class="col-tier mt-2">
+                <!-- Begin -  Filter tags Row -->
+                  <div class="" style="width: 90px; margin-right: 40px">
+                    <%= display_endorse_button(@complaint, "complaints", "Complaint", upvote_city_complaint_path(@city, @complaint.id)) %>
+                  </div>
+                  <a class="btn mr-3 alt-action" href='<%= city_map_pins_path(@city) %>' >
+                    Map Pin
+                  </a>
+                  <a class="btn mr-3 alt-action" href='<%= city_complaints_path(@city) %>' >
+                    Report
+                  </a>
+                  <a class="btn mr-3 alt-action" href='<%= complaint_category_link(@complaint) %>' >
+                     <%= @complaint.category %>
+                  </a>
+
+                  <!-- End -  Filter tags Row -->
+                  <div class="margin-l-auto">
+                    <!-- Below - Renders in helper method for endorse in upvotes_helper.rb. Instance method, name of controller, and then name of resource to display on the button itself. -->
+                    <%= link_to "<i class='theme_color_dark fas fa-pencil-alt'></i> Edit".html_safe, edit_user_complaint_path(@complaint.user, @complaint), class: "title_link text-medium" if is_current_users?(@complaint)  %>
+                    
+                  </div>
+                </div>
+              <!-- Below -  Renders in Complaint description if there is no image -->
+              <%= render 'layouts/resources/resource_description', obj: @complaint unless @complaint.image.attached? %>
+              <!-- Below -  Renders in Complaint description if there is no image -->
+              <%= render 'layouts/resources/resource_image', obj: @complaint if @complaint.image.attached? %>
+              <!-- Below -  Renders the follow and other user action buttons -->
+              <%= render 'layouts/resources/user_action_tier', obj: @complaint %>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Below -  Renders in the complaints description -->
+        <%= render 'layouts/resources/resource_description', obj: @complaint if @complaint.image.attached? %>
+      <div class="mt-4">
+        <p class="text-22 b roboto trending_font_size pull-left">
+          Complaint Location
+        </p>
+      </div> 
+      <div class="col-tier light-box-shadow border-y-none" style="border: 1px solid rgba(88, 88, 88, .2);">
+        <div class="card-body mb-0 well bg-white no-border-radius p-2" style="border-top: none !important">
+          <!-- Begin - Map Row for Complaint -->
+          <div class="map_area"> 
+            <!-- Below - Calls in the map -->
+            <div class="ms_map bg-white no-border-radius" id="oss_map" style="border: 1px solid rgba(88, 88, 88, .2); border-top: none !important; border-bottom: none !important">
+              <%= render 'complaint_show_map' %> <!-- Leaflet JS for Map -->
+            </div>
+          </div>  <!-- End - Map Row for Complaint -->
+        </div>
+      </div>
+      <div class="mt-4">
+        <p class="text-22 b roboto trending_font_size pull-left">
+          Complaint Status
+        </p>
+      </div> 
+      <!-- Begin - Second row under main cards, containing who posted it, who verified it, if the city responded or not. -->
+      <div class="well p-0 col-tier bg-white mb-0 pb-0 border-radius-0 no-border-bottom no-border-radius">
+          <!-- Begin - Left side of the row container who posted it and who verified it -->
+        <div class="col-tier light-box-shadow">
+          <div class="col-d-6 col-t-6 col-p-12 card no-y-border">
+            <!-- Begin - User who posted the complaint. -->
+            <div class="tier card-body no-border-bottom border-radius-0">
+              <div class="col-all-12" style="height: 29px !important">
+                <p class="roboto text-20 bold margin-l-8 padding-b-3 mt-0 margin-b-8 border-bottom">
+                  Process
+                </p>
+              </div> 
+              <div class="col-all-12 margin-l-8 mt-3 text-big">
+                <% if @complaint.filed? %>
+                  <p style="height: 24px !important">
+                    <span class="bold">
+                      Time Left:
+                    </span>
+                    <span>
+                      <%= @complaint.days_left %> Days
+                    </span>
+                  </p>
+                <% end %>
+                <p>
+                  <% if @complaint.verifying? %>
+                    <span class="bold">
+                      Awaiting Confirmation:
+                    </span>
+                    <span class="text-17">
+                       <%= time_ago_in_words(@complaint.created_at).capitalize %> ago 
+                    </span>
+                  <% elsif @complaint.pending? %>
+                    <span class="bold">
+                      Awaiting Endorsements:
+                    </span>
+                    <span class="text-17">
+                       <%= time_ago_in_words(@complaint.verified_at).capitalize %> ago 
+                    </span>
+                  <% elsif @complaint.filed? %>
+                    <span class="bold">
+                       Filed - Sent to City:
+                    </span>
+                    <span class="text-17">
+                       <%= time_ago_in_words(@complaint.filed_at).capitalize %> ago 
+                    </span>
+                  <% elsif @complaint.completed? %>
+                    <span class="bold">
+                       Completed:
+                    </span>
+                    <span class="text-17"> 
+                       <%= time_ago_in_words(@complaint.completed_at).capitalize %> ago 
+                    </span> 
+                  <% elsif @complaint.failed? %>
+                    <span class="bold">
+                      Failed - Deadline Hit:
+                    </span>
+                    <span class="text-17">
+                       <%= time_ago_in_words(@complaint.failed_at).capitalize %> ago 
+                    </span>
+                  <% end %>   <!-- End - Complaint Process if statement. -->
+                </p>
+                <div class="col-all-12">
+                  <% if !@complaint.verifying? && @complaint.pending? %> <!-- If complaint verifying is false and complaint pending is true, display: -->
+                    <p class="text-big theme_color_black ms_comp_process_size mb-0">     
+                      <strong>Confirmed within:</strong>
+                      <%= distance_of_time_in_words(@complaint.created_at, @complaint.verified_at) %> <!-- time since complaint was verified. -->
+                    </p> 
+                  <% end %>
+                  <% if !@complaint.pending? && @complaint.filed? %> <!-- If complaint pending is false and complaint filed is true, display: -->
+                    <p class="text-big theme_color_black ms_comp_process_size mb-0">
+                      <strong>Filed within:</strong> 
+                      <%= distance_of_time_in_words(@complaint.verified_at, @complaint.filed_at) %> <!-- time since complaint was pending. -->
+                    </p>
+                  <% end %>
+                  <% if !@complaint.filed? && @complaint.completed? %> <!-- If complaint filed is false and complaint completed is true, display: -->
+                    <p class="text-big theme_color_black ms_comp_process_size mb-0">
+                      <strong>Completed within:</strong> 
+                      <%= distance_of_time_in_words(@complaint.filed_at, @complaint.completed_at) %> <!-- time since complaint was filed. -->
+                    </p>
+                  <% end %>
+                </div>
+              </div>
+            </div> 
+          </div>   <!-- End - Left side of the row container who posted it and who verified it -->
+      <!-- Begin - Right side of the row container for the process and who verified and when -->
+       <!-- Begin - User who verified the complaint. -->
+      <div class="card col-d-6 col-t-6 col-p-12 border-y-none">
+        <div class="card-body no-border-bottom no-border-radius">
+          <!-- Begin - If statement to show who verified the complaint. -->
+          <% if @complaint.verified_by_user_id %>
+            <div class="col-all-12">
+              <p class="roboto text-20 bold margin-l-8 mt-0 padding-b-3 margin-b-8 border-bottom">
+                Confirmed By
+              </p>
+            </div>
+            <div class="center-all mt-3">
+              <%= display_medium_avatar(@verifying_voter) %>
+              <p class="margin-t-8 margin-b-0">
+                <%= link_to @verifying_voter.name, user_path(@verifying_voter.city, @verifying_voter), class: 'text-big' %>
+              </p>
+              <p class="small no-margin">
+                <%= "Confirmed: #{display_date(@complaint.verified_at)}"%>
+              </p>
+            </div>
+          <% else %>   <!-- Complaint hasn't yet been verified. -->
+            <p class="text-left text-large border-bottom">
+              Complaint has yet to be confirmed
+            </p>
+            <ul class="mb-0 pl-0">
+              <p>It has been awaiting confirmation for <%= time_ago_in_words(@complaint.created_at).capitalize  %></p>
+            </ul>
+          <% end %>
+          <!-- End - If statement to show who verified the complaint. -->
+        </div>
+      </div> 
+      <!-- End - User who verified the complaint. -->
+      <!-- Begin - Process and Cities Response -->
+      <div class="tier col-all-12">
+        <!-- Begin  - Process left side -->
+        <!-- Begin - Cities' Response right side -->
+        <div class="col-all-12 card">
+          <% if is_admins_city? %> <!-- Determines if User is a City Admin to interact with Complaints -->
+          <!-- Begin - Admin Response Buttons below Complaints' info -->
+          <div class="card-body">
+            <div class="theme_color_black text-xlarge center-all border-bottom">
+              Respond to this Complaint
+            </div>
+            <div class="tier mt-4">
+              <!-- Begin -  Admin's button row -->
+              <div id="admin_complaint_btns" class="tier center-all col-all-12">
+                <div id="" class="col-d-4 col-t-4 col-p-12 ms_my_adminbtn" data-toggle="tooltip" data-placement="top" title="Confirm that you have seen, and acknowledge this Complaint."> 
+                  <% if @complaint.replied %> <!--  City has already replied -->  
+                    <button class="light-btn-shadow btn btn-lg action text-white mx-2" disabled><i class="fas fa-check-circle padding-r-8 "></i>Acknowledged</button>
+                  <% elsif @complaint.finished? %> <!--  Complaint has already finished -->  
+                    <% if @complaint.failed? %> <!--  Complaint has failed -->
+                      <button class="light-btn-shadow btn btn-lg btn-danger text-white mx-2" disabled><i class="fas fa-percentage padding-r-8"></i>Already Scored</button>
+                    <% else %> <!--  Complaint has completed -->
+                      <button class="light-btn-shadow btn btn-lg btn-success text-white mx-2" disabled><i class="fas fa-percentage padding-r-8"></i>Already Scored</button>
+                    <% end %>
+                  <% else %> <!-- City had NOT yet replied and complaint has not finished -->
+                    <%= link_to "<i class='fas fa-reply-all padding-r-8'></i>Acknowledge <small>+ 5%</small>".html_safe, complaint_replies_path(@complaint.city, @complaint), id: "reply_#{@complaint.id} " , class: "light-btn-shadow btn btn-lg action text-white mx-2", remote: true %>
+                  <% end %>
+                </div>
+                <div id="" class="col-d-4 col-t-4 col-p-12" data-toggle="tooltip" data-placement="top" title="Submit a plan to work towards completing this Complaint within the alloted time period: <%= @complaint.days_left %> days."> 
+                  <% if @complaint.planned %> <!--  City has already submitted a plan-->  
+                    <button class="light-btn-shadow btn btn-lg action text-white mx-2" disabled><i class="fas fa-check-circle padding-r-8"></i>Planned</button>           
+                  <% elsif @complaint.finished? %> <!--  Complaint has already finished -->  
+                    <% if @complaint.failed? %> <!--  Complaint has failed -->
+                      <button class="light-btn-shadow btn btn-lg btn-danger text-white mx-2" disabled><i class="fas fa-percentage padding-r-8"></i>Already Scored</button>
+                    <% else %> <!--  Complaint has completed -->
+                      <button class="light-btn-shadow btn btn-lg btn-success text-white mx-2" disabled><i class="fas fa-percentage padding-r-8"></i>Already Scored</button>
+                    <% end %>
+                  <% else %> <!--  City has NOT submitted a plan and complaint has not finished-->  
+                    <%= link_to "<i class='fas fa-file-signature padding-r-8'></i>Submit Plan <small>+ 15%</small>".html_safe, complaint_plans_path(@complaint.city, @complaint), id: "plan_#{@complaint.id}", class: "light-btn-shadow btn btn-lg action text-white mx-2", remote: true %>                    
+                  <% end %>
+                </div>
+                <div id="" class="col-d-4 col-t-4 col-p-12" data-toggle="tooltip" data-placement="top" title="The Complaint has been completed and addressed within the alloted time period. <%= "To re-open this failed complaint, subscribed to Ossemble Pro." if @complaint.failed? %>"> 
+                  <% if @complaint.completed? %> <!--  Complaint has completed-->
+                    <button class="light-btn-shadow btn btn-lg btn-success text-white mx-2" disabled><i class="fas fa-check-circle padding-r-8"></i>Already Completed</button>                    
+                  <% elsif @complaint.failed? %> <!--  Complaint has failed -->
+                    <button class="light-btn-shadow btn btn-lg btn-danger text-white mx-2" disabled><i class="fas fa-percentage padding-r-8"></i>Already Scored</button>                   
+                  <% else %>
+                    <%= button_to "Complete at #{@complaint.score}%", {controller: "complaints",
+                        action: "completed",  id: @complaint.id, remote: :true}, {class: 'light-btn-shadow btn btn-lg action text-white mx-2'} %> 
+                  <% end %>
+                </div>
+              </div>
+              <!-- End -  Admin's button row -->
+            </div> <!-- End - Admin Response Buttons below Complaints' info -->
+          </div>
+          <% else %> <!-- User is not the admin of this city. -->
+        <!-- Begin - Shows the Citys' response to the complaint to the user.
+              Since User is NOT an admin, this row will display City's Responses based on Complaints' Responses (planned/replied). -->
+          <div class="tier my-3 center card-body margin-b-10">
+            <div class="col-all-12 border-bottom center-all" style="height: 35px !important">
+              <p class="lead bold center-all mt-0">
+                <%= @complaint.city.name %>'s  Response  
+              </p>
+            </div> 
+            <div class="col-6 center my-1 pr-0 pl-0 no-border-top" style="border: 1px groove rgba(224, 224, 224, .3)">
+              <p>
+              <!-- Begin - If Statement whether the city has replied or not to the Complaint. -->
+              <% if @complaint.replied? %>
+                <!-- Below - Displays if the City has replied. -->
+                <div class="center-all"> 
+                  <i class="fa fa-check text-success text-xxlarge" aria-hidden="true"></i>
+                </div>
+                <p class="center-all mb-0">
+                  We hear you!
+                </p>
+                <p class="center-all mb-0">
+                  Acknowledged on: <%= display_date(@complaint.replied_at) %>
+                </p>
+              <% else %>
+                <!-- Below - Displays if the City HAS NOT replied. -->
+                <div class="center-all"> 
+                  <i class="fa fa-times text-danger text-xxlarge" aria-hidden="true"></i>
+                </div> 
+                <p class="center-all mb-0">
+                  Not Acknowledged
+                </p>
+              <% end %>
+              <!-- End - If Statement whether the city has replied or not to the Complaint. -->
+              </p>
+            </div>
+            <div class="col-6 center my-1 padding-x-0 no-border-top" style="border: 1px groove rgba(224, 224, 224, .3);">
+              <p>
+              <!-- Begin - If Statement whether the city has submitted a plan or not for the Complaint. -->
+              <% if @complaint.planned? %>
+                <div class="center-all"> 
+                  <i class="fa fa-check text-success text-xxlarge" aria-hidden="true"></i>
+                </div>
+                <p class="center-all mb-0">
+                  We have a plan. See below!
+                </p>
+                <p class="center-all mb-0">
+                  Plan Submitted on: <%= display_date(@complaint.planned_at) %>
+                </p>
+              <% else %>
+                <div class="center-all"> 
+                  <i class="fa fa-times text-danger text-xxlarge" aria-hidden="true"></i>
+                </div>
+                <p class="center-all mb-0">
+                  Not Planned
+                </p>
+              <% end %> <!-- End - If Statement whether the city has submitted a plan or not for the Complaint. -->
+              </p>
+            </div>
+          </div> <!-- End - Row for Responses from cities -->
+        <% end %> <!-- End - Shows the Citys' response to the complaint to the user. -->
+      </div>   <!-- End - Cities' Response right side -->
+    </div> <!-- End - Process and Cities Response -->
+  </div>
+</div>
+
+<!-- Begin - Form for replying to a complaint for a city. -->
+<!-- Below -  Form is rendered and shown through "complaint_reply/new.js.erb" AJAX -->
+<div id="complaint_reply_div" class="content margin-t-25 vanish">
+    <div class="tier curved_box_top bg-white">
+      <div class="col-all-12">
+        <p class="theme_color_black text-xlarge pull-left margin-all-10 margin-l-0 text-18">
+          Acknowledge and Reply to <%= @complaint.title %>
+        </p>
+      </div>
+      <div class="col-all-12 light-box-shadow card" style="border: 1px solid rgba(128, 128, 128, .5)">
+        <div class="col-all-12 pull-left">
+          <div class="card-body theme_color_black bg-white">
+            <div id="acknowledge_form" class="vanish">
+              <!--  Form for a city admin creating a new reply to a complaint. Rendered using AJAX from a div named #ackowledge_form in Complaints > Show page via new.js.erb file. -->
+              <h1>ComplaintReplies#_reply_form</h1>
+              <p>Find me in app/views/complaint_replies/_reply_form.html.erb</p>
+              <%= form_for [@complaint_reply, ComplaintReply.new], url: {action: 'show'}, html: { class: 'form-horizontal no-padding bg-white center px-4 pt-0 light-box-shadow no-border border-radius-10'}, remote: true do |f| %>
+                 <%= f.text_area :description, placeholder: "You have to be a friend of this city to post comments here. Reach out and make some allies!", class: "form-control col-p-11 center light-box-shadow", style: "height: 12rem;" %>
+              
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<!-- End - Form for replying to a complaint for a city. -->
+<!-- Begin -  Area for city admins' response of ackowledge -->
+<% if @complaint.replied? %>
+  <div class="content margin-t-25">
+    <div class="tier transparent">
+      <div class="col-all-12">
+        <p class="theme_color_black text-xlarge b pull-left margin-all-10 margin-l-0 text-18" style="margin-left: 0px !important;">
+          <%= @complaint.city.name %>'s Reply:
+        </p>
+      </div>
+      <div class="col-all-12 light-box-shadow card" style="border: 1px solid rgba(128, 128, 128, .5)">
+        <div class="col-all-12 pull-left">
+          <div class="card-body theme_color_black bg-white">
+            Reply goes here
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+<!-- End -  Area for city admins' response of acknowledge -->
+<!-- Begin -  Area for city admins' response of submitted plan -->
+<% if @complaint.planned? %>
+  <div class="content margin-t-25">
+    <div class="tier transparent">
+      <div class="col-all-12">
+        <p class="theme_color_black text-xlarge b pull-left margin-all-10 margin-l-0 text-18" style="margin-left: 0px !important;">
+          <%= @complaint.city.name %>'s Plan
+        </p>
+      </div>
+      <div class="col-all-12 light-box-shadow card" style="border: 1px solid rgba(128, 128, 128, .5)">
+        <div class="col-all-12 pull-left">
+          <div class="card-body theme_color_black bg-white">
+            Plan goes here
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+  <!-- End -  Area for city admins' response of submitted planned -->
+
+  <!-- Begin - Citizen Action Complaint rendering if the complaint has been filed and the email was sent to the city. -->
+  <% if @complaint.filed? %>   <!-- If statement that will display the email sent to the City if it's been filed. -->
+    <div class="content margin-t-10">
+      <div class="tier transparent">
+        <div class="col-all-12">
+          <p class="theme_color_black b text-xlarge pull-left margin-all-10 margin-l-0 text-18">
+            Citizen Action Complaint
+          </p>
+        </div>
+        <div class="col-all-12 light-box-shadow card" style="border: 1px solid rgba(128, 128, 128, .5)">
+          <div class="col-all-12 pull-left">
+            <div class="card-body theme_color_black bg-white">
+                <p class="text-xxmedium"> The citizens of <span class="bold"> 
+                  <%= @complaint.city.name.capitalize %> </span> are formally requesting the <span class=""> <%= @complaint.city.name.capitalize %> </span> Government to resolve the issue of a community complaint. The complaint in question is defined as  <span class="underline bold"> 
+                    <i> <%= @complaint.title %> </i> </span> in or nearby the location of <span class="underline bold"> <i> <%= @complaint.address %> </i> </span> with the latitude and longitude coordinates of: <span> <%= @complaint.latitude %>, </span> 
+                    <span> <%= @complaint.longitude %>. </span>
+                    <br>
+                    <p class="text-indent text-xxmedium">
+                        Ossemble acts as a liaison for local citizens and local government. Ossemble’s standard for the issue to be resolved are within the time frame of 
+                      <span class="bold"> 
+                        <!-- Below - Shows the deadline time variable --> 
+                        <%= @complaint_deadline %>  days. 
+                      </span> 
+                      This can be considered the complaint's deadline.
+                    </p>
+                  </p> 
+                  <p class="text-xxmedium text-indent">
+                     If the complaint is resolved within this deadline, then <%= @city.name.capitalize %> will be rewarded a score of 80% for this specific complaint. To gain additional percentage points, a higher score, the city needs to communicate with their citizens through a response and plan system. This can be accomplished by visiting and interacting with the complaint here:
+                    <span> 
+                    <%= link_to "#{@complaint.title} Complaint for #{@city.name}", city_complaint_url(@complaint.city, @complaint) %>. 
+                    </span> 
+                    If the original deadline is not achieved, then the score will drop 20% percentage points. Subsequently, a new deadline will be allotted to the city.  
+                  </p> 
+                  <h3 class="ms_comp_signature i"> 
+                    X <span class="bold underline"> Ossemble Inc.</span> 
+                  </h3> 
+                  <p class="text-20">
+                    <span class="bold"> <%= @complaint.votes_for.count %> <%= @city.name %></span>, <span class=""><%= @complaint.city.state_name %> </span>  Ossemble Users. 
+                  </p>
+                  <p class="text-medium"> 
+                    <%= display_date(@complaint.filed_at) %> 
+                  </p> 
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %> <!-- End - Citizen Action Complaint rendering if the complaint has been filed and the email was sent to the city. -->
+
+    </div>
+    <div id="non_ms_ap_content" class="col-d-3 col-t-10" >
+      <%= render 'layouts/action_panel', obj: @complaint %>
+    </div>
+  </div>
+</div> <!-- End - Main page tier -->
+  
+<!-- Begin - Container for Title and form of Comments section. --> 
+<div class="content mt-0">
+  <div class="tier">
+    <div class="col-d-2 col-t-1"></div>
+      <div class="col-d-7 col-t-10 col-p-12">
+      <!-- Below - Renders in the form to create a new comment. -->
+    <div id="new_comment_tier" class="no-top-border tier">
+      <div class="col-all-12">
+        <%= render 'comments/comment_form', obj: @complaint %>
+      </div>
+    </div>
+    <!-- Below - Rendering for existing Comments. -->
+    <div id="comments_list" class="tier margin-t-30 padding-x-10">
+      <div class="col-all-12">
+        <ul id="comments_ul" class="pl-0">
+          <div id="comment_flash" class="vanish panel panel-success light-box-shadow col-all-12" style="height: 3.5rem"><div class="col-tier margin-t-5"><p class="text-success bold center-all text-xxmedium no-margin col-all-12">Your comment has posted!</p></div></div>
+          <li class="comment_placeholder vanish"></li>
+          <%= render(partial: 'comments/comment', collection: @complaint.comments)%>
+        </ul>
+        <!-- %= render 'comments/comments_list', collection: @post.comments, obj: @post_comments %>
+        -->
+        </div>
+      </div>     
+    </div>
+  </div>
+</div> <!-- End - Container for Title and form of Comments section. --> 
+
+<script>
+  $(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
+</script>

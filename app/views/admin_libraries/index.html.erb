@@ -1,0 +1,168 @@
+<!--  Main index page for an admin's library to navigate to saved posts/reports/suggestions or their own file uploads. -->
+<div class="content">
+  <div class="col-tier">
+    <div class="col-d-8 col-t-10 col-p-12 center">
+    <p class="text-24 b mb-5">
+      Your Archives
+    </p>
+    </div>
+  </div> 
+
+    <div class="col-d-8 col-t-10 col-p-12 center">
+      <div class="col-tier">
+        <div class="col-d-4 col-t-6 col-p-12">
+          <div class="tier archive_mb_ms intro3_step1">
+          <div class="p-3" style="border-radius: 10px; background-color: white; height: 80px; width: 80px;">
+           <a href="<%=  admin_library_posts_path(@institute, @admin, @library) %>"><i class="fas fa-comments theme_color_dark relative" style="font-size: 48px; left: 2px; top: 3px;"></i></a>
+          </div>
+          <p class="text-19 ml-3 margin-t-18">
+            <a href="<%=  admin_library_posts_path(@institute, @admin, @library) %>">Forum Posts</a>
+          </p>
+          <p class="relative" style="left: -106px; top: 45px;">
+            <span class="text-muted text-14"><%= @library.entries.posts.count %> Archived</span>
+          </p>
+          </div>
+        </div>
+        
+        <div class="col-d-4 col-t-6 col-p-12">
+          <div class="tier intro3_step2">
+            <div class="p-3" style="border-radius: 10px; background-color: white; height: 80px; width: 80px;">
+              <a href="<%= admin_library_maps_path(@institute, @admin, @library) %>"><i class="fas fa-map-marked-alt theme_color_dark relative" style="font-size: 48px; left: 3px; top: 3px;"></i></a>
+            </div>
+            <p class="text-19 ml-3 margin-t-18">
+              <a href="<%= admin_library_maps_path(@institute, @admin, @library) %>">Map Posts</a>
+            </p>
+            <p class="relative" style="left: -88px; top: 45px;">
+              <span class="text-muted text-14"><%= @library.entries.maps.count %> Archived</span>
+            </p>
+          </div>
+        </div>
+      </div>
+  </div>
+  
+  <div class="col-tier">
+    <div class="col-d-8 col-t-10 col-p-12 center">
+    <p class="text-24 b mb-5" style="margin-top: 60px;">
+      Your Uploads & Shares
+    </p>
+    </div>
+  </div>
+  
+  <div class="col-d-8 col-t-10 col-p-12 center">
+    <div class="col-tier intro3_step3">
+      <div class="col-d-4 col-t-4 col-p-12">
+        <div class="tier archive_mb_ms">
+        <div class="p-3" style="border-radius: 10px; background-color: white; height: 80px; width: 80px;">
+         <a href="<%=  admin_library_uploads_path(@institute, @admin, @library) %>"><i class="fas fa-file-upload theme_color_dark relative" style="font-size: 48px; left: 12px; top: 3px;"></i></a>
+        </div>
+        <p class="text-19 ml-3 margin-t-18">
+          <a href="<%=  admin_library_uploads_path(@institute, @admin, @library) %>">Your Uploads</a>
+        </p>
+        <p class="relative" style="left: -109px; top: 45px;">
+          <span class="text-muted text-14"><%=  @library.uploads.count %> Uploaded</span>
+        </p>
+        </div>
+      </div>
+      
+      <div class="col-d-4 col-t-4 col-p-12">
+        <div class="tier archive_mb_ms intro3_step4">
+          <div class="p-3" style="border-radius: 10px; background-color: white; height: 80px; width: 80px;">
+            <a href="<%= admin_library_upload_shares_path(@institute, @admin, @library) %>"><i class="fas fa-cloud-upload-alt theme_color_dark relative" style="font-size: 48px; left: 1px; top: 3px;"></i></a>
+          </div>
+          <p class="text-19 ml-3 margin-t-18">
+            <a href="<%= admin_library_upload_shares_path(@institute, @admin, @library) %>">Shared Uploads</a>
+          </p>
+          <p class="relative" style="left: -133px; top: 45px;">
+            <span class="text-muted text-14"><%= @library.entries.uploads.count %> Shared</span>
+          </p>
+        </div>
+      </div>
+      
+      <div class="col-d-4 col-t-4 col-p-12">
+        <div class="tier intro3_step5">
+          <div class="p-3" style="border-radius: 10px; background-color: white; height: 80px; width: 80px;">
+            <a href="<%= admin_library_post_shares_path(@institute, @admin, @library) %>"><i class="fas fa-share-square theme_color_dark relative" style="font-size: 48px; left: 6px; top: 3px;"></i></a>
+          </div>
+          <p class="text-19 ml-3 margin-t-18">
+            <a href="<%= admin_library_post_shares_path(@institute, @admin, @library) %>">Shared Posts</a>
+          </p>
+          <p class="relative" style="left: -112px; top: 45px;">
+            <span class="text-muted text-14"><%= @library.entries.shared_posts.count %> Shared</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-d-8 col-t-10 col-p-12 center">
+    <div class="col-tier intro3_step6">
+      <div class="col-d-4 col-t-4 col-p-12">
+        <div class="tier mt-4">
+        <div class="p-3" style="border-radius: 10px; background-color: white; height: 80px; width: 80px;">
+         <a href="<%=  new_library_upload_path(@institute, @admin, @library) %>"><i class="fas fa-plus-circle  theme_color_dark relative" style="font-size: 48px; left: 6px; top: 3px;"></i></a>
+        </div>
+        <p class="text-19 ml-3 margin-t-18">
+          <a href="<%=  new_library_upload_path(@institute, @admin, @library) %>">Add an Upload</a>
+        </p>
+        </div>
+      </div>
+    </div>  
+  </div>
+</div>
+
+<script>
+var intro3 = introJs();
+intro3.setOptions({
+    tooltipPosition : 'bottom',
+    steps: [
+        {
+            element: '.intro3_step1',
+            intro: 'All Forum Posts that you choose to archive will appear here. You may click the image, or title to view them. The total number of archived Forum Posts will appear below as well.',
+            position: 'bottom'
+        },            {
+            element: '.intro3_step2',
+            intro: 'All Map Posts that you choose to archive will appear here. You may click the image, or title to view them. The total number of archived Map Posts will appear below as well.',
+            position: 'bottom'
+        },
+        {
+            element: '.intro3_step3',
+            intro: 'Uploads that you create will appear here for an easy to view catalog of all entries.',
+            position: 'bottom'
+        },
+        {
+            element: '.intro3_step4',
+            intro: 'If someone chooses to share an Upload with you, they will appear here.',
+            position: 'bottom'
+        },
+        {
+            element: '.intro3_step5',
+            intro: 'Similar to Shared Uploads, Shared Posts is where all Forum Posts and Map Posts that are shared with you will be shown.',
+            position: 'bottom'
+        },
+        {
+            element: '.intro3_step6',
+            intro: 'You may click here to create your own personal upload, or use the button located on the navigation bar on the top of the screen.',
+            position: 'bottom'
+        }
+    ]
+});
+
+window.addEventListener('load', function () {
+    var doneTour = localStorage.getItem('EventTour') === 'Completed';
+    if (doneTour) {
+        return;
+    }
+    else {
+        intro3.start()
+
+        intro3.oncomplete(function () {
+            localStorage.setItem('EventTour', 'Completed');
+        });
+
+        intro3.onexit(function () {
+            localStorage.setItem('EventTour', 'Completed');
+        );
+    }
+});
+
+</script> 

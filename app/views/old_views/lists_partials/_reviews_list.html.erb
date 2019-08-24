@@ -1,0 +1,113 @@
+<!-- Main partial for rending What You Love reviews in list for insie a do block.-->
+<div id="review_list">
+  <!-- Below - Renders in a message to write a review review if there isn't any to Display yet unless it's rendering from community score page.  -->
+  <% if obj.empty? && !current_page?(city_feed_path(@city))  %>
+    <h2 class="center-all light-box-shadow py-3 mt-0  bg-white">No <span class="i">City</span> Reviews to show yet. <a class="title_link" href="<%= new_city_review_path(@city) %>">Write one now!</a> </h2>
+  <% end %>
+  <!-- Renders each review review -->
+  <% obj.each do |review| %> 
+    <div class="col-d-12 card bs_hover light-box-shadow padding-x-20 padding-y-0 margin-b-15 no-border-radius" style="border: 1px solid rgba(128, 128, 128, .5)">
+      <div class="pull-right">
+        <div class="col-d-2 col-t-3 col-p-12 pull-left mb-2 mr-3 margin-t-18 margin-r-20">
+          <!-- Below - If statement determining if any images are attached to the review. -->
+          <% if review.image.attached? %>   <!-- review HAS an image attached -->
+              <div style="min-height: 140px" style="background-color: white !important;">
+                <%= link_to image_tag(review.image.variant(combine_options: {crop: "1100x1100+0+0", gravity: "center"}), id: "uploaded_image", class: "center-content comp_ms_image" ), city_review_path(@city, review) %> 
+              </div>
+          <% else %>  <!-- review does NOT have any images attached to it, so tags are rendered -->
+         <!-- Check length to verify 1-3 review tags -->
+          <div class="well margin-y-0 center-all p-1" style="min-height: 14rem;">
+            <div class="mt-0 mb-2 center-all theme_color_black text-xxbig">Loves</div>
+            <div class="center-all mb-2"><span class="m-0 p-2 wul_font badge badge-pill ms_badge_t"><%= review.love_list[0] %></span></div>
+            <div class="center-all mb-2"><span class="m-0 p-2 wul_font badge badge-pill ms_badge_t"><%= review.love_list[1] %></span></div>
+            <div class="center-all"><span class="m-0 p-2 wul_font badge badge-pill ms_badge_t"><%= review.love_list[2] %></span></div>
+          </div>     
+          <% end %> <!--  End of image check. -->
+          <div class="center-all margin-t-18">
+            <!-- Below - Renders in helper method for endorse in upvotes_helper.rb. Instance method, name of controller, and then name of resource to display on the button itself. -->
+            <%= display_endorse_button(review, "city_reviews", "List", city_review_path(@city, review)) %>
+          </div>
+        </div>
+        <div id="resource_list" class="tier col-p-12">
+            <div class="text-xmedium ml-2 mt-2 mb-0 tier col-d-9 col-t-9 col-p-10">    
+               <i class="fas
+               <%= "fa-heart" if review.category == "Loves" %>
+               <%= "fa-exclamation" if review.category == "Improves" %>
+               text-big margin-t-12" style="color: #645496"></i>
+            <h4 class=" pl-2 pr-0 mt-3 ml-0 text-large" style="margin-bottom: 0px !important">
+              <%= link_to review.title.titleize.truncate(35), city_review_path(@city, review), class: "title_link" %>
+            <!-- Programmers Note: Truncate the name size on media screen -->
+            </h4>
+            
+            <p class="text-muted text-medium mt-1 mb-0 col-all-12" style="height: 57px">
+              <span class="tier">
+                <span style="width: 35px !important; height: 30px !important;">
+                  <%= display_list_avatar(review.user) %>
+                </span>
+                <span class="relative" style="top: 4px; left: 5px;">
+                  <%= link_to review.user.name, user_path(review.user.friendly_id), class: 'text-medium text-muted' %>
+                </span>
+              </span>
+                <br>
+                <span class="relative" style="top: -20px">
+                  <span class="text-medium"> 
+                   <b>Posted:</b> <%= time_ago_in_words(review.created_at).capitalize %> ago - 
+                  </span>
+                  <span class="text-muted text-medium bold">                      
+                    Scored:
+                  </span>
+                  <span class="bold text-xmedium" style="color: black;"><%= display_score(review) %></span>
+               </span>
+            </p>
+          
+           </div> 
+
+            <div class="col-all-12 pull-left tier">
+
+              <a class="btn mr-3 alt-action" href="<%= city_review_index_path(@city, review) %>" >
+               City Review
+              </a>
+              <a class="btn alt-action" href="
+                <%= loves_city_review_index_path(@city) if review.category == "Loves" %>
+                <%= improves_city_review_index_path(@city) if review.category == "Improves" %>
+                ">
+               <%= review.category %>
+              </a>  
+
+            </div>
+          <div class="col-all-12 ms_comp_margin tier ms_comp_no_padding">
+            <div class= "mb-0">
+              <small class="depAdd ms_comp_margin2 pull-left mt-2 ml-0" style="font-size: 1.8rem !important; color: black;">
+                <small>
+                 <%= review.description.truncate(170) %>
+                </small>
+              </small>
+            </div>
+          </div>
+          
+          <div class="col-all-12 px-0" style="margin-top: -8px">
+            <!-- Begin -  Filter tags Row -->
+            <div id="share_tier" class="tier">
+              <!-- Below -  Twitter share share. Goes to shares_helper.rb, passing in resource, website to share with, show page link, and then title.   -->
+              <!--  %= display_share_button(review, "Twitter", city_review_path(review.city, review),"#{review.city.name} City Review: #{review.title} - #{city_review_url(review.city, review)}") %>
+                <!-- Below -  Facebook share. Goes to shares_helper.rb, passing in resource, website to share with, show page link, and then title.   -->
+              <!--  %= display_share_button(review, "Facebook", city_review_path(review.city, review),"#{review.city.name} City Review: #{review.title}:") %>
+              -->
+              <div class="theme_color_black padding-t-8">
+                <%= display_vote_count(review) %> <!-- Displays endorsements count  -->
+              </div>
+              <div class="theme_color_black mx-3 padding-t-8">
+                <%= display_comment_count(review) %> <!--  Displays comments count -->
+              </div>
+            </div>
+            <!-- End -  Filter tags Row -->
+          </div> 
+          <!-- Begin -  Filter tags Row -->
+        </div>
+          <!-- End -  Filter tags Row -->
+      </div>
+    </div>
+    <% end %>
+  </div><!-- End - Main Wrapper for page. -->
+
+

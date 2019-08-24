@@ -1,0 +1,202 @@
+<!-- Main User Profile Show Page (/views/users/show.html.erb). CSS is found in both "global.css.scss" & "user.css.scss"-->
+
+<!-- Begin - Main content for community score page. -->
+<div class="content">
+  <div class="tier"> <!-- Begin - Main tier for page. -->
+    <!-- Begin - Filter panel rendering -->
+    <div class="col-d-1 col-t-vanish col-p-vanish">
+    </div>
+    <div id="ms_ap_content" class="col-d-8 col-t-11 col-p-12 center margin-b-15 vanish">
+      <h3 class="mt-4"><%= @city_user.city.name %> Community Score</h3>
+      <div id="profile_cs_ms">
+      </div>
+      <h3>Accomplishments</h3>
+      <div id="profile_acc_ms">
+      </div>
+    </div>
+    
+    <div class="col-d-8 col-t-11 col-p-12 center">
+      <!-- PROGRAMMERS NOTE: Commented out for now as we avoid confirmation of accounts.
+      Below -  If user hasn't confirmed their account yet, message below will display on their profile. 
+        %= render 'users/user_layouts/unconfirmed_user_message' if is_current_admin?(@city_user) && !current_admin.confirmed?  %>
+      -->
+      <div class="tier">
+        <div class="col-all-12">
+          <p id="profile_title" class="theme_color_dark px-0">
+            <!-- Below -  Shows User's city  and date of residence -->
+            <!-- Below -  Renders title of user. If it's default and user is on their own profile, gives them an option to change it. Otherwise, renders title for visitor or already changed user -->
+            <% if is_current_admin?(@city_user) %>
+              <%= "<a href='#{edit_admin_path(current_admin.institute, current_admin)}'><i class='fas fa-pencil-alt profile_edit_icon text-17'></i></a>".html_safe if @city_user.admin.title == "Official" && @city_user.admin.resident_date == "Forever" %>
+            <% end %>
+            <%= link_to @city_user.city.name.capitalize, city_feed_path(@city_user.city), class: "title_link" %>
+            Official
+            <span class="text-19">
+              since 
+              <%= @city_user.admin.resident_date.year unless @city_user.admin.resident_date.nil? %>
+              <%= "Forever" if @city_user.admin.resident_date.nil? %>
+            </span>
+          </p>
+        </div>
+      </div>
+      <div class="tier p-0 light-box-shadow no-border-radius">
+        <div class="col-all-12 card p-0 no-border-radius">
+          <div class="col-tier padding-all-10 padding-b-0">
+            <div class="col-d-4 col-t-4 col-p-12 center-all">
+              <!-- Shows avatar for the city basic user, based on the admin's avatar, or the defualt if none provided-->
+              <%= display_profile_city_avatar(@city_user) %> 
+              <!-- Begin -  SETTINGS: Shows dropdown menu of settings if the user is visiting their own profile. -->
+              <% if is_current_admin?(@city_user) %>  
+                <div id="settings_dropdown" class="dropright col-all-12">
+                  <a class="dropdown-toggle btn alt-action light-btn-shadow padding-y-5 padding-x-8"  data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-cogs margin-r-8 text-16"></i><span class="text-16">Settings</span>
+                  </a>
+                  <div id="" class="dropdown-menu">
+                    <a class="dropdown-item rep_text" href="<%= edit_admin_path(current_admin.institute, current_admin) %>">
+                      <div class="icon_container padding-r-8">
+                        <i class='far fa-edit'></i>
+                      </div>
+                      Update Profile
+                    </a>
+                    <!-- Below -  Shows upgrade link if the admin is not subscribed -->
+                    <% if current_admin.subscription.subscribed == false %>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item rep_text" href="<%= city_admin_subscriptions_path(current_admin.institute, current_admin) %>">
+                        <div class="icon_container padding-r-8">
+                          <i class='fas fa-credit-card'></i>
+                        </div>
+                        Upgrade
+                      </a>
+                    <% end %>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item rep_text" href="#" data-confirm="If you'd like to change your password, log out and click 'Forgot password?' on the login page.">
+                      <div class="icon_container padding-r-8">
+                        <i class='fa fa-unlock-alt'></i>
+                      </div>
+                      Reset Password
+                    </a>
+                  </div>
+                </div>
+              <% end %>
+              <!-- End -  SETTINGS: -->
+            </div>
+            <!-- Begin -  NAME, BIO, NEIGHBORHOOD, JOIN: Bio section, with join date, name and neighborhood -->
+            <div class="col-d-8 col-t-8 col-p-12 middle_pad">
+              <div id="user_bio_section" class="col-tier mb-4">
+                <div class="col-all-12 px-3 tier border-bottom">
+                  <p id="user_name" class="p-0 theme_color_black tier">
+                    <%= @city_user.name %> - <%= @city_user.admin.title %>
+                  </p>
+                  <span class="" style="position: relative; top: 8px; left: 10px">
+                    <% if is_current_admin?(@city_user) %>
+                      <%= link_to "<i class='fas fa-pencil-alt profile_edit_icon theme_color_dark text-xxmedium'></i>".html_safe, edit_admin_path(current_admin.institute, current_admin), title: "Edit your Bio", id: " " , class: " " %>
+                    <% end %>
+                  </span>
+                </div>                
+                <div class="col-all-12 px-3" title="When this Official signed up with Ossemble.">
+                  <p class="mb-0 padding-t-5 p-0">
+                    <b class="theme_color_black">Joined: </b>
+                    <span class=""> <%= display_date(@city_user.created_at) %></span>
+                  </p>
+                </div>
+                <div class="col-all-12 px-3">
+                <!-- Below -  Displays Admin BIo -->
+                  <p class="mt-3 p-0">
+                    <% if @city_user.admin.bio.nil? || @city_user.admin.bio.empty? %> <!--  Bio is nil, so they either are prompted to fill it out or shows a visitor it's nil. -->
+                    <!-- Below -  If the user is looking at thier own profile, and it's empty, encourage them to fill it out. -->
+                      <% if is_current_admin?(@city_user) %>
+ 
+                          You have yet to provide your bio for others to see. 
+                          <a class="title_link" href="<%= edit_admin_path(current_admin.institute, current_admin) %>">Click here</a> in order to fill it out.
+                      <% else %> <!-- A visiting user sees that the user has yet to fill out the bio section  -->
+                        This city official has yet to provide their Bio.
+                      <% end %> <!--  End of Admin checking their own profile or not. -->
+                    <% else %> <!-- Bio isn't nil, and is provided.  -->
+                      <span>
+                        <%= @city_user.admin.bio %>
+                      </span>
+                    <% end %>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <!-- End -  NAME, BIO, CONTACT, JOIN: -->
+          </div>
+        </div>
+        <!-- End -  USER PANEL -->
+        <!-- Begin -  CONTACT INFO: Tier and card for contact information -->
+        <div class="col-all-12 p-0 card no-top-border no-border-radius">
+          <div class="col-tier padding-all-15" style="min-height: 16rem;">
+            <div class="col-tier border-bottom margin-b-10" style="height: 4rem;">
+              <h3 class="roboto no-margin">
+                Contact Information
+              </h3>
+            </div>
+            <% unless @city_user.admin.contacts.empty? %> <!--  If the contacts are'not empty, then show them in a loop -->
+              <% @city_user.admin.contacts.each do |contact| %>
+                <div class="col-tier">
+                  <div class="" title="They type of contact information to contact this city official.">
+                    <span class="bold text-20">
+                      <%= " #{contact.name}: " %>
+                    </span>
+                  </div>
+                  <div class="" title="You can use this to contact this city official.">
+                    <span class="padding-l-5 text-20">
+                      <!-- Below -  Checks if the contact info is and email address and if it is, wraps it in a link mail to -->
+                      <% if contact.is_email? %>
+                         &nbsp;<%= "<a class='small_link' href='mailto:#{contact.information}'>#{contact.information}</a>".html_safe %> 
+                      <% else %>
+                        &nbsp;<%= "#{contact.information}" %> 
+                      <% end %>
+                    </span>
+                  </div>
+                </div>
+              <% end %> <!-- End -  Loop of existing contacts -->
+            <% else %>  <!--  Contacts is empty for admin -->
+              <div class="col-tier">
+                <h3 class="center text-20">
+                  <%= "<span class='text-19'>You have yet to provided contact information. <a class='small_link' href='#{edit_admin_path(current_admin.institute, current_admin)}'>Click Here </a>and go to Public Contact Details to add information for citizens to contact you.</span>".html_safe if is_current_admin?(@city_user) %>
+                  <%= "This City Official has yet to provide any contact information.".html_safe unless is_current_admin?(@city_user) %>
+                </h3>
+              </div>
+            <% end %> <!-- End -  Loop of existing contacts -->
+          </div>
+        </div>
+        
+      </div>
+      <!-- End -  CONTACT INFO: Tier and card for contact information -->
+      <!-- Below -  Recent Activity Card -->
+      <div class="tier margin-t-10 margin-b-20">
+        <div class="push-left">
+          <p class="padding-l-0 page_info_title bold my-2 ">
+            <%= @city_user.city.name %>'s Profile - Recent Activity
+          </p>
+        </div>
+        <div class="col-all-12 card p-0 no-border-radius light-box-shadow">
+          <div class="card-body" style="min-height: 15rem;">
+            <div id="user_activity_container">
+              <%= render 'activities/user_activity', collection: @city_user.activities.reverse %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Below -  Renders the City Basic action panel to the right side of the page. (views/admins/admin_layouts/_city_basic_action_panel.html.erb)-->
+    <%= render 'admins/admin_layouts/city_basic_action_panel' %>
+  </div> <!-- Main page tier -->
+</div>
+
+<script>
+// register modal component
+Vue.component('csmodal', {
+  template: '#cs-modal-template'
+})
+
+// start app
+
+new Vue({
+  el: '#cacc-modal',
+  data: {
+    showCsModal: false,
+  }
+})
+</script>

@@ -1,0 +1,709 @@
+// Main CSS Stylesheet For Filter Navigation Panel Partial (views/layouts/cs_filter_panel.html.erb), (views/layouts/_action_panel.html.erb), view panel partial (views/layouts/_view_panel.html.erb), & Sort Menu partial (views/layouts/_sort_panel.html.erb)
+$primary-color: #C361F1 !important;
+$font-stack: Adamina, serif, Times New Roman !important;
+// Begin - CSS for Filter Navigation Panel Partial.
+#update_page_wrapper {
+  .form-row:not(#sub_exclude) {
+    @media screen and (max-width: 768px) {
+    margin-top: -12px;
+                                         }
+                              }
+  #sub_exclude {
+    @media screen and (max-width: 768px) {
+    margin-bottom: 10px;
+                                         }
+               }
+}
+#u2d_hide {
+   @media screen and (max-width: 768px) {
+    display: none;
+                                         }
+}
+
+.check_box {
+   @media screen and (max-width: 768px) {
+    margin-top: 12px !important;
+    
+                                         }
+}
+  .small_hide {
+    @media screen and (max-width: 992px) {
+    display: none;
+                                         }
+                                         
+    @media screen and (max-width: 768px) {
+    display: inline-block;
+    
+                                         } 
+  }
+ 
+  
+  #profile_border {
+    border-style: dashed;
+    border-color: lightgrey;
+    height: 160px;
+    width: 160px;
+  }
+  
+  .ms_vp_title_hide {
+     @media screen and (max-width: 2000) {
+      display: block;
+                                         } 
+     @media screen and (max-width: 450) {
+      display: none;
+                                         } 
+  }
+  
+// Styling for Messages rendered by errors or information
+.message_alert_panel {
+  margin: 30px 0px 15px !important;
+  font-size: 1.9rem; 
+  font-weight: bold;
+  width: 100% !important;
+  box-shadow: 1px 3px 18px rgba(0, 0, 0, 0.20);
+  a {
+    padding-left: 10px !important;
+  }
+  @media screen and (max-width: 768px) {
+    font-size: 1.6rem;
+    width: 100% !important;
+                                       }
+}
+
+// Devise and validation error messages
+
+#error_explanation {
+  margin-bottom: 20px !important;
+  border: 1px solid rgba(0, 0, 0, 0.27);
+  box-shadow: 1px 1px 14px rgba(0, 0, 0, 0.25);
+  h2 {
+    text-align: center;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+    padding-bottom: 8px;
+  }
+  p {
+    .close {
+      font-size: 28px;
+    }
+  }
+  ul {
+    font-size: 17px;
+    li {
+      color: black;
+      padding: 5px;
+    }  
+    
+  }
+}
+// Begin - CS Filter Panel CSS Code (layouts/_cs_filter_panel.html.erb)
+  
+ #filter_panel_wrapper {
+   align-self: left;
+   padding-left: 10px;
+   padding-right: 10px;
+   margin-top: 7px;
+   margin-bottom: 7px;
+   @media screen and (max-width: 900px) {
+    align-self: left;
+    padding-left: 0px;
+    padding-right: 0px;
+    margin-top: 7px;
+    margin-bottom: 7px;
+                                         } 
+  }
+  
+  #filter_panel_body {
+    background-color: transparent !important;
+    margin-bottom: 0px !important;
+  }
+  
+  #filter_panel_head {
+    padding-bottom: 10px;
+    margin-bottom: 9px;
+  }
+  
+  #pa_style {
+    font-size: 18px;
+    word-spacing: 1px;
+    letter-spacing: 1.5px;
+    line-height: 1.4;
+    text-shadow: .04em .03em #cea2cb !important;
+    margin-bottom: 0px !important;
+    padding: 0px;
+    color: #645496;
+  }
+  
+  #filter_panel_list_wrapper{
+    padding: 0px !important;
+    margin-bottom: 0px !important;
+    background-color: transparent !important;
+  }
+  
+  #filter_panel_list{
+    list-style: none;
+    background-color: transparent !important;
+    padding: 0px;
+    margin-bottom: 0px;
+    width: 100% !important;
+    height: 672px !important;
+    @media screen and (max-width: 900px) {
+    height: auto !important;
+    width: auto !important;
+                                         } 
+    
+    li {
+      
+      line-height: 2.0;
+      margin-bottom: 7px;
+      font-size: 18px;
+      //border-bottom: 1px groove $primary-color;
+      
+      a {
+        color: rgba(88, 88, 88, .9);
+      }
+    }
+    
+  li:hover {
+      
+      line-height: 2.0;
+      margin-bottom: 0px;
+      font-size: 18px;
+      
+      a {
+        color: #645496;
+        text-decoration: none;
+      }
+    }
+    
+    hr  {
+   margin-bottom: 0px !Important;
+ }
+ 
+} 
+
+#filter_panel_content {
+
+  @media screen and (max-width: 900px) {
+  margin-left: 0px !important;
+  margin-right: 0px !important;
+    
+                                        } 
+}
+
+  .filter_panel_bottom{
+    padding: 10px;
+  }
+  
+    // Begin - CSS for Filter Panel (about_filter_panel.html.erb and cs_filter_panel)
+      
+      .about_dd_style {
+        width: 100%; 
+        margin-left: 10px !important; 
+        border: 0px !important; 
+        background: transparent !important; 
+        box-shadow: none !important; 
+        line-height: 2.5px;
+        position: relative;
+        
+      }
+      
+      .about_fp_mt {
+        @media screen and (max-width: 900px) {
+         margin-top: 15px !important;
+    
+                                        } 
+      }
+      
+      .ms_font_panel {
+        @media screen and (max-width: 1439px) and (min-width: 1001px) {
+        font-size: 13px !important;
+                                               }
+      }
+      
+      
+      // Changed width from overlapping filter panel, might have to change in the future.
+      .about_dd_hover {
+       width: 80px; 
+      }
+      
+      .about_dd_hover:hover {
+        background-color: none;
+        border: 0px !important;
+        background-color: transparent !important;
+        font-size: 18px !important;
+        margin-bottom: 7px !important;
+        text-decoration: underline;
+        
+          
+          a:hover {
+            color: #a165aa !important;
+          }
+        
+      }
+      
+    // End - CSS for About Filter Panel
+
+
+// End - CS Filter Panel CSS Code (layouts/_cs_filter_panel.html.erb)
+
+
+// Begin - CSS for action_panel.html.erb (views/layouts/_action_panel.html.erb)
+
+#action_panel_top, #action_panel_file, #action_panel_review, #action_panel_middle {
+
+}
+
+// Below - Adming card tier is the city has an admin that's signed up.
+#admin_card_tier {
+  a {
+    font-size: 18px !important;
+    color: #645496 !important;
+    font-weight: bold;
+    @media screen and (max-width: 1250px) and (min-width: 1000px) {
+      font-size: 16px !important;
+    }
+  }
+  
+  a:hover {
+  color: #645496 !important;
+  text-decoration: underline !important;
+  text-shadow: .04em .04em #cea2cb;
+  }
+  
+  a:active {
+    color: #a165aa !important;
+    text-decoration: none;
+    text-shadow: .04em .04em black;
+  }
+  
+}
+
+.ms_ap_margintop {
+  margin-top: 20px ;
+   @media screen and (max-width: 1200px) { 
+    margin-top: 5px;
+                                       }
+   @media screen and (max-width: 768px) {
+    margin-top: 10px !important;
+                                       }
+}
+
+.row-flex {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.ApScoreStyle {
+  border: 2px solid #606060;
+  border-radius: 100%;
+  height: 75px;
+  width: 75px;
+  text-align: center;
+  padding-top: 13px;
+  font-size: 32px;
+  font-family: Roboto, Times New Roman;
+} 
+
+.accomp_font_size {
+  @media screen and (max-width: 1117px) and (min-width: 999px) {
+    font-size: 1.6rem !important;
+                                       }
+}
+    // Begin - Action Panel when in Tablet and Phone Mode, inside the accordian jquery feature
+    
+    .ui-accordion-header-active {
+      background-color: rgba(128, 128, 128, .7) !important;
+      color: white !important;
+      border: 2px groove rgba(128, 128, 128, .6);
+    }
+    
+    .ui-accordion-header {
+      border: 2px groove rgba(128, 128, 128, .3);
+      color: #585858;
+      font-size: 18px !important;
+      text-shadow: none !important;
+      background-color: white;
+    }
+    
+    .ui-accordion-content {
+      border: 2px groove rgba(128, 128, 128, .6);
+      background-color: rgba(255, 255, 255, .2);
+    }
+    
+    #ms_ap_content { 
+      h3 {
+        span {
+          margin-right: 15px !important;
+        }
+      }
+    }
+    .ui-icon {
+      background-color: transparent !important;
+    }
+    // End - Action Panel when in Tablet and Phone Mode, inside the accordian jquery feature
+    
+
+// End - CSS for action_panel.html.erb  (views/layouts/_action_panel.html.erb)
+
+// Begin - CSS for ossembly_filter_panel.html.erb (views/layouts/_ossembly_filter_panel.html.erb)
+
+
+// End - CSS for ossembly_filter_panel.html.erb (views/layouts/_ossembly_filter_panel.html.erb)
+
+// Begin - CSS for Vue.js Modal 
+
+.modal-mask {
+  position: fixed;
+  z-index: 9998;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, .5);
+  display: table;
+  transition: opacity .3s ease;
+}
+
+.modal-wrapper {
+  display: table-cell;
+  vertical-align: middle;
+  @media screen and (max-width: 600px) {
+   padding-top: 45px !important;
+   vertical-align: top !important;
+                                       }
+}
+
+.modal-container {
+  width: 400px;
+  margin: 0px auto;
+  padding: 15px 25px;
+  background-color: #F8F9FA !important;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
+  transition: all .3s ease;
+  font-family: Helvetica, Arial, sans-serif;
+  @media screen and (max-width: 600px) {
+     width: 350px;
+                                       }
+}
+
+.modal-header h3 {
+  margin-top: 0;
+  color: #42b983;
+}
+#tour_btn {
+  height: 40px;
+  visibility: hidden;
+}
+.modal-body {
+  margin: 0;
+   @media screen and (max-width: 600px) {
+     height: 130px;
+  
+                                       }
+}
+
+.modal-default-button {
+  
+}
+
+.modal-enter {
+  opacity: 0;
+}
+
+.modal-leave-active {
+  opacity: 0;
+}
+
+.modal-enter .modal-container,
+.modal-leave-active .modal-container {
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
+}
+
+.cf_nopad {
+  padding-right: 10px;
+  @media screen and (max-width: 901px) {
+  padding-right: 0px !important;
+  
+                                       }
+}
+
+
+.ms_page_title {
+  @media screen and (max-width: 371px) {
+  font-size: 16px !important;
+  font-weight: bold;
+  
+                                       }
+}
+
+.city_feeds_pos {
+  text-align: left;
+  margin-top: 10px;
+  @media screen and (max-width: 901px) {
+    align-items: center;
+    position: relative;
+    text-align: center;
+    margin-left: auto !important;
+    margin-right: auto !important;
+                                       }
+}
+
+// End - Modal Vue.js CSS
+
+.dropdown {
+  cursor: pointer !important;
+}
+
+.filtertoggle {
+  @media screen and (max-width: 999px) {
+  display: none;
+                                       }
+}
+
+.sidetoggle {
+  display: none;
+  @media screen and (max-width: 999px) {
+  display: block;
+                                       }
+}
+
+
+.ms_feed_margin {
+  margin-top: 20px !important;
+  @media screen and (max-width: 999px) {
+  margin-top: 10px !important;
+                                       }
+ @media (max-width: 1200px) and (min-width: 1000px) {
+  margin-top: 5px !important;
+                                       }
+}
+
+.alert_ms_text {
+    font-size: 1.9rem; 
+  @media screen and (max-width: 768px) {
+    font-size: 1.4rem;
+                                       }
+}
+
+progress[value]::-webkit-progress-bar {
+  background-color: #eee;
+  border-radius: 2px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
+  color: white !important;
+}
+
+progress[value]::-webkit-progress-value {
+  background-image:
+	   -webkit-linear-gradient(-45deg, 
+	                           transparent 33%, rgba(0, 0, 0, .1) 33%, 
+	                           rgba(0,0, 0, .1) 66%, transparent 66%),
+	   -webkit-linear-gradient(top, 
+	                           rgba(255, 255, 255, .25), 
+	                           rgba(0, 0, 0, .25)),
+	   -webkit-linear-gradient(left, #a165aa, #645496);
+
+    border-radius: 2px; 
+    background-size: 35px 20px, 100% 100%, 100% 100%;
+    color: white !important;
+}
+
+.note {
+  width: 50%;
+  margin: 50px auto;
+  font-size: 1.25em;
+  color: #333;
+  text-align: justify;
+}
+.drop-style {
+  border: 2px dashed #ccc !important;
+  border-radius: 10px !important;
+  padding: 20px !important;
+}
+.drop-style.highlight {
+  border-color: #645496 !important;
+}
+p {
+  margin-top: 0;
+}
+.my-form {
+  margin-bottom: 10px;
+}
+#gallery {
+  margin-top: 10px;
+}
+#gallery img {
+  width: 200px;
+  margin-bottom: 10px;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+.button {
+  display: inline-block;
+  padding: 10px;
+  background: #ccc;
+  cursor: pointer;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+.button:hover {
+  background: #ddd;
+}
+#fileElem {
+  display: none;
+}
+
+#oss_action_map {
+  .leaflet-control-zoom-in {
+    display: none !important;
+  }
+  .leaflet-control-zoom-out {
+    display: none !important;
+  }
+  .leaflet-control-zoom {
+    display: none !important;
+  }
+  .leaflet-control-scale-line {
+    display: none !important;
+  }
+}
+
+.ms_modal_resize {
+  @media screen and (max-width: 460px) {
+    width: 400px !important;
+                                       }
+  @media screen and (max-width: 410px) {
+    width: 350px !important;
+                                       }
+}
+
+.ap_btn_scale {
+  @media (max-width: 1126px) and (min-width: 1000px) {
+  width: 200px !important;
+  padding: 6px !important;
+                                       }
+}
+
+.ms_x_padding_at {  
+  margin-left: 15px;
+  margin-right: 15px;
+  @media screen and (max-width: 460px) {
+  margin-left: 10px !important;
+  margin-right: 10px !important;
+                                       }
+}
+
+.pricingdiv{
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 16px;
+  justify-content: center;
+  font-family: 'Source Sans Pro', Arial, sans-serif;
+}
+
+.pricingdiv ul.theplan{
+  opacity: 0.96;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  color: black;
+  width: 40%; /* width of each table */
+  margin-bottom: 1.5em;
+  margin-top: 30px;
+  background-color: white;
+  border: 128, 128, 128, 0.8;
+  border-radius: 10px;
+  box-shadow: 1px 1px 14px rgba(0, 0, 0, 0.12), -1px -1px 14px rgba(0, 0, 0, 0.12);
+  
+  &:hover {
+    opacity: 1;
+    box-shadow: 1px 1px 16px rgba(255, 251, 158, 0.10), -1px -1px 16px rgba(255, 251, 158, 0.10);
+  }
+}
+
+.pricingdiv ul.theplan .center{
+  margin: 0 auto;
+  text-align: center;
+}
+
+.pricingdiv ul.theplan img{
+  max-width: 80%;
+  height: auto;
+}
+
+.pricingdiv ul.theplan li{
+  padding: 10px 10px;
+  position: relative;
+}
+
+.pricingdiv ul.theplan li.title{
+  font-weight: bold;
+  text-align: center;
+  padding: 10px;
+  background: rgb(40, 193, 203);
+  color: white;
+  box-shadow: 0 -10px 5px rgba(0,0,0,.1) inset;
+  text-transform: uppercase;
+  border-radius: 10px 10px 0px 0px;
+}
+
+.pricingdiv ul.theplan li p{
+  font-size: 16px; 
+  display: inline-block;
+}
+
+.pricingdiv ul.theplan li.title{
+  background: rgb(100, 84, 150);
+  color: white;
+  text-transform: uppercase;
+  font-size: 200%;
+}
+
+.pricingdiv ul.theplan i{
+  font-size: 85px;
+  color: #645496 !important;
+  margin: 1.5rem 0px;
+}
+
+.pricingdiv ul.theplan:last-of-type{ /* remove right margin in very last table */
+  margin-right: 0;
+}
+
+/*very last LI within each pricing UL */
+.pricingdiv ul.theplan li:last-of-type{
+  text-align: center;
+  margin-top: auto; /*align last LI (price botton li) to the very bottom of UL */
+}  
+
+.pricingdiv a.pricebutton{
+  background: red;
+  text-decoration: none;
+  padding: 10px;
+  display: inline-block;
+  margin: 10px auto;
+  border-radius: 5px;
+  color: white;
+  font-weight: bold;
+  border-radius: 5px;
+  text-transform: uppercase;
+}
+
+@media only screen and (max-width: 600px) {
+  .pricingdiv ul.theplan{
+    border-radius: 0;
+    width: 100%;
+    margin-right: 0;
+  }
+  
+  .pricingdiv ul.theplan:hover{
+    transform: none;
+    box-shadow: none;
+  }
+  
+  .pricingdiv a.pricebutton{
+    display: block;
+  }
+}

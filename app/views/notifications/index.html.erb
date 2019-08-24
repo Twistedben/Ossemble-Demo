@@ -1,0 +1,119 @@
+<div class="content">
+  <div class="tier"> <!-- Begin - Main tier for page. -->
+    <!-- Below -  Renders in the accordian from views/layouts/phones/... for mobile and tablet. -->
+    <%= render "layouts/phones/mobile_accordion" %>
+    <div class="center col-d-8 col-t-11 col-p-12">
+      <div class="tier">
+        <div class="col-tier">
+          <div class="col-all-12">
+            <div class="tier margin-t-10 margin-b-20">
+            <div class="col-tier">
+              <div class="padding-l-0 page_info_title bold ms_pro_label text-19 push-left my-2 theme_color_black push-left">
+                Your Unread Notifications  
+              </div>
+              <div style="margin-left: auto;" class="padding-l-0 page_info_title bold ms_pro_label text-20 push-left my-2 theme_color_black push-right">
+                <% unless @notifications.empty? %>
+                  <a href="/notifications" class="title_link" data-behavior="notifications-link"><i class="far fa-envelope-open mr-2"></i>Mark as Read</a>
+                <% end %>
+              </div>
+            </div>
+            <div class="col-all-12 card p-0 no-border-radius">
+              <div class="card-body" style="height: 100%">
+                <div id="user_activity_container">
+                  <div id="activity_container" class="tier margin-t-0">
+                    <% if @notifications.empty? %>
+                      <p class="m-0 center-all text-xxmedium theme_color_black">You currently have no new, unread notifications. Check back when you do!</p>
+                    <% else %>
+                      <% @notifications.each do |notification| %>
+                        <div id="notification_list" class="margin-y-3 border-bottom width-100" > 
+                          <p class="text-14 theme_color_black ms_ra_text text-left my-2">
+                            <!-- Below -  Instead of displaying the user's name, it displays "You" instead if current_user is viewing their own profile.-->
+                            <%= display_list_avatar(notification.actor) %>
+                            <span class="padding-l-8">
+                              <%= display_actor_name(notification , notification.actor) %>
+                            </span>
+                            <%= notifiable_action(notification) %>
+                            <span id="notifiable_show_link">
+                              <%= notifiable_show_link(notification.notifiable , notification) %>
+                            </span>
+                            
+                           <%= complaint_filed(notification.notifiable , notification) %>
+                           
+                            <small class="i">
+                              <span class="text-14">
+                                -
+                              </span> 
+                              <%= time_ago_in_words(notification.created_at) %> ago
+                            </small>
+                            <span class="push-right">
+                              <%= display_date_in_numbers(notification.created_at) %>
+                            </span>
+                            <span id="comments_city_activity">
+                              <div id="notification_desc" class="tier theme_color_black text-14 ms_ra_text padding-l-8">
+                                <%= notifiable_description(notification.notifiable , notification) %>
+                              </div>
+                            </span>
+                          </p>
+                        </div>
+                      <% end %> <!-- End -  Unread notifications check -->
+                    <% end %> <!-- End -  Unread notifications empty  check -->
+                  </div> 
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% if @read_notifications.empty? %>
+        <!--  Display nothing if there are no read notifications -->
+      <% else %>
+        <div class="mt-5 padding-l-0 page_info_title bold ms_pro_label text-19 push-left my-2 theme_color_black push-left">
+          Your Read Notifications  
+        </div>
+          <div class="col-all-12 card p-0 no-border-radius">
+            <div class="card-body" style="height: 100%">
+              <div id="user_activity_container">
+                <div id="activity_container" class="tier margin-t-0">
+                  <% @read_notifications.each do |notification| %>
+                      
+                      <div id="notification_list" class="margin-y-3 border-bottom width-100" > 
+                        <p class="text-14 theme_color_black ms_ra_text text-left my-2">
+                          <!-- Below -  Instead of displaying the user's name, it displays "You" instead if current_user is viewing their own profile.-->
+                          <%= display_list_avatar(notification.actor) %><%= display_actor_name(notification , notification.actor) %>
+                          <%= notifiable_action(notification) %>
+                          
+                          <span id="notifiable_show_link">
+                            <%= notifiable_show_link(notification.notifiable , notification) %>
+                          </span>
+                          
+                         <%= complaint_filed(notification.notifiable , notification) %>
+                         
+                          <small class="i">
+                            <span class="text-14">
+                              -
+                            </span> 
+                            <%= time_ago_in_words(notification.created_at) %> ago
+                          </small>
+                          <span id="comments_city_activity">
+          
+                          <div id="notification_desc" class="tier theme_color_black text-14 ms_ra_text">
+                            <%= notifiable_description(notification.notifiable , notification) %>
+                          </div>
+                            
+                          </span>
+                        </p>
+                      </div>
+                    <% end %> <!-- End - read  Notification loop -->
+                    
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %> <!-- End -  If empty read notifcations check -->
+        </div>
+      </div> 
+    </div> <!-- End - Center content column  -->
+    <div id="non_ms_ap_content" class="col-d-2 col-t-9" >
+      
+    </div>
+  </div> <!-- Main page tier -->
+</div>

@@ -1,0 +1,31 @@
+<!--  Partial being rendered in Update Profile page, registrations edit, to be rendered when a user hasn't yet followed any content. -->
+<div id="update_profile_title" class="tier"> 
+  <p class="push-left">
+    Follow Some Content!
+  </p>
+</div>
+<div id="follow_content_tier" class="col-tier margin-b-15 card light-box-shadow" style="border: 1px solid rgba(128, 128, 128, 0.5);">    
+  <div class="col-tier padding-b-0">            
+    <div class="col-d-12">
+      <% @content_to_follow.each do |content| %>
+        <div class="col-tier border-bottom padding-all-8">
+          <div class="col-all-10">
+            <p class="text-16 bold margin-b-5">
+              <%= content.name %>
+            </p>
+            <p class="text-13 margin-b-0">
+              <em><%= content.description %></em>
+            </p>
+          </div>
+          <div class="col-all-2">
+            <div class="push-right padding-t-8 padding-r-8">
+              <%= form_tag subtopic_follow_path(content.id), method: :post, onclick: "$(this).hide()", remote: true do 
+                  button_tag "<i class='fas fa-angle-double-right margin-r-5'></i>Follow".html_safe, class: "light-btn-shadow push-right btn alt-action"
+               end %> 
+            </div>
+          </div>
+        </div>
+      <% end %> 
+    </div>
+  </div>
+</div>

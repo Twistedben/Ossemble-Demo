@@ -1,0 +1,78 @@
+<!-- Main index page for Ossembly section. Landing page from (views/ossembly/index.html.erb) and route URL: /cities/:city_id/ossembly --> 
+
+<!-- Begin - Main content for Ossembly page. -->
+<div class="content">
+  <div class="tier"> <!-- Begin - Main tier for page. -->
+    <!-- Below -  Renders in the accordian from views/layouts/phones/... for mobile and tablet. -->
+    <%= render "layouts/phones/mobile_accordion" %>
+    <div class="center col-d-7 col-t-11 col-p-12">
+      <!-- Begin - Ossembly Page Info -->
+      <div id="page_info_card_org" class="col-tier">
+        <div id="page_info_card" class="margin-b-15 col-all-12">
+          <div class="tier">
+            <div class="col-all-12">
+              <p class="page_info_title pull-left">
+                Forum Feed
+              </p>
+            </div>
+            <div class="col-all-12 light-box-shadow card" style="border: 1px solid rgba(128, 128, 128, .5)">
+              <div class="card-body theme_color_black">
+                <div class="col-d-9 col-t-12 col-p-12 pull-left">
+                   <p class="text-big" style="font-family: Roboto;"><i>This is your local forum.</i></p> 
+                   <p class="text-medium mb-2">The forum is dedicated to everything and anything about your city.</p>
+                   <p class="text-medium mb-2">All conversations are shown based on Endorsements and comments.</p>
+                    <section class="text-xmedium">Example</section>
+                     <ul class="bold">
+                      <li>Goodvibes (Topic) conversation dedicated to Furry Friends (Subtopic)</li> 
+                     </ul>
+                </div>
+                <div class="page_info_icon_hide col-all-3 pull-right center-all pl-3 theme_color_dark" style="font-size: 100px; margin-top: 0px">
+                  <%= image_tag "icons/messages2.svg", alt: "Icon", class: "mb-0", style: "width: 120px; position: relative; top: -10px;" %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End- Ossembly Forum Page Info -->
+      <div class="tier">
+        <div class="col-tier padding-b-20">
+          <p class="trending_list_title col-p-12">
+            Trending - Week
+          </p>
+            <%= render 'filters/feed_filter', obj: @ossembly %>
+        </div>
+        <!-- Below -  Renders in search bar for ossembly forum pages -->
+        <!-- Commented out searching in Ossembly until later 
+          %= render 'searches/ossembly_search' %>
+        -->
+        <!-- Begin - Rendering of trending week's posts -->
+        <div class="col-tier">
+          <div class="col-all-12">
+            <!-- Below - Rending of trending posts by week -->
+             <%= render 'layouts/resources/resources_list', obj: @trending_week_posts %>
+          </div>
+        </div>
+        <!-- End - Rendering of trending week's posts -->
+      </div>
+      <!-- Begin -  Rendering of posts and petitions by month -->
+      <div class="tier">
+        <div class="col-all-12">
+          <p class="trending_font_size col-p-12">
+            <%= "Trending - Month" unless @trending_month_posts.empty? %>
+          </p>
+        </div>
+        <div class="col-tier">
+          <div class="col-all-12">
+            <!-- Below - Rending of trending posts by month. -->
+            <%= render 'layouts/resources/resources_list', obj: @trending_month_posts unless @trending_month_posts.empty? %>
+          </div>
+        </div>
+      </div>
+      <!-- End -  Rendering of posts and petitions by month -->
+    </div>
+    <div id="non_ms_ap_content" class="col-d-3 col-t-10" >
+      <%= render 'layouts/action_panel', obj: @ossembly %>
+    </div>
+  </div> <!-- Main page tier -->
+</div>

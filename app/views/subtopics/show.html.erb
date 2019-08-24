@@ -1,0 +1,204 @@
+<!-- Main show page for Subtopics within a topic section. Landing page from (views/subtopics/show.html.erb) and route URL: /cities/:city_id/topics/:topic_id/subtopics/:subtopic_id --> 
+<!-- Begin - Main content for community score page. -->
+<div class="content">
+  <div class="tier"> <!-- Begin - Main tier for page. -->
+    <!-- Below -  Renders in the accordian from views/layouts/phones/... for mobile and tablet. -->
+    <%= render "layouts/phones/mobile_accordion" %>
+    <div class="center col-d-7 col-t-11 col-p-12">
+      <div id="page_info_card_org" class="col-all-12">
+        <div id="page_info_card">
+          <div class="tier margin-b-15">
+            <div class="col-all-12">
+              <!-- Begin -  Subtopic Title -->
+              <p class="trending_font_size pull-left margin-all-10" style="margin-left: 0px !important; padding-top: 0.5px">
+                <%= "Help Me Out Conversations" if current_page?(subtopic_path(@city, @lets_talk, @help_out)) %> 
+                <%= "Business Buzz Conversations" if current_page?(subtopic_path(@city, @lets_talk, @business_buzz)) %> 
+                <%= "Grinds My Gears Conversations" if current_page?(subtopic_path(@city, @lets_talk, @grinds_gears)) %> 
+                <%= "Sports Conversations" if current_page?(subtopic_path(@city, @lets_talk, @sports)) %> 
+                <%= "Good News Conversations" if current_page?(subtopic_path(@city, @good_vibes, @good_news)) %> 
+                <%= "Furry Friends Conversations" if current_page?(subtopic_path(@city, @good_vibes, @furry_friends)) %> 
+                <%= "City Snaps Conversations" if current_page?(subtopic_path(@city, @good_vibes, @city_snaps)) %> 
+                <%= "Local Historian Conversations" if current_page?(subtopic_path(@city, @good_vibes, @local_historian)) %> 
+                <%= "Ballots Conversations" if current_page?(subtopic_path(@city, @city_affairs, @ballots)) %> 
+                <%= "City Improvements Conversations" if current_page?(subtopic_path(@city, @city_affairs, @city_improvements)) %> 
+                <%= "Events Conversations" if current_page?(subtopic_path(@city, @city_affairs, @events)) %> 
+                <%= "Schools Conversations" if current_page?(subtopic_path(@city, @city_affairs, @schools)) %> 
+              </p>
+            </div>
+            <!-- End -  Subtopic Title -->
+            <div class="col-all-12 light-box-shadow card" style="border: 1px solid rgba(128, 128, 128, .5)">
+              <div class="card-body padding-b-0 theme_color_black">
+                <!-- Begin -  Subtopic Descriptions/Info -->
+                <div class="col-d-9 col-t-12 col-p-12 pull-left">
+                  <% if current_page?(subtopic_path(@city, @lets_talk, @help_out)) %>  
+                    <p class="text-big" style="font-family: Roboto;"><i>Looking for a recommendation?</i></p> 
+                    <p class="text-medium">Not sure what areas of the city are dog-friendly?</p>
+                    <section class="b">Start a conversation by asking for help. Some local expert might be able to help out!</section>
+                    <ul> 
+                      <li>Ex: “Recommendation for talented, local painters?”</li>
+                    </ul>
+                  <% elsif current_page?(subtopic_path(@city, @lets_talk, @business_buzz)) %>  
+                    <p class="text-big" style="font-family: Roboto;"><i>Small businesses are the backbone of our cities.</i></p> 
+                    <p class="text-medium">We should give them some love!</p>
+                    <p class="b">Talk about new, old, favorite, upcoming, small, big, chain, mom and pop, or anything business orientated.</p>
+                    <section>Example</section>
+                     <ul class="bold"> 
+                      <li>“New Vegan Restaurant to open on Main Street!”</li>
+                     </ul>
+                  <% elsif current_page?(subtopic_path(@city, @lets_talk, @grinds_gears)) %>  
+                    <p class="text-big" style="font-family: Roboto;"><i>Sometimes it’s good to get things off your chest.</i></p> 
+                    <p class="text-medium">This is a space where citizens can vent and rant about anything; big or small.</p>
+                    <p class="text-medium">Use this as a platform to voice your general frustrations, NOT to target an individual.</p>
+                    <section class="b">Like other conversations on Ossemble, keep it civil.</section>
+                    <ul> 
+                      <li><b>No bullying, sexism, racism, etc. will be tolerated.</b></li>
+                    </ul>
+                  <% elsif current_page?(subtopic_path(@city, @good_vibes, @good_news)) %>  
+                    <p class="text-big" style="font-family: Roboto;"><i>24 Hour news cycles can be filled with negativity and division.</i></p> 
+                    <p class="text-medium">We at Ossemble believe that there is a lot more GOOD going on in the world then we are lead to believe.</p>
+                    <p class="text-medium">That Good starts in our Communities.</p>
+                    <section class="b">Example</section>
+                     <ul> 
+                      <li class="bold">The local animal shelter is hosting an event where elementary school children practiced their reading skills to shelter dogs! It was a WIN WIN for everyone!</li>
+                      </ul>
+                  <% elsif current_page?(subtopic_path(@city, @good_vibes, @furry_friends)) %>  
+                    <p class="text-big" style="font-family: Roboto;"><i>Our pets are family. Our family makes up our community. Our community makes our city.</i></p> 
+                    <p class="text-medium">This page is dedicated to those furry bundles of love and joy!</p>
+                    <section class="b">Examples</section>
+                    <ul class="bold"> 
+                      <li>Help search for a lost pet.</li>
+                      <li>Show off your cute new puppy.</li>
+                      <li>Help the animal shelter promote their new adoption week.</li>
+                    </ul>
+                  <% elsif current_page?(subtopic_path(@city, @good_vibes, @city_snaps)) %>  
+                    <p class="text-big" style="font-family: Roboto;"><i>A picture is worth a 1,000 words.</i></p> 
+                    <p class="text-medium">This page is dedicated to our amateur photographer and artist.</p>
+                    <p class="text-medium mb-0">Showcase your cities beauty and culture by uploading a picture.</p>
+                  <% elsif current_page?(subtopic_path(@city, @good_vibes, @local_historian)) %>                  
+                    <p class="text-big" style="font-family: Roboto;"><i>Teach your community about the historical importance of your city.</i></p> 
+                    <p class="text-medium">Studying history is the best lesson for the future. <br> The history of our communities make up the identity of our nation.</p>
+                    <p class="text-medium mb-0">Share a story about the old bank building down the street <br> or ask a question about a small town protest that turned into public law.</p>
+                  <% elsif current_page?(subtopic_path(@city, @city_affairs, @ballots)) %> 
+                    <p class="text-big" style="font-family: Roboto;"><i>Some local municipalities have an election twice a year.</i></p> 
+                    <p class="text-medium">Stay updated with key issues and local candidates running for office.</p>
+                    <p class="text-medium mb-0">These ballots should be explained as bi-partisan as possible. <br> Written as understandable and straightforward is always encouraged.</p>             
+                  <% elsif current_page?(subtopic_path(@city, @city_affairs, @events)) %> 
+                    <p class="text-big" style="font-family: Roboto;"><i>Stay updated with every event taking part in your city.</i></p> 
+                    <p class="text-medium">It could be an upcoming book sale from the library, <br> or the annual parade on Main Street.</p>
+                    <p class="text-medium">You can upload events that you hope others in the community will support.</p>
+                  <% elsif current_page?(subtopic_path(@city, @city_affairs, @city_improvements)) %>
+                    <p class="text-big" style="font-family: Roboto;"><i>Got an idea you think would improve the city?</i></p> 
+                    <p class="text-medium">Well here is the place where that idea can become reality.</p>
+                    <p class="text-medium">If your conversation starts to trend and get a lot of backing… <br> then make it a reality! By starting a petition!</p>
+                    <section class="b">Example</section>
+                    <ul class="bold"> 
+                      <li>“We should have a Community Garden located at Lot 66!”</li>
+                    </ul>
+                  <% elsif current_page?(subtopic_path(@city, @city_affairs, @schools))  %> 
+                    <p class="text-big" style="font-family: Roboto;"><i>Our children’s education defines our cities success.</i></p> 
+                    <p class="text-medium">A good education not only is an investment for your child but can help our communities.</p>
+                    <section class="b">This forum is dedicated to your City’s education.</section>
+                    <ul class="bold"> 
+                      <li>Discuss individual schools within the district.</li>
+                      <li>The overall curriculum.</li>
+                      <li>Safety concerns.</li>
+                      <li>Tax levy funds being used efficiently.</li>
+                    </ul>
+                  <% elsif current_page?(subtopic_path(@city, @lets_talk, @sports))  %> 
+                    <p class="text-big" style="font-family: Roboto;">Take time to talk and post all things sports related!</p>
+                     <p class="text-medium">Sporting events promote friendly competition and comradery which can help bring a community together.</p>
+                    <section class="b">City sports topics examples</section>
+                    <ul> 
+                      <li><b>High School sports teams</b></li>
+                      <li><b>Little League sign up</b></li>
+                      <li><b>Adult kick ball</b></li>
+                      <li><b>5k training tips</b></li>
+                      <li><b>Local Bike trails</b></li>
+                    </ul>
+                  <% end %>
+                </div>
+                <!-- End -  Subtopic Descriptions/Info -->
+                <!-- Begin -  Subtopic Icon -->
+                <div class="page_info_icon_hide col-all-3 pull-right center-all pl-3 theme_color_dark margin-t-0 page_info_icon" style="height: 130px">
+                  <i style="font-size: 100px; position: relative; top: -25px;" class='
+                    <%= "fas" unless current_page?(subtopic_path(@city, @lets_talk, @grinds_gears)) %> 
+                    <%= "fa-handshake" if current_page?(subtopic_path(@city, @lets_talk, @help_out)) %> 
+                    <%= "fa-building" if current_page?(subtopic_path(@city, @lets_talk, @business_buzz)) %> 
+                    <%= "fab fa-whmcs" if current_page?(subtopic_path(@city, @lets_talk, @grinds_gears)) %> 
+                    <%= "fa-football-ball" if current_page?(subtopic_path(@city, @lets_talk, @sports)) %>            
+                    <%= "fa-smile" if current_page?(subtopic_path(@city, @good_vibes, @good_news)) %> 
+                    <%= "fa-bone" if current_page?(subtopic_path(@city, @good_vibes, @furry_friends)) %> 
+                    <%= "fa-camera-retro" if current_page?(subtopic_path(@city, @good_vibes, @city_snaps)) %> 
+                    <%= "fa-atlas" if current_page?(subtopic_path(@city, @good_vibes, @local_historian)) %>
+                    <%= "fa-school" if current_page?(subtopic_path(@city, @city_affairs, @schools)) %> 
+                    <%= "fa-newspaper" if current_page?(subtopic_path(@city, @city_affairs, @ballots)) %> 
+                    <%= "fa-calendar-alt" if current_page?(subtopic_path(@city, @city_affairs, @events)) %> 
+                    <%= "fa-road" if current_page?(subtopic_path(@city, @city_affairs, @city_improvements)) %> 
+                    '>
+                  </i>
+                </div>
+                <!-- End -  Subtopic Icons -->
+                <!-- Begin - Following Subtopic information --> 
+                <div class="col-tier"> 
+                  <!-- Below - Displays the number of followers the subtopic has from Follows_helper.rb. -->
+                  <div class="col-all-12 padding-l-3 padding-b-15">
+                    <div class="tier"> 
+                      <p class="theme_color_black text-muted text-16 text-right margin-b-3 margin-l-5">
+                        <%= display_follower_count(@subtopic) %>
+                      </p>
+                    </div>
+                  <!-- Below - Displays the follow button from Follows_helper.rb, passes in the two routes and the resource. -->
+                    <div class="">
+                      <%= display_follow_button(subtopic_follow_path(@subtopic.id), subtopic_unfollow_path(@subtopic.id), @subtopic) %>
+                    </div>
+                  </div>
+                </div> <!-- End - Following Subtopic information --> 
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End- Subtopic Page Info -->
+      
+      <div class="tier">
+        <div class="col-tier padding-b-20">
+          <p class="trending_list_title col-p-12">
+            Trending - Week
+          </p>
+          <%= render 'filters/feed_filter', obj: @subtopic %>
+          <!-- Begin - Sort panel -->
+          <div class="">
+            <!-- Below - Renders in sort panel partial for ordering of subtopics with the object subtopics -->
+            <%= render 'layouts/sort_panel', obj: @subtopic %>
+          </div>
+        </div>
+        <!-- End - Sort panel -->
+        <!-- Begin - Rendering of trending week posts. -->
+        <div class="col-tier">
+          <div class="col-all-12">
+            <!-- Below - Rendering of trending posts within subtopic by week -->
+            <%= render 'layouts/resources/resources_list', obj: @week_subtopic_posts %>
+          </div>
+        </div>
+      <!-- End - Rendering of trending week posts -->
+      </div>
+      <div class="tier">
+        <div class="col-all-12">
+          <p class="trending_font_size">
+            <%= "Trending - Month" unless @month_subtopic_posts.empty? %>
+          </p>
+        </div>
+        <div class="col-tier">
+          <div class="col-all-12">
+            <!-- Below - Rending of trending posts within subtopic by month. -->
+            <%= render 'posts/posts_list', obj: @month_subtopic_posts unless @month_subtopic_posts.empty? %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="non_ms_ap_content" class="col-d-3 col-t-10">
+      <%= render 'layouts/action_panel', obj: @subtopic %>
+    </div>
+  </div> <!-- Main page tier -->
+</div>
+

@@ -1,0 +1,12 @@
+// Trigger on clicking reply to drop form down.
+  var reply_button = $('.reply_dropdown_<%= @comment.id %>');
+  var form = $('.reply_form_<%= @comment.id %>');
+  
+  $(reply_button).slideUp("fast", "swing");
+  $(form).slideDown("fast", "swing");
+  // Delays focus on the reply box
+  setTimeout(function() {
+    $('.reply_description').focus()
+   }, 1000 );
+  
+  amplitude.getInstance().logEvent('Comment Reply for a <%= @comment.subject %>');

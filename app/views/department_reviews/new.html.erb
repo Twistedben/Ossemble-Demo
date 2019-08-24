@@ -1,0 +1,350 @@
+<!--  Main page where form sits for creating a new Department Review. We do not use the partial _review_form.html.erb for simplicity reasons and keeping code less messy since they go to different routes. -->
+
+<!-- Begin -  Form for Creating a new Department Review -->
+<!-- PROGRAMMERS NOTE: Move this functionality to ruby inputs.
+    <div id="wrapper">
+      <p>WUL Tags Testing</p>
+      <ul class="tags-input" style="height: 100%; background-color: white !important">
+        <li class="tags-new">
+          <input type="text" class="mt-1"> 
+        </li>
+      </ul>  
+    </div>
+
+    <div id="wrapper2">
+      <p>Improve Tags Testing</p>
+      <ul class="tags-input2" style="height: 100%; background-color: white !important">
+        <li class="tags-new2">
+          <input type="text" class="mt-1"> 
+        </li>
+      </ul>  
+    </div>
+    -->
+<!-- Below -  Captures the written description if a post fails to be created to be then shuffled into quill using JS below -->
+<%= simple_format(@review.description, {}, wrapper_tag: "div id='new_text_wrap' class='vanish'") %>
+
+<div class="content"> 
+  <div class="col-d-10 col-t-11 col-p-12 center transparent"> 
+    <div class="trending_font_size mt-3 mb-0 ms_titles_ml">
+        Department Review - <%= current_city %>
+    </div>
+    <div class="theme_color_black text-medium mb-3 col-tier">
+      <div id="wul-modal" class="">
+        <p id="show-modal" class="mb-0 underline ms_titles_ml" ><span class="pointer" @click="showModal = true">Department Review Guidelines</span></p>
+        <!-- use the modal component, pass in the prop -->
+        <modal v-if="showModal" @close="showModal = false">
+        </modal>
+      </div>
+    </div>
+    <div class="light-box-shadow bg-white px-4 py-0" style="border: 1px solid rgba(128, 128, 128, .5)">
+      <%= simple_form_for @review, url: create_department_review_path(@city, @review), as: 'department_review', html: { multipart: true, autocomplete: 'off', class: 'form-horizontal col-all-12 form_ms_text' }, defaults: { wrapper_html: { class: 'tier center' } }  do |f| %>
+        <%= render 'layouts/errors', obj: @review %>
+        <!-- Below - Selecting New Department category to determine what score table to go to -->
+        <div class="col-tier center">
+          <div class="col-d-8 col-t-11 col-p-12 margin-t-10"> 
+            <%= f.label :scorable_type, class: 'pull-left theme_color_black text-xxmedium' do %>
+              Department to Review
+            <% end %>
+            <select required aria-required="true" id="scorable_type_select" class="select_form form-control input-box-shadow" title="What department would you like to review?" autofocus="autofocus" required="required" name="department_review[scorable_type]">
+              <option value="GovernmentScore">Government</option>
+              <option value="ParkScore">Parks</option>
+              <option value="SchoolScore">Schools</option>
+              <option value="PoliceScore">Police</option>
+              <option value="PublicScore">Public Works</option>
+            </select> 
+          <p class="margin-t-5 mb-0 text-13">Select one of the five departments you wish to review.</p>
+          </div>
+          
+        </div>
+        <!-- Below - Entering New Department Review Title --> 
+        <div class="col-tier center">
+          <div class="col-d-8 col-t-11 col-p-12 margin-t-10"> 
+            <%= f.label :title, class: 'pull-left theme_color_black text-xxmedium' do %>
+              Title <small>(optional)</small>
+            <% end %>
+            <%= f.text_field :title, title: "Provide a short, but descriptive title for your review", maxlength: 70, placeholder: "EG: '#{current_city}'s Parks are Amazing!' (Title will be generated if not entered)", required: false, class: "form-control input-box-shadow " %>
+          </div>
+          <p class="margin-t-5 mb-0 text-13">A short title to succinctly identify your review. Will be generated for you automatically if not provided. Minimum: 5 Characters, Limit: 70 Characters.</p>
+        </div>
+        <!-- Below - Score for New Department Review and Star Rating -->
+        <div class="col-tier center margin-t-30">
+          <%= f.label :score, id: "score_label", class: 'form_ms_text theme_color_black text-16'%>
+          <div id="department-star-rating" class="ml-3 mb-0">
+            <br>
+          </div>
+        </div>
+        <!-- Below - Entering New Department Review Love list -->
+        <div id="tags_list" class="vanish"> 
+          <div class="col-tier center margin-t-0" title="Enter three reasons you like this department, separated with commas. Select from Dropdown or add your own!">
+            <div class="col-d-8 col-t-11 col-p-12"> 
+              <%= f.label :love_list, class: 'pull-left text-xxmedium theme_color_black' do %>
+                Tag What You Like <small>(3 tags, separated by commas)</small>
+              <% end %>
+                <%= f.text_field :love_list, maxlength: 75, placeholder: "EG: 'Staff, Communication, Response Time'", id: 'department_like_list',  class: "select_form input-box-shadow form-control", style: "border: 1px solid #aaaaaa"  %>
+            </div>
+            <p class="margin-t-5 mb-0 text-13">Three tags, separated by commas, that identify the qualities you like about this department.</p>
+          </div> 
+          <!-- Below - Entering New Department Review improvement list -->
+          <div class="col-tier center margin-t-18" title="Enter three improvements this department should enact, separated with commas. Select from Dropdown or add your own!">
+            <div class="col-d-8 col-t-11 col-p-12"> 
+              <%= f.label :improve_list, class: 'pull-left text-xxmedium theme_color_black' do %>
+                Tag What Needs Improvement <small>(3 tags, separated by commas)</small>
+              <% end %>
+                <%= f.text_field :improve_list, maxlength: 75, placeholder: "EG: 'Red Tape, Budget, Taxes'",  id: 'department_improve_list',  class: "select_form input-box-shadow form-control", style: "border: 1px solid #aaaaaa" %>
+            </div>
+            <p class="margin-t-5 mb-0 text-13">Three tags, separated by commas, that identify the drawbacks and what needs improvement concerning this department.</p>
+          </div>
+        </div>
+        
+        <!-- Below -  Loading Image upload gif -->
+        <div class="loading" style="display:none; z-index: 15000">
+          <div class="center-all" style="border-radius: 10px !important">
+            <%= image_tag "icons/misc/loading.gif", alt: "Uploading", class: "", style: "width: 300px" %>
+            <div class="theme_color_dark mb-5 px-4">Please wait while your image uploads...</div>
+          </div>
+        </div>
+        
+        <!-- Below - Entering New Department Review Description -->
+        <div class="col-tier center">
+          <div class="col-all-12 margin-t-18"> 
+           <%= f.label :description, class: 'theme_color_black text-xxmedium' %>
+           <%= f.hidden_field :description, id: "post_description", required: true %>
+            <div id="editor-container" class="light-box-shadow" hidden="true"></div>
+            <div id="quill_container"  style="height: 250px !important;"></div>
+          </div>
+          <p class="margin-t-8 mb-0 text-13">The description of your review, explaining your experience and interactions with this department. Minimum: 100 Characters, Limit: 5,000 Characters (about 750 words).</p>
+        </div>
+        <!-- Begin - New image upload row -->
+        <div class="col-tier center margin-y-12">
+          <div class="col-all-12"> 
+            <div class="tier">
+               <%= f.label :image, "<i class='fas fa-file-image margin-r-8'></i>Upload Review Image <small> (optional) </small>".html_safe, class: "pull-left control-label" %>
+            </div>
+            <div class="tier">
+              <%= f.file_field :image, accept: 'image/*', class: "upload btn btn-info margin-y-5 light-btn-shadow", style: "width: 220px", onchange: "readURL(this);" %>
+            </div>
+            <div class="tier">
+              <%= f.label :image, "Preview of Uploaded Image".html_safe, class: " vanish img_prev_title pull-left control-label mb-2" %>
+            </div>
+            <div class="tier">
+              <img id="img_prev" class="vanish" src="#" alt="Image">
+            </div>
+            <p class="margin-t-5 mb-0 text-13">If the image you're uploading is high resolution, it may take a few moments.</p>
+          </div>
+        </div>
+        <!-- End - New image upload row -->
+      </div>
+      <div class="form-actions">
+        <div class="col-tier py-4"> 
+          <%= f.submit "Submit Review", class: "form_btn btn action light-btn-shadow", id: "loadgif", onclick: "amplitude.getInstance().logEvent('Department Review');" %>
+        </div>
+      </div>
+    <% end %> <!-- End - Simpleform New Department Review form block -->
+  </div>
+</div>
+
+<!-- Below -  Previews the uploaded image. Called by onchange for file upload. Also makes upload button bigger to show name of file. -->
+<script>
+function readURL(input) {
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+    $("#img_prev").show();
+    $(".img_prev_title").show();
+    $("#department_review_image").width(280);
+    reader.onload = function (e) {
+      $('#img_prev')
+        .attr('src', e.target.result)
+    };
+
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+</script>
+
+<!--  PROGRAMMER'S NOTE: All jquery code for scoring and dropdown selection for new and edit page is inside javascripts/department_reviews.coffee -->
+<script>
+// Code for the Department Review Tags 
+
+  function existingTag(text)
+{
+	var existing = false,
+		text = text.toLowerCase();
+
+	$(".tags").each(function(){
+		if ($(this).text().toLowerCase() == text) 
+		{
+			existing = true;
+			return "";
+		}
+	});
+
+	return existing;
+}
+
+$(function(){
+  $(".tags-new input").focus();
+  
+  $(".tags-new input").keyup(function(){
+
+		var tag = $(this).val().trim(),
+		length = tag.length;
+		if((tag.charAt(length - 1) == ',') && (tag != ","))
+		{
+			tag = tag.substring(0, length - 1);
+
+			if(!existingTag(tag))
+			{
+				$('<li class="tags"><span>' + tag + '</span><i class="fa fa-times"></i></i></li>').insertBefore($(".tags-new"));
+				$(this).val("");	
+			}
+			
+			else
+			{
+				$(this).val(tag);
+			}
+		}
+	});
+  
+  $(document).on("click", ".tags i", function(){
+    $(this).parent("li").remove();
+  });
+
+});
+</script>
+
+
+<!-- Code for the Improve Tags -->
+<script>
+  function existingTag(text)
+{
+	var existing = false,
+		text = text.toLowerCase();
+
+	$(".tags").each(function(){
+		if ($(this).text().toLowerCase() == text) 
+		{
+			existing = true;
+			return "";
+		}
+	});
+
+	return existing;
+}
+
+$(function(){
+  $(".tags-new2 input").focus();
+  
+  $(".tags-new2 input").keyup(function(){
+
+		var tag = $(this).val().trim(),
+		length = tag.length;
+		if((tag.charAt(length - 1) == ',') && (tag != ","))
+		{
+			tag = tag.substring(0, length - 1);
+
+			if(!existingTag(tag))
+			{
+				$('<li class="tags"><span>' + tag + '</span><i class="fa fa-times"></i></i></li>').insertBefore($(".tags-new2"));
+				$(this).val("");	
+			}
+			
+			else
+			{
+				$(this).val(tag);
+			}
+		}
+	});
+  
+  $(document).on("click", ".tags i", function(){
+    $(this).parent("li").remove();
+  });
+
+});
+</script>
+
+<script>
+// register modal component
+Vue.component('modal', {
+  template: '#modal-template'
+})
+
+// start app
+new Vue({
+  el: '#wul-modal',
+  data: {
+    showModal: false
+  }
+})
+</script>
+<!--  Below - VueJS Code for modal popup of guidelines for new Department Review -->
+<script type="text/x-template" id="modal-template">
+  <transition name="modal">
+    <div class="modal-mask">
+      <div class="modal-wrapper">
+        <div class="modal-body">
+          <slot name="body">
+            <div class="content">
+              <div class="col-all-10 center">
+                <div id="page_info_card_org" class="col-tier">
+                  <div id="page_info_card" class="col-all-12">
+                    <div class="col-all-12 light-box-shadow card" style="border: 1px solid rgba(128, 128, 128, .5); border-radius: 10px;">
+                      <div class="card-body theme_color_black p-4" style="">
+                        <div class="col-all-12 pull-left">
+                           <h3 class="mt-0 mb-2 ms_page_title">What You Love Guidelines</h3> 
+                           <p class="text-medium i mb-3">Please follow these posting guidelines to ensure your WUL review is valid and able to be posted.</p> 
+                           <section class="b">Please fill out all required fields below</section>
+                           <ul> 
+                            <li><b>Title</b> <span class="text-xsmall">(optional)</span> - Write a creative title to describe what you love about your city.</li>  
+                            <li><b>Score</b> - Click on the stars to rate your city and your expierence there. You may click halfway on a star for half ratings. <span class="i">EG: 4.5 out of 5 would be four and a half stars.</span></li>  
+                            <li><b>Tags</b> - Two fields for tags are avaiable, What You Love and What Needs Improvement. Write three things that you love about your city seperated by commas. Below What You Love, write three things that need improvement in your city seperated by commas.</li>
+                            <li><b>Description</b> - Please write a short description describing your review of your city, enough so others can clearly understand what your review is about.</li>
+                            <li><b>Image</b> <span class="text-xsmall">(optional)</span> - You may upload an image of What You Love about your city, it could be of your favorite place, resturant, or something you love about being there.</li>
+                          </ul>
+                          <p class="text-medium mb-2">Following these steps will ensure your What You Love review is filed properly.</p>
+                            <button class="btn btn-info modal-default-button text-xxmedium" @click="$emit('close')">
+                              Close
+                            </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div> 
+            </slot>
+          </div>
+        </div>
+      </div>
+    </div>
+  </transition>
+</script>
+
+<script>
+
+  var form = document.querySelector('.form-horizontal');
+  var quill = new Quill('#quill_container', {
+  modules: {
+    toolbar: [
+      ['bold', 'italic', 'link'],
+      [{ list: 'ordered' }, { list: 'bullet' }]
+      ]
+    },
+    placeholder: 'Please write a descriptive review of this department. Elaborate on your experiences with it and provide as much detail as possible about your interaction with this city department. Minimum: 150 characters, Limit: 5,000 characters (about 750 words).',
+    theme: 'snow'  // or 'bubble'
+  });
+
+
+  form.onsubmit = function() {
+    var postContentInput = document.querySelector('#post_description');
+    postContentInput.value = quill.root.innerHTML;
+  };
+  
+  // Below - Sets up a variable from the simple format rendering about on edit post
+  var editDescription = $('#edit_text_wrap').text();
+  $('.ql-editor p').text(editDescription);
+  // Below - Shuffles in text from a failed resource submission's description
+  var newDescription = $('#new_text_wrap').text();
+  $('.ql-editor p').text(newDescription);
+
+</script>
+
+<!-- End -  Form for Creating a new Department Review -->

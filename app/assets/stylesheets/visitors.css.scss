@@ -1,0 +1,1196 @@
+/* PROGRAMMER'S NOTE: Due to using Bootstrap Studio program, a lot of the CSS for the
+index.html.erb page was done WITHIN the HTML file using "style='X'". If you cannot find
+CSS for a particular item on this page, it'll likely be found internally inline on the index.html.erb page." */
+
+/* Ossemble's Main Colors */
+$primary-color: #C361F1 !important;
+.theme_color { color: #C361F1 !important; }
+
+/*Begin - General CSS for 'visitors/index.html.erb'  */
+  /* Begin - Jumbotron CSS for 'visitors/index.html.erb' */
+  
+  #jumbo_container  {
+    background: asset-url('visitors_index/cover_image.png') no-repeat center center fixed; 
+     -webkit-background-size: cover;
+     -moz-background-size: cover;
+     -o-background-size: cover;
+     background-size: cover;
+     
+     margin-top: -1.8rem !important;
+   // Begin - scaling options for different screen resoultions. 
+      
+      @media screen and (max-width: 860px) {
+          h1 {
+      font-size: 40px;
+            }
+       
+                                            }
+  
+    @media screen and (max-width: 667px) {
+          h2 {
+      font-size: 24px;
+              }  
+         
+                                          }
+      
+      #join_us_btn {
+        font-size: 20px;
+        margin-left: 10px;
+        height: 55px;
+        padding-right: 10px;
+        padding-top: 12px;
+        margin-bottom: 8px;
+        width: 155px;
+          
+          @media screen and (max-width: 667px) {
+            padding: 2px 4px;
+            font-size: 80%;
+            line-height: 1;
+            border-radius: 3px;
+            height: 35px;
+            width: 120px;
+            padding-top: 11px;
+            font-size: 12px;
+            letter-spacing: 1px;
+                                                }
+       
+      }
+      
+      p               {
+        font-size: 23px;
+        text-shadow:.5px .5px black;
+          @media screen and (max-width: 667px) {
+            font-size: 15px;
+                                              }
+       
+                      } 
+    } // Closing Jumbo containter media screens.
+    
+  #main_jumbo {
+    background-color: transparent;
+    text-align: center;
+    padding: 40px;
+    margin: 0 auto;
+    height: 420px;
+    position: relative;
+    @media screen and (max-width: 578px) {
+          padding: 35px;
+          height: 410px;
+                                           }
+  } 
+  
+  #jumbo_main_text{
+    font-size: 65px;
+    font-family: Adamina, serif;
+    color: #645496;
+    //text-shadow: 2px 2px #a165aa;
+  }
+  
+  #jumbo_slogan_text{
+    font-size: 40px;
+    font-family: Adamina, serif;
+    color: #645496;
+    //text-shadow: 1.5px 1.5px #a165aa;
+    @media screen and (max-width: 859px) {
+    //text-shadow: 1.5px 1px black;
+    font-size: 33px;
+                                         }
+  }
+  
+  .ms_olw {
+   font-size: 18px !important;
+   @media screen and (max-width: 768px) {
+    font-size: 14px !important;
+                                         }
+  }
+  
+  #tint {
+    padding: 1.5em;
+    background-color: rgba(237, 237, 237, 0.7) !important;
+    margin-top: 20px !important;
+    max-width: 60em;
+    @media screen and (width: 768px) {
+      width: 620px !important;
+      margin-top: 50px !important;
+      
+                                         }
+    @media screen and (max-width: 667px) {
+      margin-top: 8px !important;
+      
+                                         }
+        }
+  
+  .req_city_title {
+    margin-bottom: 15px !important; 
+    border-bottom: 1px solid rgba(100, 84, 150, .6); 
+    padding-bottom: 6px;
+  }
+  
+  #main_jumbo .container {
+    background-color: rgba(250,200,255,0.70);
+    margin-top: 5px;
+    border-radius: 25px;
+  }
+  
+  .info_container {
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+  }
+  
+  #middle_jumbo_divider {
+    height: 70px;
+  }
+  
+  .comingSoonArrow {
+    height:18px;
+  }
+  
+  .labelBorder {
+    border:0.5px solid gray;
+  }
+  
+// Begin - Request Box/Container
+  //Begin request city media screens.
+  
+  #request_wrapper {
+    padding-bottom: 3px !important;
+    margin-bottom: 0px !important;
+    border-bottom: 1px ridge;
+    border-bottom-color: rgba(100, 84, 150, .4);
+    z-index: 100;
+    
+    @media screen and (max-width: 568px) {
+        h2 {
+    font-size: 22px;
+    font-weight: bold;
+    }
+    
+    }  
+    
+    @media screen and (max-width: 568px) {
+        .alert_body {
+    width: 225px;
+    margin-top: 4px;
+    }
+    
+    }  
+    
+    @media screen and (max-width: 568px) {
+        #email_input {
+    width: 245px;
+    height: 40px;
+    font-size: 16;
+    }
+    
+    }  
+  } //Closing request city media screens.
+
+  .alert_body {
+    margin-top: 8px;
+    margin-bottom: 8px;
+    border-bottom: 1px ridge;
+    border-bottom-color: rgba(195,97,241,.3);
+    width: 500px;
+    padding-bottom: 10px;
+    
+  }
+  // CSS for Div containing both Alert boxes in Subscribe and Stay INformed
+  .alert_box {
+    padding-bottom: 4px;
+
+    padding-right: 8px;
+    padding-top: 4px;
+    
+      div {
+        margin-top: 10px !important;
+        padding: 10px 20px !important;
+      }
+      span {
+        font-size: 19px;
+        margin-top: 5px;
+      }
+  }
+  
+  .input_row_wrapper {
+    margin: 10px 0px 15px 0px !important;
+  }
+  
+  #email_input {
+    width: 285px !important;
+    background-color:#f5f4f7;
+    font-size: 16px;
+    color: rgb(11,11,11);
+    height: 33px !important;
+    padding-top: 2px;
+    margin-right: 0px;
+    margin-bottom: 10px !important;
+  }
+  
+  .input_btn_body {
+    margin-left: 10px;
+    margin-top: 9px;
+    margin-right: 10px;
+    height: 55px;
+    width: 155px;
+    font-size: 18px;
+    
+      @media screen and (max-width: 568px) {
+        padding-bottom: 14px;
+        padding-top: 7px;
+        margin-right: 5px;
+        width: 130px;
+        height: 35px;
+        font-size: 15px;
+                                          }  
+    
+  }
+  
+// End - Request Box/Container
+
+  // Begin Features Box & Info Cards media screens.
+ 
+ //Closing Features Box & Info Cards media screens.
+  
+  // Begin Subscribe media screens.
+  
+  #subscribe_wrapper {
+    margin-bottom: 0px !important;
+    border-top: 1px ridge;
+    border-top-color: rgba(195,97,241,.3);
+    z-index: 100;
+
+    @media screen and (max-width: 568px) {
+        h2 {
+    font-size: 23px;
+    font-weight: bold;
+    }
+    
+    }  
+    
+    @media screen and (max-width: 568px) {
+        .alert_body {
+    width: 205px;
+    margin-top: 4px;
+                    }
+    }  
+    
+    @media screen and (max-width: 568px) {
+        #email_input {
+    width: 285px;
+    background-color:#f5f4f7;
+    font-size: 16px;
+    color: rgb(11,11,11);
+    height: 33px;
+    margin-right: 15px;
+    padding-top: 2px;
+                        }
+    }  
+    
+    @media screen and (max-width: 568px) {
+      #request_city_btn {
+        font-size: 18px;
+        line-height: 1;
+        border-radius: 3px;
+        height: 45px;
+        width: 145px;
+        margin-top: 10px;
+        padding-top: 9px;
+        }
+    
+    }  
+    
+     @media screen and (max-width: 568px) {
+       #sub_email_wrapper {
+         
+    padding-bottom: 35px;
+                          }
+       
+                                          }
+     
+  }                              
+   
+   // Begin - Features & Website Functions List Group CSS for index.html.erb.
+
+  #function_wrapper {
+   margin-bottom: 0px !important;
+   padding-bottom: 15px;
+   
+   #function_body {
+    
+   }
+    .card {
+      width: 70rem;
+      background-color: #FFF;
+      border: 2px;
+      border-style: solid;
+      border-color: black;
+     
+          }
+          
+    img {
+      height: 16rem; 
+      width: 16rem; 
+      border-radius: 5%;
+      
+      @media screen and (max-width: 568px) {
+        height: 10rem; 
+        width: 10rem; 
+        border-radius: 5%;
+                                            }
+    }
+
+    .point_system_img {
+      @media screen and (max-width: 568px) {
+        margin-bottom: 1px !important;
+                                            }
+    }
+    ul {
+      padding: 0px;
+      list-style: none; 
+      
+    }
+    
+    h3 {
+      font-size: 2.8rem;
+      font-weight: bold;
+      letter-spacing: 1px;
+      //text-shadow: 1px 1px 1px black;
+      color: #645496;
+        }
+        
+    li {
+      border-style: none;
+      font-size: 1.8rem;
+      background-color: #FFF;
+        @media screen and (max-width: 568px) {
+          font-size: 1.3rem;
+                                           }
+        }
+        
+    .card-body {
+      color: #595959; 
+      background-color: #FFF !important;
+    }
+    
+    .card-header {
+      background-color: rgba(161, 101, 170, .1); 
+      border-bottom: 1px solid rgba(100, 84, 150, .7) !important; 
+      margin-bottom: 0px !important
+    }
+    
+    .card {
+      background-color: #FFF !important; 
+      border: 1px solid rgba(100, 84, 150, .7) !important
+    }
+  }
+  
+  
+  
+  
+  // End - Features & Website Functions List Group CSS for index.html.erb.
+  
+  
+  // Begin - Stay Informed Subscription Box CSS for index.html.erb
+  
+  #sub_wrapper {
+    height: 50px;
+    width: 1024px;
+    margin-bottom: 0px;
+    padding-right: 0px;
+    padding-left: 0px;
+  }
+  
+  #stay {
+    height: 60px;
+    margin-bottom: 0px;
+    padding: 14px;
+  }
+  
+  #email_input_sub {
+    width: 360px;
+    background-color:#f5f4f7;
+    font-size: 18px;
+    color: rgb(11,11,11);
+    height: 40px;
+    margin-right: 15px;
+    padding-top: 2px;
+  }
+  
+  #sub_btn {
+    
+    height: 41px;
+    padding-right: 13px;
+    padding-top: 8px;
+    margin-bottom: 4px;
+    margin-left: 4px;
+    width: 135px;
+  }
+  
+  .emailBorder {
+    border:2px solid black;
+  }
+  
+  .ms_pt {
+     @media screen and (min-width: 571px) {
+          padding-top: 15px !important;
+                                           }
+  }
+ // End - Stay Informed Subscription Box CSS for index.html.erb
+ 
+
+// End Animation CSS for Welcome to Ossemble
+
+// End - General CSS for index.html.erb 
+
+// City Landing CSS 
+
+#newlanding2 {
+  .navbar-light .navbar-nav .nav-link {
+  font-size: 1.0rem;
+  letter-spacing: 0.6px;
+  text-align: right;
+  padding-right: 5rem;
+    font-family: 'Marcellus', serif;
+}
+
+img {
+    width: 40%;
+    height: auto;
+}
+
+body {
+    height: 1100px;
+    font-size: 16px;
+    line-height: 1.5;
+    font-family: 'Marcellus', serif;
+}
+
+.navbar-nav > li > .dropdown-menu a{color: dimgray;  }
+
+.navbar-nav > li > .dropdown-menu {background-color: ghostwhite;  }
+
+.dropdown:hover>.dropdown-menu {
+    display: block;
+    border: none;
+}
+
+li {
+  list-style: none;
+}
+
+.navbar li {
+  display: inline;
+  float: left;
+}
+
+.navbar a {
+  display: inline-block;
+  color: #fff;
+  text-decoration: none;
+  padding: 25px;
+  transition: 0.3s all;
+    font-family: 'Marcellus', serif;
+}
+
+.navbar a {
+  text-decoration: none;
+}
+
+.navbar a:hover {
+  background-color: plum;
+}
+
+body { 
+    padding-top: 120px; 
+    background: linear-gradient(to left bottom, rebeccapurple , white);
+    font-family: 'Marcellus', serif;
+}
+
+h2.blocktext {
+    text-align: center;
+    letter-spacing: 3px;
+    word-spacing: 10px;
+    padding: 60px;
+    color: aliceblue;
+    font-size: 45pt;
+    font-family: 'Marcellus', serif;
+}
+
+h2.block {
+    text-align: center;
+    letter-spacing: 3px;
+    word-spacing: 10px;
+    padding: 25px;
+    color: aliceblue;
+    font-size: 50pt;
+    font-family: 'Marcellus', serif;
+}
+
+h1.blocktext {
+    text-align: center;
+    letter-spacing: 3px;
+    word-spacing: 15px;
+    color: aliceblue;
+    font-size: 20pt;
+    font-family: 'Marcellus', serif;
+}
+
+
+h1.block {
+    text-align: center;
+    color: aliceblue;
+    font-size: 35pt;
+    font-family: 'Marcellus', serif;
+}
+
+h1.smallblock {
+    color: aliceblue;
+    font-size: 18pt;
+    font-family: 'Marcellus', serif;
+}
+
+.heart {
+    margin-left: 14%;
+    padding: 50px;
+    width: 70%;
+    height: auto;
+}
+
+h1.blocks {
+    text-align: center;
+    letter-spacing: 3px;
+    color: rebeccapurple;
+    font-size: 20pt;
+    font-family: 'Marcellus', serif;
+}
+
+h1.block2 {
+    text-align: center;
+    color: rebeccapurple;
+    font-size: 30pt;
+    font-family: 'Marcellus', serif;
+}
+
+h5.icon-text {
+    font-size: 25px;
+    padding: 10px;
+}
+
+.page-header-box {
+    background-color: ghostwhite;
+    color: #4d2a6e;
+	display: table-cell;
+    text-align: center;
+	width: 33%;
+	position: relative;
+    padding: 25px;
+    font-family: 'Marcellus', serif;
+    font-size: 18px;
+}
+
+.page-end-box {
+    float: left;
+    margin-left: 13%;
+	display: table-cell;
+    text-align: center;
+	width: 30%;
+	position: relative;
+    padding: 40px;
+    background-color: ghostwhite;
+    border-radius: 30px/50px;
+    font-family: 'Marcellus', serif;
+}
+
+h2.block1{
+   text-align: center;
+    letter-spacing: 3px;
+    word-spacing: 10px;
+    padding: 60px;
+    color: rebeccapurple;
+    font-size: 45pt; 
+    float: left;
+    margin-left: 4%;
+    margin-top: 4%;
+    font-family: 'Marcellus', serif;
+}
+
+p.def-text{
+    text-align: center;
+    width: 50%;
+    float: left;
+    margin-left: 4%;
+    padding: 10px;
+    color: rebeccapurple;
+    font-size: 15pt; 
+    font-family: 'Marcellus', serif;
+}
+
+p.end-text{
+    text-align: center;
+    float: left;
+    margin-left: 4%;
+    padding: 10px;
+    color: rebeccapurple;
+    font-size: 15pt; 
+    padding: 20px;
+    font-family: 'Marcellus', serif;
+}
+
+.container-1 {
+    background-color: ghostwhite;
+    
+}
+
+.space {
+    padding: 30px;
+}
+
+.video {
+    width: 40%;
+    height: 400px;
+    float: right;
+    margin-right: 4%;
+    margin-top: 4%;
+}
+
+.buttons{
+    width: 30%;
+    margin: 22px;
+    float: left;
+    font-family: 'Marcellus', serif;
+}
+
+.buttons-two{
+    width: 30%;
+}
+
+.button-one{
+    text-align: center;
+    cursor: pointer;
+    font-size:24px;
+    margin-left: 130%;
+}
+
+.bgcity {
+    background-image: url("/assets/img/city.jpg") 0 0 repeat-x;
+}
+
+.button-one {
+    border-radius: 4px;
+    background-color: purple;
+    color: white;
+    border: none;
+    padding: 20px;
+    width: 200px;
+    transition: all 0.5s;
+}
+
+
+.button-one span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.button-one span:after {
+  content: '»';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.button-one:hover span {
+  padding-right: 20px;
+}
+
+.button-one:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+
+.button-two{
+    text-align: center;
+    cursor: pointer;
+    font-size:24px;
+    margin-left: 138%;
+}
+
+.button-two {
+    border-radius: 4px;
+    background-color: purple;
+    color: white;
+    border: none;
+    padding: 20px;
+    width: 200px;
+    transition: all 0.5s;
+}
+
+
+.button-two span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.button-two span:after {
+  content: '»';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.button-two:hover span {
+  padding-right: 25px;
+}
+
+.button-two:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+
+.button-three{
+    text-align: center;
+    cursor: pointer;
+    font-size:24px;
+    margin-left: 70%;
+}
+
+.button-three {
+    border-radius: 4px;
+    background-color: rebeccapurple;
+    color: white;
+    border: none;
+    padding: 20px;
+    width: 200px;
+    transition: all 0.5s;
+}
+
+
+.button-two span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.button-two span:after {
+  content: '»';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.button-two:hover span {
+  padding-right: 20px;
+}
+
+.button-two:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+
+.button-three:hover {
+  box-shadow: 2px 2px 15px rgba(0, 0, 0, 1), -2px -2px 15px rgba(0, 0, 0, 1);
+}
+
+.button-four{
+    text-align: center;
+    cursor: pointer;
+    font-size:24px;
+    font-family: 'Marcellus', serif;
+}
+
+.button-four {
+    border-radius: 4px;
+    background-color: ghostwhite;
+    color: rebeccapurple;
+    border: none;
+    padding: 20px;
+    width: 300px;
+    transition: all 0.5s;
+}
+
+.button-four:hover {
+  box-shadow: 2px 2px 15px rgba(0, 0, 0, 1), -2px -2px 15px rgba(0, 0, 0, 1);
+}
+
+#slider{
+
+  background:url("/assets/visitors_index/lakewood4.jpg");
+  -webkit-backface-visibility: hidden;
+  -webkit-transform: translate3D(0, 0, 0);
+  background-size:cover;
+  animation:slide 40s infinite;
+}
+@keyframes slide{
+  25%{ background:url("/assets/visitors_index/lakewood1.jpg");
+    background-size:cover;
+    -webkit-backface-visibility: hidden;
+    -webkit-transform: translate3D(0, 0, 0);
+  }
+  50%{ background:url("/assets/visitors_index/lakewood2.jpg");
+    background-size:cover;
+    -webkit-backface-visibility: hidden;
+    -webkit-transform: translate3D(0, 0, 0);
+  }
+  75%{ background:url("/assets/visitors_index/lakewood3.jpg");
+    background-size:cover;
+    -webkit-backface-visibility: hidden;
+    -webkit-transform: translate3D(0, 0, 0);
+  }
+  100%{ background:url("/assets/visitors_index/lakewood4.jpg");
+    background-size:cover;
+    -webkit-backface-visibility: hidden;
+    -webkit-transform: translate3D(0, 0, 0);
+  }
+}
+
+.layer {
+    background-color: rgba(102, 51, 153, 0.7);
+    width: 100%;
+    height: 100%;
+}
+
+.clearfix:after {
+	content: '';
+	display: block;
+	height: 0;
+	width: 0;
+	clear: both;
+}
+
+.pricing-wrapper {
+	width: 80%;
+    height: auto;
+	margin-left: 11%;
+    margin-top: 3%;
+    padding-bottom: 2%;
+}
+
+.pricing-table {
+	margin: 0 15px;
+	text-align: center;
+	width: 30%;
+	float: left;
+	-webkit-box-shadow: 0 0 15px rgba(0,0,0,0.4);
+	box-shadow: 0 0 15px rgba(0,0,0,0.4);
+	-webkit-transition: all 0.25s ease;
+	-o-transition: all 0.25s ease;
+	transition: all 0.25s ease;
+}
+
+.pricing-table:hover {
+	-webkit-transform: scale(1.06);
+	-ms-transform: scale(1.06);
+	-o-transform: scale(1.06);
+	transform: scale(1.06);
+}
+
+.pricing-title {
+	color: #FFF;
+	background: rebeccapurple;
+    text-align: center;
+	padding: 20px 0;
+	font-size: 30px;
+    font-family: 'Marcellus', serif;
+	text-shadow: 0 1px 1px rgba(0,0,0,0.4);
+}
+
+.pricing-table .price {
+	background: plum;
+	font-size: 40px;
+	font-weight: 700;
+	padding: 10px 0;
+	text-shadow: 0 1px 1px rgba(0,0,0,0.4);
+}
+
+.pricing-table .price sup {
+	font-size: 0.4em;
+	position: relative;
+	left: 5px;
+}
+
+.table-list {
+	background: rgb(183,132,167);
+	color: #403d3a;
+}
+
+.table-list li {
+	font-size: 1.4em;
+	font-weight: 700;
+	padding: 30px 8px;
+}
+
+.table-list li:before {
+	content: "\00bb";
+	color: rebeccapurple;
+	display: inline-block;
+	position: relative;
+    float: left;
+	font-size: 15px;
+} 
+
+.table-list li span {
+	font-weight: 400;
+}
+
+.table-list li span.premium {
+	color: ghostwhite;
+	background: rebeccapurple;
+    float: right;
+	font-size: 12px;
+	padding: 5px 7px;
+	display: inline-block;
+	-webkit-border-radius: 38px;
+	-moz-border-radius: 38px;
+	border-radius: 38px;
+}
+
+.table-buy {
+	background: #FFF;
+	padding: 7px;
+    margin-bottom: 10px;
+	text-align: left;
+	overflow: hidden;
+	height: 60px;
+}
+
+.table-buy .pricing-action {
+	color: #FFF;
+	background: rgb(141,78,133);
+	padding: 10px 16px;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
+	font-weight: 700;
+	font-size: 1.4em;
+	text-shadow: 0 1px 1px rgba(0,0,0,0.4);
+	-webkit-transition: all 0.25s ease;
+	-o-transition: all 0.25s ease;
+	transition: all 0.25s ease;
+}
+
+.table-buy .pricing-action:hover {
+	background: rebeccapurple;
+    text-decoration: none;
+}
+
+/** ================
+ * Responsive
+ ===================*/
+ @media only screen and (min-width: 768px) and (max-width: 959px) {
+ 	.pricing-wrapper {
+ 		width: 768px;
+ 	}
+
+ 	.pricing-table {
+ 		width: 236px;
+ 	}
+	
+	.table-list li {
+		font-size: 1.3em;
+	}
+
+ }
+
+ @media only screen and (max-width: 767px) {
+ 	.pricing-wrapper {
+ 		width: 420px;
+ 	}
+
+ 	.pricing-table {
+ 		display: block;
+ 		float: none;
+ 		margin: 0 0 20px 0;
+ 		width: 100%;
+ 	}
+ }
+
+@media only screen and (max-width: 479px) {
+	.pricing-wrapper {
+		width: 300px;
+	}
+} 
+
+.fa-2x {
+font-size: 2em;
+}
+.fa {
+position: relative;
+display: table-cell;
+width: 60px;
+height: 36px;
+text-align: center;
+vertical-align: middle;
+font-size:20px;
+color: rgb(108,48,130);
+}
+
+.main-menu {
+background: rgb(240,240,240);
+border-right:1px solid #e5e5e5;
+top:112px;
+bottom:0;
+height:100%;
+left:30;
+width:250px;
+height:980px;
+overflow:visible;
+-webkit-transition:width .05s linear;
+transition:width .05s linear;
+-webkit-transform:translateZ(0) scale(1,1);
+z-index:1000;
+}
+
+.main-menu>ul {
+margin:10px 0;
+}
+
+.main-menu li {
+position:relative;
+display:block;
+width:250px;
+height: 100%;
+}
+
+.main-menu li>a {
+position:relative;
+display:table;
+border-collapse:collapse;
+border-spacing:0;
+color:#999;
+ font-family: arial;
+font-size: 14px;
+text-decoration:none;
+-webkit-transform:translateZ(0) scale(1,1);
+-webkit-transition:all .1s linear;
+transition:all .1s linear;
+  
+}
+
+.main-menu .nav-icon {
+position:relative;
+display:table-cell;
+width:60px;
+height:36px;
+text-align:center;
+vertical-align:middle;
+}
+
+.main-menu .nav-text {
+position:relative;
+display:table-cell;
+vertical-align:middle;
+width:190px;
+font-family: 'Marcellus', serif;
+font-size: 12pt;
+}
+
+.no-touch .scrollable.hover {
+overflow-y:hidden;
+}
+
+.no-touch .scrollable.hover:hover {
+overflow-y:auto;
+overflow:visible;
+}
+
+a:hover,a:focus {
+text-decoration:none;
+}
+
+nav {
+-webkit-user-select:none;
+-moz-user-select:none;
+-ms-user-select:none;
+-o-user-select:none;
+user-select:none;
+}
+
+nav ul,nav li {
+outline:0;
+margin:0;
+padding:0;
+}
+.main-menu li:hover>a,nav.main-menu li.active>a,.dropdown-menu>li>a:hover,.dropdown-menu>li>a:focus,.dropdown-menu>.active>a,.dropdown-menu>.active>a:hover,.dropdown-menu>.active>a:focus,.no-touch .dashboard-page nav.dashboard-menu ul li:hover a,.dashboard-page nav.dashboard-menu ul li.active a {
+color:#fff;
+background-color:plum;
+}
+.area {
+float: left;
+background: #e2e2e2;
+width: 100%;
+height: 100%;
+}
+
+/* Hide Dropdowns by Default */
+#nav1 li ul {
+  display: none;
+}
+
+#nav1 li ul li a {
+  padding: 10px 0;
+  padding-left: 60px;
+  text-decoration: none;
+  display: block;
+}
+
+.container-3{
+  margin-left: 20%;
+  display:flex;
+  font-family: 'Marcellus', serif;
+}
+
+.card{
+  padding:1em;
+  border-radius: 5px;
+  border:1px solid black;
+  transition: all 0.05s;
+  }
+
+.title{
+    padding-bottom:1em;
+    margin-bottom:1em;
+    color: rebeccapurple;
+    border-bottom: 1px solid rebeccapurple;
+}
+
+.content{
+    flex:1;
+}
+  
+#sales-summary{
+  background: ghostwhite;
+  min-width:320px;
+}
+
+.subtitle{
+  font-size:1.2em;
+  margin:0;
+  line-height:1em;
+}
+
+.ossemble {
+    float: right;
+    border: 1px solid rgb(108,48,130);
+}
+
+.skyline {
+    width: 100%;
+}
+}
+
+.tier3text {
+    text-shadow: gray 1px 1px 1px !important;
+    -webkit-font-smoothing: antialiased;
+}

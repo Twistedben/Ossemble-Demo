@@ -1,0 +1,124 @@
+<!-- Main partial for rendering in the Ossembly related filter panel and tops and subtopics.-->
+
+<!-- Begin - Ossembly Filter Panel -->
+<div id="filter_panel_wrapper" class="filtertoggle col-d-12 center pl-0 pt-0">
+  <aside class="width-100">
+    <div id="filter_panel_content" class="no-padding border-radius-10">
+      <div id="filter_panel_body" class="panel-default panel-profile no-border border-radius-10">
+        <div id="filter_panel_list_wrapper" class="panel-body no-border">
+          <ul id="filter_panel_list" class="list-group">
+            <div class="">
+              <div class="mb-0 text-xbig city_feeds_pos b roboto" style="color: rgba(88, 88, 88, .9)">
+                Conversations
+              </div>
+            </div>
+            <div>
+              <li class="dropdown mb-0 city_feeds_pos">
+                <a title="Post anything that's about improving your city and achieving positive progress within it." class="dropdown" style="text-decoration: none;"><i class="fas fa-bullhorn margin-r-10 margin-l-8 ms_t_panel_head"></i>Let's Talk<i class="pl-3 fas fa-caret-down"></i></a>
+                <ul class="dropdown-menu city_feeds_pos about_dd_style pt-0 mt-0">
+                  <!-- % @city.topics.each do |topic|  %>
+                  %= link_to "#{topic.name}", city_topic_path(@city.friendly_id, topic), class:  %> -->
+                  <li title="Post anything that's about improving your city and achieving positive progress within it." class="about_dd_hover city_feeds_pos">
+                    <%= link_to "<i class='fas fa-bullhorn margin-l-8 margin-r-10'></i><span class='ms_font_panel'>All Let's Talk</span>".html_safe, city_topic_path(@city, @lets_talk), class: "no-padding transparent" %>
+                  </li>
+                  <li title="Post about anything you need help with amongst the boundaries of your city, ranging from accomplishing a common goal to finding your missing dog." class="about_dd_hover city_feeds_pos">
+                    <%= link_to "<i class='fas fa-handshake margin-l-8' style='margin-right: 7px'></i><span class='ms_font_panel'>Help Me Out</span>".html_safe, subtopic_path(@city, @lets_talk, @help_out), class: "no-padding transparent" %>
+                  </li>
+                  <li title="Post about your business, local businesses, new businesses, small businesses. Its all of your business!" class="about_dd_hover city_feeds_pos">
+                    <%= link_to "<i class='fas fa-building margin-l-8' style='margin-right: 14px'></i><span class='ms_font_panel'>Business Buzz</span>".html_safe, subtopic_path(@city, @lets_talk, @business_buzz), class: "no-padding transparent" %>
+                  </li>
+                  <li title="Doesn't that just grind your gears? Vent and rant about the things that bug you concerning your city." class="about_dd_hover city_feeds_pos">
+                    <%= link_to "<i class='fab fa-whmcs margin-l-8' style='margin-right: 13px'></i><span class='ms_font_panel'>Grinds My Gears</span>".html_safe, subtopic_path(@city, @lets_talk, @grinds_gears), class: "no-padding transparent" %>
+                  </li>
+                  <li title="What's your take on local sports? High school teams, peewee football?" class="about_dd_hover city_feeds_pos">
+                    <%= link_to "<i class='fas fa-football-ball margin-l-8' style='margin-right: 12px'></i><span class='ms_font_panel'>Sports</span>".html_safe, subtopic_path(@city, @lets_talk, @sports), class: "no-padding transparent" %>
+                  </li>
+                </ul>
+              </li>
+            </div>
+            <div>
+            <li class="dropdown m-0 city_feeds_pos">
+              <a title="Post anything that's uplifting, happy, or positive about your city." class="dropdown" style="text-decoration: none;"><i class="fas fa-dove margin-r-10 margin-l-8 ms_t_panel_head"></i>Good Vibes<i class="pl-3 fas fa-caret-down"></i></a>
+              <ul class="dropdown-menu city_feeds_pos about_dd_style pt-0 mt-0">
+                <li title="Post anything that's uplifting, happy, or positive about your city." class="about_dd_hover city_feeds_pos">
+                  <%= link_to "<i class='fas fa-dove margin-l-8 margin-r-12'></i><span class='ms_font_panel'>All Good Vibes</span>".html_safe, city_topic_path(@city, @good_vibes), class: "no-padding transparent" %>
+                </li>
+                <li title="Heard something about your city that just makes you feel good about it? Or something inside your city that uplifts? Spread the good news!" class="about_dd_hover city_feeds_pos">
+                  <%= link_to "<i class='fas fa-smile margin-l-8 margin-r-12'></i><span class='ms_font_panel'>Good News</span>".html_safe, subtopic_path(@city, @good_vibes, @good_news), class: "no-padding transparent" %>
+                </li>
+                <li title="You love your cat or dog. We do, too. Post about the cute creatures of your city." class="about_dd_hover city_feeds_pos">
+                  <%= link_to "<i class='fas fa-bone margin-l-5 margin-r-10'></i><span class='ms_font_panel'>Furry Friends</span>".html_safe, subtopic_path(@city, @good_vibes, @furry_friends), class: "no-padding transparent" %>
+                </li>
+                <li title="Share your favorite picture of your city or anything related to it." class="about_dd_hover city_feeds_pos">
+                  <%= link_to "<i class='fas fa-camera-retro margin-l-8 margin-r-12'></i><span class='ms_font_panel'>City Snaps</span>".html_safe, subtopic_path(@city, @good_vibes, @city_snaps), class: "no-padding transparent" %>
+                </li>
+                <li title="Your city has a lot of history. Share it and interesting stories you find buried in the past!" class="about_dd_hover city_feeds_pos">
+                  <%= link_to "<i class='fas fa-atlas margin-l-8' style='margin-right: 14px'></i><span class='ms_font_panel'>Local Historian</span>".html_safe, subtopic_path(@city, @good_vibes, @local_historian), class: "no-padding transparent" %>
+                </li>
+              </ul>
+            </li>
+            </div>
+            
+            <div>
+            <li class="dropdown m-0 city_feeds_pos">
+              <a title="Post anything that concerns your city's bureaucracy and government: policies, laws, city council & officials, ballots, events, public departments, etc.. City Affairs is the portal for your city's government." class="dropdown" style="text-decoration: none;"><i class="fas fa-gavel margin-r-10 margin-l-8 ms_t_panel_head"></i>City Affairs<i class="pl-3 fas fa-caret-down"></i></a>
+              <ul class="dropdown-menu city_feeds_pos about_dd_style pt-0 mt-0">
+                <li title="Post anything that concerns your city's bureaucracy and government: policies, laws, city council & officials, ballots, events, public departments, etc.. City Affairs is the portal for your city's government." class="about_dd_hover city_feeds_pos">
+                  <%= link_to "<i class='fas fa-gavel margin-l-8 margin-r-12'></i><span class='ms_font_panel'>All City Affairs</span>".html_safe, city_topic_path(@city, @city_affairs), class: "no-padding transparent" %>
+                </li>
+                <li title="Ballots for your local city." class="about_dd_hover city_feeds_pos">
+                  <%= link_to "<i class='fas fa-newspaper margin-l-8' style='margin-right: 10px'></i><span class='ms_font_panel'>Ballots</span>".html_safe, subtopic_path(@city, @city_affairs, @ballots), class: "no-padding transparent" %>
+                </li>    
+                <li title="Events in your city: townhalls, zoning, official meetings, etc.." class="about_dd_hover city_feeds_pos">
+                  <%= link_to "<i class='fas fa-calendar-alt margin-l-8' style='margin-right: 14px'></i><span class='ms_font_panel'>Events</span>".html_safe, subtopic_path(@city, @city_affairs, @events), class: "no-padding transparent" %>
+                </li>
+                <li title="Post about ways and means to improve you city, ranging from governmental to community reforms.." class="about_dd_hover city_feeds_pos">
+                  <%= link_to "<i class='fas fa-road margin-l-8' style='margin-right: 8px'></i><span class='ms_font_panel'>City Improvements</span>".html_safe, subtopic_path(@city, @city_affairs, @city_improvements), class: "no-padding transparent" %>
+                </li>
+                <li title="Discuss the happenings within your local school district. Policies, teachers, curriculum, etc.." class="about_dd_hover city_feeds_pos">
+                  <%= link_to "<i class='fas fa-school margin-l-8 ms_t_panel_head' style='margin-right: 7px'></i>Schools".html_safe, subtopic_path(@city, @city_affairs, @schools), class: "no-padding transparent" %>
+                </li>
+              </ul>
+            </li>
+            </div>
+            
+            <div>
+            <li class="dropdown m-0 city_feeds_pos">
+              <a title="Propose, discuss, and file petitions to improve, enhance, and change your city alongside fellow citizens." class="dropdown" style="text-decoration: none;"><i class="fas fa-clipboard margin-r-10 margin-l-8 ms_t_panel_head"></i>Petitions<i class="pl-3 fas fa-caret-down"></i></a>
+              <ul class="dropdown-menu city_feeds_pos about_dd_style pt-0 mt-0">
+                <li title="View all petitions that have been proposed." class="about_dd_hover city_feeds_pos">
+                  <%= link_to "<i class='fas fa-clipboard margin-l-8 ms_t_panel_head' style='margin-right: 14px'></i>All Petitions".html_safe, city_petitions_path(@city), class: "no-padding transparent" %>
+                </li>
+                <li title="View petitions that are awaiting more signatures so that they can be filed and sent to your city for consideration." class="about_dd_hover city_feeds_pos">
+                  <%= link_to "<i class='fas fa-file-signature margin-l-8 ms_t_panel_head' style='margin-right: 9px'></i>Needs Signatures".html_safe, pending_city_petitions_path(@city), class: "no-padding transparent" %>
+                </li>
+                <li title="View petitions that have been filed and sent to the city." class="about_dd_hover city_feeds_pos">
+                  <%= link_to "<i class='fas fa-envelope-square margin-l-8 ms_t_panel_head' style='margin-right: 14px'></i>Filed & Sent".html_safe, filed_city_petitions_path(@city), class: "no-padding transparent" %>
+                </li>
+              </ul>
+            </li>
+            </div>
+            <!-- PROGRAMMER'S NOTE: The two topics not yet implemented 
+            <li class="dropdown m-0">
+              <a class="dropdown-toggle" style="text-decoration: none;" href="/about/communityscore"><i class="fas fa-cogs mr-1"></i>Organize</a>
+              <ul class="dropdown-menu about_dd_style pt-0 mt-0">
+                <li class="about_dd_hover"><a class="p-0 transparent" href="/about/communityscore"><i class="fas fa-percent mr-1"></i>Meetups</a></li>
+                <li class="about_dd_hover"><a class="p-0 transparent" href="#"><i class="fab fa-accessible-icon mr-1"></i>1</a></li>
+                <li class="about_dd_hover"><a class="p-0 transparent" href="#"><i class="fab fa-accessible-icon mr-1"></i>2</a></li>
+                <li class="about_dd_hover"><a class="p-0 transparent" href="#"><i class="fab fa-accessible-icon mr-1"></i>3</a></li>
+              </ul>
+            </li>
+            <li class="dropdown m-0">
+              <a class="dropdown-toggle" style="text-decoration: none;" href="/about/communityscore"><i class="fas fa-cogs mr-1"></i>Polls</a>
+              <ul class="dropdown-menu about_dd_style pt-0 mt-0">
+                <li class="about_dd_hover"><a class="p-0 transparent" href="#"><i class="fab fa-accessible-icon mr-1"></i>2</a></li>
+                <li class="about_dd_hover"><a class="p-0 transparent" href="#"><i class="fab fa-accessible-icon mr-1"></i>3</a></li>
+              </ul>
+            </li>
+            -->
+          </ul> 
+        </div>
+      </div>
+    </aside>
+  </div>
+<!-- End - Ossembly Filter Panel -->

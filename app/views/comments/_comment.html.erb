@@ -1,0 +1,173 @@
+<div class="reply_flash_<%= comment.id %> flash_panel vanish panel panel-success light-box-shadow col-all-12"><div class="col-tier margin-t-5"><p class="text-success bold center-all text-xxmedium no-margin col-all-12">Your reply has posted!</p></div></div>
+<div class="delete_reply_flash_<%= comment.id %> flash_panel vanish panel panel-success light-box-shadow col-all-12"><div class="col-tier margin-t-5"><p class="text-success bold center-all text-xxmedium no-margin col-all-12">Your reply has been deleted.</p></div></div>
+<div class="delete_comment_flash_<%= comment.id %> flash_panel vanish panel panel-success light-box-shadow col-all-12"><div class="col-tier margin-t-5"><p class="text-success bold center-all text-xxmedium no-margin col-all-12">Your comment has been deleted.</p></div></div>
+
+<li id="comment" name="<%= comment.id %>" class="margin-t-3">
+  <div id="comment_info" class="col-all-12 margin-b-8">
+    <small class="upvote_count_<%=comment.id %> margin-x-5">
+      ( <i class="fas fa-arrow-circle-up upvote_arrow_<%= comment.id %>" style="color: #645496;"></i> <span class="upvotes_for_<%= comment.id %>"><%= comment.votes_for.count %></span> )
+    </small>
+    <span class="text-xmedium">-</span>
+    <small id="reply_count" class="margin-x-5">
+      ( <span id="reply_count_<%= comment.id %>"><%= comment.count_replies %></span> <% if comment.count_replies == 1 %> <span id="singular_reply_<%= comment.id %>">Reply</span> <% else %> <span id="plural_reply_<%= comment.id %>">Replies</span> <% end %> )
+    </small>
+    <small>
+      - <%= time_ago_in_words(comment.created_at) %> ago 
+    </small>
+    <i class="fas fa-ellipsis-h margin-x-5"></i>
+    <small>
+      <!-- Below -  When AJAX is rendered for new comment, it's temporarily rendered even when done in Admin's Workplace. This allows that AJAX avatar for an admin to be rendered-->
+      <% if comment.admin_id.nil? %>
+        <%= display_comment_avatar(comment.user) %>
+      <% else %>
+        <%= display_admin_comment_avatar(comment.admin) %>
+      <% end %>
+      
+        <!-- Below -  When AJAX is rendered for new comment, it's temporarily rendered even when done in Admin's Workplace. This allows name for an admin to be rendered-->
+      <% if comment.admin_id.nil? %>
+        <!-- Below -  Comment belongs to normal user -->
+        <%= link_to comment.user.name, user_path(comment.user.city, comment.user), class: "no-bottom-border theme_color_medium title_link" unless is_admins?(comment) %>
+        <%= "<i class='theme_color_dark fas fa-award'></i> <span class='underline theme_color_dark'>#{comment.user.name} </span>".html_safe if is_admins?(comment) %>
+      <% else %> <!-- Comment belongs to admin  -->
+        <!-- Below -  Comment belongs to admin account -->
+        <%= link_to comment.admin.name, "#", class: "no-bottom-border theme_color_medium title_link" %>
+      <% end %>
+    </small>
+    <% if is_current_users?(comment) || comment.user_id.nil? %> <!-- Hides the report button for users who own the comment and admin comments -->
+
+    <% else %> <!-- Displays the report button -->
+      <button type="button" class="button-report ml-2" data-toggle="modal" data-target="#exampleModalCenter">
+        <i class="fas fa-flag mr-2"></i> Report
+      </button>
+      <!-- Report Modal -->
+      <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content" style="border: 3px groove rgb(100, 84, 150);">
+            <div class="modal-header pt-0 pb-0 pr-3 pl-0" style="border-bottom: none !important">
+              <h5 class="modal-title" id="exampleModalLongTitle"></h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body py-0 mt-2">
+              <%= form_for(Report.new, url: create_report_path(comment), html: {class: "form", style: "", role: "form"}) do |f| %>
+                <div class="col-all-12">
+                  <label class="control-label"> 
+                    Reason:   
+                  </label>
+                  <div class="center-all">
+                    <div id="report-btns" class="m-0">
+                      <label class="unselect"><input type="radio" name="report[name]" value="Inappropriate"><span>Inappropriate</span></label>
+                      <label class="unselect" style="margin-left: 8px !important; margin-right: 8px !important;"><input type="radio" name="report[name]" value="Abusive"><span>Abusive</span></label>
+                      <label class="unselect"><input type="radio" name="report[name]" value="Other"><span>Other</span></label>
+                    </div>
+                    <div id="other-description" class="mt-0 col-tier">
+                      <%= f.label :description, "Explain:", class: 'margin-t-15' %><small class="theme_color_black relative" style="top: 17px; left: 3px;">(optional)</small>
+                      <%= f.text_area :description, maxlength: 255, placeholder: 'Describe the reason for reporting this comment.', class: "form-control input-box-shadow", style: "height: 100px !important;" %>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer p-3">
+                  <%= f.submit "Submit", class: "button-su light-btn-shadow" %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %> <!-- End -  Check of current users for report -->
+  </div>
+  <div id="comment_body" class="col-tier card" style="border: 2px groove rgba(0, 0, 0, 0.2) !important">
+    <div class="card-body text-medium col-all-12" style="">
+      <%= simple_format(comment.description, {class: "comment_description"}, wrapper_tag: 'div') %>
+    </div>
+  </div>
+  <div class="col-tier margin-b-5 mt-0 reply_dropdown_<%= comment.id %>">
+    <div class="col-all-12 push-right">
+      <% if comment.admin_id.nil? %> <!-- COmment is a users  -->
+        <%= link_to "<i class='far fa-caret-square-down margin-r-5'></i>Reply".html_safe, comment_reply_path(comment.user, comment), id: "reply_dropdown_button", class: "theme_color_black transparent margin-l-8 push-right padding-l-10 padding-y-10 padding-r-15 btn btn-secondary text-xmedium no-border", title: "Reply to Comment", remote: true %>
+      <% else %> <!-- Comment is an ajaxed admins'  -->
+        <%= link_to "<i class='far fa-caret-square-down margin-r-5'></i>Reply".html_safe, admin_comment_reply_path(comment.admin, comment), id: "reply_dropdown_button", class: "theme_color_black transparent margin-l-8 push-right padding-l-10 padding-y-10 padding-r-15 btn btn-secondary text-xmedium no-border", title: "Reply to Comment", remote: true %>
+      <% end %>
+      <div id="comment_actions" class="push-right comment_actions_<%= comment.id %>">
+        <% if is_current_users?(comment) %> <!-- Display edit and destroy buttons -->
+          <% if comment.admin_id.nil? %> <!-- COmment is a users  -->
+            <%= link_to '<i class="material-icons delete_icon" style="margin-top: 7px">delete_forever</i>'.html_safe, user_comment_path(comment.user, comment), method: :delete, title: "Delete comment", id: "delete_comment", class: 'margin-x-5', data: {confirm: "Are you sure you want to delete this comment?"}, remote: true %>
+            <%= link_to '<i class="material-icons edit_icon" style="margin-top: 7px">edit</i>'.html_safe, edit_user_comment_path(comment.user, comment), title: "Edit comment", id: "edit_comment", class: "margin-x-3", remote: true %>
+          <% else %> <!-- COmment is an ajaxed admin's  -->
+            <%= link_to '<i class="material-icons delete_icon" style="margin-top: 7px">delete_forever</i>'.html_safe, institute_admin_comment_path(comment.admin.institute, comment.admin, comment), method: :delete, title: "Delete comment", id: "delete_comment", class: 'margin-x-5', data: {confirm: "Are you sure you want to delete this comment?"}, remote: true %>
+            <%= link_to '<i class="material-icons edit_icon" style="margin-top: 7px">edit</i>'.html_safe, edit_institute_admin_comment_path(comment.admin.institute, comment.admin, comment), title: "Edit comment", id: "edit_comment", class: "margin-x-3", remote: true %>
+          <% end %>
+        <% elsif user_voted_for?(comment) %> <!-- Current user voted for comment already, so displays green thumbs. -->
+          <div id="thumbs_up_div" title="You already endorsed this." class="thumbs_up_<%= comment.id %>">
+            <i class="material-icons margin-x-5" style="margin-top: 7px">thumb_up</i>
+          </div>
+        <% else %> <!-- Display upvote endorse button. -->
+          <% if comment.admin_id.nil? %> <!-- COmment is a users  -->
+            <!-- Below -  User is NOT a member of given city comment, so disabled and alert box. -->
+            <!-- Below -  User is a member of given city comment, so endorse is available. -->
+            <%= link_to '<i class="upvote_comment_icon fas fa-arrow-circle-up" style="color: #645496; margin-top: 7px"></i>'.html_safe, upvote_comment_path(comment.user, comment), title: "Endorse comment", id: "upvote_comment", class: "push-right endorse_button_#{comment.id} text-xxbig margin-x-5", remote: true %>
+          <% else %>
+            <%= link_to '<i class="upvote_comment_icon fas fa-arrow-circle-up" style="color: #645496; margin-top: 7px"></i>'.html_safe, admin_upvote_comment_path(comment.admin, comment), title: "Endorse comment", id: "upvote_comment", class: "push-right endorse_button_#{comment.id} text-xxbig margin-x-5", remote: true %>
+          <% end %>
+        <% end %> <!-- End - Check of current user for edit, destroy, or upvote. -->
+      </div>
+    </div>
+  </div>
+  <!-- Begin - Reply Form -->
+  <div id="reply_form" class="tier vanish reply_form_<%= comment.id %>">
+  <!-- Below - Button to collapse form after reply button has been clicked. jQuery code is down at bottom.  -->
+    <button id="collapse_button_<%= comment.id %>" class="collapse_button margin-y-12 margin-l-5 margin-r-0 btn alt-action push-right" title="Collapse Reply">
+      <i class='fas fa-chevron-up text-big padding-r-3'></i> 
+    </button> 
+    <%= form_for [comment, Comment.new], url: comment_comments_path(comment), as: 'comment', class: "col-tier push-right margin-l-10", remote: true do |f| %>
+      <div class="tier">
+        <div class="form-group col-all-12 margin-t-10"> 
+          <!-- Below -  User is a member of city -->
+          <%= f.text_area :description, placeholder: "Reply to this comment. Limit: 2,000 Characters (about 300 words)", maxlength: 2000, class: "reply_description col-all-11 push-right form-control input-box-shadow", required: true  %>
+        </div>
+        <div class="col-all-12 push-right"> 
+          <div class="form-group push-right">
+            <!--  Below - User is NOT a member of city -->            
+            <!--  Below - User is a member of city -->
+            <%= f.submit "Post Reply".html_safe, id: "reply_post_btn", class: "action text-white btn text-xxmedium center-all push-right light-box-shadow light-text-shadow" %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<!-- End - Reply Form -->
+  <ol id="replies_ol" name="<%= comment.id %>" class="pl-3 margin-l-8 thread" style="border-left: 1px solid rgba(100, 84, 150, .6) !important">
+    <li class="vanish reply_placeholder_<%= comment.id %>"></li>
+    <%= render partial: 'comments/comment', collection: comment.comments %>
+  </ol>
+</li>
+<script>
+// When collapse button is clickd, the reply form moves up.
+
+  var reply_button = $('.reply_dropdown_<%= comment.id %>');
+  $('#collapse_button_<%= comment.id %>').click(function()
+  {
+    $('.reply_form_<%= comment.id %>').slideUp("fast", "swing");
+    $(reply_button).delay(300).slideDown("fast", "swing");
+  });
+
+  
+</script>
+
+<script>
+
+$( ".thread ol li:last-child" ).each(function() {
+  $( this ).addClass( "margin-b-20" );
+});  
+
+</script>
+
+<script>
+  $('#myModal').on('shown.bs.modal', function () {
+  $('#myInput').trigger('focus')
+})
+$(document.body).on('hide.bs.modal,hidden.bs.modal', function () {
+    $('body').css('padding-right','0');
+});
+</script>

@@ -1,0 +1,44 @@
+
+<!-- Main partial form for commenting on complaints. (views/comments/_comment_form.html.erb) -->
+  
+  <%= form_for [@comment, Comment.new], url: {action: "show"}, html: { class: 'form-horizontal pb-0 card center px-4 pt-0 light-box-shadow', style:'border-radius: 10px !important; border: none !important'} do |f| %>
+   <div class="col-all-12">
+   <!-- Begin - Header of Comment -->
+    <div class="row pt-3 pb-2 card no-top-border" style="border: 1px solid rgba(201, 201, 201, .9); border-radius:  10px 10px 0px 0px !important; border-bottom: none">
+      <h2 class="no-margin theme_font center-all">
+        <div style="border-bottom: 1px solid rgba(88, 88, 88, .2) !important">
+        <p class="mb-3 theme_color_black light-text-shadow">
+           Comments and Discussion
+        </p>
+        </div>
+      </h2>
+      <div class="center">
+        <h4 class="no-margin center-all text-xxbig" style="margin-top: 20px !important">
+          Post Your Comment Below
+        </h4>
+      </div>
+    </div>
+    <!-- End - Header of Comment -->
+    <!-- Blanking out Title for now Complaints comments 
+    <div class="form-row field" style="margin-top: 5px !important">
+      <div class="form-group col-md-6 center"> 
+        %= f.label :title, "Comment Title" %>
+        %= f.text_field :title, title: "Short Title", class: "form-control" %>
+        </div>
+      </div>
+      -->
+      <%= f.hidden_field :parent_id %>
+    <div class="form-row field bg-white" style="border-left: 1px solid rgba(201, 201, 201, .9); border-right: 1px solid rgba(201, 201, 201, .9); margin-left: -15px !important; margin-right: -15px !important;">
+      <div class="form-group col-xs-10 col-md-9 center-all mt-4 mb-0"> 
+        <%= f.text_area :description, placeholder: "Tell us what you think, (Between 20 and 4,000 characters).", class: "form-control col-p-10 center light-box-shadow", style: "height: 12rem;" %>
+      </div>
+    </div>
+    <div class="form-row field card" style="border-radius:  0px 0px 10px 10px !important; border: 1px solid rgba(201, 201, 201, .9); margin-left: -15px !important; margin-right: -15px !important; border-top: none !important">
+      <div class="col-md-12 my-2 py-3 ms_comp_submit center-all"> 
+        <%= f.submit 'Add Comment', class: "btn btn-success btn-lg" %>
+      </div>
+    </div>
+  <% end %>
+  </div>
+  <hr class="mt-5 ms_comp_hr">
+  

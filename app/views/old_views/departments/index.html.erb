@@ -1,0 +1,218 @@
+<!-- Main Index Page for Departments, showing every department inside of a city and links to the reviews-->
+
+<div class="content">
+  <div class="tier"> <!-- Begin - Main tier for page. -->
+    <!-- Below - Renders in Filter panel -->
+    <div class="col-d-2 col-t-10 col-p-12 center">
+      <%= render 'layouts/city_feeds_panel' %>
+      <%= render 'layouts/cs_filter_panel', obj: @departments %>
+      <%= render 'layouts/cs_phone_filter' %>
+    </div>
+    <div id="ms_ap_content" class="col-d-8 col-t-10 col-p-12 center" style="display: none; margin-bottom: 15px !important">
+  <h3 class="mt-4">
+    <%= "Rate your City" if current_user %>
+    <%= "Join Us!" if current_or_guest_user.guest? unless current_admin %>
+    <%= "City Dashboard" if is_admin? %>
+  </h3>
+  <div id="action_panel_msfile">
+    
+  </div>
+  <h3>
+    <%= "Voice a Complaint" if current_user %>
+    <%= "Request a City" if current_or_guest_user.guest? unless current_admin %>
+    <%= "Start a Poll" if is_admin?  %>
+  </h3>
+  <div id="action_panel_msreview">
+    
+  </div>
+  <h3><%= @city.name %> Community Score</h3>
+  <div id="action_panel_mstop">
+  
+  </div>
+  
+  <h3>Page Info</h3>
+  <div id="page_info_mscard">
+    
+  </div>
+  
+</div>
+    <!-- Main center content for department listing and panel -->
+    <div class="center col-d-7 col-t-10 col-p-12">
+      
+     <!-- Begin - Departments Page Info -->
+     <% if !@departments.parks.empty? && !@departments.government.empty? && !@departments.schools.empty? %>
+      <div id="page_info_card_org" class="col-tier">
+      <div id="page_info_card">
+      <div class="tier transparent">
+        <div class="col-all-12">
+          <p class="text-18 b theme_color_black trending_font_size pull-left margin-all-10 text-18" style="margin-left: 0px !important; padding-top: 0.5px">
+            All Departments Feed
+          </p>
+        </div>
+
+        <div class="col-all-12 light-box-shadow card" style="border: 1px solid rgba(128, 128, 128, .5)">
+          <div class="card-body theme_color_black">
+            <div class="col-d-10 col-t-12 col-p-12 pull-left">
+             <p class="text-medium i">Ossemble believes that citizens have the right to review any government entity that is supported by your tax dollars.</p> 
+             <section class="b">We separated our Departments into five categories</section>
+             <ul> 
+              <li>Government</li>  
+              <li>Schools</li>  
+              <li>Parks</li>
+              <li>Police</li>
+              <li>Public Works</li>
+              </ul>   
+              <p class="text-medium">Review and rate each department depending on your experience.</p>
+              <p class="text-medium mb-0">Ossemble is a tool for improvement so regardless if the review is positive or negative. Try to make it as constructive as possible.</p>
+          </div>
+          <div class="page_info_icon_hide col-all-2 pull-right center-all pl-3 theme_color_dark" style="font-size: 100px; margin-top: 40px">
+            <i class="fas fa-building"></i>
+          </div>
+          </div>
+        </div>
+      </div>
+      <div class="tier transparent margin-b-15"></div>
+    </div>
+  </div>
+      <!-- Schools -->
+    <% elsif !@departments.schools.empty? && @departments.parks.empty? && @departments.government.empty? %>
+     <!-- Begin - Schools Page Info -->
+  <div id="page_info_card_org" class="col-tier">
+    <div id="page_info_card">
+      <div class="tier transparent">
+        <div class="col-all-12">
+          <p class="text-18 b theme_color_black trending_font_size pull-left margin-all-10 text-18" style="margin-left: 0px !important; padding-top: 0.5px">
+            All Schools Page
+          </p>
+        </div>
+
+        <div class="col-all-12 light-box-shadow card" style="border: 1px solid rgba(128, 128, 128, .5)">
+          <div class="card-body theme_color_black">
+            <div class="col-d-8 col-t-8 col-p-12 pull-left">
+             <p class="text-medium i">Schools are the single most important asset that a city can have.</p> 
+             <p class="text-medium">This <i class="fas fa-graduation-cap theme_color_dark px-1"></i>icon identifies Schools.</p>
+             
+             <section class="b">Our education system has the biggest impact on our society. Such as:</section>
+             <ul> 
+              <li>Our children's future</li>  
+              <li>Where we start friendships</li>  
+              <li>Future economic growth</li>
+              <li>Exploration of the arts</li>
+             </ul>
+             <p class="text-medium mb-0">Education on every level has a ripple effect of our nation. There is always room for improvement.</p>
+          </div>
+          <div class="page_info_icon_hide col-all-4 pull-right center-all pl-3 theme_color_dark" style="font-size: 100px; margin-top: 40px">
+            <i class="fas fa-graduation-cap"></i>
+          </div>
+          </div>
+        </div>
+      </div>
+      <div class="tier transparent" style="margin-bottom: 15px !important"></div>
+    </div>
+  </div>
+<!-- End- Schools Page Info --> 
+    <% elsif !@departments.government.empty? && @departments.parks.empty? && @departments.schools.empty? %>
+     <!-- Begin - Government Page Info -->
+      <div id="page_info_card_org" class="col-tier">
+      <div id="page_info_card">
+      <div class="tier transparent">
+        <div class="col-all-12">
+          <p class="text-18 b theme_color_black trending_font_size pull-left margin-all-10 text-18" style="margin-left: 0px !important; padding-top: 0.5px">
+            All Governments Page
+          </p>
+        </div>
+
+        <div class="col-all-12 light-box-shadow card" style="border: 1px solid rgba(128, 128, 128, .5)">
+          <div class="card-body theme_color_black">
+            <div class="col-d-8 col-t-8 col-p-12 pull-left">
+             <p class="text-medium i">Since each local municipality is different, we have grouped the government departments as a general term.</p> 
+             <p class="text-medium">This <i class="fas fa-university theme_color_dark"></i> icon identifies government departments.</p>
+             <p class="text-medium">On face value anything that is not a “Park” or a “School.”</p>
+             
+             <section class="b">Examples of the individual departments Ossemble <br> considers to be in the Government Category are.</section>
+             <ul class="mb-0"> 
+              <li>City Hall</li>  
+              <li>Police</li>  
+              <li>Fire</li>
+              <li>Library</li>
+              <li>Zoning</li>
+              <li>Reuse & Recycle</li>
+              </ul>   
+          </div>
+          <div class="page_info_icon_hide col-all-4 pull-right center-all pl-3 theme_color_dark" style="font-size: 100px; margin-top: 40px">
+            <i class="fas fa-university"></i>
+          </div>
+          </div>
+        </div>
+      </div>
+       <div class="tier transparent" style="margin-bottom: 15px !important"></div>
+      </div>
+      </div>
+<!-- End- Government Page Info -->
+    <% elsif !@departments.parks.empty? && @departments.government.empty? && @departments.schools.empty? %>
+     <!-- Begin - Parks Page Info -->
+      <div id="page_info_card_org" class="col-tier">
+      <div id="page_info_card">
+      <div class="tier transparent">
+        <div class="col-all-12">
+          <p class="text-18 b theme_color_black trending_font_size pull-left margin-all-10 text-18" style="margin-left: 0px !important; padding-top: 0.5px">
+            All Parks Page
+          </p>
+        </div>
+
+        <div class="col-all-12 light-box-shadow card" style="border: 1px solid rgba(128, 128, 128, .5);">
+          <div class="card-body theme_color_black">
+            <div class="col-d-8 col-t-8 col-p-12 pull-left">
+             <p class="text-medium i mb-0">City Parks are one of the best features local citizens can enjoy. <span class="p-0 m-0" style="visibility: hidden; height: 1px !important">this is a bad way to fix this this is a bad way to fix this</span></p> 
+             <p class="text-medium">This <i class="fas fa-tree theme_color_dark"></i> icon identifies parks.</p>
+             
+             <section class="b">Parks are great because they represent significant areas of recreation.</section>
+             <ul class="mb-0"> 
+              <li>Playgrounds</li>  
+              <li>Family Gathering</li>  
+              <li>Cookouts</li>
+              <li>Sports</li>
+              <li>Greenery</li>
+              <li>Bodies of Water</li>
+              </ul>   
+          </div>
+          <div class="page_info_icon_hide col-all-4 pull-right center-all pl-3 theme_color_dark" style="font-size: 100px; margin-top: 40px">
+            <i class="fas fa-tree"></i>
+          </div>
+          </div>
+        </div>
+      </div>
+       <div class="tier transparent" style="margin-bottom: 15px !important;"></div>
+      </div>
+      </div>
+    <% end %>
+    
+<!-- End- Parks Page Info -->
+      
+      <div class="tier transparent">
+        <div class="col-all-6" style="text-align: left;">
+          <p class="theme_color_black trending_font_size b pull-left ms_titles_ml text-18">
+            Trending This Week
+          </p>
+        </div>
+        <!-- Belkow - Renders in sort panel partial for ordering of departments with the object departments -->
+        <div class="col-all-6">
+          <%= render 'layouts/sort_panel', obj: @departments %>
+          <%= render 'layouts/view_panel', obj: @departments %>
+        </div>
+      
+      <!-- Below - Renders in all departments -->
+      <div class="col-tier">
+        <div class="col-all-12">
+          <%= render 'departments/departments_list', obj: @departments %>
+        </div>
+      </div>
+
+      </div> 
+    <div class="tier transparent"></div>
+    </div>
+    <div id="non_ms_ap_content" class="col-d-3 col-t-10" >
+      <%= render 'layouts/action_panel', obj: @departments %>
+    </div>
+  </div> <!-- Main page tier -->
+</div>

@@ -1,0 +1,11 @@
+<!-- Partial to be rendered for Community Resource searching on index pages and Community_Score page.  Goes to 
+     Javascript is in community-search.coffee file in Javascripts folder. Refers to searches_controller -> community_search action.  -->  
+
+<!-- Below - Search form for Complaints, Department Reviews, and ity Reviews  -->
+<div id="search_container" class="col-all-12 px-2 ms_input_pad">
+  <%= form_with url: community_search_path(@city), local: true, method: :get, html: { class: "" } do |form| %>
+    <%= form.text_field :community_search, placeholder: "Filter Complaints, Department & City Reviews", data: { behavior: "community_search", location: "#{@city.friendly_id}" }, style: "width: 100%", class: "form-control" %>
+    <!-- Below -  Button is hidden because we don't want a button but a simple icon built into the search bar -->
+    <%= form.button "Search", style: "min-width: 70px", class: "vanish btn alt-action col-all-2 margin-l-3" %>
+  <% end %>
+</div>

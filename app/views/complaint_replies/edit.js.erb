@@ -1,0 +1,8 @@
+// edit.js.erb (CommentsController#edit). Triggers update.js.erb after submitted.
+  var current_comment = $('li[name="<%= @edit_comment.id %>"]');
+  $(".comment_actions_<%= @edit_comment.id %> > #edit_comment").removeAttr("href");
+  $(current_comment).slideUp("slow", "swing");
+  $(current_comment).after("<%= j render('comments/comment_form', obj: @edit_comment) %>");
+
+// On editing a comment, call to counter of comment.
+//$("#comment_<%= @edit_comment.id %> form textarea").trigger('keyup');

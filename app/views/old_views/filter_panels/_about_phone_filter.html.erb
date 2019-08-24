@@ -1,0 +1,79 @@
+<div class="push-left ml-3 sidetoggle">
+  <a id="simple-menu" onclick="$('#sidr').removeClass('vanish')" href="#sidr"><i class="fas fa-bars theme_color_dark text-xxlarge"></i></a>
+</div>
+<div id="sidr" class="vanish">
+  <!-- Your content -->
+  <div class="my-3 px-3 text-xbig b roboto" style="color: rgba(88, 88, 88, .9)">
+    <%= link_to "Ossemble", root_path, class: "title_link" %>
+  </div>
+  <ul>
+  <li class="">
+    <a class="" href="/about"><i class="fas fa-gavel margin-l-8 margin-r-12"></i>Mission</a>
+  </li>
+  <li class="">
+    <a class="" href="/about/inspiration"><i class="fas fa-chess-queen margin-l-8 margin-r-12"></i>Inspiration</a>
+  </li>
+  <li class="">
+    <a class="" href="/about/team"><i class="fas fa-users margin-l-8 margin-r-10"></i>Team</a>
+  </li>  
+  <li class="">
+    <a class="" href="/about/city_score"><i class="fas fa-percent margin-l-8 margin-r-12 ms_t_panel_head"></i>City Score</a>
+  </li>
+  <li class="">
+    <a class="" href="/about/forum"><i class="fas fa-clipboard-list margin-l-8 margin-r-12 ms_t_panel_head"></i>Forum</a>
+  </li>
+  <li class="">
+    <a class="" href="/about/reputation"><i class="fas fa-medal margin-l-8 margin-r-12 ms_t_panel_head"></i>Reputation</a>
+  </li>
+  <li>
+    <a class="" href="<%= city_feed_path(City.find(1)) %>"><i class="text-xxbig ms_t_panel_head" style="margin-left: 2px; margin-right: 7px"><%= image_tag("logos/favicon-32x32-grayscale.png") %></i>Ossemble in Action</a>
+  </li>
+  <li>
+    <a class="" href="/about/policies"><i class="fas fa-copyright text-xxbig margin-l-10 margin-r-12 ms_t_panel_head"></i>Policies & Terms</a>
+  </li>
+    <li>
+    <a class="" href="/about/faq"><i class="fas fa-question-circle text-xxbig margin-l-10 margin-r-12 ms_t_panel_head"></i>FAQ</a>
+  </li>
+  <li>
+    <a class="" href="/about/contact_us"><i class="fas fa-file-signature text-xxbig margin-l-10 margin-r-12 ms_t_panel_head"></i>Contact Us</a>
+  </li>
+  <li>
+    <a class="" onclick="ml_webform_742238('show')"><i class="fas fa-archive text-xxbig margin-l-10 margin-r-12 ms_t_panel_head"></i>Request City</a>
+  </li>
+  </ul>
+</div>
+
+
+
+
+
+
+<script>
+  $('#simple-menu').sidr();
+
+
+</script>
+
+<script>
+    var ml_webform_742238 = ml_account('webforms', '742238', 'l6h8p1', 'load');
+    ml_webform_742238('animation', 'fadeIn');
+</script>
+
+<script>
+  const textNode = document.querySelector('#jumbo_main_text,jumbo_slogan_text');
+const splitTextArr = textNode.innerText.split(" ");
+let finalMarkup = "";
+splitTextArr.forEach(buildMarkup);
+
+
+function buildMarkup(text, index) {
+  let spanText;
+  (index === 2) ? 
+  spanText = "<span>" + text + "</span><br />" : 
+  spanText = "<span>" + text + "</span> ";
+  
+  return finalMarkup += spanText;
+}
+
+textNode.innerHTML = finalMarkup;
+</script>

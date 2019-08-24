@@ -1,0 +1,32 @@
+<!--  Main page  after a charge successfully goes through. -->
+
+<!-- Below -  Renders in City Admin Navbar for navigation -->
+<%= render 'admins/admin_layouts/city_admin_navbar' %>
+
+<div class="content">
+  <div class="tier"> <!-- Begin - Main tier for page. -->
+    <div class="col-d-1 col-t-vanish col-p-vanish">
+      <!--  blank Space -->
+    </div>
+    <div class="col-d-10 col-t-12 col-p-12">
+      <div class="col-tier">
+        <p class="page_info_title">
+          Subscription Details
+        </p>
+      </div>
+      <div class="card col-tier">
+        <div id="" class="padding-all-10" >
+          
+         <h2>Thank you for your order! You have successfully upgraded to the <%= current_admin.subscription.plan %> Plan!</h2>
+          <%= link_to "Return to Dashboard ", edit_admin_path(current_admin.institute, current_admin), id: " " , class: "title_link" %>
+        </div>  
+      </div> 
+      <div class="tier">
+        <div class="col-all-12">
+
+        </div> 
+      </div>
+    </div>
+  </div> <!-- Main page tier -->
+</div>
+

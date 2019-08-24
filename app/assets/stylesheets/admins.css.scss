@@ -1,0 +1,180 @@
+// Main Stylesheet for Admin Pages (views/admins/...)
+  
+  // Begin - City Admin Navbar CSS
+    #city_settings_dropdown_btn {
+      border-radius: 5px;
+      text-shadow: 2px 2px 4px rgba(150, 150, 150, 0.3);
+      box-shadow: 1px 3px 16px rgba(0, 0, 0, 0.23);
+      border-radius: 4px;
+      border: 2px solid #645496;
+      background-color: white;
+      color: #645496;
+      padding: 5px 10px;
+      height: 35px;
+      transition: all 0.3s ease;
+      text-align: center;
+      cursor: pointer;
+      font-size: 18px;
+      position: relative;
+    }
+    
+    #city_settings_dropdown_menu {
+      min-width: 195px;
+      margin-right: 10px;
+      hr {
+        margin: 5px 0px;
+        width: 100% !important;
+      }
+      .dropdown-item {
+        font-size: 18px !important;
+        padding: 5px 5px 5px 18px;
+        text-align: left;
+      }
+      a {
+        color: #645496;
+        padding-right: 15px;
+        i {
+          height: 35px; width: 35px;
+          padding-top: 5px;
+          margin-right: 10px;
+          font-size: 20px;
+          float: left !important;
+        }
+      }
+      a:hover {
+        background: none!important;
+        font-weight: bold;
+      }
+    }
+  
+  // End - City Admin Navbar CSS
+// Begin - Admin Edit/update Page
+ #admin_edit_container {
+   #accordion_container {
+     padding: 10px;
+   }
+    h3 {
+      font-size: 22px !important;
+      font-family: 'Roboto', "Helvetica Neue", Helvetica, Times New Roman;
+      letter-spacing: 1.35px;
+      font-weight: bold;
+    }
+    input#update_profile_btn{
+      font-size: 19px;
+      height: 45px;
+      padding: 10px;
+      line-height: 1.3333333;
+    }
+    input#add_contact_info_btn, input#update_contact_info_btn {
+      font-size: 17px;
+      height: 40px;
+      width: 150px;
+      padding: 10px;
+      line-height: 1.1;
+    }
+  }
+// End - Admin Edit/update Page
+// Begin - Admins Subscriptions page
+
+#subscription_plans_table {
+  border: 2px ridge rgba(100, 84, 150, 0.3) !important;
+  box-shadow: 1px 3px 16px rgba(0, 0, 0, 0.23);
+  thead{
+    background-color: rgba(100, 84, 150, 0.5) !important;
+  }
+  th.plan_title {
+    font-size: 22px;
+    text-align: center !important;
+    padding: 17px 6px;
+  }
+  th.plan_title:last-child {
+    font-size: 18px;
+  }
+  th.row_title {
+    font-size: 17px;
+    font-family: 'Roboto', "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-weight: none !important;
+    padding: 15px 6px;
+  }
+  td {
+    font-size: 20px;
+    text-align: center !important;
+    padding: 15px 5px;
+    max-width: 250px !important;
+    i {
+      vertical-align: middle !important;
+      font-size: 22px;
+      color: rgb(100, 84, 150) !important;
+      text-align: center !important;
+    }
+    i.fa-times {
+      color: red !important;
+    }
+  }
+  td label {
+    color: #585858 !important;
+    font-family: 'Roboto', Arial, Times New Roman;
+    letter-spacing: 1.3px;
+    padding-bottom: 5px;
+    width: 90%;
+    border-bottom:  1.5px solid rgba(0, 0, 0, 0.25);
+    font-size: 20px !important;
+  }
+  td.not_available {
+    background-color: rgba(0, 0, 0, 0.3);
+    opacity: 0.8;
+  }
+  button, a.btn {
+    height: 45px;
+    width: 70%;
+  }
+  button.stripe-button-el {
+    border-radius: 4px;
+    border: 2px solid #645496;
+    background-color: white !important;
+    color: #645496;
+    padding: 8px;
+    height: 45px;
+    transition: all 0.3s ease;
+    background-image: none !important;
+    font-weight: none !important;
+  }
+  button span {
+    height: 45px;
+    font-size: 18px;
+    padding: none !important;
+    line-height: inherit;
+    background-image: none !important;
+    background-color: none !important;
+    background: none !important;
+    color: #645496;
+    font-weight: none !important;
+    text-shadow: none !important;
+    box-shadow: none !important;
+  }
+  button span:hover {
+    color: white !important;
+  }
+  button.stripe-button-el:hover, button.stripe-button-el:focus, button.stripe-button-el:active {
+    border-radius: 4px;
+    background-color: #645496 !important;
+    color: white !important;
+    padding: 7px;
+  }
+  #downgrade_link {
+    padding: 8px 12px;
+  }
+}
+
+select {
+
+  
+}
+
+.no_about_ms {
+    @media screen and (max-width: 600px) {
+    font-size: 14px !important;
+  }
+}
+// End - Admins Subscriptions page
+  

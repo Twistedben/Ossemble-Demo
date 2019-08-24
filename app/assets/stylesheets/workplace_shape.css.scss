@@ -1,0 +1,326 @@
+// Stylesheet for Workplace Shape pages.
+
+// Begin - Workplace Shape New.html.erb page
+
+// Below - County or Dstrict selected
+#submit_tier {
+  #submit_map_btn {
+    width: 135px;
+    font-size: 20px;
+  }
+  div#submit_arrow_btn {
+    margin-top: 15px;
+  	width: 4.5vmin;
+  	height: 4.5vmin;
+  	opacity: .2;
+  	box-sizing: border-box;
+  	position: relative;
+  	transform: rotate(-315deg);
+  	float: right;
+  	&.add {
+  	  opacity: 1;
+  	}
+  	&::before {
+  		content: '';
+  		width: 100%;
+  		height: 100%;
+  		border-width: .6vmin .6vmin 0 0;
+  		border-style: solid;
+  		border-color: #fafafa;
+  		transition: .4s ease;
+  		display: block;
+  		transform-origin: 100% 0;
+  	}
+  	&:after {
+  		content: '';
+  		float: left;
+  		position: relative;
+  		top: -91%;
+  		width: 100%;
+  		height: 100%;
+  		border-width: 0 .55vmin 0 0;
+  		border-style: solid;
+  		border-color: #fafafa;
+  		transform-origin: 100% 0;
+  		transition: .4s ease;
+  	}
+  	
+  	&.add::after {
+  		transform: rotate(45deg);
+  		border-color: orange;
+  		height: 120%;
+  		opacity: 1;
+  	}
+  	&.add::before {
+  		border-color: orange;
+  		transform: scale(.8);
+  	}
+  }
+}
+
+#county_district_shape_form {
+  #submit_tier {
+    #arrow_tier {
+      float: left;
+      width: 40%;
+      @media screen and (max-width: 1119px) {
+        width: 35%;
+      }
+      #submit_arrow_btn {
+        margin-right: 0px;
+      }
+    }
+    #submit_btn_tier {
+      float: right;
+      width: 57%;
+      @media screen and (max-width: 1119px) {
+        width: 60%;
+      }
+
+      #submit_map_btn {
+        float: left;
+      }
+    }
+  }  
+}
+#city_workplace_shape_form {
+  #submit_tier {
+    #arrow_tier {
+      float: left;
+      width: 83.3%;
+      #submit_arrow_btn {
+        margin-right: -15px;
+        @media screen and (max-width: 1300px) {
+          margin-right: 20px;
+        }    
+        @media screen and (max-width: 1100px) {
+          margin-right: 45px;
+        }
+        @media screen and (max-width: 768px) {
+          margin-right: 75px;
+        }
+      }
+    }
+    #submit_btn_tier {
+      float: right;
+      width: 16.6%;
+      #submit_map_btn {
+        float: right;
+      }
+    }
+  }
+}
+// Below - City selected 
+#city_map_tier {
+  height: 75px;
+  margin-bottom: 8px;
+  div#arrow_btn {
+    margin-top: 10px;
+    margin-left: 80px;
+  	width: 4.5vmin;
+  	height: 4.5vmin;
+  	opacity: .2;
+  	box-sizing: border-box;
+  	position: relative;
+  	transform: rotate(-135deg);
+  	float: left;
+  	&.add {
+  	  opacity: 1;
+  	}
+  	&::before {
+  		content: '';
+  		width: 100%;
+  		height: 100%;
+  		border-width: .6vmin .6vmin 0 0;
+  		border-style: solid;
+  		border-color: #fafafa;
+  		transition: .4s ease;
+  		display: block;
+  		transform-origin: 100% 0;
+  	}
+  	&:after {
+  		content: '';
+  		float: left;
+  		position: relative;
+  		top: -91%;
+  		width: 100%;
+  		height: 100%;
+  		border-width: 0 .55vmin 0 0;
+  		border-style: solid;
+  		border-color: #fafafa;
+  		transform-origin: 100% 0;
+  		transition: .4s ease;
+  	}
+  	
+  	&.add::after {
+  		transform: rotate(45deg);
+  		border-color: orange;
+  		height: 120%;
+  		opacity: 1;
+  	}
+  	&.add::before {
+  		border-color: orange;
+  		transform: scale(.8);
+  	}
+  }
+  
+  #try_again_btn {
+    height: 55px;    
+    width: 235px;  
+    font-size: 19px;
+    &.highlighted {
+      height: 55px;
+      width: 255px;
+      font-size: 20px;
+      font-weight: bold;
+      transition: .6s;
+    }
+  }
+  #call_census_btn {
+    height: 40px;    
+    margin-top: 10px;
+    width: 135px;  
+    font-size: 19px;
+    left: 48px;
+    position: relative;
+    float: right;
+    &.highlighted {
+      height: 55px;
+      width: 175px;
+      font-size: 20px;
+      font-weight: bold;
+      transition: .6s;
+    }
+  }
+}
+#location_category_select {
+  label {
+    font-size: 19px;
+    margin: 8px auto;
+  }
+}
+#map-type-btns {
+
+  label, a {
+    float: left;
+    width: 24%;
+    margin: 4px auto;
+    max-width: 300px;
+    background-color:#EFEFEF;
+    border-radius: 4px;
+    border: 1px solid #D0D0D0;
+    overflow: hidden;
+    span {
+      text-align:center;
+      font-size: 17px;
+      padding: 5px 0px;
+      display:block;
+      width: 190px;
+      height: 60px;
+        @media screen and (max-width: 501px) {
+          font-size: 13px;
+          padding: 5px 0px;
+          display:block;
+          width: 145px;
+          height: 50px;
+          line-height: 35px !important;
+    }
+    }
+    input {
+      position:fixed;
+      opacity:0
+    }
+  }
+  input:checked + span, .selected {
+    background-color: #645496 !important;
+    color: white !important;
+    box-shadow: 1px 2px 12px 1px rgba(0, 0, 0, 0.2);
+    width: 190px;
+    height: 60px;
+      @media screen and (max-width: 501px) {
+        width: 145px;
+        height: 50px;
+    }
+  }
+  .unselect:hover, .selected {
+    background-color: #645496 !important;
+    color: white !important;
+    box-shadow: 1px 2px 12px 1px rgba(0, 0, 0, 0.2);
+    width: 190px;
+    height: 60px;
+      @media screen and (max-width: 501px) {
+        width: 145px;
+        height: 50px;
+    }
+  }
+  .unselect {
+    border: 2px solid #645496 !important;
+    background-color: white;
+    color: #645496 !important;
+    box-shadow: 1px 2px 12px 1px rgba(0, 0, 0, 0.2);
+    width: 190px;
+    height: 60px;
+      @media screen and (max-width: 501px) {
+        width: 145px;
+        height: 50px;
+    }
+  }
+}
+
+#map_alert {
+  p.alert {
+    max-width: 1100px;
+    margin: 5px auto 15px auto; 
+    font-weight: bold;
+    width: 100%;
+    box-shadow: 1px 3px 18px rgba(0, 0, 0, 0.2);
+    color: black;
+    font-size: 20px;
+    text-align: center !important;
+    border-color: #ffe000;
+    @media screen and (max-width: 501px) {
+      font-size: 16px;
+    }
+  }
+}
+#channel_map_container {
+  max-width: 1100px;
+  border: 1px solid rgba(128, 128, 128, .5);
+  #oss_map {
+    max-width: 1100px;
+    height: 610px;
+    @media screen and (max-width: 999px) {
+      height: 450px;
+    }
+  }
+}
+
+.shapes_new_ml {
+  margin-left: 30px;
+    @media screen and (max-width: 769px) {
+      margin-left: 0px;
+    }
+}
+
+.after_padding {
+ padding: 18px;
+  @media screen and (max-width: 605px) {
+    padding: 10px !important;
+  } 
+}
+
+.btns_margin {
+ margin-right: 10px !important;
+  @media screen and (max-width: 502px) {
+     margin-right: 5px !important;
+     margin-left: 5px !important;
+  } 
+}
+
+
+.btns_margin2 {
+  @media screen and (max-width: 502px) {
+     margin-right: 5px !important;
+     margin-left: 5px !important;
+  } 
+}

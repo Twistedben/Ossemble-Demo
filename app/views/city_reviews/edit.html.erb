@@ -1,0 +1,255 @@
+
+<div class="content">
+  <div class="col-d-10 col-t-10 col-p-12 center">
+    <div class=" trending_font_size mt-3 mb-0 ms_titles_ml">
+        Edit City Review - <%= @city.name %>
+      </div>
+      <div class="theme_color_black text-medium mb-3 col-tier">
+        <div id="wul-modal" class="">
+          <p id="show-modal" class="mb-0 mt-0 pointer underline ms_titles_ml" @click="showModal = true">City Review Guidelines</p>
+          <!-- use the modal component, pass in the prop -->
+          <modal v-if="showModal" @close="showModal = false">
+          </modal>
+        </div>
+      </div>
+      <div class="light-box-shadow bg-white px-4 py-0" style="border: 1px solid rgba(128, 128, 128, .5)">
+      <%= simple_form_for @city_review, url: user_city_review_path, as: 'city_review', html: { class: 'bg-white form-horizontal col-all-12 form_ms_text', autocomplete: 'off' }, defaults: { wrapper_html: { class: 'tier center' } }  do |f| %>
+        <%= render 'layouts/errors', obj: @city_review %>
+          <!-- Below - Entering City Review Title -->
+          <div class="col-tier center">
+            <div class="col-d-7 col-t-10 col-p-12 margin-t-10"> 
+              <%= f.label :title, "Title:", class: 'pull-left theme_color_black text-16' do %>
+                Title <small>(optional)</small>:
+              <% end %>
+              <%= f.text_field :title, title: "Provide a short, but descriptive title for your review", maxlength: 60, placeholder: 'One will be generated if not entered (60 Characters)', required: false, autocomplete: false, class: "form-control input-box-shadow" %>
+            </div>
+          </div>
+          <!-- Below - Score for City Review and Star Rating -->
+          <div class="col-tier center margin-t-23">
+            <%= f.label :score, id: "score_label", class: 'field_with_errors form-control-label form_ms_text theme_color_black text-xxmedium' %>
+            <strong class="form_ms_text">:</strong>
+            <div id="star-rating" class="ml-3 mb-0">
+              <br>
+            </div>
+          </div>
+          <p class="margin-b-10 relative" style="top: -10px !important;">Score you had: <small><%= @city_review.score / 20 %> / 5</small></p>
+        <!-- Below - Entering tags for WUL list.  -->
+          <div class="col-tier center">
+            <div class="col-d-7 col-t-10 col-p-12"> 
+              <%= f.label :love_list, "Tag What You Love", class: 'field_with_errors pull-left theme_color_black text-xxmedium' %>
+              <ul id="wrapper" class="tags-input" style="background-color: white !important; list-style: none !important; padding-left: 0px !important;">
+               <p id="app-love1" class="col-tier mb-2"></p>
+                <li class="tags-new">
+                  <%= f.text_field :love_list, maxlength: 75, class: "select_form form-control input-box-shadow", placeholder: "E.G. 'Buses, Bike Paths, Parks'", required: false, style: "border: 1px solid #aaaaaa" %>
+                </li>
+              </ul>               
+              <p class="margin-y-10">Tags you had: <small><%= @city_review.love_list %></small></p>
+            </div>
+          </div> 
+          <!-- Below - Entering tags for Improve list.  -->
+          <div class="col-tier center margin-t-10">
+            <div class="col-d-7 col-t-10 col-p-12"> 
+              <%= f.label :improve_list, "Tag What Needs Improvement", class: 'field_with_errors pull-left theme_color_black text-xxmedium' %>
+              <ul id="wrapper2" class="tags-input2"  style="background-color: white !important; list-style: none !important; padding-left: 0px !important;">
+               <p id="app-love2" class="col-tier mb-2"></p>
+                <li class="tags-new2">
+                  <%= f.text_field :improve_list, maxlength: 75, class: "select_form form-control input-box-shadow", placeholder: "E.G. 'Roads, Taxes, Crime'", required: false, style: "border: 1px solid #aaaaaa" %>
+                </li>
+              </ul>               
+              <p class="margin-y-10">Tags you had: <small><%= @city_review.improve_list %></small></p>
+            </div>
+          </div>
+          
+          <div class="loading" style="display:none; z-index: 15000">
+            <div class="center-all" style="border-radius: 10px !important">
+              <%= image_tag "icons/misc/loading.gif", alt: "Uploading", class: "", style: "width: 300px" %>
+              <div class="theme_color_dark mb-5 px-4">Please wait while your image uploads...</div>
+            </div>
+          </div>
+          <!-- Below -  Renders the existing description, vanished, for being pasted into the description box from jquery below. -->
+          <%= simple_format(@city_review.description, {}, wrapper_tag: "div id='edit_text_wrap' class='vanish'") %>
+          <!-- Below - Entering City Review description -->
+          <div class="col-tier center">
+            <div class="col-all-12 margin-t-18"> 
+             <%= f.label :description, class: 'theme_color_black text-xxmedium' %>
+             <%= f.hidden_field :description, id: "post_description", required: true %>
+              <div id="editor-container" class="light-box-shadow" hidden="true"></div>
+              <div id="quill_container"  style="height: 250px !important;"></div>
+            </div>
+          </div>
+          <!-- Begin - Editing image upload row -->
+          <div class="col-tier margin-t-18">
+            <div class="col-all-12 margin-y-10"> 
+              <% if @city_review.image.attached? %> <!--  City Review already has an image. -->
+                <div id="">
+                  <div class="m-2">
+                    <%= image_tag @city_review.image.variant(resize: '400x400'), id: "uploaded_image", class: "m-0" %>
+                  </div>
+                </div>
+                <div class="tier">
+                   <%= f.label :image, "Update Current Image".html_safe, class: "pull-left control-label" %>
+                </div>
+                <div class="tier">
+                  <%= f.file_field :image, accept: 'image/*', class: "upload btn btn-info margin-y-5 light-btn-shadow", style: "width: 220px", onchange: "readURL(this);" %>
+                </div>
+                <div class="tier">
+                  <%= f.label :image, "Preview of Uploaded Image".html_safe, class: "vanish img_prev_title pull-left control-label mb-2" %>
+                </div>
+                <div class="tier">
+                  <img id="img_prev" class="vanish" src="#" alt="Image">
+                </div>
+                <p class="margin-t-5 small">If you'd like to change your review's image, select a new image by clicking Choose File and then Update.</p>
+              <% else %> <!-- City Review doesn't have image -->
+                <div class="tier">
+                  <%= f.label :image, "Upload Review Image <small> (optional - but encouraged) </small>".html_safe, class: "pull-left control-label" %>
+                </div>
+                <div class="tier">
+                  <%= f.file_field :image, accept: 'image/*', class: "upload btn btn-info margin-y-5 light-btn-shadow", style: "width: 220px", onchange: "readURL(this);" %>
+                </div>
+                <div class="tier">
+                  <%= f.label :image, "Preview of Uploaded Image".html_safe, class: "vanish img_prev_title pull-left control-label mb-2" %>
+                </div>
+                <div class="tier">
+                  <img id="img_prev" class="vanish" src="#" alt="Image">
+                </div>
+                <p class="margin-t-5 mb-2 text-13">Pictures are worth a thousand words; how does yours illustrate what you love about your city?</p>
+                <p class="margin-t-5 mb-0 small">If the image you're uploading is high resolution, it may take a few moments.</p>
+              <% end %>
+            </div>
+          </div>
+          <!-- End - Editing image upload row -->
+        </div>
+        <div class="form-actions">
+          <div class="tier mt-5">
+            <div class="col-all-6"> 
+              <%= f.submit "Update Review", class: "light-btn-shadow action form_btn btn mb-4 pull-left", id: "loadgif" %>
+            </div>
+            <div class="col-all-6"> 
+              <%= link_to "Delete Review", user_city_review_path(@user, @city_review), method: :delete, class: "text-big light-btn-shadow form_btn btn btn-danger push-right", data: {confirm: "Are you sure you want to delete this review?"} %>
+            </div>
+          </div>
+        </div>
+    <% end %> <!-- End - Form do block for simpleform edit. -->
+  </div>
+</div>
+
+<script>
+  $('#star-rating').raty({
+    scoreName: 'city_review[score]',
+    half: true,                      // Allows half stars to be logged. In this case it's ".5" tacked on the end. We multiply by 20 for a decanumeral increment.
+    size: 30,                       // Size of stars for selection
+    starOff : 'fa fa-star-o',
+    hints: ['Terrible', 'Bad', 'Average', 'Great', 'Fabulous']
+  });
+
+</script>
+
+<!-- Below -  Previews the uploaded image. Called by onchange for file upload. Also makes upload button bigger to show name of file. -->
+<script>
+function readURL(input) {
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+    $("#img_prev").show();
+    $(".img_prev_title").show();
+    $("#department_review_image").width(280);
+    reader.onload = function (e) {
+      $('#img_prev')
+        .attr('src', e.target.result)
+    };
+
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+</script>
+
+<script>
+// register modal component
+Vue.component('modal', {
+  template: '#modal-template'
+})
+
+// start app
+new Vue({
+  el: '#wul-modal',
+  data: {
+    showModal: false
+  }
+})
+</script>
+<!-- Below - VueJS Code for WUL Guidelines modal -->
+<script type="text/x-template" id="modal-template">
+  <transition name="modal">
+    <div class="modal-mask">
+      <div class="modal-wrapper">
+        <div class="modal-body">
+          <slot name="body">
+            <div class="content">
+              <div class="col-all-10 center">
+                <div id="page_info_card_org" class="col-tier">
+                  <div id="page_info_card" class="col-all-12">
+                    <div class="col-all-12 light-box-shadow card" style="border: 1px solid rgba(128, 128, 128, .5); border-radius: 10px;">
+                      <div class="card-body theme_color_black p-4" style="">
+                        <div class="col-all-12 pull-left">
+                           <h3 class="mt-0 mb-2 ms_page_title">City Review Guidelines</h3> 
+                           <p class="text-medium i mb-3">Please follow these posting guidelines to ensure your WUL review is valid and able to be posted.</p> 
+                           <section class="b">Please fill out all required fields below</section>
+                           <ul> 
+                            <li><b>Title</b> <span class="text-xsmall">(optional)</span> - Write a creative title to describe what you love about your city.</li>  
+                            <li><b>Score</b> - Click on the stars to rate your city and your expierence there. You may click halfway on a star for half ratings. <span class="i">EG: 4.5 out of 5 would be four and a half stars.</span></li>  
+                            <li><b>Tags</b> - Two fields for tags are avaiable, What You Love and What Needs Improvement. Write three things that you love about your city seperated by commas. Below What You Love, write three things that need improvement in your city seperated by commas.</li>
+                            <li><b>Description</b> - Please write a short description describing your review of your city, enough so others can clearly understand what your review is about.</li>
+                            <li><b>Image</b> <span class="text-xsmall">(optional)</span> - You may upload an image of What You Love about your city, it could be of your favorite place, resturant, or something you love about being there.</li>
+                          </ul>
+                          <p class="text-medium mb-2">Following these steps will ensure your What You Love review is filed properly.</p>
+                            <button class="btn btn-info modal-default-button text-xxmedium" @click="$emit('close')">
+                              Close
+                            </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div> 
+            </slot>
+          </div>
+        </div>
+      </div>
+    </div>
+  </transition>
+</script>
+
+<script>
+
+  var form = document.querySelector('.form-horizontal');
+  var quill = new Quill('#quill_container', {
+  modules: {
+    toolbar: [
+        ['bold', 'italic', 'link'],
+        [{ list: 'ordered' }, { list: 'bullet' }]
+      ]
+    },
+    placeholder: 'Describe your city as though you were recommending it to a friend. Minimum: 150 characters, Limit: 5,000 characters (about 750 words).',
+    theme: 'snow'  // or 'bubble'
+  });
+  
+  
+  form.onsubmit = function() {
+    var postContentInput = document.querySelector('#post_description');
+    postContentInput.value = quill.root.innerHTML;
+  };
+  
+  // Below - Sets up a variable from the simple format rendering about on edit post
+  var editDescription = $('#edit_text_wrap').text();
+  $('.ql-editor p').text(editDescription);
+  // Below - Shuffles in text from a failed resource submission's description
+  var newDescription = $('#new_text_wrap').text();
+  $('.ql-editor p').text(newDescription);
+
+</script>
+<script>
+    // Below - Clears inputs for tags due to array issue on edit and does an alert.
+  $("#city_review_love_list").val('');
+  $("#city_review_improve_list").val('');
+  alert("Please re-enter your tags and score! Thanks");
+
+</script>

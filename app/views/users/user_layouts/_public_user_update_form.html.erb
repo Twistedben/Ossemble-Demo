@@ -1,0 +1,93 @@
+<!--  Partial rendered for public profile information for user and has if statements to determine if it should be in accordion or outside  -->
+<h3 class="roboto">
+  Public Profile Details
+</h3>
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name),
+    :html => {:multipart => true, id: "public_profile_form", class: "col-all-12 light-box-shadow mb-5 padding-all-15", style: "border: 1px solid rgba(128, 128, 128, 0.5);", role: "form"}) do |f| %>
+  <div id="public_profile_tier" >
+    <div class="tier margin-y-15"> 
+      <!-- Begin - Extra info for user show page -->
+      <div id="extra_info_div" class="col-all-12"> 
+        <div class="tier">
+          <div class="col-tier">
+            <div class="col-all-4 ui-widget px-2" title="What best identifies the reason you're on Ossemble? Are you a mother, a teacher, or an activist?">
+              <div class="control-label" style="padding-bottom: 0px !important">
+                <div class="mt-0"><%= f.label :title, "Title" %></div>
+              </div>
+              <%= f.text_field :title, class: "form-control light-input-shadow", placeholder: "Your Title EG: 'Teacher, Mother, Veteran, etc..'" %> 
+            </div>
+            <div class="col-all-4 px-2" title="Are you in a neighborhood? If not, you can put your road, development, or anything that groups your location.">
+              <div class="control-label" style="padding-bottom: 0px !important">
+                <span class="mt-0"><%= f.label :neighborhood, "Neighborhood" %></span>
+              </div>
+              <%= f.text_field :neighborhood, class: "form-control light-input-shadow", placeholder: "Your Neighborhood" %> 
+            </div>
+            <div class="col-all-4 px-2" title="What year did you move into your city? Let people know how long you've been a citizen.">
+              <div class="control-label" style="padding-bottom: 0px !important">
+                <%= f.label :resident_date, "Resident Since" %>
+              </div>
+                <%= date_select :user, :resident_date, options = {discard_day: true, discard_month: true, start_year: 1930, end_year: Time.now.year}, class: "select_form form-control light-input-shadow" %> 
+            </div>
+          </div>
+          <div class="col-tier"> 
+            <div class="col-all-12 px-2" title="A hundred and fifty characters that best summarizes who you are and what you're about.">
+              <div class="control-label mt-0 pb-0">
+                <%= f.label :bio, "Bio" %>
+              </div>
+                <%= f.text_area :bio, class: "form-control light-input-shadow", maxlength: 150, placeholder: "Write a short bio about yourself to let others know who you are and why you're here on Ossemble. (Limit: 150 Characters)" %> 
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End -  Extra info for user -->
+      <div class="col-all-12">  
+        <div class="profile_avatar_wrapper center-all mt-5" style="margin-left: 6px !important"> <!-- Begin - Avatar Upload Column --> 
+         <!-- Below - If Statement for Avatar Uploading -->
+          <% if current_user.avatar.attached? %> <!-- If User already has a avatar, show it and "remove" option -->
+            <div id="profile_avatar_border">
+              <div class="m-2">
+                <%= image_tag current_user.avatar.variant(resize: '250x250!'), id: "upload_avatar", class: "m-0" %>
+              </div>
+            </div>
+            <div class="form-row margin-b-8">
+              <%= f.label :avatar, "Change Profile Picture", class: "margin-b-5 margin-t-15 margin-l-3 control-label" %>
+            </div>
+            <div class="form-row">
+              <%= f.file_field :avatar, accept: 'image/png,image/gif,image/jpeg', class: "upload btn btn-lg mb-0" %>
+            </div>
+          <% elsif current_user.is_facebook_user? %> <!-- User has facebook avatar  -->
+            <div id="profile_avatar_border">
+              <div class="margin-all-10">
+                <%= image_tag "#{current_user.image}?type=large", id: "upload_avatar", class: "margin-r-15" %>
+              </div>
+            </div>
+            <div class="form-row margin-b-8">
+              <%= f.label :avatar, "Change Profile Picture", class: "margin-y-5 margin-l-3 control-label" %>
+            </div>
+            <div class="form-row margin-b-5">
+              <%= f.file_field :avatar, accept: 'image/png,image/gif,image/jpeg', class: "upload btn btn-lg mb-0" %>
+            </div>
+            <p id="remove_cb_text text-13 mt-3">Since you're using Facebook, you may want to change your profile image there.
+              <br> 
+              Otherwise, to change on Ossemble: Click 'Choose File', then 'Update Profile'
+            </p>
+          <% else %> <!-- User doesn't have an image attached -->
+            <div class="form-row margin-b-8">
+              <%= f.label :avatar, "Upload a Profile Picture", class: "my-0 control-label" %>
+            </div>
+            <div class="form-row">
+              <%= f.file_field :avatar, accept: 'image/png,image/gif,image/jpeg', class: "upload btn btn-lg mb-0" %>
+            </div>
+          <% end %>
+        </div>                    
+      </div> 
+    </div>
+  </div> <!-- End -  Public Info Section -->
+    <!-- Begin - Update/Delete Account Button Row -->  
+  <div class="col-tier">    
+    <div class="col-all-6">
+      <%= f.submit "Update Public Info", id: "update_profile_btn", class: "push-left form_btn btn action btn-lg" %>
+    </div> 
+  </div> 
+  
+<% end %> <!-- End - Public Profile form -->

@@ -1,0 +1,59 @@
+<!--  Main index page for combination of complaints and concerns, which is reports and suggestions. -->
+<!--  Main index page for showing all City Reviews, WUL reviews. -->
+<div class="content">
+  <div class="tier"> <!-- Begin - Main tier for page. -->
+    <!-- Below -  Renders in the accordian from views/layouts/phones/... for mobile and tablet. -->
+    <%= render "layouts/phones/mobile_accordion" %>
+    <!-- Main center content for department listing and panel -->
+    <div class="center col-d-7 col-t-11 col-p-12">
+       <!-- Begin - WUL Page Info -->
+      <div id="page_info_card_org" class="col-tier">
+        <div id="page_info_card" class="col-all-12 margin-b-15">
+          <div class="tier">
+            <div class="col-all-12">
+              <p class="page_info_title pull-left">
+                Map Pins Feed
+              </p>
+            </div>
+
+            <div class="col-all-12 light-box-shadow card" style="border: 1px solid rgba(128, 128, 128, .5)">
+              <div class="card-body theme_color_black">
+                <div class="col-d-9 col-t-12 col-p-12 pull-left">
+                  <p class="text-big" style="font-family: Roboto;"><i>The collection of all Reports and Suggestions from the map of your city.</i></p> 
+                  <p class="text-medium mb-2">All pins from the map are listed below, you may further seperate them to only view Reports or Suggestions.</p>
+                </div>
+                <div class="page_info_icon_hide col-all-3 pull-right center-all pl-3 theme_color_dark margin-t-0 page_info_icon" style="height: 130px;">
+                  <i class='fas fa-map-marked-alt' style='position: relative; top: -15px'></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End- WUL Page Info -->
+      
+      <div class="tier">
+        <div class="col-tier padding-b-20">
+          <p class="trending_list_title col-p-12">
+            Trending - Week
+          </p>
+        <%= render 'filters/feed_filter', obj: @map_pins %>
+        <!-- Below - Renders in sort panel partial for ordering of City Reviews with the object City_review -->
+        <div class="">
+         <%= render 'layouts/sort_panel', obj: @map_pins %>
+        </div>
+      </div>
+      <!-- Below - Renders in all City Reviews -->
+      <div class="col-tier">
+        <div class="col-all-12">
+          <%= render 'layouts/resources/resources_list', obj: @map_pins %>
+        </div>
+      </div>
+
+      </div> 
+    </div>
+    <div id="non_ms_ap_content" class="col-d-3 col-t-10 col-p-12" >
+      <%= render 'layouts/action_panel', obj: @city_reviews %>
+    </div>
+  </div> <!-- Main page tier -->
+</div>

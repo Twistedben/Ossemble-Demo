@@ -1,0 +1,16 @@
+<!--  Form partial only rendered from after_signup_page when super admin is creating more departments inside the workplace. -->
+<div class="col-tier mb-3" style="border-bottom: 1px solid black;">
+  <div class="col-tier form_tier">
+    <div id="" class="col-all-6"> 
+      <%= f.label :name, "Department Name" %>
+      <%= f.text_field :name, maxlength: 60, title: "Enter a name for the department. (60 Characters)", placeholder: "'Planning', 'Service', 'Community Development' (60 Characters)", class: "form-control" %>
+    </div>
+  </div>
+  <div class="col-tier form_tier">
+    <div id="" class="col-all-8"> 
+      <%= f.label :description, "Department Description <small>(optional)</small>".html_safe %>
+      <!-- Below -  Renders description with placholder for city workplace, otherwise renders a more broad placheholder. -->
+      <%= f.text_area :description, maxlength: 255, title: "Enter a description for the department. (255 Characters)", placeholder: "'This Department ensures...' (255 Characters)", class: "form-control"%>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,37 @@
+<div class="content">
+  <div class="col-d-6 col-t-10 col-p-12 center">
+  <div class="transparent">
+    
+  <div class="ms_titles_ml trending_font_size">
+    Forgot Your Password?
+  </div>
+    
+  <div class="light-box-shadow px-4 py-0 bg-white mb-5" style="border: 1px solid rgba(128, 128, 128, .5)">  
+   
+    <div class="form-horizontal col-all-12 form_ms_text">
+      <div class="col-tier center">
+        <div class="col-all-12 margin-y-10"> 
+        <%= simple_form_for(resource, as: resource_name, url: user_password_path, html: { method: :post }) do |f| %>
+        <%= f.error_notification %>
+
+        <div class="form-inputs ml-4 mr-4 mb-5 col-d-10 col-t-10 col-p-11">
+          <%= f.input :email,
+            autofocus: true,
+            placeholder: "Your Profile's Email: 'youremail@example.com'",
+            input_html: { autocomplete: "email", class: "light-input-shadow" } %>
+        </div>
+
+        <div class="form-actions mb-3">
+          <%= f.button :submit, "Reset Password, Send Email", class: "btn btn-primary btn-lg light-btn-shadow" %>
+        </div>
+<% end %>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+  </div>
+  </div>
+</div>
+<div class="transparent temp-working-area"></div>

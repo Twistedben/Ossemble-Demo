@@ -1,0 +1,124 @@
+<!-- Main show page for Topics within Ossembly section. Landing page from (views/topics/show.html.erb) and route URL: /cities/:city_id/topics/:topic_id --> 
+
+<!-- Begin - Main content for community score page. -->
+<div class="content">
+  <div class="tier"> <!-- Begin - Main tier for page. -->
+    <!-- Below -  Renders in the accordian from views/layouts/phones/... for mobile and tablet. -->
+    <%= render "layouts/phones/mobile_accordion" %>
+    <div class="center col-d-7 col-t-11 col-p-12">
+    <!-- Begin - Topic Page Info -->
+      <div id="page_info_card_org" class="col-all-12">
+        <div id="page_info_card">
+          <div class="tier margin-b-15">
+            <!-- Begin - Topic Page Info Title -->
+            <div class="col-all-12">
+              <p class="trending_font_size pull-left margin-all-10 margin-l-0 padding-t-2">
+                <%= "Let's Talk Topic Feed" if current_page?(city_topic_path(@city, @lets_talk)) %> 
+                <%= "Good Vibes Topic Feed" if current_page?(city_topic_path(@city, @good_vibes)) %> 
+                <%= "Schools Topic Feed" if current_page?(city_topic_path(@city, @schools)) %> 
+                <%= "City Affairs Topic Feed" if current_page?(city_topic_path(@city, @city_affairs)) %> 
+              </p>
+            </div>
+            <!-- End - Topic Page Info Title -->
+            <div class="col-all-12 light-box-shadow card" style="border: 1px solid rgba(128, 128, 128, .5)">
+              <div class="card-body theme_color_black">
+                <div class="col-d-9 col-t-12 col-p-12 pull-left">
+                  <!-- Begin - Topic Page Info Description -->
+                  <% if current_page?(city_topic_path(@city, @lets_talk)) %>
+                    <p class="text-big" style="font-family: Roboto;"><i>Let’s talk… about anything and everything.</i></p> 
+                    <p class="text-medium">Talk about that new restaurant opening up.</p>
+                    <p class="text-medium">How great it would be if the city had a community garden.</p>
+                    <p class="text-medium mb-0">Or even your daily frustrations… like that traffic light that never seems to turn green.</p>
+                  
+                  <% elsif current_page?(city_topic_path(@city, @good_vibes)) %>
+                    <p class="text-big" style="font-family: Roboto;"><i>It seems like every time we turn on the news, tv, social media, and the internet negativity surrounds us.</i></p> 
+                    <section class="b">This forum is dedicated to gooooood vibes and good vibes only.</section>
+                     <ul class="bold"> 
+                     <li class="mb-2">You saw a good samaritan help someone across the street? <br> – Tell us that Good News!</li>  
+                     <li class="mb-2">Want to share how cute and awesome your new Puppy is? <br> – Show everyone in Furry Friends.</li>
+                     <li class="mb-2">Took a beautiful picture of the sunset? <br> – Show everyone how great your city looks in City Snaps.</li>
+                     </ul>
+                   
+                  <% elsif current_page?(city_topic_path(@city, @schools)) %>  
+                    <p class="text-medium i">Our children’s education defines our cities success.</p> 
+                    <p class="text-medium">A good education not only is an investment for your child but can help our communities.</p>
+                    <section class="b">This forum is dedicated to your City’s education.</section>
+                     <ul> 
+                      <li>Discuss individual schools within the district.</li>
+                      <li>The overall curriculum.</li>
+                      <li>Safety concerns.</li>
+                      <li>Tax levy funds being used efficiently.</li>
+                     </ul>
+    
+                  <% elsif current_page?(city_topic_path(@city, @city_affairs)) %>  
+                    <p class="text-big" style="font-family: Roboto;"><i>Wish there was a more direct way to connect to your local government?</i></p>
+                    <p class="text-medium i">Do you ever feel out of the loop?</p>
+                    <p class="text-medium">Have you felt overwhelmed with all of these different local issues on Election Day?</p>
+                    <section class="b">Well the City affairs section is dedicated to answering those sections.</section>
+                     <ul> 
+                      <li><b>Ballots</b> – Officials or local experts can quickly explain what is on the upcoming ballot.</li>
+                      <li><b>Officials</b> – Get details and communicate with your local elected officials.</li>
+                      <li><b>Events</b> – City food drive, library book sale, City Parade. Stay up to date.</li>
+                     </ul>
+                  <% end %>
+                <!-- End - Topic Page Info Description -->
+                </div>
+                <!-- Begin - Topic Page Info Icons -->
+                <div class="page_info_icon_hide col-all-3 pull-right center-all pl-3 theme_color_dark page_info_icon margin-t-0" style="height: 130px;">
+                  <i style="top: -25px !important; font-size: 100px !important;" class='relative fas 
+                    <%= "fa-bullhorn" if current_page?(city_topic_path(@city, @lets_talk)) %>
+                    <%= "fa-hand-peace" if current_page?(city_topic_path(@city, @good_vibes)) %>
+                    <%= "fa-school" if current_page?(city_topic_path(@city, @schools)) %>
+                    <%= "fa-gavel" if current_page?(city_topic_path(@city, @city_affairs)) %>
+                  ' >
+                  </i> 
+                </div>
+                <!-- End - Topic Page Info Icons -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End- Topic Page Info -->
+      <div class="tier ">
+        <div class="col-tier padding-b-20">
+          <p class="trending_font_size col-p-12">
+            Trending - Week
+          </p>
+          <%= render 'filters/feed_filter', obj: @topic %>
+          <div>
+            <!-- Below - Renders in sort panel partial for ordering of topics with the object topic -->
+            <%= render 'layouts/sort_panel', obj: @topic %>
+          </div>
+        </div>
+        <!-- End - Sort panel -->
+        <!-- Begin - Rendering of trending week posts. -->
+        <div class="col-tier">
+          <div class="col-all-12">
+            <!-- Below - Rendering of trending posts within topic by week -->
+            <%= render 'layouts/resources/resources_list', obj: @week_topic_posts %>
+          </div>
+        </div>
+      <!-- End - Rendering of trending week posts -->
+      </div>
+      
+      <div class="tier">
+        <div class="col-all-12" style="text-align: left;">
+          <p class="trending_font_size ms_titles_ml">
+            <%= "Trending - Month" unless @month_topic_posts.empty? %>
+          </p>
+        </div>
+        <div class="col-tier">
+          <div class="col-all-12">
+            <!-- Below - Rending of trending posts within topic by month. -->
+            <%= render 'posts/posts_list', obj: @month_topic_posts unless @month_topic_posts.empty? %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="non_ms_ap_content" class="col-d-3 col-t-10 col-p-12">
+      <%= render 'layouts/action_panel', obj: @topic %>
+    </div>
+  </div> <!-- Main page tier -->
+</div>
+

@@ -1,0 +1,228 @@
+<!-- Main HTML.ERB For User Signup Page (views/devise/registrations/new.html.erb) -->
+
+  <!-- Rendering new User Signup Form -->
+<div class="content-fluid"> 
+  <div class="tier"> 
+    <div class="center col-d-12 col-t-12 col-p-12" style="max-width: 930px">
+      <!--  Begin - Form_For Devise & User Signup & Finishing User Profile Signup -->
+      <%= form_for(resource, as: resource_name, url: registration_path(resource_name),
+          html: {multipart: true, class: "form", style: "margin: 80px 0px 150px", role: "form"}) do |f| %>
+        <!-- Below - Error Message(s) Wrapper for User Signup -->
+        <%= devise_error_messages! %>
+        <div class="card padding-all-18 light-box-shadow">
+          <h3 class="margin-t-8 padding-b-8 border-bottom">
+            Join Ossemble
+          </h3>
+          <div id="signup-form" class="col-all-12 center">
+            <div class="tier"> 
+              <div class="col-d-10 col-t-12 col-p-12">
+                <div class="col-tier margin-b-18"> 
+                  <!-- Begin -  NAME: FIrst and last name tier -->
+                    <div class="tier"> 
+                      <div id="first_name_div" class="col-all-4">
+                        <%= f.label :first_name, "First Name", class: 'padding-x-3'  %> 
+                        <%= f.text_field :first_name, id: "first_name", class: "form-control px-3 light-input-shadow", placeholder: "Enter First Name", autocomplete: true, autofocus: true  %>
+                      </div>
+                      <div id="last_name_div" class="col-all-4">
+                        <%= f.label :last_name, "Last Name", class: 'padding-x-3' %>
+                        <%= f.text_field :last_name, class: "form-control px-3 light-input-shadow", placeholder: "Enter Last Name",  autocomplete: true %>
+                      </div>
+                      <div id="gender_div" class="col-all-4">
+                        <label class="control-label padding-l-3"> 
+                          Gender    
+                        </label>
+                        <div class="center">
+                          <select id="gender_select" class="form-control select_form light-input-shadow" name="user[gender]" prompt="Choose Your Gender">
+                            <option value>Choose your Gender</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+
+                </div>
+                <!-- End -  NAME:  -->
+                <!-- Begin -  DOB: Date of birth tier -->
+                <div class="tier margin-t-10 margin-b-12 border-bottom padding-b-20"> 
+                  <div class="col-tier"> 
+                    <!-- Below -  Shows on tablet and above -->
+                    <%= f.label :dob, "Date of Birth", class: "control-label padding-l-3" %>
+                    <!-- Below -  Shows on phone and below -->
+                  </div>
+                  <div class="col-tier"> 
+                    <%= date_select 'user', :dob, options = { order: [:month, :day, :year], add_month_numbers: true, with_css_classes: true, prompt: {month: "MM - Birth Month", day: "DD - Birth Day", year: "YYYY - Birth Year"}, start_year: 1930, end_year: @dob_year}, html_options = { class: 'dob_tier light-input-shadow form-control select_form' } %> 
+                  </div>
+                </div>
+                <!-- End -  DOB: -->
+                <!-- Begin -  GENDER/CITY: Gender and city and request tier -->
+                <div class="tier margin-b-18"> 
+                  <div class="col-d-8 col-t-8 col-p-12">
+                    <div class="col-all-10 margin-t-10">
+                      <div class="control-label">
+                        <label>
+                          Your City -  
+                          <a onclick="ml_webform_742238('show')" class="title_link pointer" title="Don't see your city listed here? Click to request Ossemble for your city.">
+                            Request City
+                          </a>
+                        </label>
+                      </div> 
+                      <%= f.collection_select :city_id, City.all.sort_by { |u| u.name }, :id, :name, {prompt: "Choose your City"}, class: "col-all-12 select_form light-input-shadow form-control px-2" %>
+                    </div>
+                  <!-- End -  GENDER/CITY -->
+                  <!-- Begin -  EMAIL/PASS: Email and password field tier -->
+                    <div class="col-all-10 padding-t-15">
+                      <div class="control-label">
+                        <%= f.label :email, "Email Address" %>
+                      </div>
+                      <%= f.email_field :email, type: :email, autocomplete: true, class: "col-all-12 form-control px-3 light-input-shadow", placeholder: "Youremail@example.com"  %>
+                    </div>
+                    <div class="col-all-10 padding-t-15">
+                      <div class="control-label">
+                        <%= f.label :password, "Password" %>
+                      </div>
+                      <%= f.password_field :password, autocomplete: "off", id:"user_password", class: "col-all-12 form-control px-3 light-input-shadow", placeholder: "6 Character Minimum"  %>
+                    </div>
+                  </div>
+                  <div class="col-d-4 col-t-4 col-p-vanish">
+                    <%= image_tag "badges/OssemblePioneering.svg", alt: "Icon", class: "mb-0" %>
+                    <p class="center-all margin-t-12 margin-b-0 theme_color_black text-18 bold primary_font">Join Ossemble now and be awarded the Pioneer badge!</p>
+                  </div>
+
+                </div>
+                <!-- End -  EMAIL/PASS: -->
+                <div class="form-group col-all-12 p-0 mb-3"> <!-- Begin - Avatar Upload Column --> 
+                  <%= f.label :avatar, "<i class='fas fa-file-image margin-r-8'></i>Upload Profile Pic".html_safe, class: "margin-y-12 control-label" %>
+                  <div class="tier">
+                    <%= f.file_field :avatar, accept: 'image/*', class: "upload btn btn-info margin-y-5 light-btn-shadow", style: "width: 250px", onchange: "readURL(this);", title: "Upload a picture for your profile so fellow citizens can recognize you!" %>
+                  </div>
+                  <div class="tier">
+                    <%= f.label :image, "Preview of Uploaded Image".html_safe, class: " vanish img_prev_title pull-left control-label mb-2" %>
+                  </div>
+                  <div class="tier">
+                    <img id="img_prev" class="vanish" src="#" alt="Image">
+                  </div>
+                  <p class="margin-t-5 mb-0 text-13">If the image you're uploading is high resolution, it may take a few moments.</p>
+                </div>
+              </div>  
+            </div>
+          <!-- PROGRAMMER'S NOTE: State is commented out for now until scale
+            %= f.label :state, "State" %> 
+              <small>
+                (Currently Ohio)
+              </small>
+            %= f.collection_select :state, State.all, :name, :name, {prompt: "Choose a State"}, class: "col-all-12 select_form light-input-shadow form-control px-2" %>
+          -->
+            <!-- Below -  Loading Image upload gif -->
+            <div class="loading" style="display:none; z-index: 15000">
+              <div class="center-all" style="border-radius: 10px !important">
+                <%= image_tag "icons/misc/loading.gif", alt: "Uploading", class: "upload-img" %>
+                <div class="theme_color_dark mb-5 px-4">Please wait while your image uploads...</div>
+              </div>
+            </div>
+            <!-- Begin -  Action buttons at bottom. -->
+            <div class="push-left overflow-auto padding-l-0">
+              <%= link_to '<i class="fab fa-facebook-square fa-lg fa-fw fb_log_sign_icon m-0 p-0" aria-hidden="true"></i> Facebook Signup'.html_safe, 
+                  user_facebook_omniauth_authorize_path, 
+                  id: "facebook_signup_btn",
+                  class: "push-left btn btn-primary mb-0 margin-t-20 light-btn-shadow" unless Rails.env.production? %>
+            </div>
+            <div class="push-right pull-right margin-x-5" style="margin-left: auto !important">
+              <%= f.submit "Create Profile", id: 'loadgif', disabled: true, class: "btn button-cs form_btn" %>
+            </div>
+            <!-- End -  Action buttons at bottom. -->
+        </div>      
+      </div>
+    <% end %>
+<!-- End - Form_For Devise & User Signup -->
+   </div>
+  </div>
+</div>
+
+
+<script>
+//JS For adding error red highlights on input fields and select boxes
+   if ($("#error_explanation:contains('Email')").length > 0) {
+     $("#user_email").addClass("invalid")
+   };
+   if ($("#error_explanation:contains('Password')").length > 0) {
+     $("#user_password").addClass("invalid")
+   };
+   if ($("#error_explanation:contains('First')").length > 0) {
+     $("#first_name").addClass("invalid")
+   };
+   if ($("#error_explanation:contains('Last')").length > 0) {
+     $("#user_last_name").addClass("invalid")
+   };
+   if ($("#error_explanation:contains('Dob')").length > 0) {
+     $("#user_dob_1i, #user_dob_2i, #user_dob_3i").addClass("invalid")
+   };
+   if ($("#error_explanation:contains('City')").length > 0) {
+     $("#user_city_id").addClass("invalid")
+   };
+   if ($("#error_explanation:contains('Gender')").length > 0) {
+     $("#gender_select").addClass("invalid")
+   };
+  // Removes red highlight when the input box is changed
+    $("#user_email, #user_last_name, #first_name, #user_password").bind("keyup", function() {
+      if ($(this).hasClass("invalid")) {
+        $(this).removeClass('invalid')
+      }
+    });
+  // Removes red highlight when the select is changed
+    $("#user_city_id, #gender_select, #user_dob_1i, #user_dob_2i, #user_dob_3i").on("change", function() {
+      if ($(this).hasClass("invalid")) {
+        $(this).removeClass('invalid')
+      }
+    });
+
+   
+// Below - Ensures all fields are selected before allowing submit button to enable
+$('form').on('change', function() {
+    if(allFilled()) $('#loadgif').removeAttr('disabled');
+
+});
+
+// Below - When loadgif submit button is clicked, adds andamplitude event creation
+$("#loadgif").on('click', function() {
+  amplitude.getInstance().logEvent('New Profile Creation');
+});
+
+// Makes sure input and select fields are not empty before allowing submit button
+function allFilled() {
+    var filled = true;
+    $('#first_name, #user_last_name, #user_email, #user_password').each(function() {
+        if ($(this).val() == '') filled = false;
+        if ( !$("#user_dob_1i").val() ) filled = false;
+        if ( !$("#user_dob_2i").val() ) filled = false;
+        if ( !$("#user_dob_3i").val() ) filled = false;
+        if ( !$("#user_city_id").val() ) filled = false;
+        if ( !$("#gender_select").val() ) filled = false;
+    });
+    return filled;
+};
+
+// <!-- Below -  Previews the uploaded image. Called by onchange for file upload. Also makes upload button bigger to show name of file. -->
+function readURL(input) {
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+    $("#img_prev").show();
+    $(".img_prev_title").show();
+    $("#user_avatar").width(300);
+    reader.onload = function (e) {
+      $('#img_prev')
+        .attr('src', e.target.result)
+    };
+
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+</script>
+
+ 
+<script>
+  // Mailer lite web form
+    var ml_webform_742238 = ml_account('webforms', '742238', 'l6h8p1', 'load');
+    ml_webform_742238('animation', 'fadeIn');
+</script>
