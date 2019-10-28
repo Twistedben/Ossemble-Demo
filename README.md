@@ -8,7 +8,7 @@ Cloning the app will not work, as I stipped out sensitive files intentionally. (
 
 To demo the app, you can sign up for free on www.ossemble.com and see all the features, or jump right in to a limited Sandbox environment by visiting www.ossemble.com/demo_admin
 
-Some features:
+**Some features:**
 
     a. S3 hosting for uploaded files and images using Active Storage and mini-magick.
 
@@ -28,7 +28,6 @@ Some features:
 
     i. Many other features currently deprecated due to change in vision, like searching, following, sharing via Social Media, etc..
 
-================
 
 ## Software
 
