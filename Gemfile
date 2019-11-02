@@ -18,7 +18,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'high_voltage'
 gem 'jquery-rails'              # Adding jQuery to Rails
 gem 'jquery-ui-rails'           # Adding jQuery UI to Rails
-gem 'devise', '~> 4.4.3'        # User Registration Gem
+gem 'devise', '~> 4.7.1'        # User Registration Gem
 gem 'rails-jquery-autocomplete' # Autocomplete Javascript Gem
 gem 'simple_form'               # Easy Forms for HTML
 gem 'omniauth'                  # Omni Authentication
