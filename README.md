@@ -1,4 +1,4 @@
-# www.Ossemble.com -  Source Code Demo
+Source Code Demo
 
 Some source code extracted from Ossemble.com to illustrate the codebase involved in it while allowing the main codebase to stay private since it's an active SaaS product. 
 
@@ -6,7 +6,6 @@ Much of the code is currently not in active use but legacy code from before a pi
 
 Cloning the app will not work, as I stipped out sensitive files intentionally. (deleted config files, production and deployment files, DB folder, and images). Take note, some of this code is extremely old and was written when I was a beginner at Ruby and RoR, and may have never been refactored. So there may be some really smelly code scattered throughout.
 
-To demo the app, you can sign up for free on www.ossemble.com and see all the features, or jump right in to a limited Sandbox environment by visiting www.ossemble.com/demo_admin
 
 **Some features:**
 
