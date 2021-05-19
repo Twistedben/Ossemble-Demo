@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 ruby '2.5.3'
 gem 'rails', '~> 5.2'
-gem 'puma', '~> 3.12'
+gem 'puma', '~> 4.3'
 #gem 'sqlite3'
 gem 'pg'
 # gem 'bootsnap'
