@@ -1,5 +1,7 @@
 Source Code Demo
 
+##A lot of this code was written when I was still learning Ruby on Rails, learning as I built the app; hence, much of this code is smelly and not optimally written.
+
 Some source code extracted from Ossemble.com to illustrate the codebase involved in it while allowing the main codebase to stay private since it's an active SaaS product. 
 
 Much of the code is currently not in active use but legacy code from before a pivot from a free social media civic platform to a Regional Organization and Government B2G productivity and collaboration subscription app.
